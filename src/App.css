@@ -1,0 +1,54 @@
+html,
+body {
+  height: 100%;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Box-Container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: DodgerBlue;
+  width: 620px;
+}
+
+.Box-Container>.Box {
+  background-color: #464343;
+  width: 16%;
+  height: 100px;
+  margin: 12px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
+
+}
+
+.Keyboard
+{
+  position: absolute;
+  bottom: 0px;
+}
+
+.Keyboard>button {
+  
+  background-color: rgb(104, 230, 104);
+  padding: 15px 32px;
+  margin: 5px;
+}
+
+.Pointer
+{
+  position: absolute;
+  left: 22%;
+
+}
