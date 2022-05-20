@@ -5,81 +5,94 @@ import React, { useState } from 'react';
 
 
 
-function Row({ Row, WordsArray, RowNum, top }) {
+function Row({ Row, Word, RowNum, top }) {
 
-    const colors = ["25,151,0", "greenyellow", "yellow", "yellow", "orange", "red"];
+    //             ["green",     "greenyellow", "yellow",     "yellow",     "orange",    "red"];
+    const colors = ["34,139,34", "127,255,0",   "255,255,49", "255,225,53", "255,165,0", "255,69,0"];
 
     let borderOn = 0;
-    if(Row === RowNum)
-    {
+    if (Row === RowNum) {
         borderOn = 1;
     }
-    
+
     const s = {
         top: top,
-        border: '1px dotted rgba(255, 255, 255,' + borderOn + ' )', 
+        border: '2px solid rgba(' + colors[RowNum] + ',' + borderOn + ' )',
     }
 
     return (
         <div className='Row' style={s}>
-            <div className="Box"> <p>{WordsArray[0]}</p></div>
-            <div className="Box"> <p>{WordsArray[1]}</p></div>
-            <div className="Box"> <p>{WordsArray[2]}</p></div>
-            <div className="Box"> <p>{WordsArray[3]}</p></div>
-            <div className="Box"> <p>{WordsArray[4]}</p></div>
+            <div className="Box"> <p>{Word[0]}</p></div>
+            <div className="Box"> <p>{Word[1]}</p></div>
+            <div className="Box"> <p>{Word[2]}</p></div>
+            <div className="Box"> <p>{Word[3]}</p></div>
+            <div className="Box"> <p>{Word[4]}</p></div>
         </div>
     );
 }
 
-function wordSetter(setWord, Word, letter, setRow, RowNum, WordsArray, setArray) {
+function wordSetter(letter, setRow, RowNum, WordsArray, setArray) {
 
-    if (Word.length < 5 && letter !== "enter") {
-        let w = Word + letter;
-        WordsArray[RowNum] = w
-        setArray(WordsArray);
-        setWord(w);
+    let WAR = WordsArray[RowNum];
+    if (RowNum < 6) {
+
+        if (WAR.length < 5 && letter !== "enter" && letter !== "backspace") {
+
+            let w = WAR + letter;
+            WordsArray[RowNum] = w;
+            //using the spread operator '...' to setArray since [WordsArray] is not detected as change
+            setArray([...WordsArray]);
+
+        }
+        else if (WAR.length === 5 && letter === "enter") {
+
+            setRow(RowNum + 1);
+            console.log("Word Entered: " + WordsArray);
+        }
+        else if (WAR.length != 0 && letter === "backspace") {
+            WordsArray[RowNum] = WAR.substr(0, WAR.length - 1);
+            setArray([...WordsArray]);
+        }
     }
 
-    if (Word.length === 5 && letter === "enter") {
-        WordsArray[RowNum] = Word;
-        setRow(RowNum + 1);
-        setArray(WordsArray);
-        setWord("")
-        console.log("Word Entered: " + WordsArray);
+    if(letter === "reset")
+    {
+        setArray(["","","","","",""]);
+        setRow(0);
     }
+
 }
 
 
 
-function Keyboard({ setWord, Word,
+function Keyboard({
     setRow, RowNum,
     setArray, WordsArray }) {
 
-    //console.log("Keybord rendered-------------------------")
     //onclick send in the setter function, word, letter
     return (
         <div className='Keyboard'>
-            <button onClick={() => { wordSetter(setWord, Word, "A", setRow, RowNum, WordsArray, setArray) }}>A</button>
-            <button onClick={() => { wordSetter(setWord, Word, "B", setRow, RowNum, WordsArray, setArray) }}>B</button>
-            <button onClick={() => { wordSetter(setWord, Word, "C", setRow, RowNum, WordsArray, setArray) }}>C</button>
-            <button onClick={() => { wordSetter(setWord, Word, "D", setRow, RowNum, WordsArray, setArray) }}>D</button>
-            <button onClick={() => { wordSetter(setWord, Word, "E", setRow, RowNum, WordsArray, setArray) }}>E</button>
+            <button onClick={() => { wordSetter("A", setRow, RowNum, WordsArray, setArray) }}>A</button>
+            <button onClick={() => { wordSetter("B", setRow, RowNum, WordsArray, setArray) }}>B</button>
+            <button onClick={() => { wordSetter("C", setRow, RowNum, WordsArray, setArray) }}>C</button>
+            <button onClick={() => { wordSetter("D", setRow, RowNum, WordsArray, setArray) }}>D</button>
+            <button onClick={() => { wordSetter("E", setRow, RowNum, WordsArray, setArray) }}>E</button>
 
-            <button onClick={() => { wordSetter(setWord, Word, "enter", setRow, RowNum, WordsArray, setArray) }}>Enter</button>
-        
-            <button onClick={() => setWord(Word.substr(0, Word.length - 1))}> &#8592; </button>
+            <button onClick={() => { wordSetter("enter", setRow, RowNum, WordsArray, setArray) }}>Enter</button>
+            <button onClick={() => { wordSetter("backspace", setRow, RowNum, WordsArray, setArray) }}> &#8592; </button>
+            <button onClick={() => { wordSetter("reset", setRow, RowNum, WordsArray, setArray) }} style={{backgroundColor: 'IndianRed'}}> Reset </button>
         </div>
     );
 }
 
 function App() {
-    const [Word, setWord] = useState("");
-    const [RowNum, setRow] = useState(0);
     const [WordsArray, setArray] = useState(["", "", "", "", "", ""]);
+    const [RowNum, setRow] = useState(0);
     //console.log("Word: " + Word);
     //console.log("RowNum: " + RowNum);
     //console.log("Array: " + WordsArray);
     //console.log("Array[]: " + WordsArray[0]);
+    console.log("refresh")
     return (
         <div className="App">
             <div className="App-header">
@@ -87,16 +100,15 @@ function App() {
             </div>
             <div className='body'>
                 <div className='Box-Container'>
-                    <Row Row={0} WordsArray={WordsArray[0]} RowNum={RowNum} top={'3% '}/>
-                    <Row Row={1} WordsArray={WordsArray[1]} RowNum={RowNum} top={'19%'}/>
-                    <Row Row={2} WordsArray={WordsArray[2]} RowNum={RowNum} top={'35%'}/>
-                    <Row Row={3} WordsArray={WordsArray[3]} RowNum={RowNum} top={'51%'}/>
-                    <Row Row={4} WordsArray={WordsArray[4]} RowNum={RowNum} top={'67%'}/>
-                    <Row Row={5} WordsArray={WordsArray[5]} RowNum={RowNum} top={'83%'}/>
-         
+                    <Row Row={0} Word={WordsArray[0]} RowNum={RowNum} top={'3% '} />
+                    <Row Row={1} Word={WordsArray[1]} RowNum={RowNum} top={'19%'} />
+                    <Row Row={2} Word={WordsArray[2]} RowNum={RowNum} top={'35%'} />
+                    <Row Row={3} Word={WordsArray[3]} RowNum={RowNum} top={'51%'} />
+                    <Row Row={4} Word={WordsArray[4]} RowNum={RowNum} top={'67%'} />
+                    <Row Row={5} Word={WordsArray[5]} RowNum={RowNum} top={'83%'} />
+
                 </div>
                 <Keyboard
-                    setWord={setWord} Word={Word}
                     setRow={setRow} RowNum={RowNum}
                     setArray={setArray} WordsArray={WordsArray}
                 />
