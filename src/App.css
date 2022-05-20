@@ -50,11 +50,14 @@ body {
     margin-left: 5px;
     margin-right: 5px;
     text-align: center;
+    color: white;
 
 }
 
 p {
     margin-top: 30%;
+    font-weight: bold;
+
 }
 
 .Keyboard {
