@@ -38,6 +38,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 10px;
+
 }
 
 .Row {
@@ -78,7 +80,7 @@ p {
 
 .Keyboard>button {
 
-    background-color: rgb(104, 230, 104);
+    background-color: rgb(228, 228, 228);
     padding: 15px 32px;
     margin: 5px;
 }

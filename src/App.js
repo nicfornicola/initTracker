@@ -5,13 +5,13 @@ import React, { useState } from 'react';
 
 
 
-function Row({ Row, Word, RowNum, top }) {
+function Row({ RowID, Word, RowNum, top }) {
 
     //             ["green",     "greenyellow", "yellow",     "yellow",     "orange",    "red"];
     const colors = ["34,139,34", "127,255,0",   "255,255,49", "255,225,53", "255,165,0", "255,69,0"];
 
     let borderOn = 0;
-    if (Row === RowNum) {
+    if (RowID === RowNum) {
         borderOn = 1;
     }
 
@@ -100,12 +100,12 @@ function App() {
             </div>
             <div className='body'>
                 <div className='Box-Container'>
-                    <Row Row={0} Word={WordsArray[0]} RowNum={RowNum} top={'3% '} />
-                    <Row Row={1} Word={WordsArray[1]} RowNum={RowNum} top={'19%'} />
-                    <Row Row={2} Word={WordsArray[2]} RowNum={RowNum} top={'35%'} />
-                    <Row Row={3} Word={WordsArray[3]} RowNum={RowNum} top={'51%'} />
-                    <Row Row={4} Word={WordsArray[4]} RowNum={RowNum} top={'67%'} />
-                    <Row Row={5} Word={WordsArray[5]} RowNum={RowNum} top={'83%'} />
+                    <Row RowID={0} Word={WordsArray[0]} RowNum={RowNum} top={'3% '} />
+                    <Row RowID={1} Word={WordsArray[1]} RowNum={RowNum} top={'19%'} />
+                    <Row RowID={2} Word={WordsArray[2]} RowNum={RowNum} top={'35%'} />
+                    <Row RowID={3} Word={WordsArray[3]} RowNum={RowNum} top={'51%'} />
+                    <Row RowID={4} Word={WordsArray[4]} RowNum={RowNum} top={'67%'} />
+                    <Row RowID={5} Word={WordsArray[5]} RowNum={RowNum} top={'83%'} />
 
                 </div>
                 <Keyboard
