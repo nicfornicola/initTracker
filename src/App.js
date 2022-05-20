@@ -7,16 +7,17 @@ import React, { useState } from 'react';
 
 function Row({ Row, WordsArray, RowNum, top }) {
 
+    const colors = ["25,151,0", "greenyellow", "yellow", "yellow", "orange", "red"];
+
     let borderOn = 0;
-    if(Row===RowNum)
+    if(Row === RowNum)
     {
         borderOn = 1;
     }
     
-
     const s = {
         top: top,
-        border: '1px solid rgba(255, 255, 255,' + borderOn + ' )', 
+        border: '1px dotted rgba(255, 255, 255,' + borderOn + ' )', 
     }
 
     return (
@@ -79,15 +80,12 @@ function App() {
     //console.log("RowNum: " + RowNum);
     //console.log("Array: " + WordsArray);
     //console.log("Array[]: " + WordsArray[0]);
-    const styles = [15, 27, 39, 50, 62, 74];
-    const colors = ["green", "greenyellow", "yellow", "yellow", "orange", "red"];
     return (
         <div className="App">
             <div className="App-header">
                 <div>Wordle</div>
             </div>
             <div className='body'>
-                <p className='Pointer' style={{ top: styles[RowNum] + "%", color: colors[RowNum] }}> &#8594; </p>
                 <div className='Box-Container'>
                     <Row Row={0} WordsArray={WordsArray[0]} RowNum={RowNum} top={'3% '}/>
                     <Row Row={1} WordsArray={WordsArray[1]} RowNum={RowNum} top={'19%'}/>
