@@ -5,16 +5,27 @@ import React, { useState } from 'react';
 
 
 
-function Row({ WordsArray, top }) {
+function Row({ Row, WordsArray, RowNum, top }) {
+
+    let borderOn = 0;
+    if(Row===RowNum)
+    {
+        borderOn = 1;
+    }
+    
+
+    const s = {
+        top: top,
+        border: '1px solid rgba(255, 255, 255,' + borderOn + ' )', 
+    }
 
     return (
-        <div className='Row' style={{top: top}}>
+        <div className='Row' style={s}>
             <div className="Box"> <p>{WordsArray[0]}</p></div>
             <div className="Box"> <p>{WordsArray[1]}</p></div>
             <div className="Box"> <p>{WordsArray[2]}</p></div>
             <div className="Box"> <p>{WordsArray[3]}</p></div>
             <div className="Box"> <p>{WordsArray[4]}</p></div>
-      
         </div>
     );
 }
@@ -72,18 +83,18 @@ function App() {
     const colors = ["green", "greenyellow", "yellow", "yellow", "orange", "red"];
     return (
         <div className="App">
-            <header className="App-header">
-                Hello
-            </header>
+            <div className="App-header">
+                <div>Wordle</div>
+            </div>
             <div className='body'>
                 <p className='Pointer' style={{ top: styles[RowNum] + "%", color: colors[RowNum] }}> &#8594; </p>
                 <div className='Box-Container'>
-                    <Row WordsArray={WordsArray[0]} top={'3%'} />
-                    <Row WordsArray={WordsArray[1]} top={'19%'}/>
-                    <Row WordsArray={WordsArray[2]} top={'35%'}/>
-                    <Row WordsArray={WordsArray[3]} top={'51%'}/>
-                    <Row WordsArray={WordsArray[4]} top={'67%'}/>
-                    <Row WordsArray={WordsArray[5]} top={'83%'}/>
+                    <Row Row={0} WordsArray={WordsArray[0]} RowNum={RowNum} top={'3% '}/>
+                    <Row Row={1} WordsArray={WordsArray[1]} RowNum={RowNum} top={'19%'}/>
+                    <Row Row={2} WordsArray={WordsArray[2]} RowNum={RowNum} top={'35%'}/>
+                    <Row Row={3} WordsArray={WordsArray[3]} RowNum={RowNum} top={'51%'}/>
+                    <Row Row={4} WordsArray={WordsArray[4]} RowNum={RowNum} top={'67%'}/>
+                    <Row Row={5} WordsArray={WordsArray[5]} RowNum={RowNum} top={'83%'}/>
          
                 </div>
                 <Keyboard

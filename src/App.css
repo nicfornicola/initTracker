@@ -6,12 +6,17 @@ body {
 .App-header {
     background-color: #282c34;
     min-height: 8vh;
-    font-size: calc(10px + 2vmin);
     color: white;
     text-align: center;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+.App-header>div {
+    font-size: calc(10px + 2vmin);
+    font-weight: bold;
+}
 
 .body {
     background-color: #2e323b;
@@ -34,12 +39,15 @@ body {
     justify-content: center;
     align-items: center;
 }
+
 .Row{
     width: 90%;
     height: 16%;
     display: flex;
     justify-content: center;
     position: absolute;
+
+    border-style: hidden;
 
 }
 .Box-Container>.Row>.Box {
@@ -51,13 +59,13 @@ body {
     margin-right: 5px;
     text-align: center;
     color: white;
+    border-radius: 10px;
 
 }
 
 p {
     margin-top: 30%;
     font-weight: bold;
-
 }
 
 .Keyboard {
