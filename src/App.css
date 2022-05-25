@@ -3,11 +3,19 @@ body {
     height: 100%;
 }
 
-.GameOverScreen{
-    background-color: green;
+.GameOverContainer{
+    background-color: rgb(38, 88, 137);
     position: absolute;
-    height: 29px;
-    width: 29px;
+    padding: 10px;
+    top: 8.5%;
+    border-style: solid;
+    border-color: rgb(5, 146, 5);
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
     z-index: 1;
 }
 
