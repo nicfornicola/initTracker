@@ -3,6 +3,14 @@ body {
     height: 100%;
 }
 
+.GameOverScreen{
+    background-color: green;
+    position: absolute;
+    height: 29px;
+    width: 29px;
+    z-index: 1;
+}
+
 .App-header {
     background-color: #282c34;
     min-height: 8vh;

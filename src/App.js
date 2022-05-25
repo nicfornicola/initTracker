@@ -49,10 +49,14 @@ function wordSetter(letter, setRow, RowNum, WordsArray, setArray) {
             setRow(RowNum + 1);
             console.log("Word Entered: " + WordsArray);
         }
-        else if (WAR.length != 0 && letter === "backspace") {
+        else if (WAR.length !== 0 && letter === "backspace") {
             WordsArray[RowNum] = WAR.substr(0, WAR.length - 1);
             setArray([...WordsArray]);
         }
+    }
+    else
+    {
+
     }
 
     if(letter === "reset")
@@ -88,6 +92,7 @@ function Keyboard({
 function App() {
     const [WordsArray, setArray] = useState(["", "", "", "", "", ""]);
     const [RowNum, setRow] = useState(0);
+    const [Game, setGame] = useState(true);
     //console.log("Word: " + Word);
     //console.log("RowNum: " + RowNum);
     //console.log("Array: " + WordsArray);
@@ -99,6 +104,9 @@ function App() {
                 <div>Wordle</div>
             </div>
             <div className='body'>
+                <div className='GameOverScreen'>
+                    
+                </div>
                 <div className='Box-Container'>
                     <Row RowID={0} Word={WordsArray[0]} RowNum={RowNum} top={'3% '} />
                     <Row RowID={1} Word={WordsArray[1]} RowNum={RowNum} top={'19%'} />
