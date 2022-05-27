@@ -1,54 +1,192 @@
 import './App.css';
 import React, { useState } from 'react';
 
+let WORDLE = "PAPER";
+let ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-const WORDLE = "ABCDE";
+class LetterBox {
+    constructor(letter) {
+        this.letter = letter;
+        this.color = "rgb(228, 228, 228)";
 
-function Box({Word, letter, id}) {
-
-    let color = "#464343";
-
-    if(WORDLE.includes(letter))
-    {
-        if(WORDLE.indexOf(letter) === id)
-            color = "green";
-        else
-            color = "#f7d560";
+        switch (this.letter) {
+            case "A":
+                this.index = 0;
+                break;
+            case "B":
+                this.index = 1;
+                break;
+            case "C":
+                this.index = 2;
+                break;
+            case "D":
+                this.index = 3;
+                break;
+            case "E":
+                this.index = 4;
+                break;
+            case "F":
+                this.index = 5;
+                break;
+            case "G":
+                this.index = 6;
+                break;
+            case "H":
+                this.index = 7;
+                break;
+            case "I":
+                this.index = 8;
+                break;
+            case "J":
+                this.index = 9;
+                break;
+            case "K":
+                this.index = 10;
+                break;
+            case "L":
+                this.index = 11;
+                break;
+            case "M":
+                this.index = 12;
+                break;
+            case "N":
+                this.index = 13;
+                break;
+            case "O":
+                this.index = 14;
+                break;
+            case "P":
+                this.index = 15;
+                break;
+            case "Q":
+                this.index = 16;
+                break;
+            case "R":
+                this.index = 17;
+                break;
+            case "S":
+                this.index = 18;
+                break;
+            case "T":
+                this.index = 19;
+                break;
+            case "U":
+                this.index = 20;
+                break;
+            case "V":
+                this.index = 21;
+                break;
+            case "W":
+                this.index = 22;
+                break;
+            case "X":
+                this.index = 23;
+                break;
+            case "Y":
+                this.index = 24;
+                break;
+            case "Z":
+                this.index = 25;
+                break;
+            default:
+                this.index = -1;
+        }
     }
+}
+
+const KEYS = [
+    new LetterBox("A"),
+    new LetterBox("B"),
+    new LetterBox("C"),
+    new LetterBox("D"),
+    new LetterBox("E"),
+    new LetterBox("F"),
+    new LetterBox("G"),
+    new LetterBox("H"),
+    new LetterBox("I"),
+    new LetterBox("J"),
+    new LetterBox("K"),
+    new LetterBox("L"),
+    new LetterBox("M"),
+    new LetterBox("N"),
+    new LetterBox("O"),
+    new LetterBox("P"),
+    new LetterBox("Q"),
+    new LetterBox("R"),
+    new LetterBox("S"),
+    new LetterBox("T"),
+    new LetterBox("U"),
+    new LetterBox("V"),
+    new LetterBox("W"),
+    new LetterBox("X"),
+    new LetterBox("Y"),
+    new LetterBox("Z")];
 
 
 
+function Box({ Letter, Color }) {
 
     return (
-        <div className="Box" style={{ backgroundColor: color }}>
-            <p>{letter}</p>
+        <div className="Box" style={{ backgroundColor: Color }}>
+            <p>{Letter}</p>
         </div>
     );
 }
 
 function Row({ RowID, Word, RowNum, top, GameOver }) {
 
-    //             ["green",     "greenyellow", "yellow",     "yellow",     "orange",    "red"];
-    const colors = ["34,139,34", "127,255,0", "255,255,49", "255,225,53", "255,165,0", "255,69,0"];
+    //             ["green",     "greenyellow", "yellow",   "yellow",     "orange",    "red"];
+    const colors = ["34,139,34", "127,255,0", "255,255,49", "255,225,53", "255,165,0", "255,69,0", "0,0,0"];
 
     let borderOn = 0;
+
     if (RowID === RowNum && GameOver === 0) {
         borderOn = 1;
     }
 
-    const s = {
+    let s = {
         top: top,
-        border: '2px solid rgba(' + colors[RowNum] + ',' + borderOn + ' )',
+        border: '2px solid rgba(' + colors[RowNum] + ', ' + borderOn + ' )',
+    }
+
+    //color for each box
+    let BoxColorAr = ["#464343", "#464343", "#464343", "#464343", "#464343"]
+    let wordle = WORDLE;
+    //only change color if we have gone to next row
+    if (RowID < RowNum) {
+        for (let i = 0; i < 5; i++) {
+            let letter = Word[i];
+            let index = ALPHA.indexOf(letter);
+
+            //if the wordle has th letter
+            if (wordle.includes(letter)) {
+                //if the letter is in the right spot
+                if (wordle[i] === letter) {
+                    BoxColorAr[i] = "green";
+                    KEYS[index].color = "green"
+                }
+                else //if the letter is in the word but not the right spot
+                {
+                    BoxColorAr[i] = "#f7d560"; //yellow
+                    KEYS[index].color = "#f7d560";
+
+                }
+                wordle = wordle.replace(letter, letter.toLowerCase());
+            }
+            else {
+                KEYS[index].color = "#464343";
+            }
+
+        }
     }
 
     return (
         <div className='Row' style={s}>
-            <Box Word={Word} letter={Word[0]} id={0} />
-            <Box Word={Word} letter={Word[1]} id={1} />
-            <Box Word={Word} letter={Word[2]} id={2} />
-            <Box Word={Word} letter={Word[3]} id={3} />
-            <Box Word={Word} letter={Word[4]} id={4} />
-
+            <Box Letter={Word[0]} Color={BoxColorAr[0]} />
+            <Box Letter={Word[1]} Color={BoxColorAr[1]} />
+            <Box Letter={Word[2]} Color={BoxColorAr[2]} />
+            <Box Letter={Word[3]} Color={BoxColorAr[3]} />
+            <Box Letter={Word[4]} Color={BoxColorAr[4]} />
         </div>
     );
 }
@@ -59,6 +197,11 @@ function resetGame(setArray, setRow, setGameOver) {
     setRow(0);
     setGameOver(0);
 
+    for(let i = 0; i < KEYS.length; i++)
+    {
+        KEYS[i].color = "rgb(228, 228, 228)";
+    }
+
 }
 
 function specialSetter(letter, setRow, RowNum, WordsArray, setArray, setGameOver, GameOver) {
@@ -68,28 +211,19 @@ function specialSetter(letter, setRow, RowNum, WordsArray, setArray, setGameOver
 
         if (WAR.length === 5 && letter === "enter") {
             if (WAR === WORDLE) {
-                console.log("g: " + 1)
                 setGameOver(1);
-
             }
             else if (RowNum === 5) {
-                console.log("g: " + 2)
                 setGameOver(2);
             }
-            else {
-                setRow(RowNum + 1);
-            }
 
-            console.log("Word Entered: " + WordsArray);
+            setRow(RowNum + 1);
         }
         else if (WAR.length !== 0 && letter === "backspace") {
             WordsArray[RowNum] = WAR.substr(0, WAR.length - 1);
             setArray([...WordsArray]);
-
         }
     }
-
-
 }
 
 function wordSetter(letter, RowNum, WordsArray, setArray, GameOver) {
@@ -111,27 +245,57 @@ function wordSetter(letter, RowNum, WordsArray, setArray, GameOver) {
     }
 }
 
+
+
 function Keyboard({
     setRow, RowNum,
     setArray, WordsArray,
     setGameOver, GameOver }) {
 
+
     //onclick send in the setter function, word, letter
     return (
-        <div className='Keyboard'>
-            <button onClick={() => { wordSetter("A", RowNum, WordsArray, setArray, GameOver) }}>A</button>
-            <button onClick={() => { wordSetter("B", RowNum, WordsArray, setArray, GameOver) }}>B</button>
-            <button onClick={() => { wordSetter("C", RowNum, WordsArray, setArray, GameOver) }}>C</button>
-            <button onClick={() => { wordSetter("D", RowNum, WordsArray, setArray, GameOver) }}>D</button>
-            <button onClick={() => { wordSetter("E", RowNum, WordsArray, setArray, GameOver) }}>E</button>
-            <button onClick={() => { wordSetter("F", RowNum, WordsArray, setArray, GameOver) }}>F</button>
-            <button onClick={() => { wordSetter("G", RowNum, WordsArray, setArray, GameOver) }}>G</button>
-            <button onClick={() => { wordSetter("H", RowNum, WordsArray, setArray, GameOver) }}>H</button>
-
-            <button onClick={() => { specialSetter("enter", setRow, RowNum, WordsArray, setArray, setGameOver, GameOver) }}>Enter</button>
-            <button onClick={() => { specialSetter("backspace", setRow, RowNum, WordsArray, setArray, setGameOver, GameOver) }}> &#8592; </button>
-            <button onClick={() => { resetGame(setArray, setRow, setGameOver) }} style={{ backgroundColor: 'IndianRed' }}> Reset </button>
-        </div>
+        <>
+            <div className='Keyboard'>
+                <div className='top'>
+                    <button style={{ backgroundColor: KEYS[16].color }} onMouseOver="changeColor" onClick={() => { wordSetter("Q", RowNum, WordsArray, setArray, GameOver) }}>Q</button>
+                    <button style={{ backgroundColor: KEYS[22].color }} onClick={() => { wordSetter("W", RowNum, WordsArray, setArray, GameOver) }}>W</button>
+                    <button style={{ backgroundColor: KEYS[4].color }} onClick={() => { wordSetter("E", RowNum, WordsArray, setArray, GameOver) }}>E</button>
+                    <button style={{ backgroundColor: KEYS[17].color }} onClick={() => { wordSetter("R", RowNum, WordsArray, setArray, GameOver) }}>R</button>
+                    <button style={{ backgroundColor: KEYS[19].color }} onClick={() => { wordSetter("T", RowNum, WordsArray, setArray, GameOver) }}>T</button>
+                    <button style={{ backgroundColor: KEYS[24].color }} onClick={() => { wordSetter("Y", RowNum, WordsArray, setArray, GameOver) }}>Y</button>
+                    <button style={{ backgroundColor: KEYS[20].color }} onClick={() => { wordSetter("U", RowNum, WordsArray, setArray, GameOver) }}>U</button>
+                    <button style={{ backgroundColor: KEYS[8].color }} onClick={() => { wordSetter("I", RowNum, WordsArray, setArray, GameOver) }}>I</button>
+                    <button style={{ backgroundColor: KEYS[14].color }} onClick={() => { wordSetter("O", RowNum, WordsArray, setArray, GameOver) }}>O</button>
+                    <button style={{ backgroundColor: KEYS[15].color }} onClick={() => { wordSetter("P", RowNum, WordsArray, setArray, GameOver) }}>P</button>
+                </div>
+                <br />
+                <div className='middle'>
+                    <button style={{ backgroundColor: KEYS[0].color }} onClick={() => { wordSetter("A", RowNum, WordsArray, setArray, GameOver) }}>A</button>
+                    <button style={{ backgroundColor: KEYS[18].color }} onClick={() => { wordSetter("S", RowNum, WordsArray, setArray, GameOver) }}>S</button>
+                    <button style={{ backgroundColor: KEYS[3].color }} onClick={() => { wordSetter("D", RowNum, WordsArray, setArray, GameOver) }}>D</button>
+                    <button style={{ backgroundColor: KEYS[5].color }} onClick={() => { wordSetter("F", RowNum, WordsArray, setArray, GameOver) }}>F</button>
+                    <button style={{ backgroundColor: KEYS[6].color }} onClick={() => { wordSetter("G", RowNum, WordsArray, setArray, GameOver) }}>G</button>
+                    <button style={{ backgroundColor: KEYS[7].color }} onClick={() => { wordSetter("H", RowNum, WordsArray, setArray, GameOver) }}>H</button>
+                    <button style={{ backgroundColor: KEYS[9].color }} onClick={() => { wordSetter("J", RowNum, WordsArray, setArray, GameOver) }}>J</button>
+                    <button style={{ backgroundColor: KEYS[10].color }} onClick={() => { wordSetter("K", RowNum, WordsArray, setArray, GameOver) }}>K</button>
+                    <button style={{ backgroundColor: KEYS[11].color }} onClick={() => { wordSetter("L", RowNum, WordsArray, setArray, GameOver) }}>L</button>
+                </div>
+                <br />
+                <div className='bot'>
+                    <button className='enter' onClick={() => { specialSetter("enter", setRow, RowNum, WordsArray, setArray, setGameOver, GameOver) }}>Enter</button>
+                    <button style={{ backgroundColor: KEYS[25].color }} onClick={() => { wordSetter("Z", RowNum, WordsArray, setArray, GameOver) }}>Z</button>
+                    <button style={{ backgroundColor: KEYS[23].color }} onClick={() => { wordSetter("X", RowNum, WordsArray, setArray, GameOver) }}>X</button>
+                    <button style={{ backgroundColor: KEYS[2].color }} onClick={() => { wordSetter("C", RowNum, WordsArray, setArray, GameOver) }}>C</button>
+                    <button style={{ backgroundColor: KEYS[21].color }} onClick={() => { wordSetter("V", RowNum, WordsArray, setArray, GameOver) }}>V</button>
+                    <button style={{ backgroundColor: KEYS[1].color }} onClick={() => { wordSetter("B", RowNum, WordsArray, setArray, GameOver) }}>B</button>
+                    <button style={{ backgroundColor: KEYS[13].color }} onClick={() => { wordSetter("N", RowNum, WordsArray, setArray, GameOver) }}>N</button>
+                    <button style={{ backgroundColor: KEYS[12].color }} onClick={() => { wordSetter("M", RowNum, WordsArray, setArray, GameOver) }}>M</button>
+                    <button className='backspace' onClick={() => { specialSetter("backspace", setRow, RowNum, WordsArray, setArray, setGameOver, GameOver) }}> &#8592; </button>
+                </div>
+            </div>
+            <button className='reset' onClick={() => { resetGame(setArray, setRow, setGameOver) }} style={{ backgroundColor: 'IndianRed' }}> Reset </button>
+        </>
     );
 }
 
@@ -149,7 +313,6 @@ function GameOverElem({ GameOver }) {
         if (GameOver === 2) {
             borderColor = "red";
         }
-
     }
 
     const s = {
@@ -172,17 +335,14 @@ function App() {
     const [WordsArray, setArray] = useState(["", "", "", "", "", ""]);
     const [RowNum, setRow] = useState(0);
     const [GameOver, setGameOver] = useState(0);
-    //console.log("Word: " + Word);
-    //console.log("RowNum: " + RowNum);
-    //console.log("Array: " + WordsArray);
-    //console.log("Array[]: " + WordsArray[0]);
-    console.log("refresh")
+
     return (
         <div className="App">
             <div className="App-header">
                 <div>Wordle</div>
             </div>
             <div className='body'>
+
                 <GameOverElem GameOver={GameOver} setGameOver={setGameOver} />
                 <div className='Box-Container'>
                     <Row RowID={0} Word={WordsArray[0]} RowNum={RowNum} top={'3% '} GameOver={GameOver} />

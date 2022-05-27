@@ -1,9 +1,12 @@
 html,
 body {
     height: 100%;
+
 }
 
-.GameOverContainer{
+
+
+.GameOverContainer {
     background-color: rgb(38, 88, 137);
     position: absolute;
     padding: 10px;
@@ -66,9 +69,10 @@ body {
     position: absolute;
     border-style: hidden;
     border-radius: 10px;
-
-
 }
+
+
+
 
 .Box-Container>.Row>.Box {
     background-color: #464343;
@@ -91,17 +95,60 @@ p {
 
 .Keyboard {
     position: absolute;
+    max-width: 1000px;
+    min-width: 750px;
+    bottom: 1%;
+
+    height: 130px;
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.backspace {
+    background-color: orange;
+    padding-left: 13px;
+    padding-right: 13px;
+}
+
+.enter {
+    background-color: rgb(89, 89, 239);
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+
+.reset {
+    position: absolute;
+    top: 1%;
+    right: 2%;
+}
+
+.Keyboard>.top {
+    position: absolute;
+    bottom: 80px;
+}
+
+.Keyboard>.middle {
+    position: absolute;
+    bottom: 40px;
+}
+
+.Keyboard>.bot {
+    position: absolute;
     bottom: 0px;
 }
 
-.Keyboard>button {
-
+button {
     background-color: rgb(228, 228, 228);
-    padding: 15px 32px;
-    margin: 5px;
+    padding: 8px 18px;
+    margin: 2px .25px 2px;
+
+
 }
 
-.Pointer {
-    position: absolute;
-    left: 22%;
+button:hover {
+    background-color: rgb(202, 202, 202);
 }
