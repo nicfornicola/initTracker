@@ -60,7 +60,7 @@ body {
 }
 
 .Row {
-    width: 80%;
+    width: 85%;
     display: flex;
     justify-content: center;
     position: absolute;
@@ -71,11 +71,11 @@ body {
 .Box-Container>.Row>.Box {
     background-color: #464343;
     display: inline-block;
-    min-width: 66px;
-    min-height: 66px;
+    min-width: 8vh;
+    min-height: 7.5vh;
     width: 8vh;
     height: 7.5vh;
-    margin: 3px;
+    margin: 1%;
     text-align: center;
     color: white;
     display: flex;
