@@ -33,7 +33,7 @@ body {
 }
 
 .App-header>div {
-    font-size: calc(10px + 2vmin);
+    font-size: calc(20px + 2vmin);
     font-weight: bold;
 }
 
@@ -48,8 +48,7 @@ body {
 
 
 .Box-Container {
-    background-color: rgb(10, 32, 54);
-    height: 65vh;
+    height: 55vh;
     width: 55vh;
     position: absolute;
     top: 15%;
@@ -57,40 +56,38 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
 
 }
 
 .Row {
-    width: 92%;
-    height: 12.5%;
+    width: 80%;
     display: flex;
     justify-content: center;
     position: absolute;
     border-style: hidden;
-    border-radius: 10px;
 }
-
-
 
 
 .Box-Container>.Row>.Box {
     background-color: #464343;
     display: inline-block;
+    min-width: 66px;
+    min-height: 66px;
     width: 8vh;
     height: 7.5vh;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-top: 3px;
+    margin: 3px;
     text-align: center;
     color: white;
-    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 
 }
 
 p {
-    margin-top: 30%;
     font-weight: bold;
+    font-size: 250%;
 }
 
 .Keyboard {
@@ -142,9 +139,11 @@ p {
 }
 
 button {
-    background-color: rgb(228, 228, 228);
     padding: 8px 18px;
     margin: 2px .25px 2px;
+    font-weight: bold;
+    font-size: 100%;
+
 
 
 }

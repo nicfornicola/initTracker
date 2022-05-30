@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState } from 'react';
 
-let WORDLE = "PAPER";
+let WORDLE = "SPLAT";
 let ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 class LetterBox {
@@ -9,88 +9,7 @@ class LetterBox {
         this.letter = letter;
         this.color = "rgb(228, 228, 228)";
 
-        switch (this.letter) {
-            case "A":
-                this.index = 0;
-                break;
-            case "B":
-                this.index = 1;
-                break;
-            case "C":
-                this.index = 2;
-                break;
-            case "D":
-                this.index = 3;
-                break;
-            case "E":
-                this.index = 4;
-                break;
-            case "F":
-                this.index = 5;
-                break;
-            case "G":
-                this.index = 6;
-                break;
-            case "H":
-                this.index = 7;
-                break;
-            case "I":
-                this.index = 8;
-                break;
-            case "J":
-                this.index = 9;
-                break;
-            case "K":
-                this.index = 10;
-                break;
-            case "L":
-                this.index = 11;
-                break;
-            case "M":
-                this.index = 12;
-                break;
-            case "N":
-                this.index = 13;
-                break;
-            case "O":
-                this.index = 14;
-                break;
-            case "P":
-                this.index = 15;
-                break;
-            case "Q":
-                this.index = 16;
-                break;
-            case "R":
-                this.index = 17;
-                break;
-            case "S":
-                this.index = 18;
-                break;
-            case "T":
-                this.index = 19;
-                break;
-            case "U":
-                this.index = 20;
-                break;
-            case "V":
-                this.index = 21;
-                break;
-            case "W":
-                this.index = 22;
-                break;
-            case "X":
-                this.index = 23;
-                break;
-            case "Y":
-                this.index = 24;
-                break;
-            case "Z":
-                this.index = 25;
-                break;
-            default:
-                this.index = -1;
-        }
+        this.index = ALPHA.indexOf(letter);
     }
 }
 
@@ -124,14 +43,31 @@ const KEYS = [
 
 
 
-function Box({ Letter, Color }) {
+function Box({ Letter, Color, RowID, RowNum }) {
+
+    let Border = .25;
+    if (Letter !== undefined)
+        Border = 1;
+
+
+    if (RowID < RowNum)
+        Border = 0;
+
+    let s = {
+        backgroundColor: Color,
+        border: '2px solid rgba( 155,158,160, ' + Border + ' )',
+    }
 
     return (
-        <div className="Box" style={{ backgroundColor: Color }}>
+        <div className="Box" style={s}>
             <p>{Letter}</p>
         </div>
     );
 }
+
+const GREEN = "#6aaa64";
+const YELLOW = "#c9b458";
+const GREY = "#464343";
 
 function Row({ RowID, Word, RowNum, top, GameOver }) {
 
@@ -162,19 +98,20 @@ function Row({ RowID, Word, RowNum, top, GameOver }) {
             if (wordle.includes(letter)) {
                 //if the letter is in the right spot
                 if (wordle[i] === letter) {
-                    BoxColorAr[i] = "green";
-                    KEYS[index].color = "green"
+                    BoxColorAr[i] = GREEN;
+                    KEYS[index].color = GREEN;
                 }
                 else //if the letter is in the word but not the right spot
                 {
-                    BoxColorAr[i] = "#f7d560"; //yellow
-                    KEYS[index].color = "#f7d560";
+                    BoxColorAr[i] = YELLOW; //yellow
+                    KEYS[index].color = YELLOW;
 
                 }
                 wordle = wordle.replace(letter, letter.toLowerCase());
             }
             else {
-                KEYS[index].color = "#464343";
+                if (KEYS[index].color !== GREEN && KEYS[index].color !== YELLOW) //if its not green already
+                    KEYS[index].color = GREY; //grey
             }
 
         }
@@ -182,11 +119,11 @@ function Row({ RowID, Word, RowNum, top, GameOver }) {
 
     return (
         <div className='Row' style={s}>
-            <Box Letter={Word[0]} Color={BoxColorAr[0]} />
-            <Box Letter={Word[1]} Color={BoxColorAr[1]} />
-            <Box Letter={Word[2]} Color={BoxColorAr[2]} />
-            <Box Letter={Word[3]} Color={BoxColorAr[3]} />
-            <Box Letter={Word[4]} Color={BoxColorAr[4]} />
+            <Box Letter={Word[0]} Color={BoxColorAr[0]} RowID={RowID} RowNum={RowNum} />
+            <Box Letter={Word[1]} Color={BoxColorAr[1]} RowID={RowID} RowNum={RowNum} />
+            <Box Letter={Word[2]} Color={BoxColorAr[2]} RowID={RowID} RowNum={RowNum} />
+            <Box Letter={Word[3]} Color={BoxColorAr[3]} RowID={RowID} RowNum={RowNum} />
+            <Box Letter={Word[4]} Color={BoxColorAr[4]} RowID={RowID} RowNum={RowNum} />
         </div>
     );
 }
@@ -197,8 +134,7 @@ function resetGame(setArray, setRow, setGameOver) {
     setRow(0);
     setGameOver(0);
 
-    for(let i = 0; i < KEYS.length; i++)
-    {
+    for (let i = 0; i < KEYS.length; i++) {
         KEYS[i].color = "rgb(228, 228, 228)";
     }
 
@@ -345,12 +281,12 @@ function App() {
 
                 <GameOverElem GameOver={GameOver} setGameOver={setGameOver} />
                 <div className='Box-Container'>
-                    <Row RowID={0} Word={WordsArray[0]} RowNum={RowNum} top={'3% '} GameOver={GameOver} />
-                    <Row RowID={1} Word={WordsArray[1]} RowNum={RowNum} top={'19%'} GameOver={GameOver} />
-                    <Row RowID={2} Word={WordsArray[2]} RowNum={RowNum} top={'35%'} GameOver={GameOver} />
-                    <Row RowID={3} Word={WordsArray[3]} RowNum={RowNum} top={'51%'} GameOver={GameOver} />
-                    <Row RowID={4} Word={WordsArray[4]} RowNum={RowNum} top={'67%'} GameOver={GameOver} />
-                    <Row RowID={5} Word={WordsArray[5]} RowNum={RowNum} top={'83%'} GameOver={GameOver} />
+                    <Row RowID={0} Word={WordsArray[0]} RowNum={RowNum} top={'2% '} GameOver={GameOver} />
+                    <Row RowID={1} Word={WordsArray[1]} RowNum={RowNum} top={'18%'} GameOver={GameOver} />
+                    <Row RowID={2} Word={WordsArray[2]} RowNum={RowNum} top={'34%'} GameOver={GameOver} />
+                    <Row RowID={3} Word={WordsArray[3]} RowNum={RowNum} top={'50%'} GameOver={GameOver} />
+                    <Row RowID={4} Word={WordsArray[4]} RowNum={RowNum} top={'66%'} GameOver={GameOver} />
+                    <Row RowID={5} Word={WordsArray[5]} RowNum={RowNum} top={'82%'} GameOver={GameOver} />
                 </div>
                 <Keyboard
                     setRow={setRow} RowNum={RowNum}
