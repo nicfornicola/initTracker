@@ -1,6 +1,7 @@
 // export const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 export const proxyUrl = '';
 
+
 export const skills_long = ["Strength Score", "Dexterity Score", "Constitution Score", "Intelligence Score", "Wisdom Score", "Charisma Score"];
 export const skill_codes = [3520, 3521, 3522, 3523, 3524, 3525]
 export const skills_short = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
