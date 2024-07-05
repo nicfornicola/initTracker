@@ -1,4 +1,0 @@
-All icons dont reload their dead overlay when refresh buttons are clicked - current workaround, reload page
-Good guys dont properly reload their HP when the refresh all button is clicked - works for good buy refresh
-
-

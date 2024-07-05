@@ -15,7 +15,7 @@ export const getCreatures = async (gameId) => {
       withCredentials: false, 
     });
 
-    console.log("getCreaturesApi")
+    console.log("Encounter-service in getCreaturesApi - monsterHP, all initiatives")
 
     return response.data;
   } catch (error) {

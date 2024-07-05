@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../style/App.css'; // Import your CSS file
+import { v4 as uuidv4 } from 'uuid';
+
 import skullpng from '../pics/skull.png'; 
 import bloodied1 from '../pics/blood1.png'; 
 import bloodied2 from '../pics/blood2.png'; 
@@ -10,15 +12,16 @@ import bloodied6 from '../pics/blood6.png';
 
 
 // ProfileCard Component
-const Icon = ({creature}) => {
+const Icon = ({creature, setClickedCreature}) => {
+    const effectsFound = creature.effects.length > 0
     const foundHp = creature.maxHp !== null;
     const isPlayer = creature.type === "player";
-    const [isImageVisible, setIsImageVisible] = useState(true);
-    const showIcon = isImageVisible && creature.initiative >= 0
+    const showIcon = creature.initiative >= 0
     const showInitiativeBox = creature.initiative !== null;
 
-    const handleImageClick = (b) => {
-        setIsImageVisible(b);
+    const handleImageClick = (event) => {
+        event.stopPropagation(); // Prevent propagation to parent
+        setClickedCreature(creature);
     };
 
     let currentHp;
@@ -45,8 +48,8 @@ const Icon = ({creature}) => {
         if (foundHp) {
             currentHp = creature.maxHp - creature.removedHp
             if (currentHp / creature.maxHp < 0.20) {
-                hpBoxShadow = playerLowHpBoxShadow;
                 isBloodied = true;
+                hpBoxShadow = playerLowHpBoxShadow;
             } else if (currentHp / creature.maxHp < 0.55) {
                 isBloodied = true;
                 hpBoxShadow = playerMediumHpBoxShadow;
@@ -55,7 +58,6 @@ const Icon = ({creature}) => {
             if(isBloodied) {
                 const bloodiedArr = [bloodied1, bloodied2, bloodied3, bloodied4, bloodied5, bloodied6]
                 const randomNumber = (creature.id % 6) + 1; // Generates numbers from 0 to 5
-
                 bloodImg = bloodiedArr[randomNumber]
             }
 
@@ -69,24 +71,46 @@ const Icon = ({creature}) => {
     }
 
     let isDead = currentHp <= 0
+    let showEnemyHp = false;
+    let showHp = (isPlayer && foundHp) || (!isPlayer && showEnemyHp)
+    
     return (
         <>
             { showIcon &&  (
-                <div className="card" style={cardBoxShadow} onClick={() => handleImageClick(false)}>
+                <div className="card" style={cardBoxShadow} onClick={(event) => handleImageClick(event, false)}>
                     <div>
                         <div className='image-container'>
                             <img className="image" src={creature.avatarUrl} alt={name} />
+                            <div className="imageSmoke"/>
+                            
                             {isDead && (
                                 <img className="image overlay-skull" src={skullpng} alt="" />
                             )}
+
                             {isBloodied && (
                                 <img className="image overlay-blood" src={bloodImg} alt="" />
                             )}
+
+                            {effectsFound && (
+                                <div className='avatarEffectsBar'>    
+                                    {creature.effects.map((obj) => (
+                                        <>
+                                            <img className='effect'
+                                                key={uuidv4()}
+                                                src={obj.img}
+                                                alt={obj.effect}
+                                            />
+                                            <span className="tooltiptext">{obj.effect}</span>
+                                        </>
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
-                        <div className="name">{name}</div> <div className='lastName'> {lastName}</div>
+                        <div className="name">{name}</div> 
+                        <div className='lastName'> {lastName}</div>
 
-                        {isPlayer && foundHp && (
+                        {showHp && ( 
                             <div className="hp-box" style={hpBoxShadow}>
                                 <div className="hp">
                                     {currentHp}/{creature.maxHp}

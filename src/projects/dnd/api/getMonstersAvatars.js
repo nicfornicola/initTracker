@@ -2,8 +2,9 @@ import axios from 'axios';
 import { proxyUrl } from '../constants';
 
 export const getMonstersAvatars = async (creatures) => {
+    // Filter objects where type === 'monster'
     const allIds = creatures
-        .filter(obj => obj.type === 'monster') // Filter objects where type === 'monster'
+        .filter(obj => obj.type === 'monster') 
         .map(obj => `ids=${obj.id}&`);
     
     const urlIds = [...new Set(allIds)].join('');
@@ -18,7 +19,7 @@ export const getMonstersAvatars = async (creatures) => {
             },
             withCredentials: false, // Include credentials if needed
         });
-        console.log("getMonstersAvatarsAPI")
+        console.log("Monster-service - getMonstersAvatarsAPI - monster avatar urls")
         return response.data;
     } catch (error) {
         console.error('Error fetching data:', error);

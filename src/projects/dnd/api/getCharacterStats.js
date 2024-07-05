@@ -3,6 +3,8 @@ import { getMaxHp } from './getMaxHp';
 import { proxyUrl } from '../constants';
 
 export const getCharacterStats = async (data) => {
+    console.log("Character-service in getCharacterStats - playerHP")
+
     const playerIds = data.map(player => player.id);
     let i = 1;
     try {
