@@ -45,12 +45,11 @@ const Timer = () => {
                     <img className="option" src={restart} alt={"refresh"} onClick={() => setReset(true)}/>
                     <img className="option" src={pause ?  play : pauseButton} alt={"refresh"} onClick={() => setPause(!pause)}/>
                     <div className='option timer'>
-                        - {secondsToMinutes(seconds)}
+                        {secondsToMinutes(seconds)}
                     </div>
                 </>
             }
         </>
-
     );
 };
 

@@ -2,6 +2,7 @@ import '../style/App.css';
 import React, { useState } from 'react';
 import Icon from './Icon';
 import Effect from './Effect';
+import ImagePopup from './BackgroundButton.js';
 import Timer from './Timer.js'
 import { getCreatures } from '../api/getCreatures';
 import { getMonstersAvatars } from '../api/getMonstersAvatars';
@@ -15,11 +16,12 @@ import refreshMonster from '../pics/refreshMonsters.png';
 import greenCheck from '../pics/check.png'; 
 import eyeClosed from '../pics/eyeClosed.png'; 
 import eyeOpen from '../pics/eyeOpen.png'; 
+import background1 from "../pics/backgrounds/fallenCastleBigTree.jpg"
 
 import { sortCreaturesByInitiative, effectObjs } from '../constants';
 
 class Profile {
-    constructor(id = 0, name = 'Default Name', initiative = '0', type="creature", avatarUrl = null, monsterCurrentHitpoints = null, maxHitpoints = null, bonusHitPoints = null, overrideHitPoints = null, removedHitPoints = null, tempHitPoints = null ) {
+    constructor(id = 0, name = 'Default Name', initiative = '0', type="creature", avatarUrl = null, monsterCurrentHitpoints = null, maxHitpoints = null, bonusHitPoints = null, overrideHitPoints = null, removedHitPoints = null, tempHitPoints = null, exhaustionLvl = null ) {
         this.id = id;
         this.name = name;
         this.initiative = initiative;
@@ -32,12 +34,14 @@ class Profile {
         this.removedHp = removedHitPoints;
         this.tempHp = tempHitPoints;
         this.effects = []
+        this.exhaustionLvl = exhaustionLvl
     }
 }
 
 function PlayerPage() {
     const [creatures, setCreatures] = useState([]);
     const [clickedCreature, setClickedCreature] = useState(null);
+    const [backgroundImage, setBackGroundImage] = useState(background1);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(true);
@@ -45,6 +49,9 @@ function PlayerPage() {
     const [refreshPlayersCheck, setRefreshPlayersCheck] = useState(false);
     const [refreshMonstersCheck, setRefreshMonstersCheck] = useState(false);
     const [hideEnemies, setHideEnemies] = useState(true);
+
+
+
     const { gameId } = useParams();
     const refreshPlayerProfiles = async () => {
         try {
@@ -62,9 +69,11 @@ function PlayerPage() {
                 if (matchedRefresh) {
                     // getCharacterStats doesnt return initiative, that is from the encounter service, maybe make another button to reset player initiation i know thats a lot of buttons
                     const hpChange = matchedRefresh.removedHp !== undefined && matchedRefresh.removedHp !== creature.removedHp
+                    const exhaustionChange = matchedRefresh.exhaustionLvl !== undefined && matchedRefresh.exhaustionLvl !== creature.exhaustionLvl
                     const change = {
                         ...creature,
                         removedHp: hpChange ? matchedRefresh.removedHp : creature.removedHp,
+                        exhaustionLvl: exhaustionChange ? matchedRefresh.exhaustionLvl : creature.exhaustionLvl,
                     }
                     return change;
                 } else {
@@ -168,8 +177,9 @@ function PlayerPage() {
                         type === "player" ? playerHpData.bonusHp : null,
                         type === "player" ? playerHpData.overrideHitPoints : null,
                         type === "player" ? playerHpData.removedHp : null,
-                        type === "player" ? playerHpData.tempHitPoints : null
-                        )
+                        type === "player" ? playerHpData.tempHitPoints : null,
+                        type === "player" ? playerHpData.exhaustionLvl : null
+                    )
                 });
 
                 const monsterIcons = await getMonstersAvatars(creatures);
@@ -262,7 +272,9 @@ function PlayerPage() {
 
 
     return (
-        <div className="dndBackground" onClick={clickedBackground}>
+        <div className="dndBackground" onClick={clickedBackground} 
+            style={{backgroundImage: `url(${backgroundImage})` }}>
+
             {loading && (<div className='loading'>Loading...</div>)}
             <div className="cardContainer" style={{ display: 'flex', flexWrap: 'wrap' }}>
 
@@ -275,8 +287,10 @@ function PlayerPage() {
             </div>
 
             <div className='options-container'>
+                <ImagePopup setBackGroundImage={setBackGroundImage} />
                 <img className="option" src={hideEnemies ? eyeOpen : eyeClosed} alt={"showEnemies"} onClick={() => setHideEnemies(!hideEnemies)} />
                 <Timer />
+
             </div>
 
 

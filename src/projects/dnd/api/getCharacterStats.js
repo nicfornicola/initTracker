@@ -20,13 +20,13 @@ export const getCharacterStats = async (data) => {
                     withCredentials: false,
                 });
                 const resData = response.data.data;
-
                 let maxHp = getMaxHp(resData); // Ensure getMaxHp is used correctly
                 if (resData.bonusHitPoints) {
                     maxHp += resData.bonusHp
                 }
                 console.log(i.toString() + "/" + playerIds.length + " " + resData.name + " retrieved")
                 i++;
+                let exLvl = resData.conditions.find(obj => obj.id === 4)
                 return {
                     status: response.status,
                     id: resData.id.toString(),
@@ -34,7 +34,8 @@ export const getCharacterStats = async (data) => {
                     bonusHp: resData.bonusHitPoints,
                     overrideHp: resData.overrideHitPoints,
                     removedHp: resData.removedHitPoints,
-                    tempHp: resData.temporaryHitPoints,
+                    tempHp: resData.condi,
+                    exhaustionLvl: exLvl ? exLvl.level : 0
                 };
             } catch (error) {
                 if (error.response && (error.response.status === 404 || error.response.status === 403)) {
@@ -48,6 +49,7 @@ export const getCharacterStats = async (data) => {
                         overrideHp: null,
                         removedHp: null,
                         tempHp: null,
+                        exhaustionLvl: 0
                     };
                 }
                 // Throw error to be caught by the outer catch block if needed

@@ -1,13 +1,12 @@
 add family tree and pantheon too /dnd/save_the_king/tree and /dnd/save_the_king/pantheon
-
-click character -> conditiions bar shows up with all conditions, bright ones are active dim ones are inactive, click to select/deselect
-combat timer - stop/start? quick options 30 seconds - 1 min 2 min 5 min
 add hp for badguys toggle
 
 FIXED
 ----
 Good guys dont properly reload their HP when the refresh all button is clicked - works for good buy refresh
 All icons dont reload their dead overlay when refresh buttons are clicked - current workaround, reload page
+combat timer - stop/start? quick options 30 seconds - 1 min 2 min 5 min
+click character -> conditiions bar shows up with all conditions, bright ones are active dim ones are inactive, click to select/deselect
 
 
 ////

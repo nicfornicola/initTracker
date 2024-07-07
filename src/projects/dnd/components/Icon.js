@@ -9,6 +9,7 @@ import bloodied3 from '../pics/blood3.png';
 import bloodied4 from '../pics/blood4.png'; 
 import bloodied5 from '../pics/blood5.png'; 
 import bloodied6 from '../pics/blood6.png'; 
+import Exhaustion from './Exhaustion'; 
 
 
 // ProfileCard Component
@@ -18,6 +19,7 @@ const Icon = ({creature, setClickedCreature}) => {
     const isPlayer = creature.type === "player";
     const showIcon = creature.initiative >= 0
     const showInitiativeBox = creature.initiative !== null;
+    const isExhausted = creature.exhaustionLvl > 0
 
     const handleImageClick = (event) => {
         event.stopPropagation(); // Prevent propagation to parent
@@ -70,7 +72,7 @@ const Icon = ({creature, setClickedCreature}) => {
         cardBoxShadow = monsterBoxShadow;
     }
 
-    let isDead = currentHp <= 0
+    let isDead = currentHp <= 0 || creature.exhaustionLvl === 6
     let showEnemyHp = false;
     let showHp = (isPlayer && foundHp) || (!isPlayer && showEnemyHp)
     
@@ -120,6 +122,10 @@ const Icon = ({creature, setClickedCreature}) => {
                                     )}
                                 </div>
                             </div>
+                        )}
+
+                        {isExhausted && ( 
+                            <Exhaustion exhaustionLvl={creature.exhaustionLvl}/>
                         )}
 
                         {showInitiativeBox && 

@@ -5,10 +5,15 @@
     "homepage": "https://nicolasfornicola.com",
     "private": true,
     "dependencies": {
+        "@emotion/react": "^11.11.4",
+        "@emotion/styled": "^11.11.5",
+        "@mui/material": "^5.16.0",
         "@testing-library/jest-dom": "^5.16.4",
         "@testing-library/react": "^13.2.0",
         "@testing-library/user-event": "^13.5.0",
         "axios": "^1.7.2",
+        "install": "^0.13.0",
+        "npm": "^10.8.1",
         "radium": "^0.26.2",
         "react": "^18.1.0",
         "react-animations": "^1.0.0",
@@ -26,10 +31,10 @@
         "eject": "react-scripts eject"
     },
     "eslintConfig": {
-    "extends": [
-        "react-app",
-        "react-app/jest"
-    ]
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
     },
     "browserslist": {
         "production": [

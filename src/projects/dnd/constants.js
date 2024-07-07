@@ -23,9 +23,61 @@ import silence from './pics/effects/silence.png';
 import slept from './pics/effects/slept.png'; 
 import webbed from './pics/effects/webbed.png'; 
 
-export const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-// export const proxyUrl = 'https://nics-cors-anywhere-99e39b544c5d.herokuapp.com/';
+import background1 from "./pics/backgrounds/fallenCastleBigTree.jpg"
+import background2 from "./pics/backgrounds/spookyForest.jpg"
+import background3 from "./pics/backgrounds/grasslands.jpg"
+import background4 from "./pics/backgrounds/lavaMontains.jpg"
+import background5 from "./pics/backgrounds/riverPath.jpg"
+import background6 from "./pics/backgrounds/riverVillage.jpeg"
+import background7 from "./pics/backgrounds/shiningTown.jpg"
+import background8 from "./pics/backgrounds/snowyForrest.jpg"
+import background9 from "./pics/backgrounds/snowyMounts.jpg"
+import background10 from "./pics/backgrounds/spookyCastle.jpg"
+import background11 from "./pics/backgrounds/spookyVillage.jpg"
+import background12 from "./pics/backgrounds/snowyMountsGiant.jpg"
+import background13 from "./pics/backgrounds/happyTavern.png"
+import background14 from "./pics/backgrounds/tavern.jpg"
+import background15 from "./pics/backgrounds/dungeon.jpg"
+import background16 from "./pics/backgrounds/waterfall.gif"
+import background17 from "./pics/backgrounds/faireSwamp.gif"
+import background18 from "./pics/backgrounds/tower.gif"
+import background19 from "./pics/backgrounds/butteflyCavern.gif"
+import background20 from "./pics/backgrounds/riverDeer.gif"
+import background21 from "./pics/backgrounds/grass.gif"
+import background22 from "./pics/backgrounds/church.gif"
+import background23 from "./pics/backgrounds/adventureTime.gif"
+import background24 from "./pics/backgrounds/fire.gif"
+
+// export const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+export const proxyUrl = 'https://nics-cors-anywhere-99e39b544c5d.herokuapp.com/';
 // export const proxyUrl = '';
+
+export const backgroundImages = [
+    background1,
+    background2,
+    background3,
+    background4,
+    background5,
+    background6,
+    background7,
+    background8,
+    background9,
+    background10,
+    background11,
+    background12,
+    background13,
+    background14,
+    background15,
+    background16,
+    background17,
+    background18,
+    background19,
+    background20,
+    background21,
+    background22,
+    background23,
+    background24
+  ];
 
 export const skills_long = ["Strength Score", "Dexterity Score", "Constitution Score", "Intelligence Score", "Wisdom Score", "Charisma Score"];
 export const skill_codes = [3520, 3521, 3522, 3523, 3524, 3525];

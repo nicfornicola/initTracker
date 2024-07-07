@@ -6,21 +6,19 @@ body {
 
 .dndBackground {
     background-color: #000000;
-    background-image: url('../pics/backgroundTree.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;
     width: 100%;
-    height: 100vh; /* Full viewport height */
+    height: 100vh; 
     font-family: Arial, sans-serif;
     font-size: 16px;
     font-weight: bold;
-
 }
 
 .cardContainer {
-    justify-content: center; /* Center horizontally */
-    align-items: center;    /* Center vertically */
+    justify-content: center; 
+    align-items: center;    
     width: 100%;
 }
 
@@ -53,9 +51,9 @@ body {
 .initiative-box,
 .hp-box {
     position: absolute;
-    justify-content: center; /* Center horizontally */
-    display: flex; /* Use flexbox to control layout */
-    flex-direction: column; /* Stack child elements vertically */
+    justify-content: center; 
+    display: flex; 
+    flex-direction: column; 
     bottom: -.01%;
     background-color: #f0f0f0;
     border: 0.5px solid #3d3d3d;
@@ -87,27 +85,29 @@ body {
     bottom: 0;
     left: 0;
     display: flex;
-    padding: 10px; /* Optional: Add padding around the container */  
+    padding: 10px; 
+    background-color: #0000005e;
+
 }
 
 .option {
-    margin-right: 10px; /* Adjust the value for spacing between images */
-    height: 3vh; /* Adjust the height as needed */
-    cursor: pointer; /* Optional: Change cursor to pointer to indicate clickable elements */
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    margin-right: 10px; 
+    height: 20px; 
+    width: 20px; 
+    cursor: pointer; 
+    border-radius: 10px;
+    color: white;
 }
 
 .timer {
     position: relative;
-    color: white;
-    height: 3vh; /* Adjust the height as needed */
+    width: fit-content;
+    height: 25px;
+    font-size: 25px;
     bottom: 2px;
-    font-size: 3vh;
-    cursor: wait; /* Optional: Change cursor to pointer to indicate clickable elements */
-
+    background-color: #171717b3;
+    border-radius: 2px;
+ 
 }
 
 .refresh-container {
@@ -115,7 +115,8 @@ body {
     bottom: 0;
     right: 0;
     display: flex;
-    padding: 10px; /* Optional: Add padding around the container */  
+    padding: 10px; 
+    background-color: #ffffff2e;
 }
 
 .image-container {
@@ -168,11 +169,11 @@ body {
 
 .overlay-skull {
     background-color: #651d1d;
-    opacity: .35; /* Adjust opacity for desired transparency (0.0 to 1.0) */
+    opacity: .35; 
 }
 
 .overlay-blood {
-    opacity: .8; /* Adjust opacity for desired transparency (0.0 to 1.0) */
+    opacity: .8; 
 }
 
 .loading {
@@ -191,7 +192,7 @@ body {
 .effectsBarPlayerAvatar {
     position: absolute;
     width: 70px;
-    height: 70px; /* Adjust the height as needed */
+    height: 70px; 
     top: -45%;
     right: 43%;
     border: 2px solid #ffffff;
@@ -204,12 +205,12 @@ body {
     width: 500px;
     grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
     gap: 10px;
-    background-color: rgba(0, 0, 0, 0.9); /* Example background color */
+    background-color: rgba(0, 0, 0, 0.9); 
 }
 
 .effect {
-    width: 40px; /* Adjust the max width as needed */
-    height: 40px; /* Adjust the max width as needed */
+    width: 40px; 
+    height: 40px; 
     top: 50%;
     margin: 1px;
     border-radius: 20px;
@@ -224,9 +225,9 @@ body {
     padding: 5px;
     border-radius: 5px;
     position: absolute;
-    bottom: 55%; /* Position tooltip above the image */
+    bottom: 55%; 
     left: 50%;
-    transform: translateX(-50%); /* Center horizontally */
+    transform: translateX(-50%); 
     opacity: 1;
     transition: opacity 0.3s;
 }
@@ -239,3 +240,46 @@ body {
     bottom: 110%;
     width: 100px;
 }
+
+.exhaustionContainer {
+    position: absolute;
+    left: 0%;
+    bottom: 11%;
+}
+
+.exhaustionImg {
+    position: relative;
+    width: 20px; 
+    height: 20px; 
+    color: white;
+    border-radius: 3px;
+}
+
+.exhaustionText {
+    position: absolute;
+    left: 95%;
+    bottom: 3px;
+    color: rgb(0, 0, 0);
+    border-radius: 3px;
+    margin: 0%;
+    font-size: smaller;
+}
+
+.backgroundThumbnail {
+    width: 100%;
+    height: 100%;
+}
+
+.uploadContainer {
+    margin: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.uploadedTitle {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
