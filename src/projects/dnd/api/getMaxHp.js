@@ -3,6 +3,12 @@ import { skill_codes, skills_long, skills_short } from '../constants';
 
 export const getMaxHp = (data) => {
 
+    // Bonushp is maxHP modifier 
+    if (data.overrideHitPoints) {
+        return data.overrideHitPoints
+    }
+    
+
     let skill_race = [0, 0, 0, 0, 0, 0];
     let skill_AI = [0, 0, 0, 0, 0, 0];
     
@@ -64,6 +70,12 @@ export const getMaxHp = (data) => {
 
     let baseHp = data["baseHitPoints"];
     let maxHp = skills_json_array[2]["modifier"] * total_lvl + baseHp + toughHp;
+
+    // Bonushp is maxHP modifier 
+    if (data.bonusHitPoints) {
+        maxHp += data.bonusHitPoints
+    }
+
 
     return maxHp;
 };

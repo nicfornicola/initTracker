@@ -10,16 +10,19 @@ import bloodied4 from '../pics/blood4.png';
 import bloodied5 from '../pics/blood5.png'; 
 import bloodied6 from '../pics/blood6.png'; 
 import Exhaustion from './Exhaustion'; 
+import Tooltip from './Tooltip';
 
 
 // ProfileCard Component
-const Icon = ({creature, setClickedCreature}) => {
+const Icon = ({creature, setClickedCreature, hideDeadEnemies}) => {
+    const isPlayer = creature.type === "player";
     const effectsFound = creature.effects.length > 0
     const foundHp = creature.maxHp !== null;
-    const isPlayer = creature.type === "player";
     const showIcon = creature.initiative >= 0
     const showInitiativeBox = creature.initiative !== null;
     const isExhausted = creature.exhaustionLvl > 0
+
+
 
     const handleImageClick = (event) => {
         event.stopPropagation(); // Prevent propagation to parent
@@ -75,7 +78,12 @@ const Icon = ({creature, setClickedCreature}) => {
     let isDead = currentHp <= 0 || creature.exhaustionLvl === 6
     let showEnemyHp = false;
     let showHp = (isPlayer && foundHp) || (!isPlayer && showEnemyHp)
-    
+    let showTempHp = creature.tempHp > 0
+
+    if(hideDeadEnemies && !isPlayer && isDead ) {
+        return null
+    }
+
     return (
         <>
             { showIcon &&  (
@@ -96,14 +104,13 @@ const Icon = ({creature, setClickedCreature}) => {
                             {effectsFound && (
                                 <div className='avatarEffectsBar'>    
                                     {creature.effects.map((obj) => (
-                                        <>
+                                        <label key={uuidv4()}>
                                             <img className='effect'
-                                                key={uuidv4()}
                                                 src={obj.img}
                                                 alt={obj.effect}
                                             />
-                                            <span className="tooltiptext">{obj.effect}</span>
-                                        </>
+                                            <Tooltip message={obj.effect}/>
+                                        </label>
                                     ))}
                                 </div>
                             )}
@@ -117,7 +124,7 @@ const Icon = ({creature, setClickedCreature}) => {
                                 <div className="hp">
                                     {currentHp}/{creature.maxHp}
                                     
-                                    {creature.tempHp && ( 
+                                    {showTempHp && ( 
                                         <>(+<a href='example.com' className='tempHp'>{creature.tempHp}</a>)</>
                                     )}
                                 </div>

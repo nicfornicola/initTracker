@@ -3,6 +3,7 @@ import pauseButton from '../pics/pause.png';
 import play from '../pics/play.png'; 
 import restart from '../pics/restart.png'; 
 import timer from '../pics/timer.png'; 
+import Tooltip from './Tooltip';
 
 
 const secondsToMinutes = (seconds) => {
@@ -11,7 +12,7 @@ const secondsToMinutes = (seconds) => {
     if (remainingSeconds < 10)
         return`${minutes}:0${remainingSeconds}`
     return `${minutes}:${remainingSeconds}`;
-  };
+};
 
 const Timer = () => {
     const [showTimerOptions, setShowTimerOptions] = useState(false);
@@ -40,10 +41,13 @@ const Timer = () => {
     return (
         <>
             <img className="option" src={timer} alt={"refresh"} onClick={() => setShowTimerOptions(!showTimerOptions)}/>
+            <Tooltip message={"Timer"}/>
             {showTimerOptions && 
                 <>
                     <img className="option" src={restart} alt={"refresh"} onClick={() => setReset(true)}/>
+                    <Tooltip message={"Restart"}/>
                     <img className="option" src={pause ?  play : pauseButton} alt={"refresh"} onClick={() => setPause(!pause)}/>
+                    <Tooltip message={pause ?  "Play" : "Pause"}/>
                     <div className='option timer'>
                         {secondsToMinutes(seconds)}
                     </div>

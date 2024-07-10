@@ -1,9 +1,10 @@
 import '../style/App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Icon from './Icon';
 import Effect from './Effect';
 import ImagePopup from './BackgroundButton.js';
 import Timer from './Timer.js'
+import RefreshTimer from './RefreshTimer.js'
 import { getCreatures } from '../api/getCreatures';
 import { getMonstersAvatars } from '../api/getMonstersAvatars';
 import { getCharacterStats } from '../api/getCharacterStats';
@@ -16,32 +17,18 @@ import refreshMonster from '../pics/refreshMonsters.png';
 import greenCheck from '../pics/check.png'; 
 import eyeClosed from '../pics/eyeClosed.png'; 
 import eyeOpen from '../pics/eyeOpen.png'; 
+import skullButton from '../pics/skullButton.jpg'; 
+import skullButtonNot from '../pics/skullButtonNot.jpg'; 
 import background1 from "../pics/backgrounds/fallenCastleBigTree.jpg"
-
+import { Profile } from '../helper/Profile.js' 
 import { sortCreaturesByInitiative, effectObjs } from '../constants';
+import Tooltip from './Tooltip.js';
 
-class Profile {
-    constructor(id = 0, name = 'Default Name', initiative = '0', type="creature", avatarUrl = null, monsterCurrentHitpoints = null, maxHitpoints = null, bonusHitPoints = null, overrideHitPoints = null, removedHitPoints = null, tempHitPoints = null, exhaustionLvl = null ) {
-        this.id = id;
-        this.name = name;
-        this.initiative = initiative;
-        this.type = type;
-        this.avatarUrl = avatarUrl;
-        this.monsterCurrentHp = monsterCurrentHitpoints
-        this.maxHp = maxHitpoints;
-        this.bonusHp = bonusHitPoints;
-        this.overrideHp = overrideHitPoints;
-        this.removedHp = removedHitPoints;
-        this.tempHp = tempHitPoints;
-        this.effects = []
-        this.exhaustionLvl = exhaustionLvl
-    }
-}
 
 function PlayerPage() {
     const [creatures, setCreatures] = useState([]);
     const [clickedCreature, setClickedCreature] = useState(null);
-    const [backgroundImage, setBackGroundImage] = useState(background1);
+    const [backGroundImage, setBackGroundImage] = useState(background1);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(true);
@@ -49,10 +36,12 @@ function PlayerPage() {
     const [refreshPlayersCheck, setRefreshPlayersCheck] = useState(false);
     const [refreshMonstersCheck, setRefreshMonstersCheck] = useState(false);
     const [hideEnemies, setHideEnemies] = useState(true);
-
-
-
+    const [hideDeadEnemies, setHideDeadEnemies] = useState(false);
+    const [recentlyRefreshed, setRecentlyRefreshed] = useState(false);
     const { gameId } = useParams();
+    
+
+
     const refreshPlayerProfiles = async () => {
         try {
             console.log("Refreshing Player Health")
@@ -81,7 +70,7 @@ function PlayerPage() {
                 }
             });
                 
-            setCreatures(updatedCreatures);
+            setCreatures([...updatedCreatures]);
             setRefreshPlayersCheck(false);
             setRefreshCheck(refreshMonstersCheck && refreshPlayersCheck);
             console.log("Players Refreshed!")
@@ -138,7 +127,7 @@ function PlayerPage() {
                 updatedCreatures = sortCreaturesByInitiative(updatedCreatures);
     
             // Update the state with the new creature list
-            setCreatures(updatedCreatures);
+            setCreatures([...updatedCreatures]);
             setRefreshMonstersCheck(false);
             setRefreshCheck(refreshMonstersCheck && refreshPlayersCheck);
     
@@ -164,22 +153,11 @@ function PlayerPage() {
                 const charData = await getCharacterStats(players);
                 const creaturesData = [...monsters, ...players]
                 const creatures = creaturesData.map(creature => {
-                    let playerHpData = charData.find(d => d.id.toString() === creature.id);
-                    const type = creature.userName ? "player" : "monster"
+                    let playerHpData = null
+                    if(creature.userName) // Only look if its a player
+                        playerHpData = charData.find(d => d.id.toString() === creature.id);
 
-                    return new Profile(creature.id,
-                        creature.name,
-                        creature.initiative,
-                        type,
-                        creature.avatarUrl || "https://www.dndbeyond.com/avatars/42718/687/1581111423-121476494.jpeg",
-                        type === "player" ? null : creature.currentHitPoints,
-                        type === "player" ? playerHpData.maxHp : creature.maximumHitPoints,
-                        type === "player" ? playerHpData.bonusHp : null,
-                        type === "player" ? playerHpData.overrideHitPoints : null,
-                        type === "player" ? playerHpData.removedHp : null,
-                        type === "player" ? playerHpData.tempHitPoints : null,
-                        type === "player" ? playerHpData.exhaustionLvl : null
-                    )
+                    return new Profile(creature, playerHpData)
                 });
 
                 const monsterIcons = await getMonstersAvatars(creatures);
@@ -192,7 +170,6 @@ function PlayerPage() {
                 })
 
                 setCreatures(sortCreaturesByInitiative(creatures))  
-                setCreatures(creatures)  
                 setLoading(false) 
                 console.log("Creatures Set!")
             }
@@ -202,9 +179,6 @@ function PlayerPage() {
             setError(true)
         }  
     };
-
-    if (creatures.length === 0 && gameId && !error) 
-        loadProfiles();
 
     const handleRefresh = (type) => {
         if (type === 1) {
@@ -224,6 +198,29 @@ function PlayerPage() {
             refreshPlayerProfiles().then(passedCreatures => refreshMonsterProfiles(passedCreatures))
         }
     };
+
+
+    useEffect(() => {
+        if (creatures.length === 0 && gameId && !error) {
+            loadProfiles();
+        }
+
+        // Refresh every 5 minutes, when refreshed this way, show check mark for 45 seconds
+        const intervalId = setInterval(() => {
+            console.log("🔄AUTO-REFRESH🔄")
+            handleRefresh(3);
+            setRecentlyRefreshed(true)
+            const timer = setTimeout(() => {
+                setRecentlyRefreshed(false)
+            }, 45000); // 45 seconds in milliseconds
+            return () => clearInterval(timer);
+
+        }, 5 * 60.0 * 1000.0); // 5 minutes in milliseconds
+
+        // Cleanup interval on component unmount
+        return () => clearInterval(intervalId);
+    // eslint-disable-next-line
+    }, [creatures]);
 
     if(gameId && error) {
         return (
@@ -258,39 +255,53 @@ function PlayerPage() {
 
         if(!alreadyExists) {
             clickedCreature.effects.push(effectObj)
-            updateCreature(clickedCreature)
-            // setClickedCreature(null)
         } else {
             clickedCreature.effects = clickedCreature.effects.filter(eObj => eObj.effect !== effectObj.effect)
-            updateCreature(clickedCreature)
         }
+        updateCreature(clickedCreature)
+
     };
 
     const clickedBackground = () => {
         setClickedCreature(null)
     };
 
+    const handleHideEnemies = () => {
+        if(hideEnemies) // If hideEnemies is true, then refresh before revealing enemies
+            handleRefresh(2)
+
+        setHideEnemies(!hideEnemies)
+    }
+
 
     return (
         <div className="dndBackground" onClick={clickedBackground} 
-            style={{backgroundImage: `url(${backgroundImage})` }}>
+            style={{backgroundImage: `url(${backGroundImage})` }}>
 
             {loading && (<div className='loading'>Loading...</div>)}
             <div className="cardContainer" style={{ display: 'flex', flexWrap: 'wrap' }}>
-
                 {creatures.map((creature) => { 
-                    if (hideEnemies && creature.type === 'monster') {
-                        return null;
+
+                    if (creature.type === 'monster') {
+                        if (hideEnemies)
+                            return null;
                     }
-                    return <Icon key={uuidv4()} creature={creature} setClickedCreature={setClickedCreature} />;
+                    return <Icon key={uuidv4()} creature={creature} setClickedCreature={setClickedCreature} hideDeadEnemies={hideDeadEnemies} />;
                 })}
             </div>
 
-            <div className='options-container'>
+            <div className='options-container'>                
+                <img className="option" src={hideEnemies ? eyeOpen : eyeClosed} alt={"showEnemies"} onClick={handleHideEnemies} />
+                <Tooltip message={(hideEnemies ? "Show" : "Hide") + " Enemies"}/>
+                { !hideEnemies && 
+                    <>
+                        <img className="option" src={hideDeadEnemies ? skullButton : skullButtonNot} alt={"showDeadEnemies"} onClick={() => setHideDeadEnemies(!hideDeadEnemies)} />
+                        <Tooltip message={(hideDeadEnemies ? "Show" : "Hide") + " Dead Enemies"}/>
+                    </>
+                }
                 <ImagePopup setBackGroundImage={setBackGroundImage} />
-                <img className="option" src={hideEnemies ? eyeOpen : eyeClosed} alt={"showEnemies"} onClick={() => setHideEnemies(!hideEnemies)} />
                 <Timer />
-
+                
             </div>
 
 
@@ -304,16 +315,31 @@ function PlayerPage() {
                     />
                     <div className="effectsBar" onClick={(event) => event.stopPropagation()} >
                         {effectObjs.map((effectObj) => (
-                            <Effect clickedCreature={clickedCreature} effectObj={effectObj} updateCreatureEffect={updateCreatureEffect} />
+                            <Effect key={uuidv4()} clickedCreature={clickedCreature} effectObj={effectObj} updateCreatureEffect={updateCreatureEffect} />
                         ))}
                     </div>
                 </div>
             )}
 
             <div className='refresh-container'>
+                {recentlyRefreshed &&
+                    <img className="option" src={greenCheck} alt={"refresh"}/>
+                }
                 <img className="option" src={refreshPlayersCheck ? greenCheck : refreshPlayers} alt={"refresh"} onClick={() => handleRefresh(1)} />
+                <span className="tooltiptext" >
+                    Last <img src={refreshPlayersCheck ? greenCheck : refreshPlayers} alt={"refresh"} onClick={() => handleRefresh(1)} />
+                    <RefreshTimer singleRefresh={refreshPlayersCheck} totalRefresh={refreshCheck}/>
+                </span>
                 <img className="option" src={refreshMonstersCheck ? greenCheck : refreshMonster} alt={"refresh"} onClick={() => handleRefresh(2)} />
+                <span className="tooltiptext">
+                    Last <img src={refreshMonstersCheck ? greenCheck : refreshMonster} alt={"refresh"} onClick={() => handleRefresh(2)} />
+                    <RefreshTimer singleRefresh={refreshMonstersCheck} totalRefresh={refreshCheck} />
+                </span>
                 <img className="option" src={refreshCheck ? greenCheck : refresh} alt={"refresh"} onClick={() => handleRefresh(3)} />
+                <span className="tooltiptext">
+                    Last <img src={refreshCheck ? greenCheck : refresh} alt={"refresh"} onClick={() => handleRefresh(3)} />
+                    <RefreshTimer totalRefresh={refreshCheck}/>
+                </span>
             </div>
             
         </div>

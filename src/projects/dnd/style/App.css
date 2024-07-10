@@ -14,12 +14,15 @@ body {
     font-family: Arial, sans-serif;
     font-size: 16px;
     font-weight: bold;
+    justify-content: center; 
+    align-items: center; 
 }
 
 .cardContainer {
     justify-content: center; 
     align-items: center;    
-    width: 100%;
+    width: 90%;
+
 }
 
 .card {
@@ -91,12 +94,19 @@ body {
 }
 
 .option {
-    margin-right: 10px; 
+    margin: 5px; 
     height: 20px; 
     width: 20px; 
     cursor: pointer; 
     border-radius: 10px;
     color: white;
+}
+
+.tooltiptext img {
+    margin: 0 5px 0 5px; 
+    height: 20px; 
+    width: 20px; 
+    border-radius: 10px;
 }
 
 .timer {
@@ -162,10 +172,12 @@ body {
     height: 25%; 
 }
 
+.option:hover + .tooltiptext,
 .effect:hover + .tooltiptext {
     visibility: visible;
     opacity: 1;
 }
+
 
 .overlay-skull {
     background-color: #651d1d;
@@ -214,7 +226,6 @@ body {
     top: 50%;
     margin: 1px;
     border-radius: 20px;
-    
 }
 
 .tooltiptext {
@@ -232,10 +243,20 @@ body {
     transition: opacity 0.3s;
 }
 
-.effectWrapper {
-    position: relative;
+
+.options-container .tooltiptext,
+.refresh-container .tooltiptext {
+    display: flex;
+    position: absolute;
+    bottom: 110%;
 }
 
+.effectWrapper {
+    position: relative;
+    text-align: center;
+}
+
+.avatarEffectsBar .tooltiptext,
 .effectWrapper .tooltiptext {
     bottom: 110%;
     width: 100px;

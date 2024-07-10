@@ -1,5 +1,6 @@
 import React from 'react';
 import '../style/App.css'; // Import your CSS file
+import Tooltip from './Tooltip';
 
 // ProfileCard Component
 const Effect = ({clickedCreature, effectObj, updateCreatureEffect}) => {
@@ -16,7 +17,7 @@ const Effect = ({clickedCreature, effectObj, updateCreatureEffect}) => {
                 }}
                 onClick={(event) => updateCreatureEffect(event, effectObj)}
             />
-            <span className="tooltiptext" >{effectObj.effect}</span>
+            <Tooltip message={effectObj.effect}/>
         </div>
     );
 };

@@ -49,8 +49,8 @@ import background23 from "./pics/backgrounds/adventureTime.gif"
 import background24 from "./pics/backgrounds/fire.gif"
 
 // export const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-export const proxyUrl = 'https://nics-cors-anywhere-99e39b544c5d.herokuapp.com/';
-// export const proxyUrl = '';
+// export const proxyUrl = 'https://nics-cors-anywhere-99e39b544c5d.herokuapp.com/';
+export const proxyUrl = '';
 
 export const backgroundImages = [
     background1,

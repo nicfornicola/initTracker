@@ -6,6 +6,7 @@ import FileUpload from './FileUpload';
 import GridMap from './GridMap';
 
 import backgroundButton from "../pics/backgroundButton.png"
+import Tooltip from './Tooltip';
 
 const ImagePopup = ({setBackGroundImage}) => {
     const [open, setOpen] = useState(false);
@@ -39,6 +40,8 @@ const ImagePopup = ({setBackGroundImage}) => {
   return (
     <>
         <img className="option" alt='backgroundButton' src={backgroundButton} onClick={() => setOpen(true)}/>
+        <Tooltip message={"Set Background"}/>
+
         <Dialog open={open} onClose={handleClose} ref={dialogRef} >
             <DialogContent >
                 {uploadedFiles.length > 0 && (

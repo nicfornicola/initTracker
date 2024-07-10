@@ -1,5 +1,7 @@
 add family tree and pantheon too /dnd/save_the_king/tree and /dnd/save_the_king/pantheon
 add hp for badguys toggle
+add auto refresh 5 minutes or so
+add death saves
 
 FIXED
 ----
@@ -7,6 +9,8 @@ Good guys dont properly reload their HP when the refresh all button is clicked -
 All icons dont reload their dead overlay when refresh buttons are clicked - current workaround, reload page
 combat timer - stop/start? quick options 30 seconds - 1 min 2 min 5 min
 click character -> conditiions bar shows up with all conditions, bright ones are active dim ones are inactive, click to select/deselect
+add toggle to not show dead guys
+refresh on reveal
 
 
 ////

@@ -19,11 +19,10 @@ export const getCharacterStats = async (data) => {
                     },
                     withCredentials: false,
                 });
+
                 const resData = response.data.data;
                 let maxHp = getMaxHp(resData); // Ensure getMaxHp is used correctly
-                if (resData.bonusHitPoints) {
-                    maxHp += resData.bonusHp
-                }
+
                 console.log(i.toString() + "/" + playerIds.length + " " + resData.name + " retrieved")
                 i++;
                 let exLvl = resData.conditions.find(obj => obj.id === 4)
@@ -31,10 +30,10 @@ export const getCharacterStats = async (data) => {
                     status: response.status,
                     id: resData.id.toString(),
                     maxHp: maxHp,
-                    bonusHp: resData.bonusHitPoints,
-                    overrideHp: resData.overrideHitPoints,
+                    maxHpBonus: resData.bonusHitPoints,
+                    maxHpOverride: resData.overrideHitPoints,
                     removedHp: resData.removedHitPoints,
-                    tempHp: resData.condi,
+                    tempHp: resData.temporaryHitPoints,
                     exhaustionLvl: exLvl ? exLvl.level : 0
                 };
             } catch (error) {
@@ -45,8 +44,8 @@ export const getCharacterStats = async (data) => {
                         status: error.response.status,
                         id: playerId.toString(), // Use playerId directly from map function
                         maxHp: null,
-                        bonusHp: null,
-                        overrideHp: null,
+                        maxHpBonus: null,
+                        maxHpOverride: null,
                         removedHp: null,
                         tempHp: null,
                         exhaustionLvl: 0
