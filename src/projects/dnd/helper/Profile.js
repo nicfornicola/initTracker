@@ -18,6 +18,7 @@ export class Profile {
             this.removedHp = playerHpData.removedHp
             this.tempHp = playerHpData.tempHp
             this.exhaustionLvl = playerHpData.exhaustionLvl
+            this.deathSaves = playerHpData.deathSaves
         } else {
             this.monsterCurrentHp = creature.currentHitPoints;
             this.maxHp = creature.maximumHitPoints;
@@ -26,6 +27,7 @@ export class Profile {
             this.removedHp =  null;
             this.tempHp =   null;
             this.exhaustionLvl = null;
+            this.deathSaves = null;
         }
     }
 

@@ -11,6 +11,7 @@ import bloodied5 from '../pics/blood5.png';
 import bloodied6 from '../pics/blood6.png'; 
 import Exhaustion from './Exhaustion'; 
 import Tooltip from './Tooltip';
+import DeathSaves from './DeathSaves';
 
 
 // ProfileCard Component
@@ -79,6 +80,7 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies}) => {
     let showEnemyHp = false;
     let showHp = (isPlayer && foundHp) || (!isPlayer && showEnemyHp)
     let showTempHp = creature.tempHp > 0
+    let showDeathSaves = isPlayer && foundHp && (creature.deathSaves.successCount >= 0 && creature.deathSaves.failCount >= 0)
 
     if(hideDeadEnemies && !isPlayer && isDead ) {
         return null
@@ -94,7 +96,13 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies}) => {
                             <div className="imageSmoke"/>
                             
                             {isDead && (
-                                <img className="image overlay-skull" src={skullpng} alt="" />
+                                <>
+                                    <img className="image overlay-skull" src={skullpng} alt="" />
+                                    {showDeathSaves && (
+                                        <DeathSaves deathSaves={creature.deathSaves} />
+                                    )}
+                                </>
+                                
                             )}
 
                             {isBloodied && (

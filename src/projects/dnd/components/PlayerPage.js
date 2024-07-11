@@ -54,7 +54,7 @@ function PlayerPage() {
             // Iterate over the first array using a for loop
             const updatedCreatures = creatures.map(creature => {
                 const matchedRefresh = refreshedData.find(data => data.id === creature.id);
-                
+
                 if (matchedRefresh) {
                     // getCharacterStats doesnt return initiative, that is from the encounter service, maybe make another button to reset player initiation i know thats a lot of buttons
                     const hpChange = matchedRefresh.removedHp !== undefined && matchedRefresh.removedHp !== creature.removedHp
@@ -63,6 +63,8 @@ function PlayerPage() {
                         ...creature,
                         removedHp: hpChange ? matchedRefresh.removedHp : creature.removedHp,
                         exhaustionLvl: exhaustionChange ? matchedRefresh.exhaustionLvl : creature.exhaustionLvl,
+                        deathSaves: matchedRefresh.deathSaves
+
                     }
                     return change;
                 } else {
@@ -102,12 +104,11 @@ function PlayerPage() {
                 // Check if initiative has changed and mark for resorting if needed
                 if (initiativeHasChanged) 
                     needToResort = true;
-    
                 // Update creature properties based on whether it's a monster or a player
                 return {
                     ...creature,
                     monsterCurrentHp: matchedRefresh.userName === undefined && hpHasChanged ? matchedRefresh.currentHitPoints : creature.monsterCurrentHp,
-                    initiative: initiativeHasChanged ? matchedRefresh.initiative : creature.initiative
+                    initiative: initiativeHasChanged ? matchedRefresh.initiative : creature.initiative,
                 };
             };
     
@@ -159,7 +160,7 @@ function PlayerPage() {
 
                     return new Profile(creature, playerHpData)
                 });
-
+                
                 const monsterIcons = await getMonstersAvatars(creatures);
                 monsterIcons.data.forEach(monsterIcon => {
                     creatures.forEach(creature => {

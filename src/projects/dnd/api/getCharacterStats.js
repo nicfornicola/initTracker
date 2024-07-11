@@ -34,7 +34,8 @@ export const getCharacterStats = async (data) => {
                     maxHpOverride: resData.overrideHitPoints,
                     removedHp: resData.removedHitPoints,
                     tempHp: resData.temporaryHitPoints,
-                    exhaustionLvl: exLvl ? exLvl.level : 0
+                    exhaustionLvl: exLvl ? exLvl.level : 0,
+                    deathSaves: resData.deathSaves
                 };
             } catch (error) {
                 if (error.response && (error.response.status === 404 || error.response.status === 403)) {
@@ -48,7 +49,8 @@ export const getCharacterStats = async (data) => {
                         maxHpOverride: null,
                         removedHp: null,
                         tempHp: null,
-                        exhaustionLvl: 0
+                        exhaustionLvl: 0,
+                        deathSaves: null
                     };
                 }
                 // Throw error to be caught by the outer catch block if needed
