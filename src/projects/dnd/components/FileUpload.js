@@ -22,7 +22,7 @@ const FileUpload = ({uploadedFiles, setUploadedFiles}) => {
 
     return (
         <div className="uploadContainer">
-            <label htmlFor="file-upload">Upload some backgrounds... </label>         
+            <label htmlFor="file-upload">Upload pngs, jpgs, gifs or set a youtube video as the background! </label>         
             <br/>
             <input id="file-upload" type="file" accept=".png, .jpg, .jpeg, .gif" onChange={handleFileChange} />
         </div>

@@ -3,14 +3,16 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Dialog, DialogContent } from '@mui/material';
 import { backgroundImages } from '../constants';
 import FileUpload from './FileUpload';
+import TextInput from './TextInput';
 import GridMap from './GridMap';
 
 import backgroundButton from "../pics/backgroundButton.png"
 import Tooltip from './Tooltip';
 
-const ImagePopup = ({setBackGroundImage}) => {
+const ImagePopup = ({setBackGroundImage, setYoutubeLink}) => {
     const [open, setOpen] = useState(false);
     const [uploadedFiles, setUploadedFiles] = useState([]);
+    const [uploadedLinks, setUploadedLinks] = useState([]);
 
     const dialogRef = useRef(null);
 
@@ -44,17 +46,26 @@ const ImagePopup = ({setBackGroundImage}) => {
 
         <Dialog open={open} onClose={handleClose} ref={dialogRef} >
             <DialogContent >
-                {uploadedFiles.length > 0 && (
+                {uploadedLinks.length > 0 && (
                     <>     
-                        <label htmlFor="grid" className='uploadedTitle'>Uploads - ⚠️Cleared on page refresh⚠️</label>
+                        <label htmlFor="grid" className='uploadedTitle'>Uploaded Videos - ⚠️Cleared on page refresh⚠️</label>
                         <hr/>
-                        <GridMap imageArr={uploadedFiles} setBackGroundImage={setBackGroundImage}/>
+                        <GridMap imageArr={uploadedLinks} setYoutubeLink={setYoutubeLink} setBackGroundImage={setBackGroundImage} isYoutubeLink={true} />
                         <hr/>
                     </>
                 )}
-                <GridMap imageArr={backgroundImages} setBackGroundImage={setBackGroundImage}/>
+                {uploadedFiles.length > 0 && (
+                    <>     
+                        <label htmlFor="grid" className='uploadedTitle'>Uploaded Images - ⚠️Cleared on page refresh⚠️</label>
+                        <hr/>
+                        <GridMap imageArr={uploadedFiles} setYoutubeLink={setYoutubeLink} setBackGroundImage={setBackGroundImage}/>
+                        <hr/>
+                    </>
+                )}
+                <GridMap imageArr={backgroundImages} setYoutubeLink={setYoutubeLink} setBackGroundImage={setBackGroundImage}/>
             </DialogContent>
             <FileUpload uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles}/>
+            <TextInput setYoutubeLink={setYoutubeLink} setUploadedLinks={setUploadedLinks} setOpen={setOpen}/>
 
         </Dialog>
 

@@ -23,12 +23,14 @@ import background1 from "../pics/backgrounds/fallenCastleBigTree.jpg"
 import { Profile } from '../helper/Profile.js' 
 import { sortCreaturesByInitiative, effectObjs } from '../constants';
 import Tooltip from './Tooltip.js';
+import YouTubeEmbed from './YouTubeEmbed.js';
 
 
 function PlayerPage() {
     const [creatures, setCreatures] = useState([]);
     const [clickedCreature, setClickedCreature] = useState(null);
     const [backGroundImage, setBackGroundImage] = useState(background1);
+    const [youtubeLink, setYoutubeLink] = useState("");
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(true);
@@ -40,8 +42,6 @@ function PlayerPage() {
     const [recentlyRefreshed, setRecentlyRefreshed] = useState(false);
     const { gameId } = useParams();
     
-
-
     const refreshPlayerProfiles = async () => {
         try {
             console.log("Refreshing Player Health")
@@ -200,7 +200,6 @@ function PlayerPage() {
         }
     };
 
-
     useEffect(() => {
         if (creatures.length === 0 && gameId && !error) {
             loadProfiles();
@@ -273,11 +272,13 @@ function PlayerPage() {
 
         setHideEnemies(!hideEnemies)
     }
-
-
+   
     return (
-        <div className="dndBackground" onClick={clickedBackground} 
-            style={{backgroundImage: `url(${backGroundImage})` }}>
+        <div className="dndBackground" onClick={clickedBackground} style={{backgroundImage: `url(${backGroundImage})`}}>
+        
+            {youtubeLink !== "" && !backGroundImage && 
+                <YouTubeEmbed embedUrl={youtubeLink}/>
+            }
 
             {loading && (<div className='loading'>Loading...</div>)}
             <div className="cardContainer" style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -300,7 +301,7 @@ function PlayerPage() {
                         <Tooltip message={(hideDeadEnemies ? "Show" : "Hide") + " Dead Enemies"}/>
                     </>
                 }
-                <ImagePopup setBackGroundImage={setBackGroundImage} />
+                <ImagePopup setBackGroundImage={setBackGroundImage} setYoutubeLink={setYoutubeLink} />
                 <Timer />
                 
             </div>
@@ -343,7 +344,7 @@ function PlayerPage() {
                 </span>
             </div>
             
-        </div>
+        </div> 
     );
 }
 

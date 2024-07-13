@@ -1,5 +1,9 @@
-add family tree and pantheon too /dnd/save_the_king/tree and /dnd/save_the_king/pantheon
-add hp for badguys toggle
+
+king
+----
+make icons percntages of screen because they are too small for big screen
+add family tree 
+
 
 FIXED
 ----
@@ -11,6 +15,7 @@ add toggle to not show dead guys
 refresh on reveal
 add death saves
 add auto refresh 5 minutes or so
+added youtube video link upload for backgrounds
 
 
 ////
