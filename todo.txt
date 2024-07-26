@@ -11,20 +11,29 @@ remove creature from encounter
 quick edit - change name, hp (only can see in dm view), AC
 
 
+TODO
+-----
+add open5e img if its there
+on hover of a spell it shows a tooltip of what the spell is from the spell_list that is found in open5e creature
+add hover (i) on statblock to see the creature desc
+change to default to small image, show (i) to show big if available
 HOW
 -----
 grab static monster jsons from https://improvedinitiative.app/ that have all links to https://api.open5e.com/v1/monsters/?format=api
 search image on https://monster-service.dndbeyond.com/v1/Monster?search=anubian&skip=0&take=1
 aggregate!
 
+
+
+
 BROKEN 
 ----
-when removing a monster it selects it
 
 
 FIXED - offline mode
 ------
 fix problem with scrolling adding more then it needs to and spamming api calls 
+when removing a monster it selects it
 
 
 
