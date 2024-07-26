@@ -17,6 +17,9 @@ add open5e img if its there
 on hover of a spell it shows a tooltip of what the spell is from the spell_list that is found in open5e creature
 add hover (i) on statblock to see the creature desc
 change to default to small image, show (i) to show big if available
+fix default image - get first word in type instead of holding :)
+
+
 HOW
 -----
 grab static monster jsons from https://improvedinitiative.app/ that have all links to https://api.open5e.com/v1/monsters/?format=api
