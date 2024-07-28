@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const DropdownMenu = ({ savedEncounters, handleLoadEncounter }) => {
+const DropdownMenu = ({ savedEncounters, handleLoadEncounter, lastEncounterName, currentEncounterCreatures }) => {
+    const [selectedEncounterName, setSelectedEncounterName] = useState(lastEncounterName);
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedEncounterName, setSelectedEncounter] = useState(null);
+
+    useEffect(() => {
+        setSelectedEncounterName(lastEncounterName)
+    }, [lastEncounterName])
+
+    console.log(lastEncounterName)
 
     const toggleDropdown = () => setIsOpen(!isOpen);
 
     const handleOptionClick = (encounter) => {
-        setSelectedEncounter(encounter.encounterName);
+        setSelectedEncounterName(encounter.encounterName);
         setIsOpen(false);
         if(handleLoadEncounter) 
             handleLoadEncounter(encounter);
@@ -15,22 +21,27 @@ const DropdownMenu = ({ savedEncounters, handleLoadEncounter }) => {
 
     console.log(savedEncounters)
 
+    let buttonString = "No Saved Encounters"
+    if(savedEncounters) {
+        buttonString = currentEncounterCreatures.length != 0 ? "Encounter: " + selectedEncounterName : "Encounters..." 
+    }
+
     return (
         <div className="dropdown">
             <button className="dropdown-toggle" onClick={toggleDropdown}>
-                {selectedEncounterName ? 'Encounters: '+ selectedEncounterName : 'Encounters...'}
+                {buttonString}
             </button>
-            {isOpen && (
+            {isOpen && savedEncounters && (
                 <ul className="dropdown-menu">
-                {savedEncounters.map((encounter, index) => (
-                    <li
-                        key={encounter.encounterName + index}
-                        onClick={() => handleOptionClick(encounter)}
-                        className="dropdown-item"
-                    >
-                        {encounter.encounterName}
-                    </li>
-                ))}
+                    {savedEncounters.map((encounter, index) => (
+                        <li
+                            key={encounter.encounterName + index}
+                            onClick={() => handleOptionClick(encounter)}
+                            className="dropdown-item"
+                        >
+                            {encounter.encounterName}
+                        </li>
+                    ))}
                 </ul>
             )}
         </div>

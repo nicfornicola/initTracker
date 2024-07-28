@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-const DelayedInput = ({encounterName, setEncounterName}) => {
-    const [inputValue, setInputValue] = useState('');
-
+const DelayedInput = ({encounterName, setEncounterName, lastEncounterName, setLastEncounterName}) => {
+    const [inputValue, setInputValue] = useState(encounterName);
+    
     const handleChange = (e) => {
         setInputValue(e.target.value);
         if (encounterName !== e.target.value) {

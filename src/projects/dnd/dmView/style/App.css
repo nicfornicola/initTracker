@@ -79,9 +79,14 @@
     font-weight: bolder;
 }
 
+.encounterTitle {
+    border-bottom: 1px solid #ccc;
+}
+
 .encounterTitleEdit {
     visibility: hidden; 
 }
+
 .encounterTitle:hover + .encounterTitleEdit,
 .encounterTitleEdit:hover {
     visibility: visible; 

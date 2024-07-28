@@ -3,14 +3,24 @@ import StatBlock from './StatBlock';
 import DelayedInput from './DelayedInput';
 import DropdownMenu from './DropdownMenu';
 
+function generateUniqueId() {
+    return Math.random().toString(36).substring(2, 12).toUpperCase();
+}
+
 function updateJsonArray(jsonArray, newJsonObject) {
+
+    if(jsonArray === null) {
+        jsonArray = []
+    }
+    console.log(jsonArray, newJsonObject)
     // Find the index of the existing object with the same encounter name
-    const index = jsonArray.findIndex(item => item['encounterName'] === newJsonObject['encounterName']);
-    
+    const index = jsonArray.findIndex(item => item['id'] === newJsonObject['id']);
+
     if (index !== -1) {
         // Overwrite the existing object
         jsonArray[index] = newJsonObject;
     } else {
+        newJsonObject.id = generateUniqueId();
         // Add the new object to the array
         jsonArray.push(newJsonObject);
     }
@@ -20,13 +30,15 @@ function updateJsonArray(jsonArray, newJsonObject) {
 
 const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}) => {
     const [hoveredIndex, setHoveredIndex] = useState(null);
+    const [encounterId, setEncounterId] = useState(null);
     const [encounterSelectedCreature, setEncounterSelectedCreature] = useState(null);
-    const [encounterName, setEncounterName] = useState('Untitled');
+    const [encounterName, setEncounterName] = useState('New Encounter');
+    const [lastEncounterName, setLastEncounterName] = useState(encounterName);
     const [showEncounterTitleEdit, setShowEncounterTitleEdit] = useState(false);
     const [savedEncounters, setSavedEncounters] = useState(JSON.parse(localStorage.getItem('savedEncounters')));
-    const encounterCreatureX = useRef(null);
 
-    console.log("!", currentEncounterCreatures)
+    const encounterCreatureX = useRef(null);
+    console.log("!!",  currentEncounterCreatures)
     const clickEncounterCreatureX = (event, creatureName, index) => {
         // Dont click allow parent to be clicked aswell
         event.stopPropagation(); 
@@ -43,10 +55,6 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
 
     };
 
-    const handleOpenNewWindow = () => {
-        window.open('http://localhost:3000/dnd/dm', '_blank');
-    };
-
     // Sets the selected creature in encounter list on right
     const handleEncounterSelectCreature = (creature) => {
         setEncounterSelectedCreature(creature);
@@ -56,12 +64,13 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
         console.log("handleLoadEncounter", encounter)
         setCurrentEncounterCreatures(encounter.currentEncounterCreatures)
         setEncounterName(encounter.encounterName)
+        setEncounterId(encounter.id)
+        setLastEncounterName(encounter.encounterName)
     };
 
     const handleSaveEncounter = () => {
         const savedEncountersList = JSON.parse(localStorage.getItem('savedEncounters'));
-        console.log(savedEncountersList);
-        let newEncounter = {encounterName: encounterName, currentEncounterCreatures: currentEncounterCreatures}
+        let newEncounter = {encounterName: encounterName, id: encounterId, currentEncounterCreatures: currentEncounterCreatures}
         const updatedSavedEncountersList = updateJsonArray(savedEncountersList, newEncounter);
         // Setting this list to update the encounter list
         setSavedEncounters(updatedSavedEncountersList)
@@ -74,54 +83,83 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
         setShowEncounterTitleEdit(true)
     };    
     
-    const handleCloseEditBox = () => {
-        console.log("Encounter Name Auto Saved")
+    const handleCloseEditBox = (type) => {
         setShowEncounterTitleEdit(false)
+
+        if(type === "save") {
+            console.log("save")
+            handleSaveEncounter()
+            setLastEncounterName(encounterName)
+        }
+        if(type === "close") {
+            setEncounterName(lastEncounterName)
+            console.log("no save")
+
+        }
     };
 
    
     return (
         <>
             <div className='column'>
-                <button onClick={handleOpenNewWindow}> Open New Window </button>
                 <button onClick={handleSaveEncounter}> Save Encounter </button>
-                <DropdownMenu savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter}/>
-                <h3>Current Encounter Creatures</h3>
-                <div className='encounterTitle'>{encounterName}</div><div className='encounterTitleEdit' onClick={handleEncounterNameEdit}>✎</div>
-                {showEncounterTitleEdit && 
+                <DropdownMenu savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} lastEncounterName={lastEncounterName} currentEncounterCreatures={currentEncounterCreatures}/>
+                <h3>Create Encounter</h3>
+                {showEncounterTitleEdit ? ( 
                     <>
-                        <DelayedInput encounterName={encounterName} setEncounterName={setEncounterName}/>
-                        <button onClick={handleCloseEditBox}>✅</button>
+                        <DelayedInput encounterName={encounterName} setEncounterName={setEncounterName} lastEncounterName={lastEncounterName} setLastEncounterName={setLastEncounterName}/>
+                        <button onClick={() => handleCloseEditBox("save")}>✅</button>
+                        <button onClick={() => handleCloseEditBox("close")}>❌</button>
                     </>
-                }
+                ) : (
+                    <>                     
+                        <div className='encounterTitle'>{encounterName}</div><div className='encounterTitleEdit' onClick={handleEncounterNameEdit}>✎</div>
+                    </>                     
+                )}
+
                 <ul style={{padding: 0 }}>
-                    {currentEncounterCreatures.map((creature, index) => (
-                        <li className='encounterCreaturesListItem'
-                            key={index+creature.name}
-                            onMouseEnter={() => setHoveredIndex(index)}
-                            onMouseLeave={() => setHoveredIndex(null)}
-                            onClick={() => handleEncounterSelectCreature(creature)}
-                        >
-                            <img className="monsterSearchIcon" src={creature.avatarUrl} alt={"list Icon"} />
-                            {creature.name},
-                            {creature.open5e && 
-                                <>
-                                    <div className='encounterCreaturesHp'>
-                                        {creature.open5e.hit_points}
-                                        <span>/</span>
-                                        {creature.open5e.hit_points},
-                                    </div>
-                                    {creature.open5e.armor_class}
-                                </>
-                            }
-                            
-                            {hoveredIndex === index && ( 
-                                <button className='encounterCreatureX' ref={encounterCreatureX} onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
-                                X
-                                </button>
-                            )}
-                        </li>
-                    ))}
+                    {currentEncounterCreatures.length ? (
+                        <>
+                            {currentEncounterCreatures.map((creature, index) => (
+                                <li className='encounterCreaturesListItem'
+                                    key={index+creature.name}
+                                    onMouseEnter={() => setHoveredIndex(index)}
+                                    onMouseLeave={() => setHoveredIndex(null)}
+                                    onClick={() => handleEncounterSelectCreature(creature)}
+                                >
+                                    <img className="monsterSearchIcon" src={creature.avatarUrl} alt={"list Icon"} />
+                                    {creature.name},
+                                    {creature.open5e && 
+                                        <>
+                                            <div className='encounterCreaturesHp'>
+                                                {creature.open5e.hit_points}
+                                                <span>/</span>
+                                                {creature.open5e.hit_points},
+                                            </div>
+                                            {creature.open5e.armor_class}
+                                        </>
+                                    }
+                                    
+                                    {hoveredIndex === index && ( 
+                                        <button className='encounterCreatureX' ref={encounterCreatureX} onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
+                                        X
+                                        </button>
+                                    )}
+                                </li>
+                            ))}
+                        </>
+                    ) : (
+                        <>
+                            <li className='encounterCreaturesListItem'
+                                key={"key"}
+                                onMouseEnter={() => setHoveredIndex(0)}
+                                onMouseLeave={() => setHoveredIndex(null)}
+                            >
+                                Add a creature or select from your                 <DropdownMenu savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} lastEncounterName={lastEncounterName} currentEncounterCreatures={currentEncounterCreatures}/> 
+                            </li>
+                        </>
+                    )}
+                    
                 </ul>
             </div>
             <div className='column'>
