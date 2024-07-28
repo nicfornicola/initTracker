@@ -13,12 +13,14 @@ quick edit - change name, hp (only can see in dm view), AC
 
 TODO
 -----
-add open5e img if its there
 on hover of a spell it shows a tooltip of what the spell is from the spell_list that is found in open5e creature
 add hover (i) on statblock to see the creature desc
-change to default to small image, show (i) to show big if available
-fix default image - get first word in type instead of holding :)
+show (i) to show big image if available
+add open5e img if its there
 
+add saved encounter list, give them names, quick look to see names of creatures
+toggle ally/neutral/enemy in encounter list
+add encounter name saved icon
 
 HOW
 -----
@@ -37,6 +39,7 @@ FIXED - offline mode
 ------
 fix problem with scrolling adding more then it needs to and spamming api calls 
 when removing a monster it selects it
+fix default image - get first word in type instead of whole thing :)
 
 
 
