@@ -13,30 +13,44 @@ quick edit - change name, hp (only can see in dm view), AC
 
 TODO
 -----
-on hover of a spell it shows a tooltip of what the spell is from the spell_list that is found in open5e creature
-add hover (i) on statblock to see the creature desc
-show (i) to show big image if available
-add open5e img if its there
+encounter start button
+x buttons for stat blocks
+make stat blocks have a hide for now button that shows a little leaf to reappear
+    search list
+    --
+        toggle visible button  
+    statblock
+    --
+        give words a shadow
+        on hover of a spell it shows a tooltip of what the spell is from the spell_list that is found in open5e creature
+        add hover (i) on statblock to see the creature desc
+        show (i) to show big image if available
+        add open5e img if its there
 
-add saved encounter list, give them names, quick look to see names of creatures
-toggle ally/neutral/enemy in encounter list
-add encounter name saved icon
+    saved encounter list 
+    -- 
+        add quick look to see encounters names of creatures
+        save encounter name in local when click green button
 
-HOW
------
-grab static monster jsons from https://improvedinitiative.app/ that have all links to https://api.open5e.com/v1/monsters/?format=api
-search image on https://monster-service.dndbeyond.com/v1/Monster?search=anubian&skip=0&take=1
-aggregate!
-
-
-
+    encounter list changes 
+    --
+        current turn marker
+        auto roll and manual initiative
+        add dummy under encounter list 
+        add environment token under encounter list 
+        change moster names in encounter list
+        change name ac hp in encounter list 
+        toggle ally/neutral/enemy in encounter list
+        make encounter items look good
 
 BROKEN 
 ----
 
 
-FIXED - offline mode
+DONE - offline mode
 ------
+add encounter name saved icon
+add saved encounter list, give them names, 
 fix problem with scrolling adding more then it needs to and spamming api calls 
 when removing a monster it selects it
 fix default image - get first word in type instead of whole thing :)
