@@ -1,0 +1,5560 @@
+[
+    {
+        "id": "open5e-abaasy",
+        "name": "Abaasy",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/abaasy",
+        "lastUpdateMs": 0,
+        "searchHint": "abaasy giant  neutral evil",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-ahu-nixta-mechanon",
+        "name": "Ahu-Nixta Mechanon",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ahu-nixta-mechanon",
+        "lastUpdateMs": 0,
+        "searchHint": "ahunixta mechanon construct  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-akanka",
+        "name": "Akanka",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/akanka",
+        "lastUpdateMs": 0,
+        "searchHint": "akanka fey  chaotic evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-akkorokamui",
+        "name": "Akkorokamui",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/akkorokamui",
+        "lastUpdateMs": 0,
+        "searchHint": "akkorokamui celestial  chaotic good",
+        "filterDimensions": {
+            "level": "12",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-alabroza",
+        "name": "Alabroza",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/alabroza",
+        "lastUpdateMs": 0,
+        "searchHint": "alabroza monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-alabroza-bloodfiend",
+        "name": "Alabroza, Bloodfiend",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/alabroza-bloodfiend",
+        "lastUpdateMs": 0,
+        "searchHint": "alabroza bloodfiend fiend  neutral evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-alazai",
+        "name": "Alazai",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/alazai",
+        "lastUpdateMs": 0,
+        "searchHint": "alazai elemental  chaotic neutral",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-alke",
+        "name": "Alke",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/alke",
+        "lastUpdateMs": 0,
+        "searchHint": "alke monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-alliumite-husker",
+        "name": "Alliumite, Husker",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/alliumite-husker",
+        "lastUpdateMs": 0,
+        "searchHint": "alliumite husker plant  chaotic neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-alliumite-rapscallion",
+        "name": "Alliumite, Rapscallion",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/alliumite-rapscallion",
+        "lastUpdateMs": 0,
+        "searchHint": "alliumite rapscallion plant  chaotic neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-alpine-creeper",
+        "name": "Alpine Creeper",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/alpine-creeper",
+        "lastUpdateMs": 0,
+        "searchHint": "alpine creeper plant  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-alseid-woad-warrior",
+        "name": "Alseid, Woad Warrior",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/alseid-woad-warrior",
+        "lastUpdateMs": 0,
+        "searchHint": "alseid woad warrior monstrosity  chaotic neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-amphibolt",
+        "name": "Amphibolt",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/amphibolt",
+        "lastUpdateMs": 0,
+        "searchHint": "amphibolt monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-angel-haladron",
+        "name": "Angel, Haladron",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/angel-haladron",
+        "lastUpdateMs": 0,
+        "searchHint": "angel haladron celestial  lawful good",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-angel-kalkydra",
+        "name": "Angel, Kalkydra",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/angel-kalkydra",
+        "lastUpdateMs": 0,
+        "searchHint": "angel kalkydra celestial  lawful good",
+        "filterDimensions": {
+            "level": "13",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-angel-pelagic-deva",
+        "name": "Angel, Pelagic Deva",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/angel-pelagic-deva",
+        "lastUpdateMs": 0,
+        "searchHint": "angel pelagic deva celestial  neutral good",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-angel-psychopomp",
+        "name": "Angel, Psychopomp",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/angel-psychopomp",
+        "lastUpdateMs": 0,
+        "searchHint": "angel psychopomp celestial  lawful neutral",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-angel-shrouded",
+        "name": "Angel, Shrouded",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/angel-shrouded",
+        "lastUpdateMs": 0,
+        "searchHint": "angel shrouded celestial  chaotic good",
+        "filterDimensions": {
+            "level": "13",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-angel-zirnitran",
+        "name": "Angel, Zirnitran",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/angel-zirnitran",
+        "lastUpdateMs": 0,
+        "searchHint": "angel zirnitran celestial  neutral good",
+        "filterDimensions": {
+            "level": "20",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-animal-lord-mammoth-queen",
+        "name": "Animal Lord, Mammoth Queen",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/animal-lord-mammoth-queen",
+        "lastUpdateMs": 0,
+        "searchHint": "animal lord mammoth queen fey  chaotic good",
+        "filterDimensions": {
+            "level": "18",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-animated-instrument",
+        "name": "Animated Instrument",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/animated-instrument",
+        "lastUpdateMs": 0,
+        "searchHint": "animated instrument construct  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-animated-instrument-quartet",
+        "name": "Animated Instrument, Quartet",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/animated-instrument-quartet",
+        "lastUpdateMs": 0,
+        "searchHint": "animated instrument quartet construct  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-animated-instrument-symphony",
+        "name": "Animated Instrument, Symphony",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/animated-instrument-symphony",
+        "lastUpdateMs": 0,
+        "searchHint": "animated instrument symphony construct  neutral",
+        "filterDimensions": {
+            "level": "15",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-animated-offal",
+        "name": "Animated Offal",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/animated-offal",
+        "lastUpdateMs": 0,
+        "searchHint": "animated offal ooze  unaligned",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-aphasian-abomination",
+        "name": "Aphasian Abomination",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/aphasian-abomination",
+        "lastUpdateMs": 0,
+        "searchHint": "aphasian abomination construct  unaligned",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-arcane-leviathan",
+        "name": "Arcane Leviathan",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/arcane-leviathan",
+        "lastUpdateMs": 0,
+        "searchHint": "arcane leviathan construct  unaligned",
+        "filterDimensions": {
+            "level": "16",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-arcane-scavenger",
+        "name": "Arcane Scavenger",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/arcane-scavenger",
+        "lastUpdateMs": 0,
+        "searchHint": "arcane scavenger construct  neutral",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-archon-siege",
+        "name": "Archon, Siege",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/archon-siege",
+        "lastUpdateMs": 0,
+        "searchHint": "archon siege celestial  lawful good",
+        "filterDimensions": {
+            "level": "13",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-archon-ursan",
+        "name": "Archon, Ursan",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/archon-ursan",
+        "lastUpdateMs": 0,
+        "searchHint": "archon ursan celestial  chaotic good",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-archon-word",
+        "name": "Archon, Word",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/archon-word",
+        "lastUpdateMs": 0,
+        "searchHint": "archon word celestial  lawful good",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-asp-vine",
+        "name": "Asp Vine",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/asp-vine",
+        "lastUpdateMs": 0,
+        "searchHint": "asp vine plant  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-astralsupial",
+        "name": "Astralsupial",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/astralsupial",
+        "lastUpdateMs": 0,
+        "searchHint": "astralsupial beast  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-aural-hunter",
+        "name": "Aural Hunter",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/aural-hunter",
+        "lastUpdateMs": 0,
+        "searchHint": "aural hunter aberration  chaotic evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-avestruzii",
+        "name": "Avestruzii",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/avestruzii",
+        "lastUpdateMs": 0,
+        "searchHint": "avestruzii humanoid  any alignment",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-avestruzii-champion",
+        "name": "Avestruzii Champion",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/avestruzii-champion",
+        "lastUpdateMs": 0,
+        "searchHint": "avestruzii champion humanoid  any alignment",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-aziza",
+        "name": "Aziza",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/aziza",
+        "lastUpdateMs": 0,
+        "searchHint": "aziza fey  chaotic good",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-baleful-miasma",
+        "name": "Baleful Miasma",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/baleful-miasma",
+        "lastUpdateMs": 0,
+        "searchHint": "baleful miasma elemental  neutral evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-bannik",
+        "name": "Bannik",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/bannik",
+        "lastUpdateMs": 0,
+        "searchHint": "bannik fey  neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-beach-weird",
+        "name": "Beach Weird",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/beach-weird",
+        "lastUpdateMs": 0,
+        "searchHint": "beach weird elemental  neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-bearfolk-thunderstomper",
+        "name": "Bearfolk Thunderstomper",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/bearfolk-thunderstomper",
+        "lastUpdateMs": 0,
+        "searchHint": "bearfolk thunderstomper humanoid  chaotic neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-beetle-clacker-soldier",
+        "name": "Beetle, Clacker Soldier",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/beetle-clacker-soldier",
+        "lastUpdateMs": 0,
+        "searchHint": "beetle clacker soldier beast  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-beetle-clacker-swarm",
+        "name": "Beetle, Clacker Swarm",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/beetle-clacker-swarm",
+        "lastUpdateMs": 0,
+        "searchHint": "beetle clacker swarm beast  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-belu",
+        "name": "Belu",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/belu",
+        "lastUpdateMs": 0,
+        "searchHint": "belu giant  chaotic good",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-berberoka",
+        "name": "Berberoka",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/berberoka",
+        "lastUpdateMs": 0,
+        "searchHint": "berberoka giant  neutral",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-birgemon-seal",
+        "name": "Birgemon Seal",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/birgemon-seal",
+        "lastUpdateMs": 0,
+        "searchHint": "birgemon seal aberration  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-black-patch",
+        "name": "Black Patch",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/black-patch",
+        "lastUpdateMs": 0,
+        "searchHint": "black patch ooze  unaligned",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-black-shuck",
+        "name": "Black Shuck",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/black-shuck",
+        "lastUpdateMs": 0,
+        "searchHint": "black shuck fiend  chaotic evil",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-blaspheming-hand",
+        "name": "Blaspheming Hand",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/blaspheming-hand",
+        "lastUpdateMs": 0,
+        "searchHint": "blaspheming hand fiend  lawful evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-blestsessebe",
+        "name": "Blestsessebe",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/blestsessebe",
+        "lastUpdateMs": 0,
+        "searchHint": "blestsessebe celestial  neutral good",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-blood-barnacle",
+        "name": "Blood Barnacle",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/blood-barnacle",
+        "lastUpdateMs": 0,
+        "searchHint": "blood barnacle beast  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-blood-flurry",
+        "name": "Blood Flurry",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/blood-flurry",
+        "lastUpdateMs": 0,
+        "searchHint": "blood flurry aberration  neutral evil",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-bone-collector",
+        "name": "Bone Collector",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/bone-collector",
+        "lastUpdateMs": 0,
+        "searchHint": "bone collector undead  neutral evil",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-bone-lord",
+        "name": "Bone Lord",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/bone-lord",
+        "lastUpdateMs": 0,
+        "searchHint": "bone lord undead  neutral evil",
+        "filterDimensions": {
+            "level": "19",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-brain-coral",
+        "name": "Brain Coral",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/brain-coral",
+        "lastUpdateMs": 0,
+        "searchHint": "brain coral aberration  neutral evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-brownie",
+        "name": "Brownie",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/brownie",
+        "lastUpdateMs": 0,
+        "searchHint": "brownie fey  neutral good",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-brownie-beastrider",
+        "name": "Brownie Beastrider",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/brownie-beastrider",
+        "lastUpdateMs": 0,
+        "searchHint": "brownie beastrider fey  neutral good",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-brownie-mystic",
+        "name": "Brownie Mystic",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/brownie-mystic",
+        "lastUpdateMs": 0,
+        "searchHint": "brownie mystic fey  neutral good",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-brumalek",
+        "name": "Brumalek",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/brumalek",
+        "lastUpdateMs": 0,
+        "searchHint": "brumalek beast  unaligned",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-caldera-kite",
+        "name": "Caldera Kite",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/caldera-kite",
+        "lastUpdateMs": 0,
+        "searchHint": "caldera kite monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-capybear",
+        "name": "Capybear",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/capybear",
+        "lastUpdateMs": 0,
+        "searchHint": "capybear monstrosity  neutral",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-caretaker-weevil",
+        "name": "Caretaker Weevil",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/caretaker-weevil",
+        "lastUpdateMs": 0,
+        "searchHint": "caretaker weevil beast  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-catamount",
+        "name": "Catamount",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/catamount",
+        "lastUpdateMs": 0,
+        "searchHint": "catamount monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-catonoctrix",
+        "name": "Catonoctrix",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/catonoctrix",
+        "lastUpdateMs": 0,
+        "searchHint": "catonoctrix aberration  neutral evil",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-catterball",
+        "name": "Catterball",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/catterball",
+        "lastUpdateMs": 0,
+        "searchHint": "catterball fey  chaotic neutral",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-cave-mimic",
+        "name": "Cave Mimic",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/cave-mimic",
+        "lastUpdateMs": 0,
+        "searchHint": "cave mimic monstrosity  neutral",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-cave-sovereign",
+        "name": "Cave Sovereign",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/cave-sovereign",
+        "lastUpdateMs": 0,
+        "searchHint": "cave sovereign aberration  chaotic evil",
+        "filterDimensions": {
+            "level": "16",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-chaos-creeper",
+        "name": "Chaos Creeper",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/chaos-creeper",
+        "lastUpdateMs": 0,
+        "searchHint": "chaos creeper plant  chaotic neutral",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-chaos-raptor",
+        "name": "Chaos Raptor",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/chaos-raptor",
+        "lastUpdateMs": 0,
+        "searchHint": "chaos raptor monstrosity  chaotic neutral",
+        "filterDimensions": {
+            "level": "13",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-chemosit",
+        "name": "Chemosit",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/chemosit",
+        "lastUpdateMs": 0,
+        "searchHint": "chemosit fiend  neutral evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-chimera-royal",
+        "name": "Chimera, Royal",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/chimera-royal",
+        "lastUpdateMs": 0,
+        "searchHint": "chimera royal monstrosity  neutral evil",
+        "filterDimensions": {
+            "level": "15",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-chroma-lizard",
+        "name": "Chroma Lizard",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/chroma-lizard",
+        "lastUpdateMs": 0,
+        "searchHint": "chroma lizard beast  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-climbing-vine",
+        "name": "Climbing Vine",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/climbing-vine",
+        "lastUpdateMs": 0,
+        "searchHint": "climbing vine plant  unaligned",
+        "filterDimensions": {
+            "level": "1/8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-clockwork-armadillo",
+        "name": "Clockwork Armadillo",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/clockwork-armadillo",
+        "lastUpdateMs": 0,
+        "searchHint": "clockwork armadillo construct  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-clockwork-conductor",
+        "name": "Clockwork Conductor",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/clockwork-conductor",
+        "lastUpdateMs": 0,
+        "searchHint": "clockwork conductor construct  lawful neutral",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-clockwork-pugilist",
+        "name": "Clockwork Pugilist",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/clockwork-pugilist",
+        "lastUpdateMs": 0,
+        "searchHint": "clockwork pugilist construct  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-clockwork-scorpion",
+        "name": "Clockwork Scorpion",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/clockwork-scorpion",
+        "lastUpdateMs": 0,
+        "searchHint": "clockwork scorpion construct  unaligned",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-clockwork-tactician",
+        "name": "Clockwork Tactician",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/clockwork-tactician",
+        "lastUpdateMs": 0,
+        "searchHint": "clockwork tactician construct  lawful neutral",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-cloudhoof-assassin",
+        "name": "Cloudhoof Assassin",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/cloudhoof-assassin",
+        "lastUpdateMs": 0,
+        "searchHint": "cloudhoof assassin beast  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-coastline-reaper",
+        "name": "Coastline Reaper",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/coastline-reaper",
+        "lastUpdateMs": 0,
+        "searchHint": "coastline reaper monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-conniption-bug",
+        "name": "Conniption Bug",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/conniption-bug",
+        "lastUpdateMs": 0,
+        "searchHint": "conniption bug beast  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-copperkill-slime",
+        "name": "Copperkill Slime",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/copperkill-slime",
+        "lastUpdateMs": 0,
+        "searchHint": "copperkill slime ooze  unaligned",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-corpselight-moth",
+        "name": "Corpselight Moth",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/corpselight-moth",
+        "lastUpdateMs": 0,
+        "searchHint": "corpselight moth beast  unaligned",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-cosmic-symphony",
+        "name": "Cosmic Symphony",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/cosmic-symphony",
+        "lastUpdateMs": 0,
+        "searchHint": "cosmic symphony celestial  unaligned",
+        "filterDimensions": {
+            "level": "15",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-crab-duffel",
+        "name": "Crab, Duffel",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/crab-duffel",
+        "lastUpdateMs": 0,
+        "searchHint": "crab duffel monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-crab-razorback",
+        "name": "Crab, Razorback",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/crab-razorback",
+        "lastUpdateMs": 0,
+        "searchHint": "crab razorback beast  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-crab-samurai",
+        "name": "Crab, Samurai",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/crab-samurai",
+        "lastUpdateMs": 0,
+        "searchHint": "crab samurai beast  lawful neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-crystallite",
+        "name": "Crystallite",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/crystallite",
+        "lastUpdateMs": 0,
+        "searchHint": "crystallite giant  lawful neutral",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-cueyatl-warchief",
+        "name": "Cueyatl Warchief",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/cueyatl-warchief",
+        "lastUpdateMs": 0,
+        "searchHint": "cueyatl warchief humanoid  lawful evil",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-cyonaxin",
+        "name": "Cyonaxin",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/cyonaxin",
+        "lastUpdateMs": 0,
+        "searchHint": "cyonaxin celestial  chaotic good",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-daeodon",
+        "name": "Daeodon",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/daeodon",
+        "lastUpdateMs": 0,
+        "searchHint": "daeodon beast  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-dawnfly",
+        "name": "Dawnfly",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dawnfly",
+        "lastUpdateMs": 0,
+        "searchHint": "dawnfly beast  unaligned",
+        "filterDimensions": {
+            "level": "19",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-dawnfly-desolation-nymph",
+        "name": "Dawnfly, Desolation Nymph",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dawnfly-desolation-nymph",
+        "lastUpdateMs": 0,
+        "searchHint": "dawnfly desolation nymph beast  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-death-worm",
+        "name": "Death Worm",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/death-worm",
+        "lastUpdateMs": 0,
+        "searchHint": "death worm monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-demon-balbazu",
+        "name": "Demon, Balbazu",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/demon-balbazu",
+        "lastUpdateMs": 0,
+        "searchHint": "demon balbazu fiend  chaotic evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-demon-inciter",
+        "name": "Demon, Inciter",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/demon-inciter",
+        "lastUpdateMs": 0,
+        "searchHint": "demon inciter fiend  chaotic evil",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-demon-kogukhpak",
+        "name": "Demon, Kogukhpak",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/demon-kogukhpak",
+        "lastUpdateMs": 0,
+        "searchHint": "demon kogukhpak fiend  chaotic evil",
+        "filterDimensions": {
+            "level": "18",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-demon-leech",
+        "name": "Demon, Leech",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/demon-leech",
+        "lastUpdateMs": 0,
+        "searchHint": "demon leech fiend  chaotic evil",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-demon-maha",
+        "name": "Demon, Maha",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/demon-maha",
+        "lastUpdateMs": 0,
+        "searchHint": "demon maha fiend  chaotic evil",
+        "filterDimensions": {
+            "level": "12",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-demon-vetala",
+        "name": "Demon, Vetala",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/demon-vetala",
+        "lastUpdateMs": 0,
+        "searchHint": "demon vetala fiend  chaotic evil",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-derro-abysswalker",
+        "name": "Derro, Abysswalker",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/derro-abysswalker",
+        "lastUpdateMs": 0,
+        "searchHint": "derro abysswalker humanoid  chaotic evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-derro-hellforged",
+        "name": "Derro, Hellforged",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/derro-hellforged",
+        "lastUpdateMs": 0,
+        "searchHint": "derro hellforged humanoid  lawful evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-derro-voidwarped",
+        "name": "Derro, Voidwarped",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/derro-voidwarped",
+        "lastUpdateMs": 0,
+        "searchHint": "derro voidwarped humanoid  neutral evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-desert-slime",
+        "name": "Desert Slime",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/desert-slime",
+        "lastUpdateMs": 0,
+        "searchHint": "desert slime ooze  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-despair-and-anger",
+        "name": "Despair And Anger",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/despair-and-anger",
+        "lastUpdateMs": 0,
+        "searchHint": "despair and anger celestial  neutral evil",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-devil-devilflame-juggler",
+        "name": "Devil, Devilflame Juggler",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/devil-devilflame-juggler",
+        "lastUpdateMs": 0,
+        "searchHint": "devil devilflame juggler fiend  lawful evil",
+        "filterDimensions": {
+            "level": "13",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-devil-infernal-tutor",
+        "name": "Devil, Infernal Tutor",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/devil-infernal-tutor",
+        "lastUpdateMs": 0,
+        "searchHint": "devil infernal tutor fiend  lawful evil",
+        "filterDimensions": {
+            "level": "13",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-devil-infernal-tutor-lesser",
+        "name": "Devil, Infernal Tutor, Lesser",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/devil-infernal-tutor-lesser",
+        "lastUpdateMs": 0,
+        "searchHint": "devil infernal tutor lesser fiend  lawful evil",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-devil-maelstrom",
+        "name": "Devil, Maelstrom",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/devil-maelstrom",
+        "lastUpdateMs": 0,
+        "searchHint": "devil maelstrom fiend  lawful evil",
+        "filterDimensions": {
+            "level": "12",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-devil-moldering",
+        "name": "Devil, Moldering",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/devil-moldering",
+        "lastUpdateMs": 0,
+        "searchHint": "devil moldering fiend  lawful evil",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-devil-rimepacted",
+        "name": "Devil, Rimepacted",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/devil-rimepacted",
+        "lastUpdateMs": 0,
+        "searchHint": "devil rimepacted fiend  lawful evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-devouring-angel",
+        "name": "Devouring Angel",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/devouring-angel",
+        "lastUpdateMs": 0,
+        "searchHint": "devouring angel aberration  neutral",
+        "filterDimensions": {
+            "level": "12",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-dinosaur-guardian-archaeopteryx",
+        "name": "Dinosaur, Guardian Archaeopteryx",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dinosaur-guardian-archaeopteryx",
+        "lastUpdateMs": 0,
+        "searchHint": "dinosaur guardian archaeopteryx beast  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-dinosaur-jeholopterus",
+        "name": "Dinosaur, Jeholopterus",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dinosaur-jeholopterus",
+        "lastUpdateMs": 0,
+        "searchHint": "dinosaur jeholopterus beast  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-dinosaur-razorfeather-raptor",
+        "name": "Dinosaur, Razorfeather Raptor",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dinosaur-razorfeather-raptor",
+        "lastUpdateMs": 0,
+        "searchHint": "dinosaur razorfeather raptor monstrosity  neutral evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-dinosaur-therizinosaurus",
+        "name": "Dinosaur, Therizinosaurus",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dinosaur-therizinosaurus",
+        "lastUpdateMs": 0,
+        "searchHint": "dinosaur therizinosaurus beast  unaligned",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-dinosaur-thundercall-hadrosaur",
+        "name": "Dinosaur, Thundercall Hadrosaur",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dinosaur-thundercall-hadrosaur",
+        "lastUpdateMs": 0,
+        "searchHint": "dinosaur thundercall hadrosaur monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-diomedian-horse",
+        "name": "Diomedian Horse",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/diomedian-horse",
+        "lastUpdateMs": 0,
+        "searchHint": "diomedian horse beast  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-dire-lionfish",
+        "name": "Dire Lionfish",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dire-lionfish",
+        "lastUpdateMs": 0,
+        "searchHint": "dire lionfish beast  unaligned",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-dire-owlbear",
+        "name": "Dire Owlbear",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dire-owlbear",
+        "lastUpdateMs": 0,
+        "searchHint": "dire owlbear monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-dire-pangolin",
+        "name": "Dire Pangolin",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dire-pangolin",
+        "lastUpdateMs": 0,
+        "searchHint": "dire pangolin beast  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-dire-wildebeest",
+        "name": "Dire Wildebeest",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dire-wildebeest",
+        "lastUpdateMs": 0,
+        "searchHint": "dire wildebeest beast  unaligned",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-div",
+        "name": "Div",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/div",
+        "lastUpdateMs": 0,
+        "searchHint": "div elemental  neutral evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-diving-gel",
+        "name": "Diving Gel",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/diving-gel",
+        "lastUpdateMs": 0,
+        "searchHint": "diving gel ooze  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-dokkaebi",
+        "name": "Dokkaebi",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dokkaebi",
+        "lastUpdateMs": 0,
+        "searchHint": "dokkaebi fey  chaotic neutral or chaotic good",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-doom-creeper",
+        "name": "Doom Creeper",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/doom-creeper",
+        "lastUpdateMs": 0,
+        "searchHint": "doom creeper plant  unaligned",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-doppelixir",
+        "name": "Doppelixir",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/doppelixir",
+        "lastUpdateMs": 0,
+        "searchHint": "doppelixir ooze  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-dragon-prismatic-adult",
+        "name": "Dragon, Prismatic Adult",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dragon-prismatic-adult",
+        "lastUpdateMs": 0,
+        "searchHint": "dragon prismatic adult dragon  neutral",
+        "filterDimensions": {
+            "level": "16",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-dragon-prismatic-ancient",
+        "name": "Dragon, Prismatic Ancient",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dragon-prismatic-ancient",
+        "lastUpdateMs": 0,
+        "searchHint": "dragon prismatic ancient dragon  neutral",
+        "filterDimensions": {
+            "level": "21",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-dragon-prismatic-wyrmling",
+        "name": "Dragon, Prismatic Wyrmling",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dragon-prismatic-wyrmling",
+        "lastUpdateMs": 0,
+        "searchHint": "dragon prismatic wyrmling dragon  neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-dragon-prismatic-young",
+        "name": "Dragon, Prismatic Young",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dragon-prismatic-young",
+        "lastUpdateMs": 0,
+        "searchHint": "dragon prismatic young dragon  neutral",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-dragon-sand-adult",
+        "name": "Dragon, Sand Adult",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dragon-sand-adult",
+        "lastUpdateMs": 0,
+        "searchHint": "dragon sand adult dragon  neutral evil",
+        "filterDimensions": {
+            "level": "18",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-dragon-sand-ancient",
+        "name": "Dragon, Sand Ancient",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dragon-sand-ancient",
+        "lastUpdateMs": 0,
+        "searchHint": "dragon sand ancient dragon  neutral evil",
+        "filterDimensions": {
+            "level": "23",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-dragon-sand-wyrmling",
+        "name": "Dragon, Sand Wyrmling",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dragon-sand-wyrmling",
+        "lastUpdateMs": 0,
+        "searchHint": "dragon sand wyrmling dragon  neutral evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-dragon-sand-young",
+        "name": "Dragon, Sand Young",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dragon-sand-young",
+        "lastUpdateMs": 0,
+        "searchHint": "dragon sand young dragon  neutral evil",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-dragonette-barnyard",
+        "name": "Dragonette, Barnyard",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dragonette-barnyard",
+        "lastUpdateMs": 0,
+        "searchHint": "dragonette barnyard dragon  neutral",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-dragonette-sedge",
+        "name": "Dragonette, Sedge",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dragonette-sedge",
+        "lastUpdateMs": 0,
+        "searchHint": "dragonette sedge dragon  neutral",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-dragonette-shovel",
+        "name": "Dragonette, Shovel",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dragonette-shovel",
+        "lastUpdateMs": 0,
+        "searchHint": "dragonette shovel dragon  neutral",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-drake-bakery",
+        "name": "Drake, Bakery",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/drake-bakery",
+        "lastUpdateMs": 0,
+        "searchHint": "drake bakery dragon  lawful neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-drake-cactus",
+        "name": "Drake, Cactus",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/drake-cactus",
+        "lastUpdateMs": 0,
+        "searchHint": "drake cactus dragon  neutral good",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-drake-ethereal",
+        "name": "Drake, Ethereal",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/drake-ethereal",
+        "lastUpdateMs": 0,
+        "searchHint": "drake ethereal dragon  chaotic neutral",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-drake-reef",
+        "name": "Drake, Reef",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/drake-reef",
+        "lastUpdateMs": 0,
+        "searchHint": "drake reef dragon  neutral evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-drake-riptide",
+        "name": "Drake, Riptide",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/drake-riptide",
+        "lastUpdateMs": 0,
+        "searchHint": "drake riptide dragon  lawful evil",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-drake-shepherd",
+        "name": "Drake, Shepherd",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/drake-shepherd",
+        "lastUpdateMs": 0,
+        "searchHint": "drake shepherd dragon  lawful neutral",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-drake-vapor",
+        "name": "Drake, Vapor",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/drake-vapor",
+        "lastUpdateMs": 0,
+        "searchHint": "drake vapor dragon  neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-drake-venom",
+        "name": "Drake, Venom",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/drake-venom",
+        "lastUpdateMs": 0,
+        "searchHint": "drake venom dragon  chaotic evil",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-dread-examiner",
+        "name": "Dread Examiner",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dread-examiner",
+        "lastUpdateMs": 0,
+        "searchHint": "dread examiner aberration  neutral evil",
+        "filterDimensions": {
+            "level": "21",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-drudge-pitcher",
+        "name": "Drudge Pitcher",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/drudge-pitcher",
+        "lastUpdateMs": 0,
+        "searchHint": "drudge pitcher plant  unaligned",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-dubius",
+        "name": "Dubius",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dubius",
+        "lastUpdateMs": 0,
+        "searchHint": "dubius fiend  neutral evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-dust-grazer",
+        "name": "Dust Grazer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dust-grazer",
+        "lastUpdateMs": 0,
+        "searchHint": "dust grazer aberration  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-dwarf-angler",
+        "name": "Dwarf, Angler",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dwarf-angler",
+        "lastUpdateMs": 0,
+        "searchHint": "dwarf angler humanoid  neutral evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-dwarf-firecracker",
+        "name": "Dwarf, Firecracker",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dwarf-firecracker",
+        "lastUpdateMs": 0,
+        "searchHint": "dwarf firecracker humanoid  any alignment",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-dwarf-pike-guard",
+        "name": "Dwarf, Pike Guard",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dwarf-pike-guard",
+        "lastUpdateMs": 0,
+        "searchHint": "dwarf pike guard humanoid  lawful neutral",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-dwarf-pike-guard-captain",
+        "name": "Dwarf, Pike Guard Captain",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dwarf-pike-guard-captain",
+        "lastUpdateMs": 0,
+        "searchHint": "dwarf pike guard captain humanoid  lawful neutral",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-elemental-permafrost",
+        "name": "Elemental, Permafrost",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/elemental-permafrost",
+        "lastUpdateMs": 0,
+        "searchHint": "elemental permafrost elemental  neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-elemental-rockslide",
+        "name": "Elemental, Rockslide",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/elemental-rockslide",
+        "lastUpdateMs": 0,
+        "searchHint": "elemental rockslide elemental  neutral",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-elf-shadow-fey-executioner",
+        "name": "Elf, Shadow Fey Executioner",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/elf-shadow-fey-executioner",
+        "lastUpdateMs": 0,
+        "searchHint": "elf shadow fey executioner humanoid  lawful evil",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-ember-glider",
+        "name": "Ember Glider",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ember-glider",
+        "lastUpdateMs": 0,
+        "searchHint": "ember glider monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-equitox",
+        "name": "Equitox",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/equitox",
+        "lastUpdateMs": 0,
+        "searchHint": "equitox fiend  chaotic evil",
+        "filterDimensions": {
+            "level": "13",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-erina-tussler",
+        "name": "Erina Tussler",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/erina-tussler",
+        "lastUpdateMs": 0,
+        "searchHint": "erina tussler humanoid  neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-ettin-kobold",
+        "name": "Ettin, Kobold",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ettin-kobold",
+        "lastUpdateMs": 0,
+        "searchHint": "ettin kobold giant  lawful evil",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-faux-garou",
+        "name": "Faux-Garou",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/faux-garou",
+        "lastUpdateMs": 0,
+        "searchHint": "fauxgarou construct  unaligned",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-forgotten-regent",
+        "name": "Forgotten Regent",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/forgotten-regent",
+        "lastUpdateMs": 0,
+        "searchHint": "forgotten regent undead  lawful neutral",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-frostjack",
+        "name": "Frostjack",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/frostjack",
+        "lastUpdateMs": 0,
+        "searchHint": "frostjack fey  neutral evil",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-fungi-duskwilt",
+        "name": "Fungi, Duskwilt",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/fungi-duskwilt",
+        "lastUpdateMs": 0,
+        "searchHint": "fungi duskwilt plant  lawful neutral",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-fungi-mulcher",
+        "name": "Fungi, Mulcher",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/fungi-mulcher",
+        "lastUpdateMs": 0,
+        "searchHint": "fungi mulcher plant  unaligned",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-fungi-mush-marcher",
+        "name": "Fungi, Mush Marcher",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/fungi-mush-marcher",
+        "lastUpdateMs": 0,
+        "searchHint": "fungi mush marcher plant  neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-fungi-void-fungus",
+        "name": "Fungi, Void Fungus",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/fungi-void-fungus",
+        "lastUpdateMs": 0,
+        "searchHint": "fungi void fungus plant  chaotic neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-garmvvolf",
+        "name": "Garmvvolf",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/garmvvolf",
+        "lastUpdateMs": 0,
+        "searchHint": "garmvvolf monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-gearmass",
+        "name": "Gearmass",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/gearmass",
+        "lastUpdateMs": 0,
+        "searchHint": "gearmass ooze  unaligned",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-ghost-knight-templar",
+        "name": "Ghost Knight Templar",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ghost-knight-templar",
+        "lastUpdateMs": 0,
+        "searchHint": "ghost knight templar undead  lawful evil",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-giant-firestorm",
+        "name": "Giant, Firestorm",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/giant-firestorm",
+        "lastUpdateMs": 0,
+        "searchHint": "giant firestorm giant  neutral",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-giant-flea",
+        "name": "Giant Flea",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/giant-flea",
+        "lastUpdateMs": 0,
+        "searchHint": "giant flea beast  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-giant-flea-swarm",
+        "name": "Giant Flea Swarm",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/giant-flea-swarm",
+        "lastUpdateMs": 0,
+        "searchHint": "giant flea swarm beast  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-giant-hellfire",
+        "name": "Giant, Hellfire",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/giant-hellfire",
+        "lastUpdateMs": 0,
+        "searchHint": "giant hellfire giant  neutral good",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-giant-lantern",
+        "name": "Giant, Lantern",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/giant-lantern",
+        "lastUpdateMs": 0,
+        "searchHint": "giant lantern giant  neutral",
+        "filterDimensions": {
+            "level": "12",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-giant-mantis-shrimp",
+        "name": "Giant Mantis Shrimp",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/giant-mantis-shrimp",
+        "lastUpdateMs": 0,
+        "searchHint": "giant mantis shrimp beast  unaligned",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-giant-mole-lizard",
+        "name": "Giant Mole Lizard",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/giant-mole-lizard",
+        "lastUpdateMs": 0,
+        "searchHint": "giant mole lizard beast  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-giant-pufferfish",
+        "name": "Giant Pufferfish",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/giant-pufferfish",
+        "lastUpdateMs": 0,
+        "searchHint": "giant pufferfish beast  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-giant-shire",
+        "name": "Giant, Shire",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/giant-shire",
+        "lastUpdateMs": 0,
+        "searchHint": "giant shire giant  lawful evil",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-giant-thursir-armorer",
+        "name": "Giant, Thursir Armorer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/giant-thursir-armorer",
+        "lastUpdateMs": 0,
+        "searchHint": "giant thursir armorer giant  lawful evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-giant-thursir-hearth-priestess",
+        "name": "Giant, Thursir Hearth Priestess",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/giant-thursir-hearth-priestess",
+        "lastUpdateMs": 0,
+        "searchHint": "giant thursir hearth priestess giant  lawful evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-giant-walking-stick",
+        "name": "Giant Walking Stick",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/giant-walking-stick",
+        "lastUpdateMs": 0,
+        "searchHint": "giant walking stick beast  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-gigantura",
+        "name": "Gigantura",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/gigantura",
+        "lastUpdateMs": 0,
+        "searchHint": "gigantura monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "13",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-glacial-crawler",
+        "name": "Glacial Crawler",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/glacial-crawler",
+        "lastUpdateMs": 0,
+        "searchHint": "glacial crawler aberration  unaligned",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-gnyan",
+        "name": "Gnyan",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/gnyan",
+        "lastUpdateMs": 0,
+        "searchHint": "gnyan elemental  neutral good",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-goblin-siege-engine",
+        "name": "Goblin Siege Engine",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/goblin-siege-engine",
+        "lastUpdateMs": 0,
+        "searchHint": "goblin siege engine construct  unaligned",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-godslayer",
+        "name": "Godslayer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/godslayer",
+        "lastUpdateMs": 0,
+        "searchHint": "godslayer construct  unaligned",
+        "filterDimensions": {
+            "level": "30",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-golem-barnyard",
+        "name": "Golem, Barnyard",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/golem-barnyard",
+        "lastUpdateMs": 0,
+        "searchHint": "golem barnyard construct  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-golem-chain",
+        "name": "Golem, Chain",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/golem-chain",
+        "lastUpdateMs": 0,
+        "searchHint": "golem chain construct  unaligned",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-golem-ice",
+        "name": "Golem, Ice",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/golem-ice",
+        "lastUpdateMs": 0,
+        "searchHint": "golem ice construct  unaligned",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-golem-origami",
+        "name": "Golem, Origami",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/golem-origami",
+        "lastUpdateMs": 0,
+        "searchHint": "golem origami construct  unaligned",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-golem-tar",
+        "name": "Golem, Tar",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/golem-tar",
+        "lastUpdateMs": 0,
+        "searchHint": "golem tar construct  unaligned",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-gremlin-bilge",
+        "name": "Gremlin, Bilge",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/gremlin-bilge",
+        "lastUpdateMs": 0,
+        "searchHint": "gremlin bilge fey  chaotic evil",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-gremlin-bilge-bosun",
+        "name": "Gremlin, Bilge Bosun",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/gremlin-bilge-bosun",
+        "lastUpdateMs": 0,
+        "searchHint": "gremlin bilge bosun fey  neutral evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-gremlin-rum-story-keeper",
+        "name": "Gremlin, Rum Story Keeper",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/gremlin-rum-story-keeper",
+        "lastUpdateMs": 0,
+        "searchHint": "gremlin rum story keeper fey  chaotic evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-grivid",
+        "name": "Grivid",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/grivid",
+        "lastUpdateMs": 0,
+        "searchHint": "grivid aberration  neutral",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-grolar-bear",
+        "name": "Grolar Bear",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/grolar-bear",
+        "lastUpdateMs": 0,
+        "searchHint": "grolar bear beast  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-grolar-bear-alpha",
+        "name": "Grolar Bear Alpha",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/grolar-bear-alpha",
+        "lastUpdateMs": 0,
+        "searchHint": "grolar bear alpha monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-gullkin",
+        "name": "Gullkin",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/gullkin",
+        "lastUpdateMs": 0,
+        "searchHint": "gullkin humanoid  any alignment",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-gullkin-hunter",
+        "name": "Gullkin Hunter",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/gullkin-hunter",
+        "lastUpdateMs": 0,
+        "searchHint": "gullkin hunter humanoid  any alignment",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-haakjir",
+        "name": "Haakjir",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/haakjir",
+        "lastUpdateMs": 0,
+        "searchHint": "haakjir monstrosity  neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-hag-brine",
+        "name": "Hag, Brine",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/hag-brine",
+        "lastUpdateMs": 0,
+        "searchHint": "hag brine fey  lawful evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-hag-floe",
+        "name": "Hag, Floe",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/hag-floe",
+        "lastUpdateMs": 0,
+        "searchHint": "hag floe fey  neutral evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-hag-pesta",
+        "name": "Hag, Pesta",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/hag-pesta",
+        "lastUpdateMs": 0,
+        "searchHint": "hag pesta fey  chaotic neutral",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-hag-wood",
+        "name": "Hag, Wood",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/hag-wood",
+        "lastUpdateMs": 0,
+        "searchHint": "hag wood fey  neutral evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-harpy-plague",
+        "name": "Harpy, Plague",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/harpy-plague",
+        "lastUpdateMs": 0,
+        "searchHint": "harpy plague monstrosity  neutral evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-harvest-horse",
+        "name": "Harvest Horse",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/harvest-horse",
+        "lastUpdateMs": 0,
+        "searchHint": "harvest horse construct  unaligned",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-herd-skulker",
+        "name": "Herd Skulker",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/herd-skulker",
+        "lastUpdateMs": 0,
+        "searchHint": "herd skulker monstrosity  neutral evil",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-hinderling",
+        "name": "Hinderling",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/hinderling",
+        "lastUpdateMs": 0,
+        "searchHint": "hinderling fey  chaotic neutral",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-hippopotamus",
+        "name": "Hippopotamus",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/hippopotamus",
+        "lastUpdateMs": 0,
+        "searchHint": "hippopotamus beast  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-hippopotamus-sacred",
+        "name": "Hippopotamus, Sacred",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/hippopotamus-sacred",
+        "lastUpdateMs": 0,
+        "searchHint": "hippopotamus sacred celestial  any alignment as its deity",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-hirudine-stalker",
+        "name": "Hirudine Stalker",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/hirudine-stalker",
+        "lastUpdateMs": 0,
+        "searchHint": "hirudine stalker monstrosity  neutral evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-howler-of-the-hill",
+        "name": "Howler Of The Hill",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/howler-of-the-hill",
+        "lastUpdateMs": 0,
+        "searchHint": "howler of the hill aberration  neutral evil",
+        "filterDimensions": {
+            "level": "14",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-hvalfiskr",
+        "name": "Hvalfiskr",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/hvalfiskr",
+        "lastUpdateMs": 0,
+        "searchHint": "hvalfiskr giant  lawful neutral",
+        "filterDimensions": {
+            "level": "15",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-ibexian",
+        "name": "Ibexian",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ibexian",
+        "lastUpdateMs": 0,
+        "searchHint": "ibexian fiend  chaotic evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-ice-urchin",
+        "name": "Ice Urchin",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ice-urchin",
+        "lastUpdateMs": 0,
+        "searchHint": "ice urchin monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-ice-willow",
+        "name": "Ice Willow",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ice-willow",
+        "lastUpdateMs": 0,
+        "searchHint": "ice willow plant  neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-iceworm",
+        "name": "Iceworm",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/iceworm",
+        "lastUpdateMs": 0,
+        "searchHint": "iceworm monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-imperator",
+        "name": "Imperator",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/imperator",
+        "lastUpdateMs": 0,
+        "searchHint": "imperator monstrosity  neutral",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-imperator-penguin-swarm",
+        "name": "Imperator, Penguin Swarm",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/imperator-penguin-swarm",
+        "lastUpdateMs": 0,
+        "searchHint": "imperator penguin swarm beast swarm unaligned",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast (Swarm)"
+        }
+    },
+    {
+        "id": "open5e-incandescent-one",
+        "name": "Incandescent One",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/incandescent-one",
+        "lastUpdateMs": 0,
+        "searchHint": "incandescent one celestial  chaotic good",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-ion-slime",
+        "name": "Ion Slime",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ion-slime",
+        "lastUpdateMs": 0,
+        "searchHint": "ion slime ooze  unaligned",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-jinnborn-air-pirate",
+        "name": "Jinnborn Air Pirate",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/jinnborn-air-pirate",
+        "lastUpdateMs": 0,
+        "searchHint": "jinnborn air pirate humanoid  nonlawful",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-jubjub-bird",
+        "name": "Jubjub Bird",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/jubjub-bird",
+        "lastUpdateMs": 0,
+        "searchHint": "jubjub bird beast  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-juniper-sheriff",
+        "name": "Juniper Sheriff",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/juniper-sheriff",
+        "lastUpdateMs": 0,
+        "searchHint": "juniper sheriff fey  lawful neutral",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-karkadann",
+        "name": "Karkadann",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/karkadann",
+        "lastUpdateMs": 0,
+        "searchHint": "karkadann monstrosity  neutral",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-khamaseen",
+        "name": "Khamaseen",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/khamaseen",
+        "lastUpdateMs": 0,
+        "searchHint": "khamaseen elemental  neutral",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-khargi",
+        "name": "Khargi",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/khargi",
+        "lastUpdateMs": 0,
+        "searchHint": "khargi fiend  neutral evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-kobold-drake-rider",
+        "name": "Kobold, Drake Rider",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/kobold-drake-rider",
+        "lastUpdateMs": 0,
+        "searchHint": "kobold drake rider humanoid  lawful neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-kobold-empyrean",
+        "name": "Kobold, Empyrean",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/kobold-empyrean",
+        "lastUpdateMs": 0,
+        "searchHint": "kobold empyrean celestial  neutral",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-kobold-ghost-hunter",
+        "name": "Kobold, Ghost Hunter",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/kobold-ghost-hunter",
+        "lastUpdateMs": 0,
+        "searchHint": "kobold ghost hunter humanoid  lawful neutral",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-kobold-leviathan-hunter",
+        "name": "Kobold, Leviathan Hunter",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/kobold-leviathan-hunter",
+        "lastUpdateMs": 0,
+        "searchHint": "kobold leviathan hunter humanoid  chaotic neutral",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-kobold-planes-hunter",
+        "name": "Kobold, Planes Hunter",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/kobold-planes-hunter",
+        "lastUpdateMs": 0,
+        "searchHint": "kobold planes hunter humanoid  neutral",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-kobold-sapper",
+        "name": "Kobold, Sapper",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/kobold-sapper",
+        "lastUpdateMs": 0,
+        "searchHint": "kobold sapper humanoid  lawful neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-lakescourge-lotus",
+        "name": "Lakescourge Lotus",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/lakescourge-lotus",
+        "lastUpdateMs": 0,
+        "searchHint": "lakescourge lotus undead  chaotic evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-leashed-lesion",
+        "name": "Leashed Lesion",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/leashed-lesion",
+        "lastUpdateMs": 0,
+        "searchHint": "leashed lesion aberration  chaotic evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-ley-wanderer",
+        "name": "Ley Wanderer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ley-wanderer",
+        "lastUpdateMs": 0,
+        "searchHint": "ley wanderer aberration  neutral",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-life-broker",
+        "name": "Life Broker",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/life-broker",
+        "lastUpdateMs": 0,
+        "searchHint": "life broker fey  lawful neutral",
+        "filterDimensions": {
+            "level": "13",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-light-eater",
+        "name": "Light Eater",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/light-eater",
+        "lastUpdateMs": 0,
+        "searchHint": "light eater aberration  unaligned",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-living-soot",
+        "name": "Living Soot",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/living-soot",
+        "lastUpdateMs": 0,
+        "searchHint": "living soot elemental  neutral",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-lobe-lemur",
+        "name": "Lobe Lemur",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/lobe-lemur",
+        "lastUpdateMs": 0,
+        "searchHint": "lobe lemur monstrosity  neutral",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-lycanthrope-werecrocodile",
+        "name": "Lycanthrope, Werecrocodile",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/lycanthrope-werecrocodile",
+        "lastUpdateMs": 0,
+        "searchHint": "lycanthrope werecrocodile humanoid  neutral evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-lycanthrope-wereotter",
+        "name": "Lycanthrope, Wereotter",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/lycanthrope-wereotter",
+        "lastUpdateMs": 0,
+        "searchHint": "lycanthrope wereotter humanoid  chaotic good",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-malmbjorn",
+        "name": "Malmbjorn",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/malmbjorn",
+        "lastUpdateMs": 0,
+        "searchHint": "malmbjorn monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "15",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-meerkat",
+        "name": "Meerkat",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/meerkat",
+        "lastUpdateMs": 0,
+        "searchHint": "meerkat beast  unaligned",
+        "filterDimensions": {
+            "level": "0",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-meerkats-swarm",
+        "name": "Meerkats, Swarm",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/meerkats-swarm",
+        "lastUpdateMs": 0,
+        "searchHint": "meerkats swarm beast  unaligned",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-megantereon",
+        "name": "Megantereon",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/megantereon",
+        "lastUpdateMs": 0,
+        "searchHint": "megantereon beast  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-midnight-sun",
+        "name": "Midnight Sun",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/midnight-sun",
+        "lastUpdateMs": 0,
+        "searchHint": "midnight sun aberration  neutral evil",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-mindshard",
+        "name": "Mindshard",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/mindshard",
+        "lastUpdateMs": 0,
+        "searchHint": "mindshard aberration  neutral evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-minotaur-ravening",
+        "name": "Minotaur, Ravening",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/minotaur-ravening",
+        "lastUpdateMs": 0,
+        "searchHint": "minotaur ravening monstrosity  chaotic evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-monkey’s-bane-vine",
+        "name": "Monkey’S Bane Vine",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/monkey’s-bane-vine",
+        "lastUpdateMs": 0,
+        "searchHint": "monkeys bane vine plant  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-moon-weaver",
+        "name": "Moon Weaver",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/moon-weaver",
+        "lastUpdateMs": 0,
+        "searchHint": "moon weaver beast  neutral",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-moonless-hunter",
+        "name": "Moonless Hunter",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/moonless-hunter",
+        "lastUpdateMs": 0,
+        "searchHint": "moonless hunter fey  neutral evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-moonweb",
+        "name": "Moonweb",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/moonweb",
+        "lastUpdateMs": 0,
+        "searchHint": "moonweb aberration  unaligned",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-moppet",
+        "name": "Moppet",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/moppet",
+        "lastUpdateMs": 0,
+        "searchHint": "moppet construct  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-mortifera",
+        "name": "Mortifera",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/mortifera",
+        "lastUpdateMs": 0,
+        "searchHint": "mortifera aberration  chaotic neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-mudmutt",
+        "name": "Mudmutt",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/mudmutt",
+        "lastUpdateMs": 0,
+        "searchHint": "mudmutt monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-mummy-peat",
+        "name": "Mummy, Peat",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/mummy-peat",
+        "lastUpdateMs": 0,
+        "searchHint": "mummy peat undead  neutral evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-muraenid",
+        "name": "Muraenid",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/muraenid",
+        "lastUpdateMs": 0,
+        "searchHint": "muraenid monstrosity  neutral evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-musk-deer",
+        "name": "Musk Deer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/musk-deer",
+        "lastUpdateMs": 0,
+        "searchHint": "musk deer beast  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-musk-deer-swarm",
+        "name": "Musk Deer, Swarm",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/musk-deer-swarm",
+        "lastUpdateMs": 0,
+        "searchHint": "musk deer swarm beast  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-myrmex",
+        "name": "Myrmex",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/myrmex",
+        "lastUpdateMs": 0,
+        "searchHint": "myrmex elemental  neutral good",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-myrmex-speaker",
+        "name": "Myrmex Speaker",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/myrmex-speaker",
+        "lastUpdateMs": 0,
+        "searchHint": "myrmex speaker elemental  neutral good",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-myrmex-young",
+        "name": "Myrmex, Young",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/myrmex-young",
+        "lastUpdateMs": 0,
+        "searchHint": "myrmex young elemental  neutral good",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-nariphon",
+        "name": "Nariphon",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/nariphon",
+        "lastUpdateMs": 0,
+        "searchHint": "nariphon plant  neutral",
+        "filterDimensions": {
+            "level": "13",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-nautiloid",
+        "name": "Nautiloid",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/nautiloid",
+        "lastUpdateMs": 0,
+        "searchHint": "nautiloid elemental  neutral good",
+        "filterDimensions": {
+            "level": "13",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-necrotech-bonecage-constrictor",
+        "name": "Necrotech Bonecage Constrictor",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/necrotech-bonecage-constrictor",
+        "lastUpdateMs": 0,
+        "searchHint": "necrotech bonecage constrictor undead  neutral evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-necrotech-reaver",
+        "name": "Necrotech Reaver",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/necrotech-reaver",
+        "lastUpdateMs": 0,
+        "searchHint": "necrotech reaver undead  neutral evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-necrotech-thunderer",
+        "name": "Necrotech Thunderer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/necrotech-thunderer",
+        "lastUpdateMs": 0,
+        "searchHint": "necrotech thunderer undead  neutral evil",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-niya-atha-raja",
+        "name": "Niya-Atha Raja",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/niya-atha-raja",
+        "lastUpdateMs": 0,
+        "searchHint": "niyaatha raja fey  lawful neutral",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-niya-atha-sorcerer",
+        "name": "Niya-Atha Sorcerer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/niya-atha-sorcerer",
+        "lastUpdateMs": 0,
+        "searchHint": "niyaatha sorcerer fey  lawful neutral",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-niya-atha-warrior",
+        "name": "Niya-Atha Warrior",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/niya-atha-warrior",
+        "lastUpdateMs": 0,
+        "searchHint": "niyaatha warrior fey  lawful neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-npc:-apostle",
+        "name": "Npc: Apostle",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/npc:-apostle",
+        "lastUpdateMs": 0,
+        "searchHint": "npc apostle humanoid  any alignment",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-npc:-atavist",
+        "name": "Npc: Atavist",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/npc:-atavist",
+        "lastUpdateMs": 0,
+        "searchHint": "npc atavist humanoid  lawful evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-npc:-breathstealer",
+        "name": "Npc: Breathstealer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/npc:-breathstealer",
+        "lastUpdateMs": 0,
+        "searchHint": "npc breathstealer humanoid  any nongood",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-npc:-cultist-psychophant",
+        "name": "Npc: Cultist Psychophant",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/npc:-cultist-psychophant",
+        "lastUpdateMs": 0,
+        "searchHint": "npc cultist psychophant humanoid  any nongood alignment",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-npc:-field-commander",
+        "name": "Npc: Field Commander",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/npc:-field-commander",
+        "lastUpdateMs": 0,
+        "searchHint": "npc field commander humanoid  any alignment",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-npc:-first-servant",
+        "name": "Npc: First Servant",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/npc:-first-servant",
+        "lastUpdateMs": 0,
+        "searchHint": "npc first servant humanoid  any alignment",
+        "filterDimensions": {
+            "level": "12",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-npc:-fixer",
+        "name": "Npc: Fixer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/npc:-fixer",
+        "lastUpdateMs": 0,
+        "searchHint": "npc fixer humanoid  lawful neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-npc:-frost-afflicted",
+        "name": "Npc: Frost-Afflicted",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/npc:-frost-afflicted",
+        "lastUpdateMs": 0,
+        "searchHint": "npc frostafflicted humanoid  chaotic neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-npc:-infested-duelist",
+        "name": "Npc: Infested Duelist",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/npc:-infested-duelist",
+        "lastUpdateMs": 0,
+        "searchHint": "npc infested duelist humanoid  chaotic neutral",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-npc:-infiltrator",
+        "name": "Npc: Infiltrator",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/npc:-infiltrator",
+        "lastUpdateMs": 0,
+        "searchHint": "npc infiltrator humanoid  neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-npc:-merchant-captain",
+        "name": "Npc: Merchant Captain",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/npc:-merchant-captain",
+        "lastUpdateMs": 0,
+        "searchHint": "npc merchant captain humanoid  any alignment",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-npc:-warlock-of-the-genie-lord",
+        "name": "Npc: Warlock Of The Genie Lord",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/npc:-warlock-of-the-genie-lord",
+        "lastUpdateMs": 0,
+        "searchHint": "npc warlock of the genie lord humanoid  any alignment",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-npc:-wind-acolyte",
+        "name": "Npc: Wind Acolyte",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/npc:-wind-acolyte",
+        "lastUpdateMs": 0,
+        "searchHint": "npc wind acolyte humanoid  neutral",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-nullicorn",
+        "name": "Nullicorn",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/nullicorn",
+        "lastUpdateMs": 0,
+        "searchHint": "nullicorn aberration  chaotic evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-oaken-sentinel",
+        "name": "Oaken Sentinel",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/oaken-sentinel",
+        "lastUpdateMs": 0,
+        "searchHint": "oaken sentinel plant  unaligned",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-obeleric",
+        "name": "Obeleric",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/obeleric",
+        "lastUpdateMs": 0,
+        "searchHint": "obeleric aberration  chaotic evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-obsidian-ophidian",
+        "name": "Obsidian Ophidian",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/obsidian-ophidian",
+        "lastUpdateMs": 0,
+        "searchHint": "obsidian ophidian elemental  neutral",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-offal-walker",
+        "name": "Offal Walker",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/offal-walker",
+        "lastUpdateMs": 0,
+        "searchHint": "offal walker undead  neutral evil",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-ogre-alleybasher",
+        "name": "Ogre, Alleybasher",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ogre-alleybasher",
+        "lastUpdateMs": 0,
+        "searchHint": "ogre alleybasher giant  chaotic evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-ogre-black-sun",
+        "name": "Ogre, Black Sun",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ogre-black-sun",
+        "lastUpdateMs": 0,
+        "searchHint": "ogre black sun giant  lawful evil",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-ogre-cunning-artisan",
+        "name": "Ogre, Cunning Artisan",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ogre-cunning-artisan",
+        "lastUpdateMs": 0,
+        "searchHint": "ogre cunning artisan giant  neutral evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-ogre-kadag",
+        "name": "Ogre, Kadag",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ogre-kadag",
+        "lastUpdateMs": 0,
+        "searchHint": "ogre kadag giant  neutral evil",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-ogre-rainforest",
+        "name": "Ogre, Rainforest",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ogre-rainforest",
+        "lastUpdateMs": 0,
+        "searchHint": "ogre rainforest giant  chaotic evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-ogre-rockchewer",
+        "name": "Ogre, Rockchewer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ogre-rockchewer",
+        "lastUpdateMs": 0,
+        "searchHint": "ogre rockchewer giant  lawful neutral",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-ogre-void-blessed",
+        "name": "Ogre, Void Blessed",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ogre-void-blessed",
+        "lastUpdateMs": 0,
+        "searchHint": "ogre void blessed giant  chaotic evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-old-salt",
+        "name": "Old Salt",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/old-salt",
+        "lastUpdateMs": 0,
+        "searchHint": "old salt undead  neutral evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-ooze-leavesrot",
+        "name": "Ooze, Leavesrot",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ooze-leavesrot",
+        "lastUpdateMs": 0,
+        "searchHint": "ooze leavesrot ooze  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-ooze-manure",
+        "name": "Ooze, Manure",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ooze-manure",
+        "lastUpdateMs": 0,
+        "searchHint": "ooze manure ooze  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-ooze-scintillating",
+        "name": "Ooze, Scintillating",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ooze-scintillating",
+        "lastUpdateMs": 0,
+        "searchHint": "ooze scintillating ooze  neutral",
+        "filterDimensions": {
+            "level": "12",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-ooze-shoal",
+        "name": "Ooze, Shoal",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ooze-shoal",
+        "lastUpdateMs": 0,
+        "searchHint": "ooze shoal ooze  unaligned",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-ooze-sinkhole",
+        "name": "Ooze, Sinkhole",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ooze-sinkhole",
+        "lastUpdateMs": 0,
+        "searchHint": "ooze sinkhole ooze  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-ooze-sinoper",
+        "name": "Ooze, Sinoper",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ooze-sinoper",
+        "lastUpdateMs": 0,
+        "searchHint": "ooze sinoper ooze  unaligned",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-ooze-snow",
+        "name": "Ooze, Snow",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ooze-snow",
+        "lastUpdateMs": 0,
+        "searchHint": "ooze snow ooze  unaligned",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-painted-phantasm",
+        "name": "Painted Phantasm",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/painted-phantasm",
+        "lastUpdateMs": 0,
+        "searchHint": "painted phantasm construct  neutral",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-pelagic-blush-worm",
+        "name": "Pelagic Blush Worm",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/pelagic-blush-worm",
+        "lastUpdateMs": 0,
+        "searchHint": "pelagic blush worm monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-peri",
+        "name": "Peri",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/peri",
+        "lastUpdateMs": 0,
+        "searchHint": "peri elemental  chaotic good",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-pescavitus",
+        "name": "Pescavitus",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/pescavitus",
+        "lastUpdateMs": 0,
+        "searchHint": "pescavitus celestial  neutral good",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-phoenixborn",
+        "name": "Phoenixborn",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/phoenixborn",
+        "lastUpdateMs": 0,
+        "searchHint": "phoenixborn humanoid  any",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-phoenixborn-sorcerer",
+        "name": "Phoenixborn Sorcerer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/phoenixborn-sorcerer",
+        "lastUpdateMs": 0,
+        "searchHint": "phoenixborn sorcerer humanoid  any",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-porcellina",
+        "name": "Porcellina",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/porcellina",
+        "lastUpdateMs": 0,
+        "searchHint": "porcellina beast  unaligned",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-primordial-matriarch",
+        "name": "Primordial Matriarch",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/primordial-matriarch",
+        "lastUpdateMs": 0,
+        "searchHint": "primordial matriarch elemental  neutral",
+        "filterDimensions": {
+            "level": "21",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-primordial-surge",
+        "name": "Primordial Surge",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/primordial-surge",
+        "lastUpdateMs": 0,
+        "searchHint": "primordial surge elemental  neutral",
+        "filterDimensions": {
+            "level": "16",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-puffinfolk",
+        "name": "Puffinfolk",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/puffinfolk",
+        "lastUpdateMs": 0,
+        "searchHint": "puffinfolk humanoid  neutral",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-pyrite-pile",
+        "name": "Pyrite Pile",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/pyrite-pile",
+        "lastUpdateMs": 0,
+        "searchHint": "pyrite pile elemental  unaligned",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-pyrrhic-podthrower",
+        "name": "Pyrrhic Podthrower",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/pyrrhic-podthrower",
+        "lastUpdateMs": 0,
+        "searchHint": "pyrrhic podthrower plant  unaligned",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-púca",
+        "name": "Púca",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/púca",
+        "lastUpdateMs": 0,
+        "searchHint": "pca fey  neutral evil",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-quagga",
+        "name": "Quagga",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/quagga",
+        "lastUpdateMs": 0,
+        "searchHint": "quagga monstrosity  neutral",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-qumdaq",
+        "name": "Qumdaq",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/qumdaq",
+        "lastUpdateMs": 0,
+        "searchHint": "qumdaq elemental  neutral",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-rafflesian",
+        "name": "Rafflesian",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/rafflesian",
+        "lastUpdateMs": 0,
+        "searchHint": "rafflesian plant  unaligned",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-rakshasa-myrmidon",
+        "name": "Rakshasa, Myrmidon",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/rakshasa-myrmidon",
+        "lastUpdateMs": 0,
+        "searchHint": "rakshasa myrmidon fiend  lawful evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-rakshasa-pustakam",
+        "name": "Rakshasa, Pustakam",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/rakshasa-pustakam",
+        "lastUpdateMs": 0,
+        "searchHint": "rakshasa pustakam fiend  lawful evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-rakshasa-servitor",
+        "name": "Rakshasa, Servitor",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/rakshasa-servitor",
+        "lastUpdateMs": 0,
+        "searchHint": "rakshasa servitor fiend  lawful evil",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-rakshasa-slayer",
+        "name": "Rakshasa, Slayer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/rakshasa-slayer",
+        "lastUpdateMs": 0,
+        "searchHint": "rakshasa slayer fiend  lawful evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-relentless-hound",
+        "name": "Relentless Hound",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/relentless-hound",
+        "lastUpdateMs": 0,
+        "searchHint": "relentless hound undead  chaotic neutral",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-rochade",
+        "name": "Rochade",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/rochade",
+        "lastUpdateMs": 0,
+        "searchHint": "rochade fey  neutral",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-rock-salamander",
+        "name": "Rock Salamander",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/rock-salamander",
+        "lastUpdateMs": 0,
+        "searchHint": "rock salamander elemental  unaligned",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-rockwood",
+        "name": "Rockwood",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/rockwood",
+        "lastUpdateMs": 0,
+        "searchHint": "rockwood elemental  chaotic neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-savior-lumen",
+        "name": "Savior Lumen",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/savior-lumen",
+        "lastUpdateMs": 0,
+        "searchHint": "savior lumen celestial  chaotic good",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-sazakan",
+        "name": "Sazakan",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/sazakan",
+        "lastUpdateMs": 0,
+        "searchHint": "sazakan elemental  lawful neutral",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-scarab-ruin",
+        "name": "Scarab, Ruin",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/scarab-ruin",
+        "lastUpdateMs": 0,
+        "searchHint": "scarab ruin undead  neutral evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-scarab-suncatcher",
+        "name": "Scarab, Suncatcher",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/scarab-suncatcher",
+        "lastUpdateMs": 0,
+        "searchHint": "scarab suncatcher beast  unaligned",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-scarsupial",
+        "name": "Scarsupial",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/scarsupial",
+        "lastUpdateMs": 0,
+        "searchHint": "scarsupial beast  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-scorchrunner-jackal",
+        "name": "Scorchrunner Jackal",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/scorchrunner-jackal",
+        "lastUpdateMs": 0,
+        "searchHint": "scorchrunner jackal monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-sewer-weird",
+        "name": "Sewer Weird",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/sewer-weird",
+        "lastUpdateMs": 0,
+        "searchHint": "sewer weird elemental  neutral evil",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-shadow-lurker",
+        "name": "Shadow Lurker",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/shadow-lurker",
+        "lastUpdateMs": 0,
+        "searchHint": "shadow lurker fey  chaotic evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-shetani",
+        "name": "Shetani",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/shetani",
+        "lastUpdateMs": 0,
+        "searchHint": "shetani fiend  neutral evil",
+        "filterDimensions": {
+            "level": "14",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-silent-crier",
+        "name": "Silent Crier",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/silent-crier",
+        "lastUpdateMs": 0,
+        "searchHint": "silent crier fiend  neutral evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-sinstar",
+        "name": "Sinstar",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/sinstar",
+        "lastUpdateMs": 0,
+        "searchHint": "sinstar plant  lawful evil",
+        "filterDimensions": {
+            "level": "17",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-sinstar-thrall",
+        "name": "Sinstar Thrall",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/sinstar-thrall",
+        "lastUpdateMs": 0,
+        "searchHint": "sinstar thrall plant  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-slithy-tove",
+        "name": "Slithy Tove",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/slithy-tove",
+        "lastUpdateMs": 0,
+        "searchHint": "slithy tove monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-snallygaster",
+        "name": "Snallygaster",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/snallygaster",
+        "lastUpdateMs": 0,
+        "searchHint": "snallygaster aberration  unaligned",
+        "filterDimensions": {
+            "level": "15",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-snatch-bat",
+        "name": "Snatch Bat",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/snatch-bat",
+        "lastUpdateMs": 0,
+        "searchHint": "snatch bat aberration  chaotic neutral",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-sodwose",
+        "name": "Sodwose",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/sodwose",
+        "lastUpdateMs": 0,
+        "searchHint": "sodwose plant  neutral evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-soil-snake",
+        "name": "Soil Snake",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/soil-snake",
+        "lastUpdateMs": 0,
+        "searchHint": "soil snake construct  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-splinter-matron",
+        "name": "Splinter Matron",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/splinter-matron",
+        "lastUpdateMs": 0,
+        "searchHint": "splinter matron fey  chaotic evil",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-stained-glass-moth",
+        "name": "Stained-Glass Moth",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/stained-glass-moth",
+        "lastUpdateMs": 0,
+        "searchHint": "stainedglass moth construct  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-star-nosed-diopsid",
+        "name": "Star-Nosed Diopsid",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/star-nosed-diopsid",
+        "lastUpdateMs": 0,
+        "searchHint": "starnosed diopsid aberration  lawful evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-stargazer",
+        "name": "Stargazer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/stargazer",
+        "lastUpdateMs": 0,
+        "searchHint": "stargazer monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-starving-specter",
+        "name": "Starving Specter",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/starving-specter",
+        "lastUpdateMs": 0,
+        "searchHint": "starving specter undead  chaotic evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-stone-eater-slime",
+        "name": "Stone-Eater Slime",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/stone-eater-slime",
+        "lastUpdateMs": 0,
+        "searchHint": "stoneeater slime ooze  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-sunflower-sprite",
+        "name": "Sunflower Sprite",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/sunflower-sprite",
+        "lastUpdateMs": 0,
+        "searchHint": "sunflower sprite fey  neutral good",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-swampgas-shade",
+        "name": "Swampgas Shade",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/swampgas-shade",
+        "lastUpdateMs": 0,
+        "searchHint": "swampgas shade undead  neutral evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-swarm-biting-gnat",
+        "name": "Swarm, Biting Gnat",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/swarm-biting-gnat",
+        "lastUpdateMs": 0,
+        "searchHint": "swarm biting gnat beast  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-swarm-gryllus",
+        "name": "Swarm, Gryllus",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/swarm-gryllus",
+        "lastUpdateMs": 0,
+        "searchHint": "swarm gryllus construct  lawful neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-swarm-ice-borers",
+        "name": "Swarm, Ice Borers",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/swarm-ice-borers",
+        "lastUpdateMs": 0,
+        "searchHint": "swarm ice borers elemental  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-swarm-swamp-slirghs",
+        "name": "Swarm, Swamp Slirghs",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/swarm-swamp-slirghs",
+        "lastUpdateMs": 0,
+        "searchHint": "swarm swamp slirghs elemental  neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-swarm-vampire-blossom",
+        "name": "Swarm, Vampire Blossom",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/swarm-vampire-blossom",
+        "lastUpdateMs": 0,
+        "searchHint": "swarm vampire blossom plant  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-talus-flow",
+        "name": "Talus Flow",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/talus-flow",
+        "lastUpdateMs": 0,
+        "searchHint": "talus flow elemental  neutral evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-tatzelwurm",
+        "name": "Tatzelwurm",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/tatzelwurm",
+        "lastUpdateMs": 0,
+        "searchHint": "tatzelwurm dragon  neutral evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-the-flesh",
+        "name": "The Flesh",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/the-flesh",
+        "lastUpdateMs": 0,
+        "searchHint": "the flesh aberration  neutral evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-thripper",
+        "name": "Thripper",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/thripper",
+        "lastUpdateMs": 0,
+        "searchHint": "thripper humanoid  chaotic neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-tigebra",
+        "name": "Tigebra",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/tigebra",
+        "lastUpdateMs": 0,
+        "searchHint": "tigebra monstrosity  chaotic evil",
+        "filterDimensions": {
+            "level": "13",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-torch-mimic",
+        "name": "Torch Mimic",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/torch-mimic",
+        "lastUpdateMs": 0,
+        "searchHint": "torch mimic monstrosity  neutral",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-tripwire-patch",
+        "name": "Tripwire Patch",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/tripwire-patch",
+        "lastUpdateMs": 0,
+        "searchHint": "tripwire patch plant  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-troll-breakwater",
+        "name": "Troll, Breakwater",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/troll-breakwater",
+        "lastUpdateMs": 0,
+        "searchHint": "troll breakwater giant  chaotic neutral",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-troll-gutter",
+        "name": "Troll, Gutter",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/troll-gutter",
+        "lastUpdateMs": 0,
+        "searchHint": "troll gutter giant  neutral evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-troll-rattleback",
+        "name": "Troll, Rattleback",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/troll-rattleback",
+        "lastUpdateMs": 0,
+        "searchHint": "troll rattleback giant  chaotic evil",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-troll-tumor",
+        "name": "Troll, Tumor",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/troll-tumor",
+        "lastUpdateMs": 0,
+        "searchHint": "troll tumor giant  chaotic evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-trollkin-fire-shaman",
+        "name": "Trollkin Fire Shaman",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/trollkin-fire-shaman",
+        "lastUpdateMs": 0,
+        "searchHint": "trollkin fire shaman humanoid  neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-trollkin-ironmonger",
+        "name": "Trollkin Ironmonger",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/trollkin-ironmonger",
+        "lastUpdateMs": 0,
+        "searchHint": "trollkin ironmonger humanoid  neutral",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-trollkin-ragecaster",
+        "name": "Trollkin Ragecaster",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/trollkin-ragecaster",
+        "lastUpdateMs": 0,
+        "searchHint": "trollkin ragecaster humanoid  chaotic neutral",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-truant-devourer",
+        "name": "Truant Devourer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/truant-devourer",
+        "lastUpdateMs": 0,
+        "searchHint": "truant devourer undead  any alignment as its creator deity",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-tuberkith",
+        "name": "Tuberkith",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/tuberkith",
+        "lastUpdateMs": 0,
+        "searchHint": "tuberkith plant  any alignment",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-umbral-shambler",
+        "name": "Umbral Shambler",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/umbral-shambler",
+        "lastUpdateMs": 0,
+        "searchHint": "umbral shambler aberration  neutral evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-underworld-sentinel",
+        "name": "Underworld Sentinel",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/underworld-sentinel",
+        "lastUpdateMs": 0,
+        "searchHint": "underworld sentinel undead  neutral",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-urushi-constrictor",
+        "name": "Urushi Constrictor",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/urushi-constrictor",
+        "lastUpdateMs": 0,
+        "searchHint": "urushi constrictor monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-vampiric-vanguard",
+        "name": "Vampiric Vanguard",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/vampiric-vanguard",
+        "lastUpdateMs": 0,
+        "searchHint": "vampiric vanguard undead  neutral evil",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-veritigibbet",
+        "name": "Veritigibbet",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/veritigibbet",
+        "lastUpdateMs": 0,
+        "searchHint": "veritigibbet fey  chaotic neutral",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-void-constructor",
+        "name": "Void Constructor",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/void-constructor",
+        "lastUpdateMs": 0,
+        "searchHint": "void constructor construct  neutral evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-void-knight",
+        "name": "Void Knight",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/void-knight",
+        "lastUpdateMs": 0,
+        "searchHint": "void knight construct  lawful evil",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-vorthropod",
+        "name": "Vorthropod",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/vorthropod",
+        "lastUpdateMs": 0,
+        "searchHint": "vorthropod monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-wakwak",
+        "name": "Wakwak",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wakwak",
+        "lastUpdateMs": 0,
+        "searchHint": "wakwak beast  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-wandering-haze",
+        "name": "Wandering Haze",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wandering-haze",
+        "lastUpdateMs": 0,
+        "searchHint": "wandering haze ooze  unaligned",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-waterkledde",
+        "name": "Waterkledde",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/waterkledde",
+        "lastUpdateMs": 0,
+        "searchHint": "waterkledde fiend  chaotic evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-wild-sirocco",
+        "name": "Wild Sirocco",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wild-sirocco",
+        "lastUpdateMs": 0,
+        "searchHint": "wild sirocco elemental  neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-wilderness-crone",
+        "name": "Wilderness Crone",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wilderness-crone",
+        "lastUpdateMs": 0,
+        "searchHint": "wilderness crone fey  neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-wind-witch",
+        "name": "Wind Witch",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wind-witch",
+        "lastUpdateMs": 0,
+        "searchHint": "wind witch plant  chaotic evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-witchalder",
+        "name": "Witchalder",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/witchalder",
+        "lastUpdateMs": 0,
+        "searchHint": "witchalder plant  neutral evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-wrackwraith",
+        "name": "Wrackwraith",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wrackwraith",
+        "lastUpdateMs": 0,
+        "searchHint": "wrackwraith undead  neutral evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-wraith-oathrot",
+        "name": "Wraith, Oathrot",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wraith-oathrot",
+        "lastUpdateMs": 0,
+        "searchHint": "wraith oathrot undead  neutral evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-xecha",
+        "name": "Xecha",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/xecha",
+        "lastUpdateMs": 0,
+        "searchHint": "xecha fiend  chaotic evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-yali",
+        "name": "Yali",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/yali",
+        "lastUpdateMs": 0,
+        "searchHint": "yali construct  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-zilaq",
+        "name": "Zilaq",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/zilaq",
+        "lastUpdateMs": 0,
+        "searchHint": "zilaq dragon  neutral",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-zombie-smokeplume",
+        "name": "Zombie, Smokeplume",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/zombie-smokeplume",
+        "lastUpdateMs": 0,
+        "searchHint": "zombie smokeplume undead  chaotic evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-zombie-voidclaw",
+        "name": "Zombie, Voidclaw",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/zombie-voidclaw",
+        "lastUpdateMs": 0,
+        "searchHint": "zombie voidclaw undead  chaotic evil",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "ToB3",
+            "source": "Tome of Beasts 3",
+            "type": "Undead"
+        }
+    }
+]

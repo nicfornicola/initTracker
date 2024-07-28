@@ -1,0 +1,4986 @@
+[
+    {
+        "id": "open5e-aatxe",
+        "name": "Aatxe",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/aatxe",
+        "lastUpdateMs": 0,
+        "searchHint": "aatxe celestial shapechanger lawful good",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial (shapechanger)"
+        }
+    },
+    {
+        "id": "open5e-acid-ant",
+        "name": "Acid Ant",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/acid-ant",
+        "lastUpdateMs": 0,
+        "searchHint": "acid ant monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-adult-light-dragon",
+        "name": "Adult Light Dragon",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/adult-light-dragon",
+        "lastUpdateMs": 0,
+        "searchHint": "adult light dragon dragon  neutral good",
+        "filterDimensions": {
+            "level": "16",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-adult-wasteland-dragon",
+        "name": "Adult Wasteland Dragon",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/adult-wasteland-dragon",
+        "lastUpdateMs": 0,
+        "searchHint": "adult wasteland dragon dragon  chaotic evil",
+        "filterDimensions": {
+            "level": "17",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-agnibarra",
+        "name": "Agnibarra",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/agnibarra",
+        "lastUpdateMs": 0,
+        "searchHint": "agnibarra monstrosity  chaotic neutral",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-ahu-nixta",
+        "name": "Ahu-Nixta",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ahu-nixta",
+        "lastUpdateMs": 0,
+        "searchHint": "ahunixta aberration  neutral evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-ahuizotl",
+        "name": "Ahuizotl",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ahuizotl",
+        "lastUpdateMs": 0,
+        "searchHint": "ahuizotl monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-alabaster-tree",
+        "name": "Alabaster Tree",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/alabaster-tree",
+        "lastUpdateMs": 0,
+        "searchHint": "alabaster tree celestial  neutral good",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-albino-death-weasel",
+        "name": "Albino Death Weasel",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/albino-death-weasel",
+        "lastUpdateMs": 0,
+        "searchHint": "albino death weasel beast  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-alchemical-apprentice",
+        "name": "Alchemical Apprentice",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/alchemical-apprentice",
+        "lastUpdateMs": 0,
+        "searchHint": "alchemical apprentice ooze  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-alchemical-golem",
+        "name": "Alchemical Golem",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/alchemical-golem",
+        "lastUpdateMs": 0,
+        "searchHint": "alchemical golem construct  unaligned",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-alchemist-archer",
+        "name": "Alchemist Archer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/alchemist-archer",
+        "lastUpdateMs": 0,
+        "searchHint": "alchemist archer humanoid elf any alignment",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (elf)"
+        }
+    },
+    {
+        "id": "open5e-alkonost",
+        "name": "Alkonost",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/alkonost",
+        "lastUpdateMs": 0,
+        "searchHint": "alkonost monstrosity  neutral",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-alliumite",
+        "name": "Alliumite",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/alliumite",
+        "lastUpdateMs": 0,
+        "searchHint": "alliumite plant  chaotic neutral",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-alnaar",
+        "name": "Alnaar",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/alnaar",
+        "lastUpdateMs": 0,
+        "searchHint": "alnaar fiend demon chaotic evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (demon)"
+        }
+    },
+    {
+        "id": "open5e-alp",
+        "name": "Alp",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/alp",
+        "lastUpdateMs": 0,
+        "searchHint": "alp fey shapechanger chaotic evil",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fey (shapechanger)"
+        }
+    },
+    {
+        "id": "open5e-alpha-yek",
+        "name": "Alpha Yek",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/alpha-yek",
+        "lastUpdateMs": 0,
+        "searchHint": "alpha yek fiend demon chaotic evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (demon)"
+        }
+    },
+    {
+        "id": "open5e-altar-flame-golem",
+        "name": "Altar Flame Golem",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/altar-flame-golem",
+        "lastUpdateMs": 0,
+        "searchHint": "altar flame golem construct  neutral",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-ammut",
+        "name": "Ammut",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ammut",
+        "lastUpdateMs": 0,
+        "searchHint": "ammut celestial  neutral",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-ancient-light-dragon",
+        "name": "Ancient Light Dragon",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ancient-light-dragon",
+        "lastUpdateMs": 0,
+        "searchHint": "ancient light dragon dragon  neutral good",
+        "filterDimensions": {
+            "level": "22",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-ancient-mandriano",
+        "name": "Ancient Mandriano",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ancient-mandriano",
+        "lastUpdateMs": 0,
+        "searchHint": "ancient mandriano plant  lawful evil",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-ancient-wasteland-dragon",
+        "name": "Ancient Wasteland Dragon",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ancient-wasteland-dragon",
+        "lastUpdateMs": 0,
+        "searchHint": "ancient wasteland dragon dragon  chaotic evil",
+        "filterDimensions": {
+            "level": "23",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-ankou-soul-herald",
+        "name": "Ankou Soul Herald",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ankou-soul-herald",
+        "lastUpdateMs": 0,
+        "searchHint": "ankou soul herald dragon  neutral",
+        "filterDimensions": {
+            "level": "21",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-ankou-soul-seeker",
+        "name": "Ankou Soul Seeker",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ankou-soul-seeker",
+        "lastUpdateMs": 0,
+        "searchHint": "ankou soul seeker dragon  neutral",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-anophiloi",
+        "name": "Anophiloi",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/anophiloi",
+        "lastUpdateMs": 0,
+        "searchHint": "anophiloi monstrosity  neutral",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-arborcyte",
+        "name": "Arborcyte",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/arborcyte",
+        "lastUpdateMs": 0,
+        "searchHint": "arborcyte plant  chaotic neutral",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-arcamag",
+        "name": "Arcamag",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/arcamag",
+        "lastUpdateMs": 0,
+        "searchHint": "arcamag monstrosity shapechanger neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity (shapechanger)"
+        }
+    },
+    {
+        "id": "open5e-arcanaphage",
+        "name": "Arcanaphage",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/arcanaphage",
+        "lastUpdateMs": 0,
+        "searchHint": "arcanaphage monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-archaeopteryx",
+        "name": "Archaeopteryx",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/archaeopteryx",
+        "lastUpdateMs": 0,
+        "searchHint": "archaeopteryx beast  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-armory-golem",
+        "name": "Armory Golem",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/armory-golem",
+        "lastUpdateMs": 0,
+        "searchHint": "armory golem construct  unaligned",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-astral-snapper",
+        "name": "Astral Snapper",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/astral-snapper",
+        "lastUpdateMs": 0,
+        "searchHint": "astral snapper aberration  neutral evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-avatar-of-shoth",
+        "name": "Avatar of Shoth",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/avatar-of-shoth",
+        "lastUpdateMs": 0,
+        "searchHint": "avatar of shoth aberration shoth lawful neutral",
+        "filterDimensions": {
+            "level": "21",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration (shoth)"
+        }
+    },
+    {
+        "id": "open5e-azeban",
+        "name": "Azeban",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/azeban",
+        "lastUpdateMs": 0,
+        "searchHint": "azeban fey  chaotic neutral",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-azi-dahaka",
+        "name": "Azi Dahaka",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/azi-dahaka",
+        "lastUpdateMs": 0,
+        "searchHint": "azi dahaka dragon  chaotic evil",
+        "filterDimensions": {
+            "level": "14",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-bar-brawl",
+        "name": "Bar Brawl",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/bar-brawl",
+        "lastUpdateMs": 0,
+        "searchHint": "bar brawl humanoid  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-barong",
+        "name": "Barong",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/barong",
+        "lastUpdateMs": 0,
+        "searchHint": "barong celestial  lawful good",
+        "filterDimensions": {
+            "level": "17",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-bathhouse-drake",
+        "name": "Bathhouse Drake",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/bathhouse-drake",
+        "lastUpdateMs": 0,
+        "searchHint": "bathhouse drake dragon  lawful neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-bearfolk-chieftain",
+        "name": "Bearfolk Chieftain",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/bearfolk-chieftain",
+        "lastUpdateMs": 0,
+        "searchHint": "bearfolk chieftain humanoid bearfolk chaotic good",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (bearfolk)"
+        }
+    },
+    {
+        "id": "open5e-bearmit-crab",
+        "name": "Bearmit Crab",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/bearmit-crab",
+        "lastUpdateMs": 0,
+        "searchHint": "bearmit crab monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-bilwis",
+        "name": "Bilwis",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/bilwis",
+        "lastUpdateMs": 0,
+        "searchHint": "bilwis elemental  chaotic evil",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-black-sun-orc",
+        "name": "Black Sun Orc",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/black-sun-orc",
+        "lastUpdateMs": 0,
+        "searchHint": "black sun orc humanoid orc chaotic evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (orc)"
+        }
+    },
+    {
+        "id": "open5e-black-sun-priestess",
+        "name": "Black Sun Priestess",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/black-sun-priestess",
+        "lastUpdateMs": 0,
+        "searchHint": "black sun priestess humanoid orc chaotic evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (orc)"
+        }
+    },
+    {
+        "id": "open5e-blood-elemental",
+        "name": "Blood Elemental",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/blood-elemental",
+        "lastUpdateMs": 0,
+        "searchHint": "blood elemental elemental  neutral",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-blood-giant",
+        "name": "Blood Giant",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/blood-giant",
+        "lastUpdateMs": 0,
+        "searchHint": "blood giant giant  lawful neutral",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-blood-ooze",
+        "name": "Blood Ooze",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/blood-ooze",
+        "lastUpdateMs": 0,
+        "searchHint": "blood ooze ooze  unaligned",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-blood-zombie",
+        "name": "Blood Zombie",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/blood-zombie",
+        "lastUpdateMs": 0,
+        "searchHint": "blood zombie undead  neutral evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-bloody-bones",
+        "name": "Bloody Bones",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/bloody-bones",
+        "lastUpdateMs": 0,
+        "searchHint": "bloody bones monstrosity  chaotic evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-bone-golem",
+        "name": "Bone Golem",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/bone-golem",
+        "lastUpdateMs": 0,
+        "searchHint": "bone golem construct  unaligned",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-bookkeeper",
+        "name": "Bookkeeper",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/bookkeeper",
+        "lastUpdateMs": 0,
+        "searchHint": "bookkeeper construct  unaligned",
+        "filterDimensions": {
+            "level": "1/8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-boot-grabber",
+        "name": "Boot Grabber",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/boot-grabber",
+        "lastUpdateMs": 0,
+        "searchHint": "boot grabber aberration  neutral",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-bronze-golem",
+        "name": "Bronze Golem",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/bronze-golem",
+        "lastUpdateMs": 0,
+        "searchHint": "bronze golem construct  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-cacus-giant",
+        "name": "Cacus Giant",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/cacus-giant",
+        "lastUpdateMs": 0,
+        "searchHint": "cacus giant giant  chaotic evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-carbuncle",
+        "name": "Carbuncle",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/carbuncle",
+        "lastUpdateMs": 0,
+        "searchHint": "carbuncle monstrosity  chaotic good",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-cats-of-ulthar",
+        "name": "Cats of Ulthar",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/cats-of-ulthar",
+        "lastUpdateMs": 0,
+        "searchHint": "cats of ulthar beast  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-cauldronborn",
+        "name": "Cauldronborn",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/cauldronborn",
+        "lastUpdateMs": 0,
+        "searchHint": "cauldronborn construct  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-cave-giant",
+        "name": "Cave Giant",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/cave-giant",
+        "lastUpdateMs": 0,
+        "searchHint": "cave giant giant  chaotic evil",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-centaur-chieftain",
+        "name": "Centaur Chieftain",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/centaur-chieftain",
+        "lastUpdateMs": 0,
+        "searchHint": "centaur chieftain monstrosity  chaotic neutral",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-chaos-spawn-goblin",
+        "name": "Chaos-Spawn Goblin",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/chaos-spawn-goblin",
+        "lastUpdateMs": 0,
+        "searchHint": "chaosspawn goblin humanoid goblinoid neutral evil",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (goblinoid)"
+        }
+    },
+    {
+        "id": "open5e-child-of-yggdrasil",
+        "name": "Child of Yggdrasil",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/child-of-yggdrasil",
+        "lastUpdateMs": 0,
+        "searchHint": "child of yggdrasil aberration  neutral evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-chuhaister",
+        "name": "Chuhaister",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/chuhaister",
+        "lastUpdateMs": 0,
+        "searchHint": "chuhaister giant  chaotic evil",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-chupacabra",
+        "name": "Chupacabra",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/chupacabra",
+        "lastUpdateMs": 0,
+        "searchHint": "chupacabra monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-cipactli",
+        "name": "Cipactli",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/cipactli",
+        "lastUpdateMs": 0,
+        "searchHint": "cipactli fiend demon chaotic evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (demon)"
+        }
+    },
+    {
+        "id": "open5e-clacking-skeleton",
+        "name": "Clacking Skeleton",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/clacking-skeleton",
+        "lastUpdateMs": 0,
+        "searchHint": "clacking skeleton undead  neutral evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-clockwork-assassin",
+        "name": "Clockwork Assassin",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/clockwork-assassin",
+        "lastUpdateMs": 0,
+        "searchHint": "clockwork assassin construct  unaligned",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-clockwork-servant",
+        "name": "Clockwork Servant",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/clockwork-servant",
+        "lastUpdateMs": 0,
+        "searchHint": "clockwork servant construct  unaligned",
+        "filterDimensions": {
+            "level": "1/8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-clockwork-soldier",
+        "name": "Clockwork Soldier",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/clockwork-soldier",
+        "lastUpdateMs": 0,
+        "searchHint": "clockwork soldier construct  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-corpse-thief",
+        "name": "Corpse Thief",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/corpse-thief",
+        "lastUpdateMs": 0,
+        "searchHint": "corpse thief humanoid  neutral",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-crimson-mist",
+        "name": "Crimson Mist",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/crimson-mist",
+        "lastUpdateMs": 0,
+        "searchHint": "crimson mist undead  chaotic evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-crypt-spider",
+        "name": "Crypt Spider",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/crypt-spider",
+        "lastUpdateMs": 0,
+        "searchHint": "crypt spider beast  lawful evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-cueyatl",
+        "name": "Cueyatl",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/cueyatl",
+        "lastUpdateMs": 0,
+        "searchHint": "cueyatl humanoid  lawful evil",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-cueyatl-moon-priest",
+        "name": "Cueyatl Moon Priest",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/cueyatl-moon-priest",
+        "lastUpdateMs": 0,
+        "searchHint": "cueyatl moon priest humanoid  lawful evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-cueyatl-sea-priest",
+        "name": "Cueyatl Sea Priest",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/cueyatl-sea-priest",
+        "lastUpdateMs": 0,
+        "searchHint": "cueyatl sea priest humanoid  lawful evil",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-cueyatl-warrior",
+        "name": "Cueyatl Warrior",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/cueyatl-warrior",
+        "lastUpdateMs": 0,
+        "searchHint": "cueyatl warrior humanoid  lawful evil",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-darakhul-high-priestess",
+        "name": "Darakhul High Priestess",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/darakhul-high-priestess",
+        "lastUpdateMs": 0,
+        "searchHint": "darakhul high priestess undead  neutral evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-darakhul-shadowmancer",
+        "name": "Darakhul Shadowmancer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/darakhul-shadowmancer",
+        "lastUpdateMs": 0,
+        "searchHint": "darakhul shadowmancer undead  neutral evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-dark-eye",
+        "name": "Dark Eye",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dark-eye",
+        "lastUpdateMs": 0,
+        "searchHint": "dark eye humanoid dark folk neutral evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (dark folk)"
+        }
+    },
+    {
+        "id": "open5e-dark-father",
+        "name": "Dark Father",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dark-father",
+        "lastUpdateMs": 0,
+        "searchHint": "dark father undead  lawful neutral",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-dark-servant",
+        "name": "Dark Servant",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dark-servant",
+        "lastUpdateMs": 0,
+        "searchHint": "dark servant humanoid dark folk neutral evil",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (dark folk)"
+        }
+    },
+    {
+        "id": "open5e-dark-voice",
+        "name": "Dark Voice",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dark-voice",
+        "lastUpdateMs": 0,
+        "searchHint": "dark voice humanoid dark folk neutral evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (dark folk)"
+        }
+    },
+    {
+        "id": "open5e-deathsworn-elf",
+        "name": "Deathsworn Elf",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/deathsworn-elf",
+        "lastUpdateMs": 0,
+        "searchHint": "deathsworn elf humanoid elf chaotic neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (elf)"
+        }
+    },
+    {
+        "id": "open5e-desert-troll",
+        "name": "Desert Troll",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/desert-troll",
+        "lastUpdateMs": 0,
+        "searchHint": "desert troll giant  chaotic evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-devil-bough",
+        "name": "Devil Bough",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/devil-bough",
+        "lastUpdateMs": 0,
+        "searchHint": "devil bough fiend  neutral evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-devil-shark",
+        "name": "Devil Shark",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/devil-shark",
+        "lastUpdateMs": 0,
+        "searchHint": "devil shark monstrosity  neutral evil",
+        "filterDimensions": {
+            "level": "13",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-dhampir",
+        "name": "Dhampir",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dhampir",
+        "lastUpdateMs": 0,
+        "searchHint": "dhampir humanoid dhampir any alignment",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (dhampir)"
+        }
+    },
+    {
+        "id": "open5e-dhampir-commander",
+        "name": "Dhampir Commander",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dhampir-commander",
+        "lastUpdateMs": 0,
+        "searchHint": "dhampir commander humanoid dhampir any alignment",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (dhampir)"
+        }
+    },
+    {
+        "id": "open5e-doom-golem",
+        "name": "Doom Golem",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/doom-golem",
+        "lastUpdateMs": 0,
+        "searchHint": "doom golem construct  unaligned",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-dracotaur",
+        "name": "Dracotaur",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dracotaur",
+        "lastUpdateMs": 0,
+        "searchHint": "dracotaur dragon  chaotic neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-dream-squire",
+        "name": "Dream Squire",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dream-squire",
+        "lastUpdateMs": 0,
+        "searchHint": "dream squire fey  neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-dream-wraith",
+        "name": "Dream Wraith",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dream-wraith",
+        "lastUpdateMs": 0,
+        "searchHint": "dream wraith undead  neutral evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-droth",
+        "name": "Droth",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/droth",
+        "lastUpdateMs": 0,
+        "searchHint": "droth aberration shoth lawful neutral",
+        "filterDimensions": {
+            "level": "12",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration (shoth)"
+        }
+    },
+    {
+        "id": "open5e-dust-goblin-chieftain",
+        "name": "Dust Goblin Chieftain",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dust-goblin-chieftain",
+        "lastUpdateMs": 0,
+        "searchHint": "dust goblin chieftain humanoid goblinoid neutral evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (goblinoid)"
+        }
+    },
+    {
+        "id": "open5e-dvarapala",
+        "name": "Dvarapala",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/dvarapala",
+        "lastUpdateMs": 0,
+        "searchHint": "dvarapala giant  any alignment as its patron deity",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-echo",
+        "name": "Echo",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/echo",
+        "lastUpdateMs": 0,
+        "searchHint": "echo fiend demon chaotic evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (demon)"
+        }
+    },
+    {
+        "id": "open5e-ecstatic-bloom",
+        "name": "Ecstatic Bloom",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ecstatic-bloom",
+        "lastUpdateMs": 0,
+        "searchHint": "ecstatic bloom celestial  neutral good",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-edjet",
+        "name": "Edjet",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/edjet",
+        "lastUpdateMs": 0,
+        "searchHint": "edjet humanoid dragonborn lawful neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (dragonborn)"
+        }
+    },
+    {
+        "id": "open5e-elder-ghost-boar",
+        "name": "Elder Ghost Boar",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/elder-ghost-boar",
+        "lastUpdateMs": 0,
+        "searchHint": "elder ghost boar monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-elementalist",
+        "name": "Elementalist",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/elementalist",
+        "lastUpdateMs": 0,
+        "searchHint": "elementalist humanoid dragonborn lawful neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (dragonborn)"
+        }
+    },
+    {
+        "id": "open5e-elite-kobold",
+        "name": "Elite Kobold",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/elite-kobold",
+        "lastUpdateMs": 0,
+        "searchHint": "elite kobold humanoid kobold lawful neutral",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (kobold)"
+        }
+    },
+    {
+        "id": "open5e-elophar",
+        "name": "Elophar",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/elophar",
+        "lastUpdateMs": 0,
+        "searchHint": "elophar undead  chaotic evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-enchanter",
+        "name": "Enchanter",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/enchanter",
+        "lastUpdateMs": 0,
+        "searchHint": "enchanter humanoid elf any alignment",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (elf)"
+        }
+    },
+    {
+        "id": "open5e-execrable-shrub",
+        "name": "Execrable Shrub",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/execrable-shrub",
+        "lastUpdateMs": 0,
+        "searchHint": "execrable shrub fiend  neutral evil",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-exploding-toad",
+        "name": "Exploding Toad",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/exploding-toad",
+        "lastUpdateMs": 0,
+        "searchHint": "exploding toad monstrosity  chaotic evil",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-eye-of-the-gods",
+        "name": "Eye of the Gods",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/eye-of-the-gods",
+        "lastUpdateMs": 0,
+        "searchHint": "eye of the gods celestial  any alignment as its creator deity",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-fang-of-the-great-wolf",
+        "name": "Fang of the Great Wolf",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/fang-of-the-great-wolf",
+        "lastUpdateMs": 0,
+        "searchHint": "fang of the great wolf monstrosity  neutral evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-far-wanderer",
+        "name": "Far Wanderer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/far-wanderer",
+        "lastUpdateMs": 0,
+        "searchHint": "far wanderer aberration  neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-fear-liath",
+        "name": "Fear Liath",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/fear-liath",
+        "lastUpdateMs": 0,
+        "searchHint": "fear liath undead  neutral evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-fey-drake",
+        "name": "Fey Drake",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/fey-drake",
+        "lastUpdateMs": 0,
+        "searchHint": "fey drake dragon  chaotic neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-fierstjerren",
+        "name": "Fierstjerren",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/fierstjerren",
+        "lastUpdateMs": 0,
+        "searchHint": "fierstjerren undead  neutral evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-fire-imp",
+        "name": "Fire Imp",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/fire-imp",
+        "lastUpdateMs": 0,
+        "searchHint": "fire imp fiend devil lawful evil",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (devil)"
+        }
+    },
+    {
+        "id": "open5e-flame-eater-swarm",
+        "name": "Flame Eater Swarm",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/flame-eater-swarm",
+        "lastUpdateMs": 0,
+        "searchHint": "flame eater swarm beast  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-flame-scourged-scion",
+        "name": "Flame-Scourged Scion",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/flame-scourged-scion",
+        "lastUpdateMs": 0,
+        "searchHint": "flamescourged scion aberration  chaotic evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-flesh-reaver",
+        "name": "Flesh Reaver",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/flesh-reaver",
+        "lastUpdateMs": 0,
+        "searchHint": "flesh reaver undead  neutral evil",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-fleshpod-hornet",
+        "name": "Fleshpod Hornet",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/fleshpod-hornet",
+        "lastUpdateMs": 0,
+        "searchHint": "fleshpod hornet beast  unaligned",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-flying-polyp",
+        "name": "Flying Polyp",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/flying-polyp",
+        "lastUpdateMs": 0,
+        "searchHint": "flying polyp aberration  chaotic evil",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-forest-drake",
+        "name": "Forest Drake",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/forest-drake",
+        "lastUpdateMs": 0,
+        "searchHint": "forest drake dragon  neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-foxfire-ooze",
+        "name": "Foxfire Ooze",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/foxfire-ooze",
+        "lastUpdateMs": 0,
+        "searchHint": "foxfire ooze ooze  unaligned",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-foxin",
+        "name": "Foxin",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/foxin",
+        "lastUpdateMs": 0,
+        "searchHint": "foxin fey  neutral",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-fractal-golem",
+        "name": "Fractal Golem",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/fractal-golem",
+        "lastUpdateMs": 0,
+        "searchHint": "fractal golem construct  unaligned",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-fragrite",
+        "name": "Fragrite",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/fragrite",
+        "lastUpdateMs": 0,
+        "searchHint": "fragrite elemental shapechanger chaotic neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Elemental (shapechanger)"
+        }
+    },
+    {
+        "id": "open5e-fulad-zereh",
+        "name": "Fulad-Zereh",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/fulad-zereh",
+        "lastUpdateMs": 0,
+        "searchHint": "fuladzereh fiend demon chaotic evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (demon)"
+        }
+    },
+    {
+        "id": "open5e-fulminar",
+        "name": "Fulminar",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/fulminar",
+        "lastUpdateMs": 0,
+        "searchHint": "fulminar elemental  neutral",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-gaki",
+        "name": "Gaki",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/gaki",
+        "lastUpdateMs": 0,
+        "searchHint": "gaki undead  chaotic evil",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-gargoctopus",
+        "name": "Gargoctopus",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/gargoctopus",
+        "lastUpdateMs": 0,
+        "searchHint": "gargoctopus monstrosity  neutral",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-ghast-of-leng",
+        "name": "Ghast of Leng",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ghast-of-leng",
+        "lastUpdateMs": 0,
+        "searchHint": "ghast of leng aberration  neutral evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-ghost-boar",
+        "name": "Ghost Boar",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ghost-boar",
+        "lastUpdateMs": 0,
+        "searchHint": "ghost boar monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-ghost-dragon",
+        "name": "Ghost Dragon",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ghost-dragon",
+        "lastUpdateMs": 0,
+        "searchHint": "ghost dragon undead  any alignment",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-ghost-dwarf",
+        "name": "Ghost Dwarf",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ghost-dwarf",
+        "lastUpdateMs": 0,
+        "searchHint": "ghost dwarf undead  neutral evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-ghoulsteed",
+        "name": "Ghoulsteed",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ghoulsteed",
+        "lastUpdateMs": 0,
+        "searchHint": "ghoulsteed undead  neutral evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-giant-albino-bat",
+        "name": "Giant Albino Bat",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/giant-albino-bat",
+        "lastUpdateMs": 0,
+        "searchHint": "giant albino bat monstrosity  neutral evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-giant-moth",
+        "name": "Giant Moth",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/giant-moth",
+        "lastUpdateMs": 0,
+        "searchHint": "giant moth beast  unaligned",
+        "filterDimensions": {
+            "level": "1/8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-giant-shark-bowl",
+        "name": "Giant Shark Bowl",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/giant-shark-bowl",
+        "lastUpdateMs": 0,
+        "searchHint": "giant shark bowl ooze  unaligned",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-giant-sloth",
+        "name": "Giant Sloth",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/giant-sloth",
+        "lastUpdateMs": 0,
+        "searchHint": "giant sloth beast  unaligned",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-giant-vampire-bat",
+        "name": "Giant Vampire Bat",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/giant-vampire-bat",
+        "lastUpdateMs": 0,
+        "searchHint": "giant vampire bat beast  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-glass-golem",
+        "name": "Glass Golem",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/glass-golem",
+        "lastUpdateMs": 0,
+        "searchHint": "glass golem construct  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-gloomflower",
+        "name": "Gloomflower",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/gloomflower",
+        "lastUpdateMs": 0,
+        "searchHint": "gloomflower plant  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-gnoll-slaver",
+        "name": "Gnoll Slaver",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/gnoll-slaver",
+        "lastUpdateMs": 0,
+        "searchHint": "gnoll slaver humanoid gnoll chaotic evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (gnoll)"
+        }
+    },
+    {
+        "id": "open5e-goliath-longlegs",
+        "name": "Goliath Longlegs",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/goliath-longlegs",
+        "lastUpdateMs": 0,
+        "searchHint": "goliath longlegs monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-goreling",
+        "name": "Goreling",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/goreling",
+        "lastUpdateMs": 0,
+        "searchHint": "goreling undead  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-grave-behemoth",
+        "name": "Grave Behemoth",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/grave-behemoth",
+        "lastUpdateMs": 0,
+        "searchHint": "grave behemoth undead  neutral evil",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-great-mandrake",
+        "name": "Great Mandrake",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/great-mandrake",
+        "lastUpdateMs": 0,
+        "searchHint": "great mandrake plant  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-greater-rakshasa",
+        "name": "Greater Rakshasa",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/greater-rakshasa",
+        "lastUpdateMs": 0,
+        "searchHint": "greater rakshasa fiend  lawful evil",
+        "filterDimensions": {
+            "level": "15",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-greater-scrag",
+        "name": "Greater Scrag",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/greater-scrag",
+        "lastUpdateMs": 0,
+        "searchHint": "greater scrag monstrosity  chaotic evil",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-green-abyss-orc",
+        "name": "Green Abyss Orc",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/green-abyss-orc",
+        "lastUpdateMs": 0,
+        "searchHint": "green abyss orc humanoid orc chaotic evil",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (orc)"
+        }
+    },
+    {
+        "id": "open5e-green-knight-of-the-woods",
+        "name": "Green Knight of the Woods",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/green-knight-of-the-woods",
+        "lastUpdateMs": 0,
+        "searchHint": "green knight of the woods fey  lawful neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-grindylow",
+        "name": "Grindylow",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/grindylow",
+        "lastUpdateMs": 0,
+        "searchHint": "grindylow aberration  chaotic evil",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-gugalanna",
+        "name": "Gugalanna",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/gugalanna",
+        "lastUpdateMs": 0,
+        "searchHint": "gugalanna celestial  chaotic good",
+        "filterDimensions": {
+            "level": "21",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-gulon",
+        "name": "Gulon",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/gulon",
+        "lastUpdateMs": 0,
+        "searchHint": "gulon monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-gumienniki",
+        "name": "Gumienniki",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/gumienniki",
+        "lastUpdateMs": 0,
+        "searchHint": "gumienniki fiend shapechanger neutral evil",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (shapechanger)"
+        }
+    },
+    {
+        "id": "open5e-hair-golem",
+        "name": "Hair Golem",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/hair-golem",
+        "lastUpdateMs": 0,
+        "searchHint": "hair golem construct  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-hallowed-reed",
+        "name": "Hallowed Reed",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/hallowed-reed",
+        "lastUpdateMs": 0,
+        "searchHint": "hallowed reed celestial  neutral good",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-haunted-giant",
+        "name": "Haunted Giant",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/haunted-giant",
+        "lastUpdateMs": 0,
+        "searchHint": "haunted giant giant  chaotic neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-heavy-cavalry",
+        "name": "Heavy Cavalry",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/heavy-cavalry",
+        "lastUpdateMs": 0,
+        "searchHint": "heavy cavalry humanoid dragonborn lawful neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (dragonborn)"
+        }
+    },
+    {
+        "id": "open5e-hierophant-lich",
+        "name": "Hierophant Lich",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/hierophant-lich",
+        "lastUpdateMs": 0,
+        "searchHint": "hierophant lich undead  any evil alignment",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-horned-serpent",
+        "name": "Horned Serpent",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/horned-serpent",
+        "lastUpdateMs": 0,
+        "searchHint": "horned serpent monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "12",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-hound-of-tindalos",
+        "name": "Hound of Tindalos",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/hound-of-tindalos",
+        "lastUpdateMs": 0,
+        "searchHint": "hound of tindalos aberration  neutral evil",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-ichneumon",
+        "name": "Ichneumon",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ichneumon",
+        "lastUpdateMs": 0,
+        "searchHint": "ichneumon monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-ijiraq",
+        "name": "Ijiraq",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ijiraq",
+        "lastUpdateMs": 0,
+        "searchHint": "ijiraq fey  chaotic neutral",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-incinis",
+        "name": "Incinis",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/incinis",
+        "lastUpdateMs": 0,
+        "searchHint": "incinis elemental  neutral evil",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-infernal-knight",
+        "name": "Infernal Knight",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/infernal-knight",
+        "lastUpdateMs": 0,
+        "searchHint": "infernal knight fiend devil lawful evil",
+        "filterDimensions": {
+            "level": "16",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (devil)"
+        }
+    },
+    {
+        "id": "open5e-ink-guardian",
+        "name": "Ink Guardian",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ink-guardian",
+        "lastUpdateMs": 0,
+        "searchHint": "ink guardian ooze  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-inkling",
+        "name": "Inkling",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/inkling",
+        "lastUpdateMs": 0,
+        "searchHint": "inkling construct  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-iron-sphere",
+        "name": "Iron Sphere",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/iron-sphere",
+        "lastUpdateMs": 0,
+        "searchHint": "iron sphere construct  unaligned",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-jaanavar-jal",
+        "name": "Jaanavar Jal",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/jaanavar-jal",
+        "lastUpdateMs": 0,
+        "searchHint": "jaanavar jal monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-jiangshi",
+        "name": "Jiangshi",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/jiangshi",
+        "lastUpdateMs": 0,
+        "searchHint": "jiangshi undead  chaotic evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-jinmenju",
+        "name": "Jinmenju",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/jinmenju",
+        "lastUpdateMs": 0,
+        "searchHint": "jinmenju plant  chaotic neutral",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-junk-shaman",
+        "name": "Junk Shaman",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/junk-shaman",
+        "lastUpdateMs": 0,
+        "searchHint": "junk shaman humanoid kobold lawful neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (kobold)"
+        }
+    },
+    {
+        "id": "open5e-kallikantzaros",
+        "name": "Kallikantzaros",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/kallikantzaros",
+        "lastUpdateMs": 0,
+        "searchHint": "kallikantzaros fey  chaotic evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-kapi",
+        "name": "Kapi",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/kapi",
+        "lastUpdateMs": 0,
+        "searchHint": "kapi humanoid simian chaotic good",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (simian)"
+        }
+    },
+    {
+        "id": "open5e-kappa",
+        "name": "Kappa",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/kappa",
+        "lastUpdateMs": 0,
+        "searchHint": "kappa fey  chaotic neutral or chaotic evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-karakura",
+        "name": "Karakura",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/karakura",
+        "lastUpdateMs": 0,
+        "searchHint": "karakura fiend shapechanger neutral evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (shapechanger)"
+        }
+    },
+    {
+        "id": "open5e-keg-golem",
+        "name": "Keg Golem",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/keg-golem",
+        "lastUpdateMs": 0,
+        "searchHint": "keg golem construct  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-king-kobold",
+        "name": "King Kobold",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/king-kobold",
+        "lastUpdateMs": 0,
+        "searchHint": "king kobold humanoid kobold lawful neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (kobold)"
+        }
+    },
+    {
+        "id": "open5e-kinnara",
+        "name": "Kinnara",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/kinnara",
+        "lastUpdateMs": 0,
+        "searchHint": "kinnara celestial  lawful good",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-kitsune",
+        "name": "Kitsune",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/kitsune",
+        "lastUpdateMs": 0,
+        "searchHint": "kitsune fey shapechanger chaotic neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fey (shapechanger)"
+        }
+    },
+    {
+        "id": "open5e-knight-of-the-road",
+        "name": "Knight of the Road",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/knight-of-the-road",
+        "lastUpdateMs": 0,
+        "searchHint": "knight of the road humanoid elf lawful evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (elf)"
+        }
+    },
+    {
+        "id": "open5e-korrigan",
+        "name": "Korrigan",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/korrigan",
+        "lastUpdateMs": 0,
+        "searchHint": "korrigan fey  chaotic neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-kryt",
+        "name": "Kryt",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/kryt",
+        "lastUpdateMs": 0,
+        "searchHint": "kryt humanoid kryt neutral evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (kryt)"
+        }
+    },
+    {
+        "id": "open5e-kulmking",
+        "name": "Külmking",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/kulmking",
+        "lastUpdateMs": 0,
+        "searchHint": "klmking undead  chaotic evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-kuunganisha",
+        "name": "Kuunganisha",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/kuunganisha",
+        "lastUpdateMs": 0,
+        "searchHint": "kuunganisha fiend  any evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-labyrinth-keeper",
+        "name": "Labyrinth Keeper",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/labyrinth-keeper",
+        "lastUpdateMs": 0,
+        "searchHint": "labyrinth keeper monstrosity  chaotic evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-lady-in-white",
+        "name": "Lady in White",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/lady-in-white",
+        "lastUpdateMs": 0,
+        "searchHint": "lady in white undead  any alignment",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-laestrigonian-giant",
+        "name": "Laestrigonian Giant",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/laestrigonian-giant",
+        "lastUpdateMs": 0,
+        "searchHint": "laestrigonian giant giant  chaotic evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-lamassu",
+        "name": "Lamassu",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/lamassu",
+        "lastUpdateMs": 0,
+        "searchHint": "lamassu celestial  lawful good",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-leonino",
+        "name": "Leonino",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/leonino",
+        "lastUpdateMs": 0,
+        "searchHint": "leonino beast  unaligned",
+        "filterDimensions": {
+            "level": "1/8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-lesser-scrag",
+        "name": "Lesser Scrag",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/lesser-scrag",
+        "lastUpdateMs": 0,
+        "searchHint": "lesser scrag monstrosity  chaotic evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-light-cavalry",
+        "name": "Light Cavalry",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/light-cavalry",
+        "lastUpdateMs": 0,
+        "searchHint": "light cavalry humanoid dragonborn lawful neutral",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (dragonborn)"
+        }
+    },
+    {
+        "id": "open5e-light-dragon-wyrmling",
+        "name": "Light Dragon Wyrmling",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/light-dragon-wyrmling",
+        "lastUpdateMs": 0,
+        "searchHint": "light dragon wyrmling dragon  neutral good",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-living-shade",
+        "name": "Living Shade",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/living-shade",
+        "lastUpdateMs": 0,
+        "searchHint": "living shade fey  neutral",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-living-star",
+        "name": "Living Star",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/living-star",
+        "lastUpdateMs": 0,
+        "searchHint": "living star celestial  any alignment",
+        "filterDimensions": {
+            "level": "19",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-lord-zombie",
+        "name": "Lord Zombie",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/lord-zombie",
+        "lastUpdateMs": 0,
+        "searchHint": "lord zombie undead  neutral evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-lost-minotaur",
+        "name": "Lost Minotaur",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/lost-minotaur",
+        "lastUpdateMs": 0,
+        "searchHint": "lost minotaur undead  neutral evil",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-lotus-golem",
+        "name": "Lotus Golem",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/lotus-golem",
+        "lastUpdateMs": 0,
+        "searchHint": "lotus golem construct  unaligned",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-lou-carcolh",
+        "name": "Lou Carcolh",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/lou-carcolh",
+        "lastUpdateMs": 0,
+        "searchHint": "lou carcolh monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-lystrosaurus",
+        "name": "Lystrosaurus",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/lystrosaurus",
+        "lastUpdateMs": 0,
+        "searchHint": "lystrosaurus beast  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-manastorm-golem",
+        "name": "Manastorm Golem",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/manastorm-golem",
+        "lastUpdateMs": 0,
+        "searchHint": "manastorm golem construct  unaligned",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-mandrake",
+        "name": "Mandrake",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/mandrake",
+        "lastUpdateMs": 0,
+        "searchHint": "mandrake plant  unaligned",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-mandriano",
+        "name": "Mandriano",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/mandriano",
+        "lastUpdateMs": 0,
+        "searchHint": "mandriano plant  lawful evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-matriarch-serpentine-lamia",
+        "name": "Matriarch Serpentine Lamia",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/matriarch-serpentine-lamia",
+        "lastUpdateMs": 0,
+        "searchHint": "matriarch serpentine lamia monstrosity  neutral evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-megapede",
+        "name": "Megapede",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/megapede",
+        "lastUpdateMs": 0,
+        "searchHint": "megapede monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-mold-zombie",
+        "name": "Mold Zombie",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/mold-zombie",
+        "lastUpdateMs": 0,
+        "searchHint": "mold zombie undead  chaotic evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-monarch-skeleton",
+        "name": "Monarch Skeleton",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/monarch-skeleton",
+        "lastUpdateMs": 0,
+        "searchHint": "monarch skeleton undead  neutral evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-monkey-king",
+        "name": "Monkey King",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/monkey-king",
+        "lastUpdateMs": 0,
+        "searchHint": "monkey king celestial  neutral",
+        "filterDimensions": {
+            "level": "21",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-moon-drake",
+        "name": "Moon Drake",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/moon-drake",
+        "lastUpdateMs": 0,
+        "searchHint": "moon drake dragon  neutral",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-moon-nymph",
+        "name": "Moon Nymph",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/moon-nymph",
+        "lastUpdateMs": 0,
+        "searchHint": "moon nymph aberration  chaotic neutral",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-moonchild-naga",
+        "name": "Moonchild Naga",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/moonchild-naga",
+        "lastUpdateMs": 0,
+        "searchHint": "moonchild naga monstrosity  neutral evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-morko",
+        "name": "Morko",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/morko",
+        "lastUpdateMs": 0,
+        "searchHint": "morko fey  chaotic evil",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-mountain-giant",
+        "name": "Mountain Giant",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/mountain-giant",
+        "lastUpdateMs": 0,
+        "searchHint": "mountain giant giant  neutral evil",
+        "filterDimensions": {
+            "level": "21",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-mud-golem",
+        "name": "Mud Golem",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/mud-golem",
+        "lastUpdateMs": 0,
+        "searchHint": "mud golem construct  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-mytholabe",
+        "name": "Mytholabe",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/mytholabe",
+        "lastUpdateMs": 0,
+        "searchHint": "mytholabe construct  unaligned",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-nachzehrer",
+        "name": "Nachzehrer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/nachzehrer",
+        "lastUpdateMs": 0,
+        "searchHint": "nachzehrer undead  chaotic evil",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-nalusa-falaya",
+        "name": "Nalusa Falaya",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/nalusa-falaya",
+        "lastUpdateMs": 0,
+        "searchHint": "nalusa falaya aberration  neutral evil",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-necrophage-ghast",
+        "name": "Necrophage Ghast",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/necrophage-ghast",
+        "lastUpdateMs": 0,
+        "searchHint": "necrophage ghast undead  chaotic evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-necrotic-tick",
+        "name": "Necrotic Tick",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/necrotic-tick",
+        "lastUpdateMs": 0,
+        "searchHint": "necrotic tick beast  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-neophron",
+        "name": "Neophron",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/neophron",
+        "lastUpdateMs": 0,
+        "searchHint": "neophron fiend demon shapechanger chaotic evil",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (demon, shapechanger)"
+        }
+    },
+    {
+        "id": "open5e-nian",
+        "name": "Nian",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/nian",
+        "lastUpdateMs": 0,
+        "searchHint": "nian monstrosity  chaotic neutral",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-nightgaunt",
+        "name": "Nightgaunt",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/nightgaunt",
+        "lastUpdateMs": 0,
+        "searchHint": "nightgaunt aberration  lawful evil",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-ningyo",
+        "name": "Ningyo",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ningyo",
+        "lastUpdateMs": 0,
+        "searchHint": "ningyo aberration  neutral evil",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-nodosaurus",
+        "name": "Nodosaurus",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/nodosaurus",
+        "lastUpdateMs": 0,
+        "searchHint": "nodosaurus beast  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-oliphaunt",
+        "name": "Oliphaunt",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/oliphaunt",
+        "lastUpdateMs": 0,
+        "searchHint": "oliphaunt beast  unaligned",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-one-headed-clockwork-dragon",
+        "name": "One-Headed Clockwork Dragon",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/one-headed-clockwork-dragon",
+        "lastUpdateMs": 0,
+        "searchHint": "oneheaded clockwork dragon construct  unaligned",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-ophanim",
+        "name": "Ophanim",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ophanim",
+        "lastUpdateMs": 0,
+        "searchHint": "ophanim celestial  lawful good",
+        "filterDimensions": {
+            "level": "16",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-orthrus",
+        "name": "Orthrus",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/orthrus",
+        "lastUpdateMs": 0,
+        "searchHint": "orthrus monstrosity  lawful neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-oth",
+        "name": "Oth",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/oth",
+        "lastUpdateMs": 0,
+        "searchHint": "oth aberration shoth lawful neutral",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration (shoth)"
+        }
+    },
+    {
+        "id": "open5e-ouroban",
+        "name": "Ouroban",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ouroban",
+        "lastUpdateMs": 0,
+        "searchHint": "ouroban humanoid dragonborn neutral evil",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (dragonborn)"
+        }
+    },
+    {
+        "id": "open5e-ouroboros",
+        "name": "Ouroboros",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ouroboros",
+        "lastUpdateMs": 0,
+        "searchHint": "ouroboros dragon  neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-pact-drake",
+        "name": "Pact Drake",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/pact-drake",
+        "lastUpdateMs": 0,
+        "searchHint": "pact drake dragon  lawful neutral",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-pact-lich",
+        "name": "Pact Lich",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/pact-lich",
+        "lastUpdateMs": 0,
+        "searchHint": "pact lich undead  any evil alignment",
+        "filterDimensions": {
+            "level": "15",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-paper-golem",
+        "name": "Paper Golem",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/paper-golem",
+        "lastUpdateMs": 0,
+        "searchHint": "paper golem construct  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-paper-golem-swarm",
+        "name": "Paper Golem Swarm",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/paper-golem-swarm",
+        "lastUpdateMs": 0,
+        "searchHint": "paper golem swarm construct  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-pattern-dancer",
+        "name": "Pattern Dancer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/pattern-dancer",
+        "lastUpdateMs": 0,
+        "searchHint": "pattern dancer humanoid elf chaotic evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (elf)"
+        }
+    },
+    {
+        "id": "open5e-pech",
+        "name": "Pech",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/pech",
+        "lastUpdateMs": 0,
+        "searchHint": "pech elemental  neutral good",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-pech-lithlord",
+        "name": "Pech Lithlord",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/pech-lithlord",
+        "lastUpdateMs": 0,
+        "searchHint": "pech lithlord elemental  neutral good",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-pech-stonemaster",
+        "name": "Pech Stonemaster",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/pech-stonemaster",
+        "lastUpdateMs": 0,
+        "searchHint": "pech stonemaster elemental  neutral good",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-peluda-drake",
+        "name": "Peluda Drake",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/peluda-drake",
+        "lastUpdateMs": 0,
+        "searchHint": "peluda drake dragon  chaotic neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-phantom",
+        "name": "Phantom",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/phantom",
+        "lastUpdateMs": 0,
+        "searchHint": "phantom undead  any alignment",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-philosophers-ghost",
+        "name": "Philosopher's Ghost",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/philosophers-ghost",
+        "lastUpdateMs": 0,
+        "searchHint": "philosophers ghost ooze  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-piasa",
+        "name": "Piasa",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/piasa",
+        "lastUpdateMs": 0,
+        "searchHint": "piasa dragon  unaligned",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-pillar-of-the-lost-magocracy",
+        "name": "Pillar of the Lost Magocracy",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/pillar-of-the-lost-magocracy",
+        "lastUpdateMs": 0,
+        "searchHint": "pillar of the lost magocracy construct  chaotic neutral",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-pishacha",
+        "name": "Pishacha",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/pishacha",
+        "lastUpdateMs": 0,
+        "searchHint": "pishacha fiend shapechanger chaotic evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (shapechanger)"
+        }
+    },
+    {
+        "id": "open5e-pixiu",
+        "name": "Pixiu",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/pixiu",
+        "lastUpdateMs": 0,
+        "searchHint": "pixiu monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-plaresh",
+        "name": "Plaresh",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/plaresh",
+        "lastUpdateMs": 0,
+        "searchHint": "plaresh fiend demon chaotic evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (demon)"
+        }
+    },
+    {
+        "id": "open5e-preta",
+        "name": "Preta",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/preta",
+        "lastUpdateMs": 0,
+        "searchHint": "preta undead  neutral evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-purple-slime",
+        "name": "Purple Slime",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/purple-slime",
+        "lastUpdateMs": 0,
+        "searchHint": "purple slime ooze  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-quickstep",
+        "name": "Quickstep",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/quickstep",
+        "lastUpdateMs": 0,
+        "searchHint": "quickstep fey  neutral evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-quiet-soul",
+        "name": "Quiet Soul",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/quiet-soul",
+        "lastUpdateMs": 0,
+        "searchHint": "quiet soul undead  neutral evil",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-rageipede",
+        "name": "Rageipede",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/rageipede",
+        "lastUpdateMs": 0,
+        "searchHint": "rageipede beast  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-ramag-portal-master",
+        "name": "Ramag Portal Master",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ramag-portal-master",
+        "lastUpdateMs": 0,
+        "searchHint": "ramag portal master humanoid ramag neutral",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (ramag)"
+        }
+    },
+    {
+        "id": "open5e-ratatosk-warlord",
+        "name": "Ratatosk Warlord",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ratatosk-warlord",
+        "lastUpdateMs": 0,
+        "searchHint": "ratatosk warlord celestial  chaotic neutral",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-ratfolk-mercenary",
+        "name": "Ratfolk Mercenary",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ratfolk-mercenary",
+        "lastUpdateMs": 0,
+        "searchHint": "ratfolk mercenary humanoid ratfolk neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (ratfolk)"
+        }
+    },
+    {
+        "id": "open5e-ratfolk-warlock",
+        "name": "Ratfolk Warlock",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ratfolk-warlock",
+        "lastUpdateMs": 0,
+        "searchHint": "ratfolk warlock humanoid ratfolk any alignment",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (ratfolk)"
+        }
+    },
+    {
+        "id": "open5e-rattok",
+        "name": "Rattok",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/rattok",
+        "lastUpdateMs": 0,
+        "searchHint": "rattok fiend demon chaotic evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (demon)"
+        }
+    },
+    {
+        "id": "open5e-razorleaf",
+        "name": "Razorleaf",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/razorleaf",
+        "lastUpdateMs": 0,
+        "searchHint": "razorleaf plant  neutral evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-rimewing",
+        "name": "Rimewing",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/rimewing",
+        "lastUpdateMs": 0,
+        "searchHint": "rimewing beast  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-ring-servant",
+        "name": "Ring Servant",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ring-servant",
+        "lastUpdateMs": 0,
+        "searchHint": "ring servant construct  neutral",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-roachling-scout",
+        "name": "Roachling Scout",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/roachling-scout",
+        "lastUpdateMs": 0,
+        "searchHint": "roachling scout humanoid roachling chaotic neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (roachling)"
+        }
+    },
+    {
+        "id": "open5e-roggenwolf",
+        "name": "Roggenwolf",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/roggenwolf",
+        "lastUpdateMs": 0,
+        "searchHint": "roggenwolf monstrosity  neutral evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-ruby-ooze",
+        "name": "Ruby Ooze",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ruby-ooze",
+        "lastUpdateMs": 0,
+        "searchHint": "ruby ooze ooze  unaligned",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-sammael",
+        "name": "Sammael",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/sammael",
+        "lastUpdateMs": 0,
+        "searchHint": "sammael celestial  neutral good",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-scitalis",
+        "name": "Scitalis",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/scitalis",
+        "lastUpdateMs": 0,
+        "searchHint": "scitalis monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-sentinel-in-darkness",
+        "name": "Sentinel in Darkness",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/sentinel-in-darkness",
+        "lastUpdateMs": 0,
+        "searchHint": "sentinel in darkness construct  unaligned",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-serpentfolk-of-yig",
+        "name": "Serpentfolk of Yig",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/serpentfolk-of-yig",
+        "lastUpdateMs": 0,
+        "searchHint": "serpentfolk of yig humanoid  neutral evil",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-serpentine-lamia",
+        "name": "Serpentine Lamia",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/serpentine-lamia",
+        "lastUpdateMs": 0,
+        "searchHint": "serpentine lamia monstrosity  neutral evil",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-servant-of-the-vine",
+        "name": "Servant of the Vine",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/servant-of-the-vine",
+        "lastUpdateMs": 0,
+        "searchHint": "servant of the vine humanoid elf chaotic neutral",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (elf)"
+        }
+    },
+    {
+        "id": "open5e-servant-of-yig",
+        "name": "Servant of Yig",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/servant-of-yig",
+        "lastUpdateMs": 0,
+        "searchHint": "servant of yig aberration  neutral evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-shadow-blight",
+        "name": "Shadow Blight",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/shadow-blight",
+        "lastUpdateMs": 0,
+        "searchHint": "shadow blight plant  neutral evil",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-shadow-fey-ambassador",
+        "name": "Shadow Fey Ambassador",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/shadow-fey-ambassador",
+        "lastUpdateMs": 0,
+        "searchHint": "shadow fey ambassador humanoid elf lawful evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (elf)"
+        }
+    },
+    {
+        "id": "open5e-shadow-fey-poisoner",
+        "name": "Shadow Fey Poisoner",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/shadow-fey-poisoner",
+        "lastUpdateMs": 0,
+        "searchHint": "shadow fey poisoner humanoid elf neutral",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (elf)"
+        }
+    },
+    {
+        "id": "open5e-shadow-goblin",
+        "name": "Shadow Goblin",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/shadow-goblin",
+        "lastUpdateMs": 0,
+        "searchHint": "shadow goblin humanoid goblinoid neutral evil",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (goblinoid)"
+        }
+    },
+    {
+        "id": "open5e-shadow-ooze",
+        "name": "Shadow Ooze",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/shadow-ooze",
+        "lastUpdateMs": 0,
+        "searchHint": "shadow ooze ooze  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-shadow-river-lord",
+        "name": "Shadow River Lord",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/shadow-river-lord",
+        "lastUpdateMs": 0,
+        "searchHint": "shadow river lord undead  neutral evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-shadow-skeleton",
+        "name": "Shadow Skeleton",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/shadow-skeleton",
+        "lastUpdateMs": 0,
+        "searchHint": "shadow skeleton undead  neutral evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-shantak",
+        "name": "Shantak",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/shantak",
+        "lastUpdateMs": 0,
+        "searchHint": "shantak monstrosity  lawful evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-shard-swarm",
+        "name": "Shard Swarm",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/shard-swarm",
+        "lastUpdateMs": 0,
+        "searchHint": "shard swarm construct  unaligned",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-shockwing",
+        "name": "Shockwing",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/shockwing",
+        "lastUpdateMs": 0,
+        "searchHint": "shockwing beast  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-shoreline-scrapper",
+        "name": "Shoreline Scrapper",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/shoreline-scrapper",
+        "lastUpdateMs": 0,
+        "searchHint": "shoreline scrapper beast  unaligned",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-sigilian",
+        "name": "Sigilian",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/sigilian",
+        "lastUpdateMs": 0,
+        "searchHint": "sigilian construct  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-simhamukha",
+        "name": "Simhamukha",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/simhamukha",
+        "lastUpdateMs": 0,
+        "searchHint": "simhamukha celestial dakini chaotic good",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial (dakini)"
+        }
+    },
+    {
+        "id": "open5e-simurg",
+        "name": "Simurg",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/simurg",
+        "lastUpdateMs": 0,
+        "searchHint": "simurg celestial  neutral good",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-skull-drake",
+        "name": "Skull Drake",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/skull-drake",
+        "lastUpdateMs": 0,
+        "searchHint": "skull drake dragon  neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-skull-lantern",
+        "name": "Skull Lantern",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/skull-lantern",
+        "lastUpdateMs": 0,
+        "searchHint": "skull lantern undead  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-sleipnir",
+        "name": "Sleipnir",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/sleipnir",
+        "lastUpdateMs": 0,
+        "searchHint": "sleipnir monstrosity  neutral good",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-snow-cat",
+        "name": "Snow Cat",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/snow-cat",
+        "lastUpdateMs": 0,
+        "searchHint": "snow cat beast  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-snow-hag",
+        "name": "Snow Hag",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/snow-hag",
+        "lastUpdateMs": 0,
+        "searchHint": "snow hag fey  neutral evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-song-angel",
+        "name": "Song Angel",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/song-angel",
+        "lastUpdateMs": 0,
+        "searchHint": "song angel celestial  lawful good",
+        "filterDimensions": {
+            "level": "6",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-sootwing",
+        "name": "Sootwing",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/sootwing",
+        "lastUpdateMs": 0,
+        "searchHint": "sootwing beast  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-sooze",
+        "name": "Sooze",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/sooze",
+        "lastUpdateMs": 0,
+        "searchHint": "sooze aberration shoth lawful neutral",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration (shoth)"
+        }
+    },
+    {
+        "id": "open5e-spawn-of-chernobog",
+        "name": "Spawn of Chernobog",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/spawn-of-chernobog",
+        "lastUpdateMs": 0,
+        "searchHint": "spawn of chernobog fiend  chaotic evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-speaker-to-the-darkness",
+        "name": "Speaker to the Darkness",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/speaker-to-the-darkness",
+        "lastUpdateMs": 0,
+        "searchHint": "speaker to the darkness humanoid derro chaotic evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (derro)"
+        }
+    },
+    {
+        "id": "open5e-spider-drake",
+        "name": "Spider Drake",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/spider-drake",
+        "lastUpdateMs": 0,
+        "searchHint": "spider drake dragon  lawful evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-spirit-lamp",
+        "name": "Spirit Lamp",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/spirit-lamp",
+        "lastUpdateMs": 0,
+        "searchHint": "spirit lamp undead  chaotic evil",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-spree",
+        "name": "Spree",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/spree",
+        "lastUpdateMs": 0,
+        "searchHint": "spree fiend demon chaotic evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (demon)"
+        }
+    },
+    {
+        "id": "open5e-storm-lord",
+        "name": "Storm Lord",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/storm-lord",
+        "lastUpdateMs": 0,
+        "searchHint": "storm lord elemental  neutral",
+        "filterDimensions": {
+            "level": "13",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-storm-spirit",
+        "name": "Storm Spirit",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/storm-spirit",
+        "lastUpdateMs": 0,
+        "searchHint": "storm spirit elemental  neutral",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-sunset-raptor",
+        "name": "Sunset Raptor",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/sunset-raptor",
+        "lastUpdateMs": 0,
+        "searchHint": "sunset raptor monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-suppurating-ooze",
+        "name": "Suppurating Ooze",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/suppurating-ooze",
+        "lastUpdateMs": 0,
+        "searchHint": "suppurating ooze ooze  unaligned",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-swolbold",
+        "name": "Swolbold",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/swolbold",
+        "lastUpdateMs": 0,
+        "searchHint": "swolbold humanoid kobold chaotic neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (kobold)"
+        }
+    },
+    {
+        "id": "open5e-tar-ghoul",
+        "name": "Tar Ghoul",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/tar-ghoul",
+        "lastUpdateMs": 0,
+        "searchHint": "tar ghoul undead  neutral evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-terror-bird",
+        "name": "Terror Bird",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/terror-bird",
+        "lastUpdateMs": 0,
+        "searchHint": "terror bird beast  unaligned",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Beast"
+        }
+    },
+    {
+        "id": "open5e-the-barbed",
+        "name": "The Barbed",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/the-barbed",
+        "lastUpdateMs": 0,
+        "searchHint": "the barbed humanoid kobold lawful evil",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (kobold)"
+        }
+    },
+    {
+        "id": "open5e-thorned-sulfurlord",
+        "name": "Thorned Sulfurlord",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/thorned-sulfurlord",
+        "lastUpdateMs": 0,
+        "searchHint": "thorned sulfurlord fiend  chaotic evil",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend"
+        }
+    },
+    {
+        "id": "open5e-thread-bound-constrictor-snake",
+        "name": "Thread-Bound Constrictor Snake",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/thread-bound-constrictor-snake",
+        "lastUpdateMs": 0,
+        "searchHint": "threadbound constrictor snake construct  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-three-headed-clockwork-dragon",
+        "name": "Three-Headed Clockwork Dragon",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/three-headed-clockwork-dragon",
+        "lastUpdateMs": 0,
+        "searchHint": "threeheaded clockwork dragon construct  unaligned",
+        "filterDimensions": {
+            "level": "14",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-three-headed-cobra",
+        "name": "Three-Headed Cobra",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/three-headed-cobra",
+        "lastUpdateMs": 0,
+        "searchHint": "threeheaded cobra monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-tosculi-jeweled-drone",
+        "name": "Tosculi Jeweled Drone",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/tosculi-jeweled-drone",
+        "lastUpdateMs": 0,
+        "searchHint": "tosculi jeweled drone humanoid tosculi lawful evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (tosculi)"
+        }
+    },
+    {
+        "id": "open5e-trollkin-shaman",
+        "name": "Trollkin Shaman",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/trollkin-shaman",
+        "lastUpdateMs": 0,
+        "searchHint": "trollkin shaman humanoid trollkin neutral",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (trollkin)"
+        }
+    },
+    {
+        "id": "open5e-trollking-grunt",
+        "name": "Trollking Grunt",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/trollking-grunt",
+        "lastUpdateMs": 0,
+        "searchHint": "trollking grunt humanoid trollkin neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (trollkin)"
+        }
+    },
+    {
+        "id": "open5e-tulpa",
+        "name": "Tulpa",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/tulpa",
+        "lastUpdateMs": 0,
+        "searchHint": "tulpa undead  neutral evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-tusked-crimson-ogre",
+        "name": "Tusked Crimson Ogre",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/tusked-crimson-ogre",
+        "lastUpdateMs": 0,
+        "searchHint": "tusked crimson ogre giant  chaotic evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-tveirherjar",
+        "name": "Tveirherjar",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/tveirherjar",
+        "lastUpdateMs": 0,
+        "searchHint": "tveirherjar undead  lawful evil",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-two-headed-eagle",
+        "name": "Two-Headed Eagle",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/two-headed-eagle",
+        "lastUpdateMs": 0,
+        "searchHint": "twoheaded eagle monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-undead-phoenix",
+        "name": "Undead Phoenix",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/undead-phoenix",
+        "lastUpdateMs": 0,
+        "searchHint": "undead phoenix undead  chaotic evil",
+        "filterDimensions": {
+            "level": "12",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-unhatched",
+        "name": "Unhatched",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/unhatched",
+        "lastUpdateMs": 0,
+        "searchHint": "unhatched undead  chaotic evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-ursa-polaris",
+        "name": "Ursa Polaris",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ursa-polaris",
+        "lastUpdateMs": 0,
+        "searchHint": "ursa polaris monstrosity  neutral evil",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-vampire-patrician",
+        "name": "Vampire Patrician",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/vampire-patrician",
+        "lastUpdateMs": 0,
+        "searchHint": "vampire patrician undead  lawful evil",
+        "filterDimensions": {
+            "level": "10",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-vampire-priestess",
+        "name": "Vampire Priestess",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/vampire-priestess",
+        "lastUpdateMs": 0,
+        "searchHint": "vampire priestess undead  lawful evil",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-vampiric-knight",
+        "name": "Vampiric Knight",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/vampiric-knight",
+        "lastUpdateMs": 0,
+        "searchHint": "vampiric knight undead  neutral evil",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-vanara",
+        "name": "Vanara",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/vanara",
+        "lastUpdateMs": 0,
+        "searchHint": "vanara humanoid simian neutral good",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (simian)"
+        }
+    },
+    {
+        "id": "open5e-vellso",
+        "name": "Vellso",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/vellso",
+        "lastUpdateMs": 0,
+        "searchHint": "vellso fiend demon chaotic evil",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (demon)"
+        }
+    },
+    {
+        "id": "open5e-venom-elemental",
+        "name": "Venom Elemental",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/venom-elemental",
+        "lastUpdateMs": 0,
+        "searchHint": "venom elemental elemental  neutral",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Elemental"
+        }
+    },
+    {
+        "id": "open5e-venom-maw-hydra",
+        "name": "Venom Maw Hydra",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/venom-maw-hydra",
+        "lastUpdateMs": 0,
+        "searchHint": "venom maw hydra monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "12",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-vines-of-nemthyr",
+        "name": "Vines of Nemthyr",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/vines-of-nemthyr",
+        "lastUpdateMs": 0,
+        "searchHint": "vines of nemthyr plant  neutral evil",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-void-giant",
+        "name": "Void Giant",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/void-giant",
+        "lastUpdateMs": 0,
+        "searchHint": "void giant giant  chaotic neutral",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Giant"
+        }
+    },
+    {
+        "id": "open5e-war-machine-golem",
+        "name": "War Machine Golem",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/war-machine-golem",
+        "lastUpdateMs": 0,
+        "searchHint": "war machine golem construct  unaligned",
+        "filterDimensions": {
+            "level": "18",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-war-wyvern",
+        "name": "War Wyvern",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/war-wyvern",
+        "lastUpdateMs": 0,
+        "searchHint": "war wyvern dragon  unaligned",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-warlocks-trumpetbloom",
+        "name": "Warlock's Trumpetbloom",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/warlocks-trumpetbloom",
+        "lastUpdateMs": 0,
+        "searchHint": "warlocks trumpetbloom plant  neutral evil",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-wasteland-dragon-wyrmling",
+        "name": "Wasteland Dragon Wyrmling",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wasteland-dragon-wyrmling",
+        "lastUpdateMs": 0,
+        "searchHint": "wasteland dragon wyrmling dragon  chaotic evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-water-horse",
+        "name": "Water Horse",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/water-horse",
+        "lastUpdateMs": 0,
+        "searchHint": "water horse fey shapechanger neutral evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fey (shapechanger)"
+        }
+    },
+    {
+        "id": "open5e-weirding-scroll",
+        "name": "Weirding Scroll",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/weirding-scroll",
+        "lastUpdateMs": 0,
+        "searchHint": "weirding scroll construct  unaligned",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-wendigo",
+        "name": "Wendigo",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wendigo",
+        "lastUpdateMs": 0,
+        "searchHint": "wendigo monstrosity  chaotic evil",
+        "filterDimensions": {
+            "level": "11",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-werebat",
+        "name": "Werebat",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/werebat",
+        "lastUpdateMs": 0,
+        "searchHint": "werebat humanoid human shapechanger lawful evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (human, shapechanger)"
+        }
+    },
+    {
+        "id": "open5e-werehyena",
+        "name": "Werehyena",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/werehyena",
+        "lastUpdateMs": 0,
+        "searchHint": "werehyena humanoid gnoll shapechanger chaotic evil",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (gnoll, shapechanger)"
+        }
+    },
+    {
+        "id": "open5e-whisperer-in-darkness",
+        "name": "Whisperer in Darkness",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/whisperer-in-darkness",
+        "lastUpdateMs": 0,
+        "searchHint": "whisperer in darkness aberration  neutral evil",
+        "filterDimensions": {
+            "level": "15",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-white-stag",
+        "name": "White Stag",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/white-stag",
+        "lastUpdateMs": 0,
+        "searchHint": "white stag celestial  chaotic good",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    },
+    {
+        "id": "open5e-wickerman",
+        "name": "Wickerman",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wickerman",
+        "lastUpdateMs": 0,
+        "searchHint": "wickerman construct  neutral evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-wind-demon",
+        "name": "Wind Demon",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wind-demon",
+        "lastUpdateMs": 0,
+        "searchHint": "wind demon fiend demon chaotic evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (demon)"
+        }
+    },
+    {
+        "id": "open5e-wind-eater",
+        "name": "Wind Eater",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wind-eater",
+        "lastUpdateMs": 0,
+        "searchHint": "wind eater undead  lawful evil",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Undead"
+        }
+    },
+    {
+        "id": "open5e-wind-weasel",
+        "name": "Wind Weasel",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wind-weasel",
+        "lastUpdateMs": 0,
+        "searchHint": "wind weasel fey shapechanger chaotic neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fey (shapechanger)"
+        }
+    },
+    {
+        "id": "open5e-winds-harp",
+        "name": "Wind's Harp",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/winds-harp",
+        "lastUpdateMs": 0,
+        "searchHint": "winds harp fiend devil lawful evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (devil)"
+        }
+    },
+    {
+        "id": "open5e-wirbeln-fungi",
+        "name": "Wirbeln Fungi",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wirbeln-fungi",
+        "lastUpdateMs": 0,
+        "searchHint": "wirbeln fungi plant  lawful neutral",
+        "filterDimensions": {
+            "level": "1",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Plant"
+        }
+    },
+    {
+        "id": "open5e-witch-queen",
+        "name": "Witch Queen",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/witch-queen",
+        "lastUpdateMs": 0,
+        "searchHint": "witch queen humanoid derro chaotic evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (derro)"
+        }
+    },
+    {
+        "id": "open5e-wizard-kobold",
+        "name": "Wizard Kobold",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wizard-kobold",
+        "lastUpdateMs": 0,
+        "searchHint": "wizard kobold humanoid kobold lawful neutral",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (kobold)"
+        }
+    },
+    {
+        "id": "open5e-wolpertinger",
+        "name": "Wolpertinger",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wolpertinger",
+        "lastUpdateMs": 0,
+        "searchHint": "wolpertinger monstrosity  unaligned",
+        "filterDimensions": {
+            "level": "1/4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Monstrosity"
+        }
+    },
+    {
+        "id": "open5e-wood-golem",
+        "name": "Wood Golem",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wood-golem",
+        "lastUpdateMs": 0,
+        "searchHint": "wood golem construct  unaligned",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Construct"
+        }
+    },
+    {
+        "id": "open5e-woodwose",
+        "name": "Woodwose",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/woodwose",
+        "lastUpdateMs": 0,
+        "searchHint": "woodwose humanoid  chaotic neutral",
+        "filterDimensions": {
+            "level": "1/2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid"
+        }
+    },
+    {
+        "id": "open5e-wyvern-knight",
+        "name": "Wyvern Knight",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/wyvern-knight",
+        "lastUpdateMs": 0,
+        "searchHint": "wyvern knight humanoid any race lawful evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (any race)"
+        }
+    },
+    {
+        "id": "open5e-xenabsorber",
+        "name": "Xenabsorber",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/xenabsorber",
+        "lastUpdateMs": 0,
+        "searchHint": "xenabsorber aberration  chaotic neutral",
+        "filterDimensions": {
+            "level": "3",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-xiphus",
+        "name": "Xiphus",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/xiphus",
+        "lastUpdateMs": 0,
+        "searchHint": "xiphus fey  chaotic evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fey"
+        }
+    },
+    {
+        "id": "open5e-yaga-goo",
+        "name": "Yaga Goo",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/yaga-goo",
+        "lastUpdateMs": 0,
+        "searchHint": "yaga goo ooze  neutral evil",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Ooze"
+        }
+    },
+    {
+        "id": "open5e-yakirian",
+        "name": "Yakirian",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/yakirian",
+        "lastUpdateMs": 0,
+        "searchHint": "yakirian humanoid yakirian lawful neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Humanoid (yakirian)"
+        }
+    },
+    {
+        "id": "open5e-yann-an-oed",
+        "name": "Yann-An-Oed",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/yann-an-oed",
+        "lastUpdateMs": 0,
+        "searchHint": "yannanoed aberration  neutral",
+        "filterDimensions": {
+            "level": "2",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-yek",
+        "name": "Yek",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/yek",
+        "lastUpdateMs": 0,
+        "searchHint": "yek fiend demon chaotic evil",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Fiend (demon)"
+        }
+    },
+    {
+        "id": "open5e-young-light-dragon",
+        "name": "Young Light Dragon",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/young-light-dragon",
+        "lastUpdateMs": 0,
+        "searchHint": "young light dragon dragon  neutral good",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-young-wasteland-dragon",
+        "name": "Young Wasteland Dragon",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/young-wasteland-dragon",
+        "lastUpdateMs": 0,
+        "searchHint": "young wasteland dragon dragon  chaotic evil",
+        "filterDimensions": {
+            "level": "9",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Dragon"
+        }
+    },
+    {
+        "id": "open5e-ziphius",
+        "name": "Ziphius",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/ziphius",
+        "lastUpdateMs": 0,
+        "searchHint": "ziphius aberration  neutral",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-zoog",
+        "name": "Zoog",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/zoog",
+        "lastUpdateMs": 0,
+        "searchHint": "zoog aberration  chaotic evil",
+        "filterDimensions": {
+            "level": "0",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Aberration"
+        }
+    },
+    {
+        "id": "open5e-zoryas",
+        "name": "Zoryas",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/zoryas",
+        "lastUpdateMs": 0,
+        "searchHint": "zoryas celestial  lawful good",
+        "filterDimensions": {
+            "level": "8",            
+            "sourceShort": "CC",
+            "source": "Creature Codex",
+            "type": "Celestial"
+        }
+    }
+]

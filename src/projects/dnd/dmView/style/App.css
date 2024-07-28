@@ -1,0 +1,293 @@
+
+.dmView {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Bitter', serif;
+    background-color: #e8e4c7;
+    height: 100vh;
+}
+
+.searchBar {
+    width: 95%;
+    padding: 8px; 
+    margin-bottom: 10px;
+}
+
+.column {
+    position: relative;
+    width: 25%;
+    margin: 10px;
+
+}
+
+.monsterSearch {
+    max-height: 85vh;
+    overflow-y: scroll; 
+    border: 1px solid #ccc 
+}
+
+.monsterSearchList {
+   padding: 0px;
+}
+
+.monsterSearchItem {
+    position: relative;
+    width: 95%;
+    padding: 2px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    transition: background-color 0.1s ease;
+
+}
+
+.monsterSearchIcon {
+    width: 50px;
+}
+
+.monsterSearchSource {
+    font-size: 12px;
+    font-style: italic;
+}
+
+.encounterCreaturesListItem {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    color: rgb(0, 0, 0);
+    transition: background-color 0.2s ease;
+}
+
+.monsterSearchItem:hover,
+.encounterCreaturesListItem:hover {
+    background-color: rgb(186, 186, 186);
+}
+
+.encounterCreaturesHp {
+    color: rgb(27, 204, 48);
+}
+
+.encounterCreatureX {
+    position: relative;
+    right: 0px;
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-weight: bolder;
+}
+
+.encounterTitleEdit {
+    visibility: hidden; 
+}
+.encounterTitle:hover + .encounterTitleEdit,
+.encounterTitleEdit:hover {
+    visibility: visible; 
+    cursor: pointer;
+}
+
+.titleFontFamily {
+    font-family: "Spectral SC", serif;
+    margin-bottom: 0px;
+}
+
+.statBlock {
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f2d3;
+    border: 2px solid #7f7977;
+    border-radius: 10px;
+    padding: 10px;
+    color: #822000;
+}
+
+.statBlock p, h1, h5 {
+    margin: 3px;
+}
+
+.lineSeperator {
+    position: relative;
+    border: none; /* Remove default styling */
+    border-top: 2px solid #822000; /* Change color and thickness */
+    width: 100%; /* Set the width to 50% of the parent container */
+    margin: 0px;
+}
+
+
+.creatureName {
+    position: relative;
+    margin-left: 0px;
+    font-size: 25px;
+    top: 5px;
+    color: #822000;
+}
+
+
+.infoTitle {
+    position: relative;
+    margin-left: 0px;
+    font-size: 20px;
+    top: 5px;
+}
+
+.topCard {
+    display: flex;
+    align-items: center; /* Center vertically */
+    flex-wrap: wrap;
+    background-color: #ffffff00;
+    margin-bottom: 8px;
+
+}
+
+.topInfo {
+    position: relative;
+    width: 100%;
+    overflow: hidden; /* Hide any overflow */
+    border-radius: 8px 8px 0px 0px;
+}
+
+.img {
+    position: absolute;
+    width: 100%;
+    bottom: 5px;
+    opacity: .3;
+    object-fit: cover; /* Ensures the image covers the container without distortion */
+    transform: scale(1);
+    transform-origin: center;
+}
+
+.source {
+    font-size: 11px;
+    color: black;
+}
+
+.creatureType {
+    position: relative;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: black;
+
+}
+
+.stickyStatGrid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    margin-bottom: 15px;
+}
+
+.stickyStatItem {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.extraInfo {
+    font-style: italic;
+    font-size: 12px;
+}
+
+.skillGridContainer {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); /* Creates three columns of equal width */
+    gap: 1px; /* Space between grid items */
+    width: 100%;
+}
+  
+.skillGridHeader {
+    font-size: 10px;
+    text-align: center;
+    background-color: #f4f4f4;
+    padding: 2px;
+    border-bottom: 2px solid #ccc;
+}
+
+.skillGridItem {
+    background-color: #e0e0e0;
+    padding: 2px;
+    text-align: center;
+    font-size: 15px;
+
+}
+
+.skillGridItem span {
+    font-size: 9px;
+}
+
+.statBlockScroll {
+    overflow-y: scroll; 
+    max-height: 60vh;
+}
+
+.actionInfo {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.shadowBox {
+    background-color: #fff; /* Background color of the div */
+    border: 1px solid #ddd; /* Optional: border for the div */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25); /* Bottom shadow */
+}
+
+  /* Style the scrollbar track */
+::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
+    height: 12px; /* Height of the horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color of the track */
+    border-radius: 10px; /* Round the track */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar */
+    border-radius: 10px; /* Round the scrollbar */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color when hovering over the scrollbar */
+}
+
+/* Dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown button */
+.dropdown-toggle {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 160px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Dropdown menu items */
+.dropdown-item {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f1f1;
+}

@@ -1,0 +1,58 @@
+[
+    {
+        "id": "open5e-firetamer",
+        "name": "Ashari Firetamer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/firetamer",
+        "lastUpdateMs": 0,
+        "searchHint": "firetamer humanoid any race neutral good",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CR",
+            "source": "Critical Role: Tal’Dorei Campaign Setting",
+            "type": "Humanoid (any race)"
+        }
+    },
+    {
+        "id": "open5e-skydancer",
+        "name": "Ashari Skydancer",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/skydancer",
+        "lastUpdateMs": 0,
+        "searchHint": "skydancer humanoid any race chaotic neutral",
+        "filterDimensions": {
+            "level": "5",            
+            "sourceShort": "CR",
+            "source": "Critical Role: Tal’Dorei Campaign Setting",
+            "type": "Humanoid (any race)"
+        }
+    },
+    {
+        "id": "open5e-stoneguard",
+        "name": "Ashari Stoneguard",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/stoneguard",
+        "lastUpdateMs": 0,
+        "searchHint": "stoneguard humanoid any race lawful neutral",
+        "filterDimensions": {
+            "level": "7",            
+            "sourceShort": "CR",
+            "source": "Critical Role: Tal’Dorei Campaign Setting",
+            "type": "Humanoid (any race)"
+        }
+    },
+    {
+        "id": "open5e-waverider",
+        "name": "Ashari Waverider",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/waverider",
+        "lastUpdateMs": 0,
+        "searchHint": "waverider humanoid any race neutral good",
+        "filterDimensions": {
+            "level": "4",            
+            "sourceShort": "CR",
+            "source": "Critical Role: Tal’Dorei Campaign Setting",
+            "type": "Humanoid (any race)"
+        }
+    }
+]
