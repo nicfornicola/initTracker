@@ -23,7 +23,7 @@ const DropdownMenu = ({ savedEncounters, handleLoadEncounter, lastEncounterName,
 
     let buttonString = "No Saved Encounters"
     if(savedEncounters) {
-        buttonString = currentEncounterCreatures.length != 0 ? "Encounter: " + selectedEncounterName : "Encounters..." 
+        buttonString = currentEncounterCreatures.length !== 0 ? "Encounter: " + selectedEncounterName : "Encounters..." 
     }
 
     return (

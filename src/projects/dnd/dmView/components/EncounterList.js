@@ -38,7 +38,6 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
     const [savedEncounters, setSavedEncounters] = useState(JSON.parse(localStorage.getItem('savedEncounters')));
 
     const encounterCreatureX = useRef(null);
-    console.log("!!",  currentEncounterCreatures)
     const clickEncounterCreatureX = (event, creatureName, index) => {
         // Dont click allow parent to be clicked aswell
         event.stopPropagation(); 
