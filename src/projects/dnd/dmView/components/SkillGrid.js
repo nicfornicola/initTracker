@@ -38,8 +38,8 @@ const SkillGrid = ({creature}) => {
             <SkillGridItem skill={'INT'} skillMod={creature.intelligence} skillSaveMod= {creature.intelligence_save}/>
             <SkillGridItem skill={'WIS'} skillMod={creature.wisdom} skillSaveMod= {creature.wisdom_save}/>
             <SkillGridItem skill={'CHA'} skillMod={creature.charisma} skillSaveMod= {creature.charisma_save}/>
-     </div>
-  );
+        </div>
+    );
 }
 
 export default SkillGrid;

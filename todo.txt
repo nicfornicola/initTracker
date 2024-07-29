@@ -19,6 +19,7 @@ make stat blocks have a hide for now button that shows a little leaf to reappear
     search list
     --
         toggle visible button  
+        
     statblock
     --
         give words a shadow

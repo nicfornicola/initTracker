@@ -100,78 +100,77 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
    
     return (
         <>
-            <div className='column'>
-                <button onClick={handleSaveEncounter}> Save Encounter </button>
-                <DropdownMenu savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} lastEncounterName={lastEncounterName} currentEncounterCreatures={currentEncounterCreatures}/>
-                <h3>Create Encounter</h3>
-                {showEncounterTitleEdit ? ( 
-                    <>
-                        <DelayedInput encounterName={encounterName} setEncounterName={setEncounterName} lastEncounterName={lastEncounterName} setLastEncounterName={setLastEncounterName}/>
-                        <button onClick={() => handleCloseEditBox("save")}>✅</button>
-                        <button onClick={() => handleCloseEditBox("close")}>❌</button>
-                    </>
-                ) : (
-                    <>                     
-                        <div className='encounterTitle'>{encounterName}</div><div className='encounterTitleEdit' onClick={handleEncounterNameEdit}>✎</div>
-                    </>                     
-                )}
+            <div className='column columnBorder'>
+                <div className='infoContainer'>
 
-                <ul style={{padding: 0 }}>
-                    {currentEncounterCreatures.length ? (
+                    <h3 className='titleFontFamily'>Create Encounter</h3>
+                    <button className='dmViewButton' onClick={handleSaveEncounter}> Save Encounter </button>
+                    <DropdownMenu savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} lastEncounterName={lastEncounterName} currentEncounterCreatures={currentEncounterCreatures}/>
+                    {showEncounterTitleEdit ? ( 
                         <>
-                            {currentEncounterCreatures.map((creature, index) => (
-                                <li className='encounterCreaturesListItem'
-                                    key={index+creature.name}
-                                    onMouseEnter={() => setHoveredIndex(index)}
-                                    onMouseLeave={() => setHoveredIndex(null)}
-                                    onClick={() => handleEncounterSelectCreature(creature)}
-                                >
-                                    <img className="monsterSearchIcon" src={creature.avatarUrl} alt={"list Icon"} />
-                                    {creature.name},
-                                    {creature.open5e && 
-                                        <>
-                                            <div className='encounterCreaturesHp'>
-                                                {creature.open5e.hit_points}
-                                                <span>/</span>
-                                                {creature.open5e.hit_points},
-                                            </div>
-                                            {creature.open5e.armor_class}
-                                        </>
-                                    }
-                                    
-                                    {hoveredIndex === index && ( 
-                                        <button className='encounterCreatureX' ref={encounterCreatureX} onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
-                                        X
-                                        </button>
-                                    )}
-                                </li>
-                            ))}
+                            <DelayedInput encounterName={encounterName} setEncounterName={setEncounterName} lastEncounterName={lastEncounterName} setLastEncounterName={setLastEncounterName}/>
+                            <button onClick={() => handleCloseEditBox("save")}>✅</button>
+                            <button onClick={() => handleCloseEditBox("close")}>❌</button>
                         </>
                     ) : (
-                        <>
+                        <>                     
+                            <div className='encounterTitle'>{encounterName}</div><div className='encounterTitleEdit' onClick={handleEncounterNameEdit}>✎</div>
+                        </>
+                    )}
+
+                    <ul style={{padding: 0 }}>
+                        {currentEncounterCreatures.length ? (
+                            <>
+                                {currentEncounterCreatures.map((creature, index) => (
+                                    <li className='encounterCreaturesListItem'
+                                        key={index+creature.name}
+                                        onMouseEnter={() => setHoveredIndex(index)}
+                                        onMouseLeave={() => setHoveredIndex(null)}
+                                        onClick={() => handleEncounterSelectCreature(creature)}
+                                    >
+                                        <img className="monsterSearchIcon" src={creature.avatarUrl} alt={"list Icon"} />
+                                        {creature.name},
+                                        {creature.open5e && 
+                                            <>
+                                                <div className='encounterCreaturesHp'>
+                                                    {creature.open5e.hit_points}
+                                                    <span>/</span>
+                                                    {creature.open5e.hit_points},
+                                                </div>
+                                                {creature.open5e.armor_class}
+                                            </>
+                                        }
+                                        
+                                        {hoveredIndex === index && ( 
+                                            <button className='encounterCreatureX' ref={encounterCreatureX} onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
+                                            X
+                                            </button>
+                                        )}
+                                    </li>
+                                ))}
+                            </>
+                        ) : (
                             <li className='encounterCreaturesListItem'
                                 key={"key"}
                                 onMouseEnter={() => setHoveredIndex(0)}
                                 onMouseLeave={() => setHoveredIndex(null)}
                             >
-                                Add a creature or select from your                 <DropdownMenu savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} lastEncounterName={lastEncounterName} currentEncounterCreatures={currentEncounterCreatures}/> 
+                                Add a creature or select from your 
+                                <DropdownMenu savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} lastEncounterName={lastEncounterName} currentEncounterCreatures={currentEncounterCreatures}/> 
                             </li>
-                        </>
-                    )}
-                    
-                </ul>
+                        )}
+                        
+                    </ul>
+                </div>
             </div>
-            <div className='column'>
-                {encounterSelectedCreature ? (
-                    <div>
-                        <StatBlock creature={encounterSelectedCreature.open5e} img={encounterSelectedCreature.avatarUrl}/>
-                    </div>
-                ) : 
-                    <div> No Encounter Creature Selected </div>
-                }
-            </div>
+            {encounterSelectedCreature ? (
+                <div className='column'>
+                    <StatBlock creature={encounterSelectedCreature.open5e} img={encounterSelectedCreature.avatarUrl} closeFunction={() => setEncounterSelectedCreature(false)}/>
+                </div>
 
-
+            ) : 
+                <div> No Encounter Creature Selected </div>
+            }
         </>
   );
 }

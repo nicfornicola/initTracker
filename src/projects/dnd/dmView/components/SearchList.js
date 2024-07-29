@@ -166,57 +166,49 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
         setCurrentEncounterCreatures(prev => [...prev, creature]);
     };
 
-    // const handleImageError = (e, fallBackImage) => {
-    //     if (e.target.src !== fallBackImage) {
-    //         console.log("Fallback img")
-    //         e.target.src = fallBackImage;
-    //     }
-    // };
-
     return (
         <>
-            <div className='column'>
-                <input
-                    className='searchBar'
-                    type="text"
-                    placeholder="Search..."
-                    value={searchTerm}
-                    onChange={(e) => handleSetSearchTerm(e.target.value)}
-                />
-                Results Loaded: {displayedItems.length}
-                <div
-                    className='monsterSearch'
-                    onScroll={handleScroll}
-                >
-                    <ul className='monsterSearchList'>
-                        {displayedItems.map((item, index) => (
-                            <li
-                                className='monsterSearchItem'
-                                key={item.id + item.filterDimensions.source}
-                                onClick={() => handleSearchSelectCreature(item)}
-                            >
-                                <span>
-                                    <img className="monsterSearchIcon" src={item.avatarUrl} alt={"list Icon"} />
-                                    {index} {item.name} - <span className='monsterSearchSource'>{item.filterDimensions.sourceShort}</span>
-                                </span>
-                            
-                            </li>
-                        ))}
-                    </ul>
+            <div className='column columnBorder'>
+                <div className='infoContainer'>
+                    <input
+                        className='searchBar'
+                        type="text"
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={(e) => handleSetSearchTerm(e.target.value)}
+                    />
+                    Results Loaded: {displayedItems.length}
+                    <div
+                        className='monsterSearch'
+                        onScroll={handleScroll}
+                    >
+                        <ul className='monsterSearchList'>
+                            {displayedItems.map((item, index) => (
+                                <li
+                                    className='monsterSearchItem'
+                                    key={item.id + item.filterDimensions.source}
+                                    onClick={() => handleSearchSelectCreature(item)}
+                                >
+                                    <span>
+                                        <img className="monsterSearchIcon" src={item.avatarUrl} alt={"list Icon"} />
+                                        {index} {item.name} - <span className='monsterSearchSource'>{item.filterDimensions.sourceShort}</span>
+                                    </span>
+                                
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div className='column'>
-                {searchSelectedCreature ? (
-                    <div>
-                        <StatBlock creature={searchSelectedCreature.open5e} img={searchSelectedCreature.avatarUrl}/>
-                    </div>
-                ) : 
-                    <div> No Search Creature Selected </div>
-                }
-            </div>
-
+            {searchSelectedCreature ? (
+                <div className='column'>
+                    <StatBlock creature={searchSelectedCreature.open5e} img={searchSelectedCreature.avatarUrl} closeFunction={() => setSearchSelectedCreature(false)}/>
+                </div>
+            ) : (
+                <div> No Search Creature Selected </div>
+            )}
         </>
-  );
+    );
 }
 
 export default SearchList;

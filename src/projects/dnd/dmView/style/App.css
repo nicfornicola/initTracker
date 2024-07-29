@@ -3,21 +3,31 @@
     display: flex;
     justify-content: space-between;
     font-family: 'Bitter', serif;
-    background-color: #e8e4c7;
     height: 100vh;
+    background-image: url('../pics//dmViewPaperBack.jpg');
+    background-size: cover; /* Ensures the image covers the entire container */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
 }
 
 .searchBar {
     width: 95%;
-    padding: 8px; 
-    margin-bottom: 10px;
 }
 
 .column {
     position: relative;
     width: 25%;
+    height: 94vh;
+    border: 2px solid #7f7977;
+    border-radius: 10px;
     margin: 10px;
+    box-sizing: border-box; /* Include border and padding in the element's total width and height */
 
+}
+
+.columnBorder {
+    background-color: #f8f2d3;
+    color: #822000;
 }
 
 .monsterSearch {
@@ -102,14 +112,35 @@
     display: flex;
     flex-direction: column;
     background-color: #f8f2d3;
-    border: 2px solid #7f7977;
     border-radius: 10px;
-    padding: 10px;
     color: #822000;
+    height: 100%
 }
 
 .statBlock p, h1, h5 {
     margin: 3px;
+}
+
+.statBlock:hover .statblockX {
+    visibility: visible;
+}
+
+.infoContainer {
+    padding: 3% 3% 3% 3%;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box; /* Include border and padding in the element's total width and height */
+
+}
+
+.statblockX {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background-color: rgb(186, 186, 186);
+    cursor: pointer;
+    visibility: hidden;
+    z-index: 1;
 }
 
 .lineSeperator {
@@ -138,29 +169,29 @@
 }
 
 .topCard {
-    display: flex;
+    position: relative;
     align-items: center; /* Center vertically */
-    flex-wrap: wrap;
     background-color: #ffffff00;
-    margin-bottom: 8px;
+    width: 100%;
+    overflow: hidden;
 
 }
 
 .topInfo {
     position: relative;
-    width: 100%;
-    overflow: hidden; /* Hide any overflow */
-    border-radius: 8px 8px 0px 0px;
+    height: 100%;
 }
 
 .img {
-    position: absolute;
+    position: absolute; /* Position absolutely to fill the container */
+    top: 50%; /* Center image vertically */
+    left: 50%; /* Center image horizontally */
     width: 100%;
-    bottom: 5px;
+    height: 100%;
+    object-fit: cover; /* Cover the container, stretching if necessary */
+    object-position: center; /* Center the image */
+    transform: translate(-50%, -50%); /* Offset to center the image */
     opacity: .3;
-    object-fit: cover; /* Ensures the image covers the container without distortion */
-    transform: scale(1);
-    transform-origin: center;
 }
 
 .source {
@@ -197,34 +228,31 @@
 .skillGridContainer {
     position: relative;
     display: grid;
-    grid-template-columns: repeat(12, 1fr); /* Creates three columns of equal width */
-    gap: 1px; /* Space between grid items */
+    grid-template-columns: repeat(12, minmax(0, 1fr)); /* Flexible columns */
+    gap: .5%; /* Space between grid items */
     width: 100%;
 }
-  
+
 .skillGridHeader {
-    font-size: 10px;
     text-align: center;
     background-color: #f4f4f4;
-    padding: 2px;
-    border-bottom: 2px solid #ccc;
+    padding-bottom: 2%;
+    width: 100%;
+    font-size: .66vw; /* Responsive font size */
 }
 
 .skillGridItem {
     background-color: #e0e0e0;
-    padding: 2px;
     text-align: center;
-    font-size: 15px;
-
+    font-size: .8vw; /* Responsive font size */
 }
 
 .skillGridItem span {
-    font-size: 9px;
+    font-size: .5vw; /* Responsive font size */
 }
-
 .statBlockScroll {
+    height: 72%;
     overflow-y: scroll; 
-    max-height: 60vh;
 }
 
 .actionInfo {
@@ -245,13 +273,18 @@
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Color of the track */
-    border-radius: 10px; /* Round the track */
+    border-radius: 2px; /* Round the track */
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888; /* Color of the scrollbar */
-    border-radius: 10px; /* Round the scrollbar */
+    background: #88888831; /* Color of the scrollbar */
+    border-radius: 4px; /* Round the scrollbar */
+}
+
+.column:hover 
+::-webkit-scrollbar-thumb {
+    background: #888888cd; /* Color of the scrollbar */
+    border-radius: 4px; /* Round the scrollbar */
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -265,7 +298,7 @@
 }
 
 /* Dropdown button */
-.dropdown-toggle {
+.dmViewButton {
     padding: 10px 20px;
     cursor: pointer;
     border: 1px solid #ccc;

@@ -105,69 +105,68 @@ function addSign(modNumber) {
     return `${modNumber}`; // Negative number already has a minus sign
 }
 
-const StatBlock = ({creature, img}) => {
+const StatBlock = ({creature, img, closeFunction }) => {
     console.log(creature)
     return (
         <div className='statBlock'>
-            <div className="topCard">
-                <div className='topInfo shadowBox'>
-                    <img className="img" src={img} alt={"Search Img"}/>
+            <div className='infoContainer'>
+                <button className='statblockX' onClick={closeFunction}>❌</button>
+                <div className="topCard">
+                    <div className='topInfo shadowBox'>
+                        <img className="img" src={img} alt={"Search Img"}/>
 
-                    <h1 className='creatureName titleFontFamily'>{creature.name}</h1>
-                    <div className='creatureType'>
-                        <hr className="lineSeperator" />
-                        <p className='source'>{creature.document__title}</p>
-                        <p><i>{creature.size} {creature.type},  {creature.subtype && <> ({creature.subtype}), </>} {creature.group && <> ({creature.group}), </>} {creature.alignment}</i></p>
+                        <h1 className='creatureName titleFontFamily'>{creature.name}</h1>
+                        <div className='creatureType'>
+                            <hr className="lineSeperator" />
+                            <p className='source'>{creature.document__title}</p>
+                            <p><i>{creature.size} {creature.type},  {creature.subtype && <> ({creature.subtype}), </>} {creature.group && <> ({creature.group}), </>} {creature.alignment}</i></p>
+                        </div>
+                        <div className='stickyStatGrid'>
+                            <p className="stickyStatItem"><strong>AC</strong>&nbsp;{creature.armor_class} {creature.armor_desc && <span className='extraInfo'>&nbsp;({creature.armor_desc}) </span>} </p>
+                            <p className="stickyStatItem"><strong>Initiative</strong>&nbsp;{addSign(creature.dexterity_save)} <span className='extraInfo'>&nbsp;({creature.dexterity_save+10})</span></p>
+                            <p className="stickyStatItem"><strong>HP</strong>&nbsp;{creature.hit_points}/{creature.hit_points} <span className='extraInfo'>&nbsp;({creature.hit_dice})</span></p>
+                            <p className="stickyStatItem"></p>
+                            <p className="stickyStatItem">
+                                <strong>Speed</strong>&nbsp;
+                                {Object.entries(creature.speed).map(([key, value], index, array) => (
+                                    <span key={index + key}>
+                                        {capsFirstLetter(key)} {value}{index < array.length - 1 ? ',' : ''}&nbsp;
+                                    </span>
+                                ))}
+                            </p>
+                            <p className="stickyStatItem"></p>
+                        </div>
+
+                        <SkillGrid creature={creature}/>
+
                     </div>
-                    <div className='stickyStatGrid'>
-                        <p className="stickyStatItem"><strong>AC</strong>&nbsp;{creature.armor_class} {creature.armor_desc && <span className='extraInfo'>&nbsp;({creature.armor_desc}) </span>} </p>
-                        <p className="stickyStatItem"><strong>Initiative</strong>&nbsp;{addSign(creature.dexterity_save)} <span className='extraInfo'>&nbsp;({creature.dexterity_save+10})</span></p>
-                        <p className="stickyStatItem"><strong>HP</strong>&nbsp;{creature.hit_points}/{creature.hit_points} <span className='extraInfo'>&nbsp;({creature.hit_dice})</span></p>
-                        <p className="stickyStatItem"></p>
-                        <p className="stickyStatItem">
-                            <strong>Speed</strong>&nbsp;
-                            {Object.entries(creature.speed).map(([key, value], index, array) => (
-                                <span key={index + key}>
-                                    {capsFirstLetter(key)} {value}{index < array.length - 1 ? ',' : ''}&nbsp;
-                                </span>
-                            ))}
-                        </p>
-                        <p className="stickyStatItem"></p>
-                    </div>
-
-                    <SkillGrid creature={creature}/>
-
                 </div>
-            </div>
-                
-            <div className="statBlockScroll">
-                <div className="section-left">
-                    <div className="top-stats">
-
+                    
+                <div className="statBlockScroll">
+                    {creature.skills && Object.keys(creature.skills).length !== 0 && (
                         <p>
                             <strong>Skills </strong>
                             {Object.entries(creature.skills).map(([key, value], index) => (
                                 <span key={index+key}>{capsFirstLetter(key)} {addSign(value)}, </span>
                             ))}
                         </p>
+                    )}
+                    {creature.damage_vulnerabilities && (
+                        <p><strong>Vulnerabilities</strong> {creature.damage_vulnerabilities}</p>
+                    )}
+                    {creature.damage_resistances && (
+                        <p><strong>Resistances</strong> {creature.damage_resistances}</p>
+                    )}
+                    {creature.damage_immunities && (
+                        <p><strong>Immunities</strong> {creature.damage_immunities}</p>
+                    )}
+                    {creature.condition_immunities && (
+                        <p><strong>Condition Immunities</strong> {creature.condition_immunities}</p>
+                    )}
+                    <p><strong>Senses</strong> {capsFirstLetter(creature.senses)}</p>
+                    <p><strong>Languages</strong> {creature.languages}</p>
+                    <p><strong>CR </strong>{creature.cr} <i>({levelXPData[creature.challenge_rating]} XP)</i></p>
 
-                        {creature.damage_vulnerabilities && (
-                            <p><strong>Vulnerabilities</strong> {creature.damage_vulnerabilities}</p>
-                        )}
-                        {creature.damage_resistances && (
-                            <p><strong>Resistances</strong> {creature.damage_resistances}</p>
-                        )}
-                        {creature.damage_immunities && (
-                            <p><strong>Immunities</strong> {creature.damage_immunities}</p>
-                        )}
-                        {creature.condition_immunities && (
-                            <p><strong>Condition Immunities</strong> {creature.condition_immunities}</p>
-                        )}
-                        <p><strong>Senses</strong> {capsFirstLetter(creature.senses)}</p>
-                        <p><strong>Languages</strong> {creature.languages}</p>
-                        <p><strong>CR </strong>{creature.cr} <i>({levelXPData[creature.challenge_rating]} XP)</i></p>
-
-                    </div>
 
                     <h1 className='infoTitle'>TRAITS</h1>
                     <hr className="lineSeperator" />
@@ -230,23 +229,19 @@ const StatBlock = ({creature, img}) => {
                             ))}
                         </>
                     )}
-                    <hr className="lineSeperator" />
 
                     {creature.environments && creature.environments.length !== 0 && (
                         <div className='extraInfo'>
+                            <hr className="lineSeperator" />
                             <strong>Environments: </strong>
                             {creature.environments.map((value) => (
                                 <span key={value}>{value}, </span>
                             ))}
                         </div>
                     )}
-
-                   
-                    
                 </div>
+                <hr className="lineSeperator" />
             </div>
-            <hr className="lineSeperator" />
-
         </div>
     );
 }
