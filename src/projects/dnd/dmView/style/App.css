@@ -17,7 +17,7 @@
 .column {
     position: relative;
     width: 25%;
-    height: 94vh;
+    height: 97vh;
     border: 2px solid #7f7977;
     border-radius: 10px;
     margin: 10px;
@@ -126,6 +126,8 @@
 }
 
 .infoContainer {
+    display: flex;
+    flex-direction: column;
     padding: 3% 3% 3% 3%;
     height: 100%;
     width: 100%;
@@ -173,7 +175,6 @@
     align-items: center; /* Center vertically */
     background-color: #ffffff00;
     width: 100%;
-    overflow: hidden;
 
 }
 
@@ -204,7 +205,6 @@
     margin-bottom: 10px;
     font-size: 14px;
     color: black;
-
 }
 
 .stickyStatGrid {
@@ -251,7 +251,7 @@
     font-size: .5vw; /* Responsive font size */
 }
 .statBlockScroll {
-    height: 72%;
+    padding-top: 1%;
     overflow-y: scroll; 
 }
 
