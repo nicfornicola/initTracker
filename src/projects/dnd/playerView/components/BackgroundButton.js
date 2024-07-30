@@ -11,8 +11,8 @@ import Tooltip from './Tooltip';
 
 const ImagePopup = ({setBackGroundImage, setYoutubeLink}) => {
     const [open, setOpen] = useState(false);
-    const [uploadedFiles, setUploadedFiles] = useState([]);
-    const [uploadedLinks, setUploadedLinks] = useState([]);
+    const [uploadedFiles, setUploadedFiles] = useState(JSON.parse(localStorage.getItem('uploadedBackgrounds')) || []);
+    const [uploadedLinks, setUploadedLinks] = useState(JSON.parse(localStorage.getItem('uploadedLinks')) || []);
 
     const dialogRef = useRef(null);
 
@@ -21,7 +21,6 @@ const ImagePopup = ({setBackGroundImage, setYoutubeLink}) => {
     };
 
     useEffect(() => {
-
         const handleClickOutside = (event) => {
             if ((dialogRef.current && !dialogRef.current.contains(event.target)) || event.target.tagName === 'IMG') {
                 handleClose();
@@ -29,11 +28,12 @@ const ImagePopup = ({setBackGroundImage, setYoutubeLink}) => {
         };
         
         open ? document.addEventListener('mousedown', handleClickOutside) : document.removeEventListener('mousedown', handleClickOutside);
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
+        return () => { document.removeEventListener('mousedown', handleClickOutside); };
     }, [open]);
+
+    //JSON.parse(localStorage.getItem('youtubeLinks'))
+    //JSON.parse(localStorage.getItem('savedBackgrounds'))
+    //localStorage.setItem('savedEncounters', JSON.stringify(updatedSavedEncountersList));
 
     const handleClick = (src, isYoutubeLink) => {
         if (isYoutubeLink) { // https://www.youtube.com/watch?v=H-bd0eyF-HA&ab_channel=AnimatedBattleMaps
@@ -76,7 +76,7 @@ const ImagePopup = ({setBackGroundImage, setYoutubeLink}) => {
             <DialogContent >
                 {uploadedLinks.length > 0 && (
                     <>     
-                        <label htmlFor="grid" className='uploadedTitle'>Uploaded Youtube Links - ⚠️Cleared on page refresh⚠️</label>
+                        <label htmlFor="grid" className='uploadedTitle'>Uploaded Youtube Links</label>
                         <hr/>
                         <GridMap imageArr={uploadedLinks} handleClick={handleClick} isYoutubeLink={true} />
                         <hr/>
@@ -84,7 +84,7 @@ const ImagePopup = ({setBackGroundImage, setYoutubeLink}) => {
                 )}
                 {uploadedFiles.length > 0 && (
                     <>     
-                        <label htmlFor="grid" className='uploadedTitle'>Uploaded Images - ⚠️Cleared on page refresh⚠️</label>
+                        <label htmlFor="grid" className='uploadedTitle'>Uploaded Images</label>
                         <hr/>
                         <GridMap imageArr={uploadedFiles} handleClick={handleClick}/>
                         <hr/>
@@ -93,7 +93,7 @@ const ImagePopup = ({setBackGroundImage, setYoutubeLink}) => {
                 <GridMap imageArr={backgroundImages} handleClick={handleClick}/>
             </DialogContent>
             <FileUpload uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles}/>
-            <TextInput setYoutubeLink={setYoutubeLink} setUploadedLinks={setUploadedLinks} setOpen={setOpen}/>
+            <TextInput setYoutubeLink={setYoutubeLink} setUploadedLinks={setUploadedLinks} uploadedLinks={uploadedLinks} setOpen={setOpen}/>
 
         </Dialog>
 

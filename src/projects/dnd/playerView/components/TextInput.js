@@ -8,7 +8,6 @@ function getYouTubeThumbnail(url) {
 
         // Construct thumbnail URL
         let thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-        
         return thumbnailUrl;
     } else {
         console.error('Invalid YouTube URL');
@@ -16,7 +15,7 @@ function getYouTubeThumbnail(url) {
     }
 }
 
-const TextInput = ({setUploadedLinks}) => {
+const TextInput = ({setUploadedLinks, uploadedLinks}) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleChange = (event) => {
@@ -26,8 +25,11 @@ const TextInput = ({setUploadedLinks}) => {
   const handleSubmit = (event) => {
     event.preventDefault(); 
     let thumbnailUrl = getYouTubeThumbnail(inputValue)
-    if(thumbnailUrl)
+    if(thumbnailUrl) {
         setUploadedLinks((prevLinks) => [...prevLinks, thumbnailUrl]);
+        localStorage.setItem('uploadedLinks', JSON.stringify([...uploadedLinks, thumbnailUrl]));
+    }
+
   };
 
   return (

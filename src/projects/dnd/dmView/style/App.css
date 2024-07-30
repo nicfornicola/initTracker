@@ -61,6 +61,12 @@
     font-style: italic;
 }
 
+
+.encounterCreaturesList {
+    padding: 0px;
+    overflow-y: scroll;
+}
+
 .encounterCreaturesListItem {
     padding: 8px;
     border-bottom: 1px solid #ccc;
@@ -69,6 +75,14 @@
     color: rgb(0, 0, 0);
     transition: background-color 0.2s ease;
 }
+
+.submitButton {
+    padding: 0px;
+    border: 0px;
+    background-color: #00000000;
+    cursor: pointer;
+}
+
 
 .monsterSearchItem:hover,
 .encounterCreaturesListItem:hover {
@@ -89,8 +103,27 @@
     font-weight: bolder;
 }
 
+.encounterTitleEditInput {
+    width: 90%;
+    margin: 0px;
+    padding: 0px;
+    background-color: #00000000;
+    color: #822000;
+    font-weight: bold;
+    font-family: 'Bitter', serif;
+}
+
+.encounterTitleEditContainer {
+    position: relative;
+    display: flex;
+    width: 90%;
+}
+
 .encounterTitle {
     border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    align-items: flex-end;
+
 }
 
 .encounterTitleEdit {
@@ -123,6 +156,11 @@
 
 .statBlock:hover .statblockX {
     visibility: visible;
+}
+
+.textShadow {
+    text-shadow: -.5px .5px 0px #000000;
+                
 }
 
 .infoContainer {

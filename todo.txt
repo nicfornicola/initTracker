@@ -58,6 +58,10 @@ fix default image - get first word in type instead of whole thing :)
 
 
 
+playerview
+------
+    add x button to remove uploadedLinks and images
+
 
 king
 ----

@@ -124,11 +124,12 @@ hr {
 }
 
 .cardContainer {
+    display: flex;
+    flex-wrap: wrap;
     position: absolute;
     justify-content: center; 
-    align-items: center;    
-    width: 80%;
-    padding: 100%;
+    align-items: center;  
+    /* setting width inline */
 }
 
 .card {

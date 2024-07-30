@@ -121,7 +121,7 @@ const StatBlock = ({creature, img, closeFunction }) => {
                             <p className='source'>{creature.document__title}</p>
                             <p><i>{creature.size} {creature.type},  {creature.subtype && <> ({creature.subtype}), </>} {creature.group && <> ({creature.group}), </>} {creature.alignment}</i></p>
                         </div>
-                        <div className='stickyStatGrid'>
+                        <div className='stickyStatGrid textShadow' >
                             <p className="stickyStatItem"><strong>AC</strong>&nbsp;{creature.armor_class} {creature.armor_desc && <span className='extraInfo'>&nbsp;({creature.armor_desc}) </span>} </p>
                             <p className="stickyStatItem"><strong>Initiative</strong>&nbsp;{addSign(creature.dexterity_save)} <span className='extraInfo'>&nbsp;({creature.dexterity_save+10})</span></p>
                             <p className="stickyStatItem"><strong>HP</strong>&nbsp;{creature.hit_points}/{creature.hit_points} <span className='extraInfo'>&nbsp;({creature.hit_dice})</span></p>
@@ -136,9 +136,7 @@ const StatBlock = ({creature, img, closeFunction }) => {
                             </p>
                             <p className="stickyStatItem"></p>
                         </div>
-
                         <SkillGrid creature={creature}/>
-
                     </div>
                 </div>
                     

@@ -20,6 +20,9 @@ import eyeOpen from '../pics/icons/eyeOpen.png';
 import skullButton from '../pics/icons/skullButton.jpg'; 
 import skullButtonNot from '../pics/icons/skullButtonNot.jpg'; 
 import background1 from "../pics/backgrounds/fallenCastleBigTree.jpg"
+import upArrow from "../pics/icons/upArrow.png"
+import downArrow from "../pics/icons/downArrow.png"
+import noArrow from "../pics/icons/noArrow.jpg"
 import { Profile } from '../helper/Profile.js' 
 import { sortCreaturesByInitiative, effectObjs } from '../constants.js';
 import Tooltip from './Tooltip.js';
@@ -41,6 +44,8 @@ function PlayerPage() {
     const [hideDeadEnemies, setHideDeadEnemies] = useState(false);
     const [recentlyRefreshed, setRecentlyRefreshed] = useState(false);
     const [foundCreatures, setFoundCreatures] = useState(null);
+    const [cardContainerStyle, setCardContainerStyle] = useState({width: '80%'});
+    const [arrowButton, setArrowButton] = useState(upArrow);
     const { gameId } = useParams();
     
     const refreshPlayerProfiles = async () => {
@@ -224,7 +229,7 @@ function PlayerPage() {
                 return () => clearInterval(timer);
 
             }
-        }, 5 * 60.0 * 1000.0); // 5 minutes in milliseconds
+        }, 2 * 60.0 * 1000.0); // 5 minutes in milliseconds
 
         // Cleanup interval on component unmount
         return () => clearInterval(intervalId);
@@ -236,9 +241,8 @@ function PlayerPage() {
             <div>
                 <HowTo />
                 <br/>
-                If it still doesnt work Encounter ID might be wrong... idk
+                    If it still doesnt work Encounter ID might be wrong... idk
                 <br/>
-
                 <li>Error: {errorMessage.message}</li> 
             </div>
         )
@@ -277,8 +281,38 @@ function PlayerPage() {
             handleRefresh(2)
 
         setHideEnemies(!hideEnemies)
+    } 
+    
+    const handleMovePortraits = () => {
+
+        if('bottom' in cardContainerStyle) {
+            // middle style
+            const newCardContainerStyle = {
+                width: '80%',
+            }
+            setCardContainerStyle(newCardContainerStyle)
+            setArrowButton(upArrow)
+        } else if('top' in cardContainerStyle) {
+            // bottom style
+            const newCardContainerStyle = {
+                width: '95%',
+                bottom: '0%'
+            }
+            setCardContainerStyle(newCardContainerStyle)
+            setArrowButton(noArrow)
+        } else {
+            // top style
+            const newCardContainerStyle = {
+                width: '95%',
+                top: '0%'
+            }
+            setCardContainerStyle(newCardContainerStyle)
+            setArrowButton(downArrow)
+
+        }
+
     }
-   
+
     return (
         <div className="dndBackground" onClick={() => setClickedCreature(null)} style={{backgroundImage: backGroundImage ? `url(${backGroundImage})` : 'none'}}>
         
@@ -288,7 +322,7 @@ function PlayerPage() {
 
             {loading && (<div className='loading'>Loading...</div>)}
             {!foundCreatures && !loading && (<div className='loading'>No Players or Monsters found in encounter id - {gameId}</div>)}
-            <div className="cardContainer" style={{ display: 'flex', flexWrap: 'wrap' }}>
+            <div className="cardContainer" style={cardContainerStyle}>
                 {creatures.map((creature) => { 
 
                     if (creature.type === 'monster') {
@@ -300,6 +334,9 @@ function PlayerPage() {
             </div>
 
             <div className='options-container'>                
+                <img className="option" src={arrowButton} alt={"change style"} onClick={handleMovePortraits} />
+                <Tooltip message={"Icon Position"}/>
+
                 <img className="option" src={hideEnemies ? eyeOpen : eyeClosed} alt={"showEnemies"} onClick={handleHideEnemies} />
                 <Tooltip message={(hideEnemies ? "Show" : "Hide") + " Enemies"}/>
                 { !hideEnemies && 

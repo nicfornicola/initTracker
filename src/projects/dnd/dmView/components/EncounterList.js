@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import StatBlock from './StatBlock';
-import DelayedInput from './DelayedInput';
 import DropdownMenu from './DropdownMenu';
 
 function generateUniqueId() {
@@ -8,11 +7,9 @@ function generateUniqueId() {
 }
 
 function updateJsonArray(jsonArray, newJsonObject) {
-
     if(jsonArray === null) {
         jsonArray = []
     }
-    console.log(jsonArray, newJsonObject)
     // Find the index of the existing object with the same encounter name
     const index = jsonArray.findIndex(item => item['id'] === newJsonObject['id']);
 
@@ -36,6 +33,15 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
     const [lastEncounterName, setLastEncounterName] = useState(encounterName);
     const [showEncounterTitleEdit, setShowEncounterTitleEdit] = useState(false);
     const [savedEncounters, setSavedEncounters] = useState(JSON.parse(localStorage.getItem('savedEncounters')));
+    const [inputValue, setInputValue] = useState(encounterName);
+    const inputRef = useRef(null);
+
+    const handleEditTitleChange = (e) => {
+        setInputValue(e.target.value);
+        if (encounterName !== e.target.value) {
+            setEncounterName(e.target.value);
+        }
+    };
 
     const encounterCreatureX = useRef(null);
     const clickEncounterCreatureX = (event, creatureName, index) => {
@@ -68,7 +74,7 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
     };
 
     const handleSaveEncounter = () => {
-        const savedEncountersList = JSON.parse(localStorage.getItem('savedEncounters'));
+        const savedEncountersList = JSON.parse(localStorage.getItem('savedEncounters')) || [];
         let newEncounter = {encounterName: encounterName, id: encounterId, currentEncounterCreatures: currentEncounterCreatures}
         const updatedSavedEncountersList = updateJsonArray(savedEncountersList, newEncounter);
         // Setting this list to update the encounter list
@@ -96,7 +102,6 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
 
         }
     };
-
    
     return (
         <>
@@ -107,18 +112,29 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
                     <button className='dmViewButton' onClick={handleSaveEncounter}> Save Encounter </button>
                     <DropdownMenu savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} lastEncounterName={lastEncounterName} currentEncounterCreatures={currentEncounterCreatures}/>
                     {showEncounterTitleEdit ? ( 
-                        <>
-                            <DelayedInput encounterName={encounterName} setEncounterName={setEncounterName} lastEncounterName={lastEncounterName} setLastEncounterName={setLastEncounterName}/>
-                            <button onClick={() => handleCloseEditBox("save")}>✅</button>
-                            <button onClick={() => handleCloseEditBox("close")}>❌</button>
-                        </>
+                        <div className='encounterTitleEditContainer'>
+                             <input
+                                ref={inputRef}
+                                className='encounterTitleEditInput'
+                                type="text"
+                                value={inputValue}
+                                onChange={handleEditTitleChange}
+                                placeholder="Encounter Name..."
+                                autoFocus
+                            />
+                            <button className='submitButton' onClick={() => handleCloseEditBox("save")}>✅</button>
+                            <button className='submitButton' onClick={() => handleCloseEditBox("close")}>❌</button>
+                        </div>
                     ) : (
-                        <>                     
-                            <div className='encounterTitle'>{encounterName}</div><div className='encounterTitleEdit' onClick={handleEncounterNameEdit}>✎</div>
+                        <>
+                            <div className='encounterTitleEditContainer' onClick={handleEncounterNameEdit}>                     
+                                <div className='encounterTitle'><strong>{encounterName}</strong></div>
+                                <div className='encounterTitleEdit'>🖉</div>
+                            </div>
                         </>
                     )}
 
-                    <ul style={{padding: 0 }}>
+                    <ul className='encounterCreaturesList'>
                         {currentEncounterCreatures.length ? (
                             <>
                                 {currentEncounterCreatures.map((creature, index) => (

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const DelayedInput = ({encounterName, setEncounterName, lastEncounterName, setLastEncounterName}) => {
     const [inputValue, setInputValue] = useState(encounterName);
     
-    const handleChange = (e) => {
+    const handleEditTitleChange = (e) => {
         setInputValue(e.target.value);
         if (encounterName !== e.target.value) {
             setEncounterName(e.target.value);
@@ -12,9 +12,10 @@ const DelayedInput = ({encounterName, setEncounterName, lastEncounterName, setLa
 
     return (
         <input
+            className='encounterTitleEditInput'
             type="text"
             value={inputValue}
-            onChange={handleChange}
+            onChange={handleEditTitleChange}
             placeholder="Encounter Name..."
         />
     );
