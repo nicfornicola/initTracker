@@ -67,6 +67,23 @@
     overflow-y: scroll;
 }
 
+.encounterCreaturesNoItemsContainer {
+    margin-top: 25%;
+    border: 1px solid #ccc;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.encounterCreaturesNoItems {
+    display: contents;
+    padding-top: 5%;
+    border-bottom: 1px solid #ccc;
+    color: rgb(0, 0, 0);
+    transition: background-color 0.2s ease;
+}
+
 .encounterCreaturesListItem {
     padding: 8px;
     border-bottom: 1px solid #ccc;
@@ -113,6 +130,57 @@
     font-family: 'Bitter', serif;
 }
 
+@keyframes grow {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    0% {
+      transform: translateY(100%);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+}
+
+.animated-box {
+    animation: slideUp 0.5s ease-out forwards;
+    /* Initial position for the slide up effect */
+    transform: translateY(200%);
+}
+  
+.animated-label {
+    display: inline-block; /* Ensure the label scales correctly */
+    animation: grow 0.3s ease-in-out forwards;
+}
+
+.animatedListItem {
+    animation: grow 0.3s ease-in-out backwards;
+}
+  
+input {
+    margin-top: 10px; 
+}
+
+.encounterTitleContainer {
+    margin-top: 10%;
+}
+
+.titleLabel {
+    color: grey;
+    font-weight: bold;
+}
+    
+
 .encounterTitleEditContainer {
     position: relative;
     display: flex;
@@ -123,7 +191,7 @@
     border-bottom: 1px solid #ccc;
     cursor: pointer;
     align-items: flex-end;
-
+    font-size: large;
 }
 
 .encounterTitleEdit {
@@ -329,15 +397,24 @@
     background: #555; /* Color when hovering over the scrollbar */
 }
 
-/* Dropdown container */
-.dropdown {
+.dmViewButtonContainer {
+    display: flex;
+}
+
+.dmViewButtonContainer .dropdown {
+    all: unset;
     position: relative;
     display: inline-block;
 }
 
-/* Dropdown button */
+.dropdown {
+    all: unset;
+    position: relative;
+    display: inline-block;
+}
+
 .dmViewButton {
-    padding: 10px 20px;
+    padding: 1vh 1.5vw;
     cursor: pointer;
     border: 1px solid #ccc;
     background-color: #f9f9f9;

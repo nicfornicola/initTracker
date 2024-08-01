@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import StatBlock from './StatBlock';
 import DropdownMenu from './DropdownMenu';
 
@@ -29,12 +29,17 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [encounterId, setEncounterId] = useState(null);
     const [encounterSelectedCreature, setEncounterSelectedCreature] = useState(null);
-    const [encounterName, setEncounterName] = useState('New Encounter');
+    const [encounterName, setEncounterName] = useState('Name Your Encounter');
     const [lastEncounterName, setLastEncounterName] = useState(encounterName);
     const [showEncounterTitleEdit, setShowEncounterTitleEdit] = useState(false);
     const [savedEncounters, setSavedEncounters] = useState(JSON.parse(localStorage.getItem('savedEncounters')));
     const [inputValue, setInputValue] = useState(encounterName);
+    const [isDisabled, setIsDisabled] = useState(currentEncounterCreatures?.length === 0);
     const inputRef = useRef(null);
+
+    useEffect(() => {
+        setIsDisabled(currentEncounterCreatures?.length === 0)
+      }, [currentEncounterCreatures]);
 
     const handleEditTitleChange = (e) => {
         setInputValue(e.target.value);
@@ -71,6 +76,7 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
         setEncounterName(encounter.encounterName)
         setEncounterId(encounter.id)
         setLastEncounterName(encounter.encounterName)
+        setIsDisabled(false)
     };
 
     const handleSaveEncounter = () => {
@@ -103,44 +109,55 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
         }
     };
    
+    console.log("!!")
+    console.log(inputValue)
+
+    let titleColor = ''
+    if (encounterName === 'Name Your Encounter')
+        titleColor = 'grey'
+
     return (
         <>
             <div className='column columnBorder'>
                 <div className='infoContainer'>
 
                     <h3 className='titleFontFamily'>Create Encounter</h3>
-                    <button className='dmViewButton' onClick={handleSaveEncounter}> Save Encounter </button>
-                    <DropdownMenu savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} lastEncounterName={lastEncounterName} currentEncounterCreatures={currentEncounterCreatures}/>
-                    {showEncounterTitleEdit ? ( 
-                        <div className='encounterTitleEditContainer'>
-                             <input
-                                ref={inputRef}
-                                className='encounterTitleEditInput'
-                                type="text"
-                                value={inputValue}
-                                onChange={handleEditTitleChange}
-                                placeholder="Encounter Name..."
-                                autoFocus
-                            />
-                            <button className='submitButton' onClick={() => handleCloseEditBox("save")}>✅</button>
-                            <button className='submitButton' onClick={() => handleCloseEditBox("close")}>❌</button>
-                        </div>
-                    ) : (
-                        <>
-                            <div className='encounterTitleEditContainer' onClick={handleEncounterNameEdit}>                     
-                                <div className='encounterTitle'><strong>{encounterName}</strong></div>
+                    <div className='dmViewButtonContainer'>
+                        <button className='dmViewButton' onClick={handleSaveEncounter} disabled={isDisabled}> Save Encounter </button>
+                        <DropdownMenu savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} lastEncounterName={lastEncounterName} currentEncounterCreatures={currentEncounterCreatures}/>
+                    </div>
+
+                    <div className='encounterTitleContainer'>
+                        {showEncounterTitleEdit ? ( 
+                            <>                            
+                                <label className='titleLabel animated-label' htmlFor="titleEdit" >Name Your Encounter</label>
+                                <div name="titleEdit" className='encounterTitleEditContainer'>
+                                    <input
+                                        ref={inputRef}
+                                        className='encounterTitleEditInput'
+                                        type="text"
+                                        value={encounterName === 'Name Your Encounter' ? '' : encounterName}
+                                        onChange={handleEditTitleChange}
+                                        autoFocus
+                                    />
+                                    <button className='submitButton' onClick={() => handleCloseEditBox("save")}>✅</button>
+                                    <button className='submitButton' onClick={() => handleCloseEditBox("close")}>❌</button>
+                                </div>
+                            </>
+                        ) : (
+                            <div className='encounterTitleEditContainer animated-label' onClick={handleEncounterNameEdit}>                     
+                                <div className='encounterTitle'><strong style={{color: titleColor}}>{encounterName}</strong></div>
                                 <div className='encounterTitleEdit'>🖉</div>
                             </div>
-                        </>
-                    )}
+                        )}
+                    </div>
 
-                    <ul className='encounterCreaturesList'>
                         {currentEncounterCreatures.length ? (
-                            <>
+                            <ul className='encounterCreaturesList'>
                                 {currentEncounterCreatures.map((creature, index) => (
-                                    <li className='encounterCreaturesListItem'
+                                    <li className='encounterCreaturesListItem animated-box'
                                         key={index+creature.name}
-                                        onMouseEnter={() => setHoveredIndex(index)}
+                                        onMouseEnter={() => setHoveredIndex(index+creature.name)}
                                         onMouseLeave={() => setHoveredIndex(null)}
                                         onClick={() => handleEncounterSelectCreature(creature)}
                                     >
@@ -157,30 +174,32 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
                                             </>
                                         }
                                         
-                                        {hoveredIndex === index && ( 
+                                        {hoveredIndex === index+creature.name && ( 
                                             <button className='encounterCreatureX' ref={encounterCreatureX} onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
                                             X
                                             </button>
                                         )}
                                     </li>
                                 ))}
-                            </>
+                            </ul>
                         ) : (
-                            <li className='encounterCreaturesListItem'
-                                key={"key"}
-                                onMouseEnter={() => setHoveredIndex(0)}
-                                onMouseLeave={() => setHoveredIndex(null)}
-                            >
-                                Add a creature or select from your 
-                                <DropdownMenu savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} lastEncounterName={lastEncounterName} currentEncounterCreatures={currentEncounterCreatures}/> 
-                            </li>
+                            <div className='encounterCreaturesNoItemsContainer'> 
+                                <div className='encounterCreaturesNoItems'>
+                                    {savedEncounters?.length ? (
+                                        <>
+                                            Add a creature or select on of your
+                                            <DropdownMenu savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} lastEncounterName={lastEncounterName} currentEncounterCreatures={currentEncounterCreatures}/> 
+                                        </>
+                                    ) : ( <>Add a creature to create an encounter!</>)}
+                                </div>
+                            </div>
+                            
                         )}
                         
-                    </ul>
                 </div>
             </div>
             {encounterSelectedCreature ? (
-                <div className='column'>
+                <div className='column animated-box'>
                     <StatBlock creature={encounterSelectedCreature.open5e} img={encounterSelectedCreature.avatarUrl} closeFunction={() => setEncounterSelectedCreature(false)}/>
                 </div>
 

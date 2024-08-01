@@ -25,8 +25,6 @@ const DropdownMenu = ({ savedEncounters, handleLoadEncounter, lastEncounterName,
         setSelectedEncounterName(lastEncounterName)
     }, [lastEncounterName])
 
-    console.log(lastEncounterName)
-
     const toggleDropdown = () => setIsOpen(!isOpen);
 
     const handleOptionClick = (encounter) => {
@@ -36,8 +34,6 @@ const DropdownMenu = ({ savedEncounters, handleLoadEncounter, lastEncounterName,
             handleLoadEncounter(encounter);
     };
 
-    console.log(savedEncounters)
-
     let buttonString = "No Saved Encounters"
     if(savedEncounters) {
         buttonString = currentEncounterCreatures.length !== 0 ? "Encounter: " + selectedEncounterName : "Encounters..." 
@@ -45,7 +41,7 @@ const DropdownMenu = ({ savedEncounters, handleLoadEncounter, lastEncounterName,
 
     return (
         <div className="dropdown">
-            <button  ref={dropdownRef} className="dmViewButton" onClick={toggleDropdown}>
+            <button ref={dropdownRef} className="dmViewButton" onClick={toggleDropdown}>
                 {buttonString}
             </button>
             {isOpen && savedEncounters && (

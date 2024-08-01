@@ -201,7 +201,7 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
                 </div>
             </div>
             {searchSelectedCreature ? (
-                <div className='column'>
+                <div className='column animated-box'>
                     <StatBlock creature={searchSelectedCreature.open5e} img={searchSelectedCreature.avatarUrl} closeFunction={() => setSearchSelectedCreature(false)}/>
                 </div>
             ) : (
