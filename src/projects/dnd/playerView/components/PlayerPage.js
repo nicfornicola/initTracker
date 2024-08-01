@@ -23,6 +23,9 @@ import background1 from "../pics/backgrounds/fallenCastleBigTree.jpg"
 import upArrow from "../pics/icons/upArrow.png"
 import downArrow from "../pics/icons/downArrow.png"
 import noArrow from "../pics/icons/noArrow.jpg"
+import bloodIcon from "../pics/icons/bloodIcon.png"
+import bloodIconMinus from "../pics/icons/bloodIconMinus.png"
+import bloodIconSlash from "../pics/icons/bloodIconSlash.png"
 import { Profile } from '../helper/Profile.js' 
 import { sortCreaturesByInitiative, effectObjs } from '../constants.js';
 import Tooltip from './Tooltip.js';
@@ -46,6 +49,8 @@ function PlayerPage() {
     const [foundCreatures, setFoundCreatures] = useState(null);
     const [cardContainerStyle, setCardContainerStyle] = useState({width: '80%'});
     const [arrowButton, setArrowButton] = useState(upArrow);
+    const [enemyBloodToggleType, setEnemyBloodToggleType] = useState(0);
+    const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(bloodIcon);
     const { gameId } = useParams();
     
     const refreshPlayerProfiles = async () => {
@@ -282,9 +287,19 @@ function PlayerPage() {
 
         setHideEnemies(!hideEnemies)
     } 
+
+    const handleEnemyBlood = () => {
+        setEnemyBloodToggleType(enemyBloodToggleType === 2 ? 0 : enemyBloodToggleType + 1)
+        if(enemyBloodToggleType === 0) {
+            setEnemyBloodToggleImage(bloodIcon)
+        } else if(enemyBloodToggleType === 1) {
+            setEnemyBloodToggleImage(bloodIconSlash)
+        } else if(enemyBloodToggleType === 2) {
+            setEnemyBloodToggleImage(bloodIconMinus)
+        }
+    } 
     
     const handleMovePortraits = () => {
-
         if('bottom' in cardContainerStyle) {
             // middle style
             const newCardContainerStyle = {
@@ -310,7 +325,6 @@ function PlayerPage() {
             setArrowButton(downArrow)
 
         }
-
     }
 
     return (
@@ -329,13 +343,16 @@ function PlayerPage() {
                         if (hideEnemies)
                             return null;
                     }
-                    return <Icon key={uuidv4()} creature={creature} setClickedCreature={setClickedCreature} hideDeadEnemies={hideDeadEnemies} />;
+                    return <Icon key={uuidv4()} creature={creature} setClickedCreature={setClickedCreature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggleType={enemyBloodToggleType} />;
                 })}
             </div>
 
             <div className='options-container'>                
                 <img className="option" src={arrowButton} alt={"change style"} onClick={handleMovePortraits} />
                 <Tooltip message={"Icon Position"}/>
+
+                <img className="option" src={enemyBloodToggleImage} alt={"enemy blood"} onClick={handleEnemyBlood} />
+                <Tooltip message={(enemyBloodToggleType === 0 ? "Show Enemy Blood" : (enemyBloodToggleType === 1 ? "Show Enemy HP" : "Hide Enemy Blood & HP"))}/>
 
                 <img className="option" src={hideEnemies ? eyeOpen : eyeClosed} alt={"showEnemies"} onClick={handleHideEnemies} />
                 <Tooltip message={(hideEnemies ? "Show" : "Hide") + " Enemies"}/>

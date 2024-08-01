@@ -15,7 +15,7 @@ import DeathSaves from './DeathSaves';
 
 
 // ProfileCard Component
-const Icon = ({creature, setClickedCreature, hideDeadEnemies}) => {
+const Icon = ({creature, setClickedCreature, hideDeadEnemies, enemyBloodToggleType}) => {
     const isPlayer = creature.type === "player";
     const effectsFound = creature.effects.length > 0
     const foundHp = creature.maxHp !== null;
@@ -30,6 +30,7 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies}) => {
         setClickedCreature(creature);
     };
 
+    let showEnemyHp = false;
     let currentHp;
     let isBloodied = false;
     let bloodImg;
@@ -63,21 +64,31 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies}) => {
 
             if(isBloodied) {
                 const bloodiedArr = [bloodied1, bloodied2, bloodied3, bloodied4, bloodied5, bloodied6]
-                const randomNumber = (creature.id % 6) + 1; // Generates numbers from 0 to 5
+                const randomNumber = (creature.id % 6); // Generates numbers from 0 to 5
                 bloodImg = bloodiedArr[randomNumber]
             }
 
         }
-
         cardBoxShadow = playerBoxShadow
+
     } else { // it's a Monster
         name = creature.name;
         currentHp = creature.monsterCurrentHp
         cardBoxShadow = monsterBoxShadow;
+
+        if (enemyBloodToggleType === 2)
+            showEnemyHp = true;
+
+        if (currentHp / creature.maxHp < 0.55 && enemyBloodToggleType !== 0) {
+            isBloodied = true;
+            const bloodiedArr = [bloodied1, bloodied2, bloodied3, bloodied4, bloodied5, bloodied6]
+            const randomNumber = (creature.id % 6); // Generates numbers from 0 to 5
+            bloodImg = bloodiedArr[randomNumber]
+        }
+
     }
 
     let isDead = currentHp <= 0 || creature.exhaustionLvl === 6
-    let showEnemyHp = false;
     let showHp = (isPlayer && foundHp) || (!isPlayer && showEnemyHp)
     let showTempHp = creature.tempHp > 0
     let showDeathSaves = isPlayer && foundHp && (creature.deathSaves.successCount >= 0 && creature.deathSaves.failCount >= 0)
@@ -89,7 +100,7 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies}) => {
     return (
         <>
             { showIcon &&  (
-                <div className="card" style={cardBoxShadow} onClick={(event) => handleImageClick(event, false)}>
+                <div className="card" style={cardBoxShadow} onClick={(event) => handleImageClick(event)}>
                     <div>
                         <div className='image-container'>
                             <img className="image" src={creature.avatarUrl} alt={name} />
