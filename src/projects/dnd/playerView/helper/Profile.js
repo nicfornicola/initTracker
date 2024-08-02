@@ -19,6 +19,16 @@ export class Profile {
             this.tempHp = playerHpData.tempHp
             this.exhaustionLvl = playerHpData.exhaustionLvl
             this.deathSaves = playerHpData.deathSaves
+        } else if(creature.id.includes("open5e")) {
+            this.monsterCurrentHp = creature.open5e.hit_points; //todo
+            this.maxHp = creature.open5e.hit_points;
+            this.maxHpBonus = null;
+            this.maxHpOverride =  null;
+            this.removedHp =  null;
+            this.tempHp =   null;
+            this.exhaustionLvl = null;
+            this.deathSaves = null;
+            this.initiative = creature.open5e.initiative || 0;
         } else {
             this.monsterCurrentHp = creature.currentHitPoints;
             this.maxHp = creature.maximumHitPoints;

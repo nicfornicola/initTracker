@@ -7,6 +7,9 @@ function generateUniqueId() {
 }
 
 function updateJsonArray(jsonArray, newJsonObject) {
+    if(!('id' in newJsonObject))
+        newJsonObject.id = generateUniqueId();
+
     if(jsonArray === null) {
         jsonArray = []
     }
@@ -17,7 +20,6 @@ function updateJsonArray(jsonArray, newJsonObject) {
         // Overwrite the existing object
         jsonArray[index] = newJsonObject;
     } else {
-        newJsonObject.id = generateUniqueId();
         // Add the new object to the array
         jsonArray.push(newJsonObject);
     }
@@ -26,37 +28,35 @@ function updateJsonArray(jsonArray, newJsonObject) {
 }
 
 const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}) => {
-    const [hoveredIndex, setHoveredIndex] = useState(null);
     const [encounterId, setEncounterId] = useState(null);
     const [encounterSelectedCreature, setEncounterSelectedCreature] = useState(null);
     const [encounterName, setEncounterName] = useState('Name Your Encounter');
     const [lastEncounterName, setLastEncounterName] = useState(encounterName);
     const [showEncounterTitleEdit, setShowEncounterTitleEdit] = useState(false);
     const [savedEncounters, setSavedEncounters] = useState(JSON.parse(localStorage.getItem('savedEncounters')));
-    const [inputValue, setInputValue] = useState(encounterName);
-    const [isDisabled, setIsDisabled] = useState(currentEncounterCreatures?.length === 0);
+    const [showSaveMessage, setShowSaveMessage] = useState(false);
+    const [saveMessageColor, setSaveMessageColor] = useState("");
+    const [isSaveDisabled, setIsSaveDisabled] = useState(currentEncounterCreatures?.length === 0);
     const inputRef = useRef(null);
 
     useEffect(() => {
-        setIsDisabled(currentEncounterCreatures?.length === 0)
-      }, [currentEncounterCreatures]);
+        setIsSaveDisabled(currentEncounterCreatures?.length === 0)
+    }, [currentEncounterCreatures]);
 
     const handleEditTitleChange = (e) => {
-        setInputValue(e.target.value);
         if (encounterName !== e.target.value) {
             setEncounterName(e.target.value);
         }
     };
 
-    const encounterCreatureX = useRef(null);
     const clickEncounterCreatureX = (event, creatureName, index) => {
         // Dont click allow parent to be clicked aswell
         event.stopPropagation(); 
 
         // Remove creature from Encounter list
-        setCurrentEncounterCreatures(prev =>
-            prev.filter((_, i) => i !== index)
-        );
+
+        let newArray = currentEncounterCreatures.filter((_, i) => i !== index)
+        setCurrentEncounterCreatures([...newArray]);
 
         if(encounterSelectedCreature && creatureName === encounterSelectedCreature.name) {
             // Remove Encounter Selection if its of removed creature
@@ -76,7 +76,16 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
         setEncounterName(encounter.encounterName)
         setEncounterId(encounter.id)
         setLastEncounterName(encounter.encounterName)
-        setIsDisabled(false)
+        setIsSaveDisabled(false)
+
+    };    
+    
+    const handleNewEncounter = () => {
+        setCurrentEncounterCreatures([])
+        setEncounterName("Name Your Encounter")
+        setEncounterId(null)
+        setLastEncounterName("Name Your Encounter")
+        setIsSaveDisabled(true)
     };
 
     const handleSaveEncounter = () => {
@@ -85,9 +94,13 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
         const updatedSavedEncountersList = updateJsonArray(savedEncountersList, newEncounter);
         // Setting this list to update the encounter list
         setSavedEncounters(updatedSavedEncountersList)
-        // Saving to local storage under the name savedEncounters
         localStorage.setItem('savedEncounters', JSON.stringify(updatedSavedEncountersList));
+        // Saving to local storage under the name savedEncounters
         
+        setShowSaveMessage(true);
+        setTimeout(() => {
+          setShowSaveMessage(false);
+        }, 800); // Hide the message after 5 seconds
     };
 
     const handleEncounterNameEdit = () => {
@@ -108,13 +121,32 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
 
         }
     };
-   
-    console.log("!!")
-    console.log(inputValue)
 
+    const handleStartEncounter = (event) => {
+        console.log("play")
+        console.log(savedEncounters)
+
+        const currentUrl = window.location.href;
+
+        window.open(`${currentUrl}playerView`, '_blank');
+        event.stopPropagation(); 
+        savedEncounters.forEach(e => {
+            if(e.encounterName === encounterName) {
+                console.log("SETTING " + encounterName + " in LOCAL STORAGE")
+                console.log(e)
+                localStorage.setItem('savedCurrentEncounter', JSON.stringify(e));
+            }
+        });
+
+    };
+   
     let titleColor = ''
     if (encounterName === 'Name Your Encounter')
         titleColor = 'grey'
+
+    useEffect(() => {
+        setSaveMessageColor(showSaveMessage ? "#08d82b" : "")
+    }, [showSaveMessage]);
 
     return (
         <>
@@ -123,7 +155,8 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
 
                     <h3 className='titleFontFamily'>Create Encounter</h3>
                     <div className='dmViewButtonContainer'>
-                        <button className='dmViewButton' onClick={handleSaveEncounter} disabled={isDisabled}> Save Encounter </button>
+                        <button className='dmViewButton' onClick={handleSaveEncounter} disabled={isSaveDisabled} style={{backgroundColor: saveMessageColor}}>  {showSaveMessage ? <>Encounter Saved!</> : <>Save Encounter</>} </button>
+                        <button className='dmViewButton' onClick={handleNewEncounter} >  New Encounter </button>
                         <DropdownMenu savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} lastEncounterName={lastEncounterName} currentEncounterCreatures={currentEncounterCreatures}/>
                     </div>
 
@@ -148,17 +181,18 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
                             <div className='encounterTitleEditContainer animated-label' onClick={handleEncounterNameEdit}>                     
                                 <div className='encounterTitle'><strong style={{color: titleColor}}>{encounterName}</strong></div>
                                 <div className='encounterTitleEdit'>🖉</div>
+                                {currentEncounterCreatures.length > 0 &&                                 
+                                    <button className='dmViewButton' onClick={handleStartEncounter} >Play</button>
+                                }
                             </div>
+                            
                         )}
                     </div>
-
                         {currentEncounterCreatures.length ? (
                             <ul className='encounterCreaturesList'>
                                 {currentEncounterCreatures.map((creature, index) => (
                                     <li className='encounterCreaturesListItem animated-box'
-                                        key={index+creature.name}
-                                        onMouseEnter={() => setHoveredIndex(index+creature.name)}
-                                        onMouseLeave={() => setHoveredIndex(null)}
+                                        key={creature.guid+index} // Add index so it forces a re render
                                         onClick={() => handleEncounterSelectCreature(creature)}
                                     >
                                         <img className="monsterSearchIcon" src={creature.avatarUrl} alt={"list Icon"} />
@@ -174,11 +208,9 @@ const EncounterList = ({currentEncounterCreatures, setCurrentEncounterCreatures}
                                             </>
                                         }
                                         
-                                        {hoveredIndex === index+creature.name && ( 
-                                            <button className='encounterCreatureX' ref={encounterCreatureX} onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
-                                            X
-                                            </button>
-                                        )}
+                                        <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
+                                        X
+                                        </button>
                                     </li>
                                 ))}
                             </ul>

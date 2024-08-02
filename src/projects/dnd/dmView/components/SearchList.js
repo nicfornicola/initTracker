@@ -4,6 +4,10 @@ import {monsterList, imagesAvailable, proxyUrl} from '../constants'
 import axios from 'axios';
 import StatBlock from './StatBlock';
 
+function generateUniqueId() {
+    return Math.random().toString(36).substring(2, 12).toUpperCase();
+}
+
 // Function to get the image URL based on the type
 const getImageUrl = (creature) => {
     const wordsArray = creature.filterDimensions.type.split(' ');
@@ -82,9 +86,6 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
             });
             const displayItems = await Promise.all(promises);
 
-            // console.log("filtered", filtered.length)
-            // console.log("displayItems", displayItems.length)
-
             setFilteredItems(filtered);
             setDisplayedItems(displayItems);
         }
@@ -142,7 +143,6 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
 
     // Sets the selected creature in search bar on left and gets the data from open5e
     const handleSearchSelectCreature = async (creature) => {
-
         try {
             if('open5e' in creature) {
                 handleAddCreatureToEncounter(creature);
@@ -162,8 +162,9 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
     };
 
     const handleAddCreatureToEncounter = (creature) => {
-        setSearchSelectedCreature(creature);
-        setCurrentEncounterCreatures(prev => [...prev, creature]);
+        let newCreature = {...creature, guid: generateUniqueId()}
+        setSearchSelectedCreature(newCreature);
+        setCurrentEncounterCreatures(prev => [...prev, newCreature]);
     };
 
     return (
@@ -185,7 +186,7 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
                         <ul className='monsterSearchList'>
                             {displayedItems.map((item, index) => (
                                 <li
-                                    className='monsterSearchItem'
+                                    className='monsterSearchItem animated-label'
                                     key={item.id + item.filterDimensions.source}
                                     onClick={() => handleSearchSelectCreature(item)}
                                 >

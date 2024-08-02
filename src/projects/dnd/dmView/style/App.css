@@ -16,7 +16,7 @@
 
 .column {
     position: relative;
-    width: 25%;
+    width: 24%;
     height: 97vh;
     border: 2px solid #7f7977;
     border-radius: 10px;
@@ -65,6 +65,7 @@
 .encounterCreaturesList {
     padding: 0px;
     overflow-y: scroll;
+    height: 100%;
 }
 
 .encounterCreaturesNoItemsContainer {
@@ -90,7 +91,7 @@
     display: flex;
     justify-content: space-between;
     color: rgb(0, 0, 0);
-    transition: background-color 0.2s ease;
+    transition: background-color .1s ease;
 }
 
 .submitButton {
@@ -106,11 +107,17 @@
     background-color: rgb(186, 186, 186);
 }
 
+.encounterCreaturesListItem:hover .encounterCreatureX {
+    opacity: 1;
+    transition: opacity .2s ease-in-out;
+}
+
 .encounterCreaturesHp {
     color: rgb(27, 204, 48);
 }
 
 .encounterCreatureX {
+    opacity: 0;
     position: relative;
     right: 0px;
     background: none;
@@ -163,10 +170,6 @@
     animation: grow 0.3s ease-in-out forwards;
 }
 
-.animatedListItem {
-    animation: grow 0.3s ease-in-out backwards;
-}
-  
 input {
     margin-top: 10px; 
 }

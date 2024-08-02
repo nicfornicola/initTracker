@@ -52,7 +52,8 @@ function PlayerPage() {
     const [enemyBloodToggleType, setEnemyBloodToggleType] = useState(0);
     const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(bloodIcon);
     const { gameId } = useParams();
-    
+    const isOfflineMode = window.location.href.includes("playerView");
+
     const refreshPlayerProfiles = async () => {
         try {
             console.log("Refreshing Player Health")
@@ -98,53 +99,58 @@ function PlayerPage() {
 
     const refreshMonsterProfiles = async (passedCreatures) => {
         try {
-            console.log("Refreshing Monster Hp and Initiatives");
-            console.log("----------------");
-    
-            // Fetch the latest data for monsters and players
-            const { data: { monsters, players } } = await getCreatures(gameId);
-            const allRefreshedCreatures = [...monsters, ...players];
-    
-            let needToResort = false;
-    
-            // Function to update a single creature's data
-            const updateSingleCreature = (creature, matchedRefresh) => {
-                const hpHasChanged = matchedRefresh.currentHitPoints !== creature.monsterCurrentHp;
-                const initiativeHasChanged = matchedRefresh.initiative !== creature.initiative;
-    
-                // Check if initiative has changed and mark for resorting if needed
-                if (initiativeHasChanged) 
-                    needToResort = true;
-                // Update creature properties based on whether it's a monster or a player
-                return {
-                    ...creature,
-                    monsterCurrentHp: matchedRefresh.userName === undefined && hpHasChanged ? matchedRefresh.currentHitPoints : creature.monsterCurrentHp,
-                    initiative: initiativeHasChanged ? matchedRefresh.initiative : creature.initiative,
+            if (!isOfflineMode) {
+                console.log("Refreshing Monster Hp and Initiatives");
+                console.log("----------------");
+        
+                // Fetch the latest data for monsters and players
+                const { data: { monsters, players } } = await getCreatures(gameId);
+                const allRefreshedCreatures = [...monsters, ...players];
+        
+                let needToResort = false;
+        
+                // Function to update a single creature's data
+                const updateSingleCreature = (creature, matchedRefresh) => {
+                    const hpHasChanged = matchedRefresh.currentHitPoints !== creature.monsterCurrentHp;
+                    const initiativeHasChanged = matchedRefresh.initiative !== creature.initiative;
+        
+                    // Check if initiative has changed and mark for resorting if needed
+                    if (initiativeHasChanged) 
+                        needToResort = true;
+                    // Update creature properties based on whether it's a monster or a player
+                    return {
+                        ...creature,
+                        monsterCurrentHp: matchedRefresh.userName === undefined && hpHasChanged ? matchedRefresh.currentHitPoints : creature.monsterCurrentHp,
+                        initiative: initiativeHasChanged ? matchedRefresh.initiative : creature.initiative,
+                    };
                 };
-            };
-    
-            // Function to update all creatures in the list
-            const updateAllCreatures = (creatureList) => {
-                return creatureList.map(creature => {
-                    const matchedRefresh = allRefreshedCreatures.find(data => data.name === creature.name);
-                    return matchedRefresh ? updateSingleCreature(creature, matchedRefresh) : creature;
-                });
-            };
-    
-            // Update the creatures, either passed in or existing ones
-            let updatedCreatures = passedCreatures ? updateAllCreatures(passedCreatures) : updateAllCreatures(creatures);
-            
-            // Resort the creatures if any initiative has changed
-            if (needToResort) 
-                updatedCreatures = sortCreaturesByInitiative(updatedCreatures);
-    
-            // Update the state with the new creature list
-            setCreatures([...updatedCreatures]);
-            setRefreshMonstersCheck(false);
-            setRefreshCheck(refreshMonstersCheck && refreshPlayersCheck);
-    
-            console.log("Monsters Refreshed!");
-            return updatedCreatures;
+        
+                // Function to update all creatures in the list
+                const updateAllCreatures = (creatureList) => {
+                    return creatureList.map(creature => {
+                        const matchedRefresh = allRefreshedCreatures.find(data => data.name === creature.name);
+                        return matchedRefresh ? updateSingleCreature(creature, matchedRefresh) : creature;
+                    });
+                };
+        
+                // Update the creatures, either passed in or existing ones
+                let updatedCreatures = passedCreatures ? updateAllCreatures(passedCreatures) : updateAllCreatures(creatures);
+                
+                // Resort the creatures if any initiative has changed
+                if (needToResort) 
+                    updatedCreatures = sortCreaturesByInitiative(updatedCreatures);
+        
+                // Update the state with the new creature list
+                setCreatures([...updatedCreatures]);
+                setRefreshMonstersCheck(false);
+                setRefreshCheck(refreshMonstersCheck && refreshPlayersCheck);
+        
+                console.log("Monsters Refreshed!");
+                return updatedCreatures;
+            } else {
+                console.log("Offline mode refresh")
+            }
+
 
         } catch (error) {
             console.error("Error refreshing monster profiles:", error);
@@ -218,9 +224,27 @@ function PlayerPage() {
     };
 
     useEffect(() => {
+        console.log("main load")
         if (creatures.length === 0 && gameId && !error) {
             loadProfiles();
+            console.log("loadProfiles")
+        } else if (creatures.length === 0 && !gameId && !error) {
+            let savedCurrentEncounter = JSON.parse(localStorage.getItem('savedCurrentEncounter'))
+            console.log("localStorage")
+            console.log(savedCurrentEncounter.currentEncounterCreatures)
+
+            //map offline monsters to profile
+            const open5eCreatures = savedCurrentEncounter.currentEncounterCreatures.map(open5eCreature => {
+                return new Profile(open5eCreature)
+            });
+            console.log(open5eCreatures)
+
+            setCreatures([...open5eCreatures])
+            setLoading(false)
         }
+
+        console.log("!!")
+        console.log(creatures)
 
         // Refresh every 5 minutes, when refreshed this way, show check mark for 45 seconds
         const intervalId = setInterval(() => {
@@ -252,8 +276,8 @@ function PlayerPage() {
             </div>
         )
     }
-
-    if(!gameId) {
+    if(!gameId && !isOfflineMode) {
+        console.log("HOW TO")
         return (
             <HowTo backGroundImage={backGroundImage}/>
         )
@@ -335,7 +359,7 @@ function PlayerPage() {
             }
 
             {loading && (<div className='loading'>Loading...</div>)}
-            {!foundCreatures && !loading && (<div className='loading'>No Players or Monsters found in encounter id - {gameId}</div>)}
+            {((!foundCreatures && !loading) && (isOfflineMode && creatures.length === 0)) && (<div className='loading'>No Players or Monsters found in encounter id - {gameId}</div>)}
             <div className="cardContainer" style={cardContainerStyle}>
                 {creatures.map((creature) => { 
 

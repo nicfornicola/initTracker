@@ -24,7 +24,6 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies, enemyBloodToggleTy
     const isExhausted = creature.exhaustionLvl > 0
 
 
-
     const handleImageClick = (event) => {
         event.stopPropagation(); // Prevent propagation to parent
         setClickedCreature(creature);
@@ -97,9 +96,11 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies, enemyBloodToggleTy
         return null
     }
 
+    console.log(creature)
+
     return (
         <>
-            { showIcon &&  (
+            { showIcon && (
                 <div className="card" style={cardBoxShadow} onClick={(event) => handleImageClick(event)}>
                     <div>
                         <div className='image-container'>

@@ -1,20 +1,14 @@
 
 offline mod - add creatures from a list names and portaits without dnd beyonds help
 -----
-creature search list - view button, edit button (later), add to encounter button 
-encounter list - initiative, name, edit hp, edit ac, add effect - hide - remove button 
 DM view (extra options - and portraits) - encounter creatures list
 Player view (only portraits) - encounter creatures list
-
-add creature to encounter 
-remove creature from encounter
+encounter list - initiative, name, hp, ac, add effect - hide - remove button 
 quick edit - change name, hp (only can see in dm view), AC
-
 
 TODO
 -----
 encounter start button
-x buttons for stat blocks
 make stat blocks have a hide for now button that shows a little leaf to reappear
     search list
     --
@@ -22,7 +16,6 @@ make stat blocks have a hide for now button that shows a little leaf to reappear
         
     statblock
     --
-        give words a shadow
         on hover of a spell it shows a tooltip of what the spell is from the spell_list that is found in open5e creature
         add hover (i) on statblock to see the creature desc
         show (i) to show big image if available
@@ -31,18 +24,20 @@ make stat blocks have a hide for now button that shows a little leaf to reappear
     saved encounter list 
     -- 
         add quick look to see encounters names of creatures
-        save encounter name in local when click green button
 
     encounter list changes 
     --
+        change initiative
+        change ac
+        change hp - max and current
+        change name
+        toggle hide
+        add effects 
         current turn marker
         auto roll and manual initiative
         add dummy under encounter list 
         add environment token under encounter list 
-        change moster names in encounter list
-        change name ac hp in encounter list 
         toggle ally/neutral/enemy in encounter list
-        make encounter items look good
 
 BROKEN 
 ----
@@ -50,6 +45,12 @@ BROKEN
 
 DONE - offline mode
 ------
+creature search list - view button, add to encounter button 
+add creature to encounter 
+remove creature from encounter
+save encounter name in local when click green button
+x buttons for stat blocks
+give words a shadow
 add encounter name saved icon
 add saved encounter list, give them names, 
 fix problem with scrolling adding more then it needs to and spamming api calls 

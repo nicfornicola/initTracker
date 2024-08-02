@@ -10,6 +10,10 @@ import TomeOfBeasts2023 from './monsterJsons/TomeOfBeasts2023.json';
 export const proxyUrl = window.location.href.includes("nicfornicola.com") 
                         ? 'https://nics-cors-anywhere-99e39b544c5d.herokuapp.com/' 
                         : "";
+
+// export const proxyUrl = window.location.href.includes("localhost") 
+//                         ? 'http://localhost:8080/' 
+//                         : "";
                         
 proxyUrl === "" ? console.log("No Proxy") : console.log("Using Proxy")
 
