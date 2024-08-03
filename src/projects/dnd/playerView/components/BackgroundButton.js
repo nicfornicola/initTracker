@@ -31,9 +31,6 @@ const ImagePopup = ({setBackGroundImage, setYoutubeLink}) => {
         return () => { document.removeEventListener('mousedown', handleClickOutside); };
     }, [open]);
 
-    //JSON.parse(localStorage.getItem('youtubeLinks'))
-    //JSON.parse(localStorage.getItem('savedBackgrounds'))
-    //localStorage.setItem('savedEncounters', JSON.stringify(updatedSavedEncountersList));
 
     const handleClick = (src, isYoutubeLink) => {
         if (isYoutubeLink) { // https://www.youtube.com/watch?v=H-bd0eyF-HA&ab_channel=AnimatedBattleMaps

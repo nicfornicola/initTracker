@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const DelayedInput = ({encounterName, setEncounterName, lastEncounterName, setLastEncounterName}) => {
+const DelayedInput = ({encounterName, setEncounterName}) => {
     const [inputValue, setInputValue] = useState(encounterName);
     
     const handleEditTitleChange = (e) => {

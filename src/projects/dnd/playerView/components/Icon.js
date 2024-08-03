@@ -87,16 +87,15 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies, enemyBloodToggleTy
 
     }
 
-    let isDead = currentHp <= 0 || creature.exhaustionLvl === 6
+    let isGlobal = creature.type === "global"
+    let isDead = (currentHp <= 0 || creature.exhaustionLvl === 6) && !isGlobal
     let showHp = (isPlayer && foundHp) || (!isPlayer && showEnemyHp)
     let showTempHp = creature.tempHp > 0
     let showDeathSaves = isPlayer && foundHp && (creature.deathSaves.successCount >= 0 && creature.deathSaves.failCount >= 0)
 
-    if(hideDeadEnemies && !isPlayer && isDead ) {
+    if(hideDeadEnemies && !isPlayer  && isDead ) {
         return null
     }
-
-    console.log(creature)
 
     return (
         <>
@@ -107,7 +106,7 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies, enemyBloodToggleTy
                             <img className="image" src={creature.avatarUrl} alt={name} />
                             <div className="imageSmoke"/>
                             
-                            {isDead && (
+                            {isDead && !isGlobal && (
                                 <>
                                     <img className="image overlay-skull" src={skullpng} alt="" />
                                     {showDeathSaves && (

@@ -1,31 +1,30 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-const DropdownMenu = ({ savedEncounters, handleLoadEncounter, lastEncounterName, currentEncounterCreatures }) => {
+const DropdownMenu = ({ savedEncounters, handleLoadEncounter, lastEncounterName, currentEncounterCreatures, clickEncounterDropdownMenuX }) => {
     const [selectedEncounterName, setSelectedEncounterName] = useState(lastEncounterName);
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-          if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-            setIsOpen(false);
-          }
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
         };
     
         if (isOpen) {
-          document.addEventListener('click', handleClickOutside);
+            document.addEventListener('click', handleClickOutside);
         } else {
-          document.removeEventListener('click', handleClickOutside);
+            document.removeEventListener('click', handleClickOutside);
         }
     
         return () => document.removeEventListener('click', handleClickOutside);
-      }, [isOpen]);
+    }, [isOpen]);
 
     useEffect(() => {
         setSelectedEncounterName(lastEncounterName)
     }, [lastEncounterName])
 
-    const toggleDropdown = () => setIsOpen(!isOpen);
 
     const handleOptionClick = (encounter) => {
         setSelectedEncounterName(encounter.encounterName);
@@ -41,11 +40,11 @@ const DropdownMenu = ({ savedEncounters, handleLoadEncounter, lastEncounterName,
 
     return (
         <div className="dropdown">
-            <button ref={dropdownRef} className="dmViewButton" onClick={toggleDropdown}>
+            <button ref={dropdownRef} className="dmViewButton" onClick={() => setIsOpen(!isOpen)}>
                 {buttonString}
             </button>
             {isOpen && savedEncounters && (
-                <ul className="dropdown-menu">
+                <ul className="dropdown-menu animatedMenu">
                     {savedEncounters.map((encounter, index) => (
                         <li
                             key={encounter.encounterName + index}
@@ -53,6 +52,9 @@ const DropdownMenu = ({ savedEncounters, handleLoadEncounter, lastEncounterName,
                             className="dropdown-item"
                         >
                             {encounter.encounterName}
+                            <button className='encounterDropdownX' onClick={(event) => clickEncounterDropdownMenuX(event, encounter)}>
+                                X
+                            </button>
                         </li>
                     ))}
                 </ul>

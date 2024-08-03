@@ -17,6 +17,10 @@ export const proxyUrl = window.location.href.includes("nicfornicola.com")
                         
 proxyUrl === "" ? console.log("No Proxy") : console.log("Using Proxy")
 
+export const generateUniqueId = () => {
+    return Math.random().toString(36).substring(2, 12).toUpperCase();
+}
+
 let combinedArray = [...CoreRules,
                      ...CreatureCodex,
                      ...CriticalRole,

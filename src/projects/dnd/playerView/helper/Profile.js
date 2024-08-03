@@ -9,6 +9,7 @@ export class Profile {
         this.type = type;
         this.effects = [];
 
+        
 
         if(type === "player") {
             this.monsterCurrentHp = null
@@ -20,8 +21,8 @@ export class Profile {
             this.exhaustionLvl = playerHpData.exhaustionLvl
             this.deathSaves = playerHpData.deathSaves
         } else if(creature.id.includes("open5e")) {
-            this.monsterCurrentHp = creature.open5e.hit_points; //todo
-            this.maxHp = creature.open5e.hit_points;
+            this.monsterCurrentHp = creature.open5e.hit_points || 0; //todo
+            this.maxHp = creature.open5e.hit_points || 0;
             this.maxHpBonus = null;
             this.maxHpOverride =  null;
             this.removedHp =  null;
@@ -29,6 +30,7 @@ export class Profile {
             this.exhaustionLvl = null;
             this.deathSaves = null;
             this.initiative = creature.open5e.initiative || 0;
+            this.type = creature.id.includes("global") ? "global" : "monster";
         } else {
             this.monsterCurrentHp = creature.currentHitPoints;
             this.maxHp = creature.maximumHitPoints;

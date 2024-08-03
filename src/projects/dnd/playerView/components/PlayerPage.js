@@ -223,25 +223,36 @@ function PlayerPage() {
         }
     };
 
+    const open5eToProfile = (open5eCreatures) => {
+        //map offline monsters to profile
+        const open5eProfiles = open5eCreatures.map(open5eCreature => {
+            return new Profile(open5eCreature)
+        });
+        return open5eProfiles
+    }
+
+
     useEffect(() => {
         console.log("main load")
         if (creatures.length === 0 && gameId && !error) {
             loadProfiles();
             console.log("loadProfiles")
         } else if (creatures.length === 0 && !gameId && !error) {
-            let savedCurrentEncounter = JSON.parse(localStorage.getItem('savedCurrentEncounter'))
+            let savedCurrentEncounter = JSON.parse(localStorage.getItem('playerViewEncounter'))
             console.log("localStorage")
             console.log(savedCurrentEncounter.currentEncounterCreatures)
 
-            //map offline monsters to profile
-            const open5eCreatures = savedCurrentEncounter.currentEncounterCreatures.map(open5eCreature => {
-                return new Profile(open5eCreature)
-            });
-            console.log(open5eCreatures)
-
-            setCreatures([...open5eCreatures])
+            setCreatures([...open5eToProfile(savedCurrentEncounter.currentEncounterCreatures)])
             setLoading(false)
+
+            const getRefreshedLocalEncounter= () => {
+                console.log("storage RELOAD")
+                setCreatures([...open5eToProfile(JSON.parse(localStorage.getItem('playerViewEncounter')).currentEncounterCreatures)])
+            }
+            window.addEventListener('storage', getRefreshedLocalEncounter);
         }
+
+       
 
         console.log("!!")
         console.log(creatures)
@@ -277,7 +288,6 @@ function PlayerPage() {
         )
     }
     if(!gameId && !isOfflineMode) {
-        console.log("HOW TO")
         return (
             <HowTo backGroundImage={backGroundImage}/>
         )
@@ -363,9 +373,8 @@ function PlayerPage() {
             <div className="cardContainer" style={cardContainerStyle}>
                 {creatures.map((creature) => { 
 
-                    if (creature.type === 'monster') {
-                        if (hideEnemies)
-                            return null;
+                    if ((creature.type === 'monster' || creature.type === 'global') && hideEnemies) {
+                        return null;
                     }
                     return <Icon key={uuidv4()} creature={creature} setClickedCreature={setClickedCreature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggleType={enemyBloodToggleType} />;
                 })}

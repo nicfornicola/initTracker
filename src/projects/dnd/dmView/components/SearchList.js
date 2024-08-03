@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
 // import data from '../monsterJsons/5eCoreRules.json'; // Adjust the import path as necessary
-import {monsterList, imagesAvailable, proxyUrl} from '../constants'
+import {monsterList, imagesAvailable, proxyUrl, generateUniqueId} from '../constants'
 import axios from 'axios';
 import StatBlock from './StatBlock';
-
-function generateUniqueId() {
-    return Math.random().toString(36).substring(2, 12).toUpperCase();
-}
 
 // Function to get the image URL based on the type
 const getImageUrl = (creature) => {
