@@ -1,7 +1,7 @@
 import React, { useState  } from 'react';
 import '../style/App.css';
 import SearchList from './SearchList.js';
-import EncounterList from './EncounterList.js';
+import EncounterColumn from './EncounterColumn.js';
 
 const DmView = () => {
     const [currentEncounterCreatures, setCurrentEncounterCreatures] = useState([]);
@@ -9,7 +9,7 @@ const DmView = () => {
     return (
         <div className='dmView'>
             <SearchList setCurrentEncounterCreatures={setCurrentEncounterCreatures}></SearchList>
-            <EncounterList currentEncounterCreatures={currentEncounterCreatures} setCurrentEncounterCreatures={setCurrentEncounterCreatures}/>
+            <EncounterColumn currentEncounterCreatures={currentEncounterCreatures} setCurrentEncounterCreatures={setCurrentEncounterCreatures}/>
         </div>
     );
 };
