@@ -87,15 +87,6 @@
     transition: background-color 0.2s ease;
 }
 
-/* .encounterCreaturesListItem {
-    display: flex;
-    justify-content: column;
-    padding: 8px;
-    border-bottom: 1px solid #ccc;
-    color: rgb(0, 0, 0);
-    transition: background-color .1s ease;
-} */
-
 .submitButton {
     padding: 0px;
     border: 0px;
@@ -377,6 +368,19 @@ input {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25); /* Bottom shadow */
 }
 
+.infoContainerFlag {
+    position: absolute;
+    transform: rotate(45deg);
+    bottom: calc(100% - 8px);
+    right: 25%;
+    background-color: #f5e9af;
+    height: 16px;
+    width: 16px;
+    border-top: 1px solid #b59c9c;
+    border-left: 1px solid #b59c9c;
+}
+
+
   /* Style the scrollbar track */
 ::-webkit-scrollbar {
     width: 12px; /* Width of the scrollbar */
@@ -429,18 +433,6 @@ input {
     cursor: pointer;
     border: 1px solid #ccc;
     background-color: #f9f9f9;
-}
-
-@keyframes slideDown {
-    0% {
-      transform: translateY(-10%);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-
-    }
 }
 
 .animatedMenu {
@@ -498,9 +490,6 @@ input {
     transition: opacity .2s ease-in-out;
 }
 
-
-
-
 .encounterCreaturesList {
     list-style-type: none; /* Remove bullets */
     padding: 0; /* Remove padding */
@@ -509,13 +498,81 @@ input {
 }
   
 .encounterCreaturesListItem {
+    z-index: 0;
     display: flex;
     align-items: center; /* Vertically center the items */
     margin-bottom: 1%; /* Add space between list items */
     padding: 1%; /* Add padding for better visual separation */
 }
-  
+
+@keyframes editHpGrow {
+    0% {
+      transform: scale(.5);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+
+    }
+}
+
+.editHpGrow {
+    animation: editHpGrow 0.25s ease-out forwards;
+}
+
+.editStatsContainer {
+    border-radius: 10px;
+    display: flex;
+    border: 1px solid #b59c9c;
+    padding: 10px;
+    margin-bottom: 1%;
+    width: 100%;
+    z-index: 2;
+    background-color: #f5e9af;
+    box-sizing: border-box;
+    justify-content: space-around;
+
+}
+
+.editHpContainer {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    padding: 2%;
+}
+
+.overHpContainer {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+}
+
+.hpTitle {
+    font-size: .8vw;
+}
+
+.tempHp {
+    color:rgb(17, 204, 210)
+}
+
+.editHpButton {
+    padding: 0px;
+}
+
+.editStatsInput {
+    border-radius: 1px;
+    border: 1px solid #ae2626;
+    width: 100%;
+    margin: 0px;
+    box-sizing: border-box;
+    text-align: center;
+
+}
+
 .monsterSearchIcon {
+    z-index: -1;
+    display: flex;
     margin-right: 10px; /* Space between the image and the name */
     width: 50px;
 }

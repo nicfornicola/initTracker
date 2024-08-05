@@ -118,15 +118,11 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
     };
 
     const handleStartEncounter = (event) => {
+        let url = window.location.href;
+        // Add '/' if needed
+        url += url.endsWith("/") ? "" : "/";
 
-        console.log("play")
-
-        let currentUrl = window.location.href;
-        if(!currentUrl.endsWith("/")) {
-            currentUrl += "/"
-        }
-
-        window.open(`${currentUrl}playerView`, '_blank');
+        window.open(`${url}playerView`, '_blank');
         savedEncounters.forEach(e => {
             if(e.encounterName === encounterName) {
                 console.log("SETTING " + encounterName + " in LOCAL STORAGE")

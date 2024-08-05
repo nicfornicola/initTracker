@@ -29,21 +29,22 @@ make stat blocks have a hide for now button that shows a little leaf to reappear
     --
         change initiative
         change ac
-        change hp - max and current
         change name
+        
         toggle hide
         add effects 
         current turn marker
         auto roll and manual initiative
-        add dummy under encounter list 
-        add environment token under encounter list 
         toggle ally/neutral/enemy in encounter list
 
 BROKEN 
 ----
+temp hp is not calculated when damage is taken
+when bad guys are in list, play is available even if not saved
 
 DONE - offline mode
 ------
+change hp - max and current and temp
 creature search list - view button, add to encounter button 
 add creature to encounter 
 remove creature from encounter
@@ -55,6 +56,8 @@ add saved encounter list, give them names,
 fix problem with scrolling adding more then it needs to and spamming api calls 
 when removing a monster it selects it
 fix default image - get first word in type instead of whole thing :)
+add dummy under encounter list 
+add environment token under encounter list 
 
 
 

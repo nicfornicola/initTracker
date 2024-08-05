@@ -52,7 +52,6 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
 
     useEffect(() => {
         async function fetchData() {
-
             const filtered = monsterList.filter(item => {
                     return item.name.toLowerCase().includes(searchTerm.toLowerCase())
                 }
@@ -119,11 +118,7 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
     };
 
     const handleSetSearchTerm = (term) => {
-        if(term.length <= 1)
-            setItemsToShow(15);
-        else {
-            setItemsToShow((Math.min(15, filteredItems.length)));
-        }
+        setItemsToShow(term.length <= 1 ? 15 : Math.min(15, filteredItems.length));
         setSearchTerm(term)
     };
 
@@ -158,7 +153,16 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
     };
 
     const handleAddCreatureToEncounter = (creature) => {
-        let newCreature = {...creature, guid: generateUniqueId()}
+        let appendedOpen5e = {...creature.open5e,
+                        hit_points_default: creature.open5e.hit_points,
+                        hit_points_current: creature.open5e.hit_points,
+                        hit_points_temp: 0,
+                        hit_points_override: 0,
+                        initiative: 0,
+                        last_damage: null
+                       
+        }
+        let newCreature = {...creature, guid: generateUniqueId(), open5e: appendedOpen5e}
         setSearchSelectedCreature(newCreature);
         setCurrentEncounterCreatures(prev => [...prev, newCreature]);
     };
