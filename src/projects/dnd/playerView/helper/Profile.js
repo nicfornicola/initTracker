@@ -21,12 +21,13 @@ export class Profile {
             this.exhaustionLvl = playerHpData.exhaustionLvl
             this.deathSaves = playerHpData.deathSaves
         } else if(creature.id.includes("open5e")) {
-            this.monsterCurrentHp = creature.open5e.hit_points || 0; //todo
+            this.id = Math.floor(Math.random() * 1000) + 1
+            this.monsterCurrentHp = creature.open5e.hit_points_current || 0;
             this.maxHp = creature.open5e.hit_points || 0;
             this.maxHpBonus = null;
             this.maxHpOverride =  null;
             this.removedHp =  null;
-            this.tempHp =   null;
+            this.tempHp = creature.open5e.hit_points_temp;
             this.exhaustionLvl = null;
             this.deathSaves = null;
             this.initiative = creature.open5e.initiative || 0;

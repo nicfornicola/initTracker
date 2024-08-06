@@ -154,12 +154,33 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
         if(type === "dummy") {
             dummyObj.avatarUrl = "https://www.dndbeyond.com/Content/Skins/Waterdeep/images/icons/monsters/beast.jpg"
             dummyObj.name = "Dummy"
-            dummyObj.open5e = {hit_points: 0, armor_class: 10}
+            dummyObj.open5e = {
+                hit_points: 20, 
+                armor_class: 10, 
+                hit_points_current: 20,
+                hit_points_default: 20,
+                hit_points_override: 0,
+                hit_points_temp: 0,
+                initiative: 0
+            }
 
         }
 
         setCurrentEncounterCreatures(prev => [...prev, dummyObj]);
     };
+
+    const handleAutoRollInitiative = (event) => {
+        event.stopPropagation()
+        currentEncounterCreatures.forEach(creature => {
+            creature.open5e.initiative = Math.floor(Math.random() * 20) + 1 + creature.open5e.dexterity_save
+            console.log(creature.open5e.initiative)
+        });
+
+        currentEncounterCreatures.sort((a, b) =>  b.open5e.initiative - a.open5e.initiative);
+
+        setCurrentEncounterCreatures([...currentEncounterCreatures]);
+
+    }
 
     return (
         <>
@@ -170,7 +191,7 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
                         {showEncounterTitleEdit ? ( 
                             <EncounterListTitleEdit inputRef={inputRef} encounterName={encounterName} handleEditTitleChange={handleEditTitleChange} handleCloseEditBox={handleCloseEditBox}/>
                         ) : (
-                            <EncounterListTitle setShowEncounterTitleEdit={setShowEncounterTitleEdit} titleColor={titleColor} encounterName={encounterName} currentEncounterCreatures={currentEncounterCreatures} handleStartEncounter={handleStartEncounter}/>
+                            <EncounterListTitle setShowEncounterTitleEdit={setShowEncounterTitleEdit} titleColor={titleColor} encounterName={encounterName} currentEncounterCreatures={currentEncounterCreatures} handleStartEncounter={handleStartEncounter} handleAutoRollInitiative={handleAutoRollInitiative}/>
                         )}
                     </div>
                     {currentEncounterCreatures.length ? (
@@ -199,9 +220,9 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
                 <div className='column animated-box'>
                     <StatBlock creature={encounterSelectedCreature.open5e} img={encounterSelectedCreature.avatarUrl} closeFunction={() => setEncounterSelectedCreature(false)}/>
                 </div>
-
-            ) : <div> No Encounter Creature Selected </div>
-            }
+            ) : (
+                <div> No Encounter Creature Selected </div>
+            )}
         </>
   );
 }

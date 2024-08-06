@@ -8,15 +8,11 @@ const EncounterListItem = ({index, creatureListItem, setEncounterSelectedCreatur
     const [overrideHp, setOverrideHp] = useState(creatureListItem.open5e.hit_points_override || 0);
     const [creature, setCreature] = useState(creatureListItem)
     // console.log("render", creature)
-
-    let initiative = 0
-
     const openEditCreatureStats = (event) => {
         event.stopPropagation(); 
         setOpenEditWidget(!openEditWidget)
     }
 
-    // TODO: if temp hp remove that first, dont go past max
     const handleChangeHpCreature = (type) => {
         console.log(type, hpChange)
         let hpNum = hpChange;
@@ -80,29 +76,38 @@ const EncounterListItem = ({index, creatureListItem, setEncounterSelectedCreatur
         setCreature({...creature})
     }
 
+    const handleInitiativeChange = (event) => {
+        creature.open5e.initiative = parseInt(event.target.value)
+        setCreature({...creature})
+    }
+
+    const handleArmorClassChange = (event) => {
+        creature.open5e.armor_class = parseInt(event.target.value)
+        setCreature({...creature})
+    }
+
     return (
         <>
             <li className='encounterCreaturesListItem animated-box'
                 onClick={() => setEncounterSelectedCreature(creature)}
             >
                 <img className="monsterSearchIcon" src={creature.avatarUrl} alt={"list Icon"} />
-                <span>{creature.name}</span>
+                <span className='encounterMonsterName'>{creature.name}</span>
                 {creature.open5e.hit_points !== null  ? 
                     <>
-                        <button className='encounterCreaturesHp'>
-                            {initiative}
-                        </button>
-                        <button className='encounterCreaturesHp' onClick={(event) => openEditCreatureStats(event)}>
-                            {creature.open5e.hit_points_current}
-                            <span>/</span>
-                            {creature.open5e.hit_points}
+                        <input className='inputButton' type='text' defaultValue={parseInt(creature.open5e.initiative)} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
+                        <div className='encounterCreaturesHpContainer'>
+                            <button className='encounterCreaturesHp' onClick={(event) => openEditCreatureStats(event)}>
+                                {creature.open5e.hit_points_current}
+                                <span>/</span>
+                                {creature.open5e.hit_points}
 
-                            {tempHp !== 0 && (
-                                <span className='tempHp'> (+{tempHp}) </span>
-                            )}
-
-                        </button>
-                        <button>{creature.open5e.armor_class}</button>
+                                {tempHp !== 0 && (
+                                    <span className='tempHp'> (+{tempHp}) </span>
+                                )}
+                            </button>
+                        </div>
+                        <input className='inputButton armorClassButton' type='text' defaultValue={creature.open5e.armor_class} onChange={handleArmorClassChange} onClick={(event) => event.stopPropagation()}/>
                         
                     </> 
                 :
@@ -118,15 +123,15 @@ const EncounterListItem = ({index, creatureListItem, setEncounterSelectedCreatur
 
                     <div className='overHpContainer'>
                         <label className='hpTitle' htmlFor='temphp'>Temp HP</label>
-                        <input id='temphp' className='editStatsInput' value={tempHp || 0} onChange={handleTempHp}/>
+                        <input id='temphp' type='text' className='editStatsInput' value={tempHp || 0} onChange={handleTempHp}/>
                         <label className='hpTitle' htmlFor='override'>Override HP </label>
-                        <input id='override' className='editStatsInput' defaultValue={overrideHp || 0} onChange={handleOverrideHp}/>
+                        <input id='override' type='text' className='editStatsInput' defaultValue={overrideHp || 0} onChange={handleOverrideHp}/>
                     </div>
 
                     <div className='editHpContainer'>
-                        <button className='editHpButton' onClick={() => handleChangeHpCreature("heal")}>Heal</button>
-                        <input className='editStatsInput' placeholder={"0"} onChange={(event) => setHpChange(parseInt(event.target.value))} autoFocus/>
-                        <button className='editHpButton' onClick={() => handleChangeHpCreature("damage")}>Damage</button>
+                        <button className='editHpButton healButton' onClick={() => handleChangeHpCreature("heal")}>HEAL</button>
+                        <input className='editStatsInput' type='text' placeholder={"0"} onChange={(event) => setHpChange(parseInt(event.target.value))} autoFocus/>
+                        <button className='editHpButton damageButton' onClick={() => handleChangeHpCreature("damage")}>DAMAGE</button>
                     </div>
                 </div>
             )}

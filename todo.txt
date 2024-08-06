@@ -8,14 +8,16 @@ quick edit - change name, hp (only can see in dm view), AC
 
 TODO
 -----
-encounter start button
 make stat blocks have a hide for now button that shows a little leaf to reappear
+move buttons from player view to dm view
+
     search list
     --
         toggle visible button  
         
     statblock
     --
+        add (i) next to AC or name that is homebrewed
         on hover of a spell it shows a tooltip of what the spell is from the spell_list that is found in open5e creature
         add hover (i) on statblock to see the creature desc
         show (i) to show big image if available
@@ -27,23 +29,23 @@ make stat blocks have a hide for now button that shows a little leaf to reappear
 
     encounter list changes 
     --
-        change initiative
-        change ac
         change name
-        
+        add natural 1's and 20's to auto roll
         toggle hide
         add effects 
         current turn marker
-        auto roll and manual initiative
         toggle ally/neutral/enemy in encounter list
 
 BROKEN 
 ----
-temp hp is not calculated when damage is taken
 when bad guys are in list, play is available even if not saved
+dummys dont get initiative, neither do environment but for different reason
 
 DONE - offline mode
 ------
+encounter start button
+change ac
+auto roll and manual initiative
 change hp - max and current and temp
 creature search list - view button, add to encounter button 
 add creature to encounter 

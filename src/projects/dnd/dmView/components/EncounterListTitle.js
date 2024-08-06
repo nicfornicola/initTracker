@@ -1,12 +1,15 @@
 import React from 'react';
 
-const EncounterListTitle = ({setShowEncounterTitleEdit, titleColor, encounterName, currentEncounterCreatures, handleStartEncounter}) => {
+const EncounterListTitle = ({setShowEncounterTitleEdit, titleColor, encounterName, currentEncounterCreatures, handleStartEncounter, handleAutoRollInitiative}) => {
     return (
         <div className='encounterTitleEditContainer animated-label' onClick={() => setShowEncounterTitleEdit(true)}>                     
             <div className='encounterTitle'><strong style={{color: titleColor}}>{encounterName}</strong></div>
             <div className='encounterTitleEdit'>🖉</div>
-            {currentEncounterCreatures.length > 0 &&                                 
-                <button className='dmViewButton' onClick={handleStartEncounter} >Play</button>
+            {currentEncounterCreatures.length > 0 && 
+                <>
+                    <button className='dmViewButton' onClick={handleAutoRollInitiative}>Auto Initiative</button>
+                    <button className='dmViewButton' onClick={handleStartEncounter}>Play</button>
+                </>
             }
         </div>
     );

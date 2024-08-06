@@ -1,10 +1,10 @@
 
 .dmView {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     font-family: 'Bitter', serif;
     height: 100vh;
-    background-image: url('../pics//dmViewPaperBack.jpg');
+    background-image: url('../pics/dmViewPaperBack.jpg');
     background-size: cover; /* Ensures the image covers the entire container */
     background-position: center; /* Centers the image */
     background-repeat: no-repeat; /* Prevents the image from repeating */
@@ -22,7 +22,6 @@
     border-radius: 10px;
     margin: 10px;
     box-sizing: border-box; /* Include border and padding in the element's total width and height */
-
 }
 
 .columnBorder {
@@ -104,21 +103,6 @@
     opacity: 1;
     transition: opacity .2s ease-in-out;
 }
-
-/* .encounterCreaturesHp {
-    color: rgb(27, 204, 48);
-} */
-
-/* .encounterCreatureX {
-    opacity: 0;
-    position: relative;
-    right: 0px;
-    background: none;
-    border: none;
-    color: red;
-    cursor: pointer;
-    font-weight: bolder;
-} */
 
 .encounterTitleEditInput {
     width: 90%;
@@ -372,7 +356,7 @@ input {
     position: absolute;
     transform: rotate(45deg);
     bottom: calc(100% - 8px);
-    right: 25%;
+    right: 31%;
     background-color: #f5e9af;
     height: 16px;
     width: 16px;
@@ -498,12 +482,27 @@ input {
 }
   
 .encounterCreaturesListItem {
-    z-index: 0;
     display: flex;
     align-items: center; /* Vertically center the items */
     margin-bottom: 1%; /* Add space between list items */
     padding: 1%; /* Add padding for better visual separation */
+    border-bottom: 1px solid #ccc;
+
 }
+
+.encounterMonsterName {
+    width: 30%;
+    font-size: .9em;
+}
+
+.inputButton {
+    position: relative;
+    margin: 0px;
+    width: 5%;
+    text-align: center;
+}
+
+
 
 @keyframes editHpGrow {
     0% {
@@ -539,13 +538,13 @@ input {
     display: flex;
     flex-direction: column;
     width: 25%;
-    padding: 2%;
+    padding: 2% 10% 0 0;
 }
 
 .overHpContainer {
     display: flex;
     flex-direction: column;
-    width: 25%;
+    width: 25%;   
 }
 
 .hpTitle {
@@ -553,11 +552,21 @@ input {
 }
 
 .tempHp {
-    color:rgb(17, 204, 210)
+    color:rgb(15, 175, 181)
 }
 
 .editHpButton {
     padding: 0px;
+    font-family: 'Bitter', serif;
+    color: white;
+}
+
+.healButton {
+    background-color: rgb(102, 174, 102);
+}
+
+.damageButton {
+    background-color: rgb(174, 102, 102);
 }
 
 .editStatsInput {
@@ -567,7 +576,6 @@ input {
     margin: 0px;
     box-sizing: border-box;
     text-align: center;
-
 }
 
 .monsterSearchIcon {
@@ -576,16 +584,22 @@ input {
     margin-right: 10px; /* Space between the image and the name */
     width: 50px;
 }
+
+.encounterCreaturesHpContainer {
+    margin: 0% 2%;
+    width: 20%;
+    text-align: center;
+}
   
 .encounterCreaturesHp {
-    margin-left: auto; /* Pushes this element to the far right */
-    margin-right: 5%; /* Pushes this element to the far right */
-    color: rgb(27, 204, 48);
+    color: rgb(62, 172, 74);
+    font-weight: bold;
+    width: 100%;
 }
   
 .encounterCreatureX {
     position: relative;
-    padding: 0% 0% 0% 3%;
+    margin: 0% 0% 0% 8%;
     opacity: 0;
     background: none;
     border: none;

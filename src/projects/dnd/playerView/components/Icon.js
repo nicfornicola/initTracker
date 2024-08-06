@@ -71,6 +71,8 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies, enemyBloodToggleTy
         cardBoxShadow = playerBoxShadow
 
     } else { // it's a Monster
+        console.log(creature)
+        console.log(enemyBloodToggleType)
         name = creature.name;
         currentHp = creature.monsterCurrentHp
         cardBoxShadow = monsterBoxShadow;
@@ -82,6 +84,7 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies, enemyBloodToggleTy
             isBloodied = true;
             const bloodiedArr = [bloodied1, bloodied2, bloodied3, bloodied4, bloodied5, bloodied6]
             const randomNumber = (creature.id % 6); // Generates numbers from 0 to 5
+            console.log("rand", randomNumber)
             bloodImg = bloodiedArr[randomNumber]
         }
 
@@ -96,6 +99,8 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies, enemyBloodToggleTy
     if(hideDeadEnemies && !isPlayer  && isDead ) {
         return null
     }
+    
+    console.log("isblodd", isBloodied)
 
     return (
         <>
