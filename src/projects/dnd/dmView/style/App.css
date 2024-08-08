@@ -51,23 +51,11 @@
 
 }
 
-/* .monsterSearchIcon {
-    width: 50px;
-} */
-
 .monsterSearchSource {
     font-size: 12px;
     font-style: italic;
 }
 
-
-/* .encounterCreaturesList {
-    list-style-type: none; 
-    padding: 0px;
-    overflow-y: scroll;
-    height: 100%;
-}
-*/
 
 .encounterCreaturesNoItemsContainer {
     margin-top: 25%;
@@ -93,16 +81,20 @@
     cursor: pointer;
 }
 
-
-.monsterSearchItem:hover,
-.encounterCreaturesListItem:hover {
+.monsterSearchItem:hover {
     background-color: rgb(186, 186, 186);
 }
 
-.encounterCreaturesListItem:hover .encounterCreatureX {
+.encounterCreatureX:hover,
+.encounterCreatureContainer:hover + .encounterCreatureX {
     opacity: 1;
     transition: opacity .2s ease-in-out;
 }
+
+.listItem:hover .encounterCreatureContainer {
+    background-color: rgb(186, 186, 186);
+}
+
 
 .encounterTitleEditInput {
     width: 90%;
@@ -218,7 +210,6 @@ input {
     height: 100%;
     width: 100%;
     box-sizing: border-box; /* Include border and padding in the element's total width and height */
-
 }
 
 .statblockX {
@@ -304,6 +295,11 @@ input {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+}
+
+.stickyStatExtraWide {
+    position: relative;
+    width: 200%;
 }
 
 .extraInfo {
@@ -397,7 +393,14 @@ input {
     flex-direction: row;
     border-top: 1px solid #822000; /* Change color and thickness */
     border-bottom: 1px solid #822000; /* Change color and thickness */
+}
 
+.dummyButtons {
+    position: absolute;
+    width: 94%;
+    border-top: 1px solid #822000; /* Change color and thickness */
+    border-bottom: 1px solid #822000; /* Change color and thickness */
+    bottom: 10px;
 }
 
 .dmViewButtonContainer .dropdown {
@@ -480,29 +483,82 @@ input {
     overflow-y: scroll;
     height: 100%;
 }
-  
-.encounterCreaturesListItem {
-    display: flex;
-    align-items: center; /* Vertically center the items */
-    margin-bottom: 1%; /* Add space between list items */
-    padding: 1%; /* Add padding for better visual separation */
-    border-bottom: 1px solid #ccc;
 
+.listItem {
+    padding-bottom: 2%;
 }
+  
+.encounterCreatureContainer {
+    display: flex;
+    border: 1px solid #ccc;
+}
+
+
 
 .encounterMonsterName {
     width: 30%;
     font-size: .9em;
 }
 
-.inputButton {
+.listItemMiddleStats {
+    display: flex;
+    flex-direction: column;
+}
+
+.nameInputContainer {
     position: relative;
+    width: 100%;
+    padding-bottom: 5px;
+}
+
+.nameInput {
+    position: relative;
+    width: 80%;
     margin: 0px;
-    width: 5%;
+    padding: none;
+    font-family: 'Bitter', serif;
+    font-weight: bold;
+    font-size: .8em;
+    background-color: inherit;
+    color: inherit;
+    border: none;
+    border-bottom: 2px dotted #919191;
+}
+
+.initiativeInputContainer {
+    position: relative;
+    width: 15%;
+}
+
+.inputButton {
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: #f0f0f0;
+    border: 1px solid #000000;
+    border-radius: 3px;
+}
+
+.middleStatsInput {
+    margin: 0px;
+    margin-left: 5px;
+    width: 20%;
     text-align: center;
 }
 
+.armorClassContainer {
+    position: relative;
+    display: flex;
+    width: 90%;
+    margin: 0px;
+    text-align: center;
+    flex-direction: row;
+    font-size: .8em;
+    align-items: center
 
+}
 
 @keyframes editHpGrow {
     0% {
@@ -579,15 +635,25 @@ input {
 }
 
 .monsterSearchIcon {
-    z-index: -1;
-    display: flex;
     margin-right: 10px; /* Space between the image and the name */
     width: 50px;
+    border-radius: 5px;
+
+}
+
+.monsterEncounterIconContainer {
+    position: relative;
+    padding: 2px 2px 0px 2px;
+}
+
+.monsterEncounterIcon {
+    width: 50px;
+    border-radius: 5px;
 }
 
 .encounterCreaturesHpContainer {
-    margin: 0% 2%;
-    width: 20%;
+    position: relative;
+    min-width: 20%;
     text-align: center;
 }
   
@@ -595,15 +661,20 @@ input {
     color: rgb(62, 172, 74);
     font-weight: bold;
     width: 100%;
+    height: 100%;
 }
-  
+ 
 .encounterCreatureX {
-    position: relative;
-    margin: 0% 0% 0% 8%;
+    position: absolute;
+    margin: 0;
+    padding: 0px;
+    top: 0;
+    right: 22%;
     opacity: 0;
     background: none;
     border: none;
     color: red;
-    cursor: pointer;
     font-weight: bolder;
+    cursor: pointer;
+
 }

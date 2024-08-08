@@ -138,13 +138,11 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
             if('open5e' in creature) {
                 handleAddCreatureToEncounter(creature);
             } else {
-                const open5eMonster = await axios.get(creature.link).then(res => {
+                await axios.get(creature.link).then(res => {
                     creature.open5e = res.data;
                     handleAddCreatureToEncounter(creature)
                     return creature
                 })
-    
-                console.log("Selected:", open5eMonster.id, open5eMonster)
             }
 
         } catch (error) {
@@ -154,15 +152,20 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
 
     const handleAddCreatureToEncounter = (creature) => {
         let appendedOpen5e = {...creature.open5e,
+                        name_default: creature.open5e.name,
                         hit_points_default: creature.open5e.hit_points,
                         hit_points_current: creature.open5e.hit_points,
                         hit_points_temp: 0,
                         hit_points_override: 0,
                         initiative: 0,
                         last_damage: null
+                        
                        
         }
+
         let newCreature = {...creature, guid: generateUniqueId(), open5e: appendedOpen5e}
+        console.log("Selected:", newCreature.name, newCreature)
+
         setSearchSelectedCreature(newCreature);
         setCurrentEncounterCreatures(prev => [...prev, newCreature]);
     };

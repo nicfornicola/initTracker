@@ -1,27 +1,30 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 
-const EncounterListItem = ({index, creatureListItem, setEncounterSelectedCreature, clickEncounterCreatureX}) => {
+const EncounterListItem = ({index, creatureListItem, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
     const [openEditWidget, setOpenEditWidget] = useState(false);
     const [hpChange, setHpChange] = useState(0);
     const [tempHp, setTempHp] = useState(creatureListItem.open5e.hit_points_temp);
     const [overrideHp, setOverrideHp] = useState(creatureListItem.open5e.hit_points_override || 0);
     const [creature, setCreature] = useState(creatureListItem)
-    // console.log("render", creature)
+    
+    useEffect(() => {
+        if(encounterSelectedCreature !== null && creature.guid === encounterSelectedCreature.guid)
+            setEncounterSelectedCreature(creature)
+        // eslint-disable-next-line
+    }, [creature]);
+
     const openEditCreatureStats = (event) => {
         event.stopPropagation(); 
         setOpenEditWidget(!openEditWidget)
     }
 
     const handleChangeHpCreature = (type) => {
-        console.log(type, hpChange)
         let hpNum = hpChange;
         if(type === 'damage') {
 
-            console.log("temp", creature.open5e.hit_points_temp)
             if(creature.open5e.hit_points_temp > 0) {
                 let tempHpRemainder = creature.open5e.hit_points_temp - hpChange
-                console.log("?", tempHpRemainder)
                 if(tempHpRemainder <= 0) {
                     hpNum = Math.abs(tempHpRemainder)
                     creature.open5e.hit_points_temp = 0
@@ -35,21 +38,17 @@ const EncounterListItem = ({index, creatureListItem, setEncounterSelectedCreatur
 
             hpNum *= -1                
         }
-        console.log("===")
-
         creature.open5e.hit_points_current = creature.open5e.hit_points_current + hpNum
 
         if(creature.open5e.hit_points_current > creature.open5e.hit_points)
             creature.open5e.hit_points_current = creature.open5e.hit_points
 
         setCreature({...creature})
-        // console.log(creature.open5e.hit_points_current + "/" + creature.open5e.hit_points)
     }
 
     const handleOverrideHp = (event) => {
         let override = parseInt(event.target.value)
         // Set override in creature
-        console.log("override", event.target.value)
         creature.open5e.hit_points_override = override
         // Find old diff between current and max
         let dif = creature.open5e.hit_points - creature.open5e.hit_points_current
@@ -62,14 +61,16 @@ const EncounterListItem = ({index, creatureListItem, setEncounterSelectedCreatur
         }
 
         creature.open5e.hit_points_current = creature.open5e.hit_points - dif
-
-       
         setOverrideHp(override)
         setCreature({...creature})
     }
 
+    const handleChangeName = (event) => {
+        creature.open5e.name = event.target.value
+        setCreature({...creature})
+    }
+
     const handleTempHp = (event) => {
-        console.log("temp", event.target.value)
         let tempHp = parseInt(event.target.value)
         creature.open5e.hit_points_temp = isNaN(tempHp) ? 0 : tempHp
         setTempHp(creature.open5e.hit_points_temp)
@@ -77,46 +78,70 @@ const EncounterListItem = ({index, creatureListItem, setEncounterSelectedCreatur
     }
 
     const handleInitiativeChange = (event) => {
-        creature.open5e.initiative = parseInt(event.target.value)
+        let init = parseInt(event.target.value)
+        creature.open5e.initiative = isNaN(init) ? '0' : init
         setCreature({...creature})
     }
 
     const handleArmorClassChange = (event) => {
-        creature.open5e.armor_class = parseInt(event.target.value)
+        let ac = parseInt(event.target.value)
+        creature.open5e.armor_class = isNaN(ac) ? '0' : ac
         setCreature({...creature})
     }
 
+    const handleHightlight = (e) => {
+        e.target.select();
+      };
+
     return (
         <>
-            <li className='encounterCreaturesListItem animated-box'
+            <li className='listItem animated-box'
                 onClick={() => setEncounterSelectedCreature(creature)}
-            >
-                <img className="monsterSearchIcon" src={creature.avatarUrl} alt={"list Icon"} />
-                <span className='encounterMonsterName'>{creature.name}</span>
-                {creature.open5e.hit_points !== null  ? 
-                    <>
-                        <input className='inputButton' type='text' defaultValue={parseInt(creature.open5e.initiative)} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
+            >   
+                <div className='encounterCreatureContainer'>
+                    <div className='initiativeInputContainer'>
+                        <input className='inputButton' onFocus={handleHightlight} onBlur={resort} type='text' value={creature.open5e.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
+                    </div>
+                    <div className="monsterEncounterIconContainer">
+                        <img className="monsterEncounterIcon" src={creature.avatarUrl} alt={"list Icon"} />
+                    </div>
+                    
+                    <div className='listItemMiddleStats'>
+                        <div className='nameInputContainer'>
+                            <input className='nameInput' type='text' defaultValue={creature.open5e.name} onChange={handleChangeName} onClick={(event) => event.stopPropagation()}/>
+                        </div>
+                        <div className='armorClassContainer'>
+                            <div>
+                                <label htmlFor='ac'>AC</label>
+                                <input id='ac' className='middleStatsInput' onFocus={handleHightlight} type='text' defaultValue={creature.open5e.armor_class} onChange={handleArmorClassChange} onClick={(event) => event.stopPropagation()}/>
+                            </div>
+                            <div>
+                                <label htmlFor='init'>Init Bonus</label>
+                                <input id='init'className='middleStatsInput' onFocus={handleHightlight} disabled={true}  type='text' defaultValue={creature.open5e.dexterity_save ? '+' + creature.open5e.dexterity_save : '+0'} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
+                            </div>
+                        </div>
+                    </div>
+
+                    {creature.open5e.hit_points !== null  ? 
                         <div className='encounterCreaturesHpContainer'>
                             <button className='encounterCreaturesHp' onClick={(event) => openEditCreatureStats(event)}>
                                 {creature.open5e.hit_points_current}
                                 <span>/</span>
                                 {creature.open5e.hit_points}
-
                                 {tempHp !== 0 && (
                                     <span className='tempHp'> (+{tempHp}) </span>
                                 )}
                             </button>
                         </div>
-                        <input className='inputButton armorClassButton' type='text' defaultValue={creature.open5e.armor_class} onChange={handleArmorClassChange} onClick={(event) => event.stopPropagation()}/>
-                        
-                    </> 
-                :
-                    <div className='encounterCreaturesHp'/>
-                }
+                    :
+                        <div className='encounterCreaturesHp'/>
+                    }
+                </div>
                 <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
-                X
+                    X
                 </button>
             </li>
+           
             {openEditWidget && ( 
                 <div className='editStatsContainer shadowBox editHpGrow '>
                     <div className="infoContainerFlag"/>

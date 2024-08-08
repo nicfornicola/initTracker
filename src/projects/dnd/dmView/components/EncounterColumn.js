@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import StatBlock from './StatBlock';
-import { generateUniqueId } from '../constants';
+import { generateUniqueId, dummyOpen5e } from '../constants';
 import GlobalImg from '../pics/global.png'
 import EncounterListTopInfo from './EncounterListTopInfo'
 import DropdownMenu from './DropdownMenu';
@@ -112,10 +112,6 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
             console.log("no save")
         }
     };    
-    const clickEncounterDropdownMenuX = (event, encounter) => {
-       console.log("XCLICKED on " + encounter.encounterName)
-       event.stopPropagation();
-    };
 
     const handleStartEncounter = (event) => {
         let url = window.location.href;
@@ -141,7 +137,7 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
     }, [showSaveMessage]);
 
     const handleAddExtra = (type) => {
-        console.log("adding extra")
+        console.log("adding extra", type)
 
         const dummyObj = {
             id: "open5e-" + type,
@@ -155,15 +151,18 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
             dummyObj.avatarUrl = "https://www.dndbeyond.com/Content/Skins/Waterdeep/images/icons/monsters/beast.jpg"
             dummyObj.name = "Dummy"
             dummyObj.open5e = {
+                name: "Dummy",
                 hit_points: 20, 
                 armor_class: 10, 
                 hit_points_current: 20,
                 hit_points_default: 20,
                 hit_points_override: 0,
                 hit_points_temp: 0,
-                initiative: 0
+                initiative: 0,
+                ...dummyOpen5e
             }
 
+            console.log(dummyObj)
         }
 
         setCurrentEncounterCreatures(prev => [...prev, dummyObj]);
@@ -173,11 +172,9 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
         event.stopPropagation()
         currentEncounterCreatures.forEach(creature => {
             creature.open5e.initiative = Math.floor(Math.random() * 20) + 1 + creature.open5e.dexterity_save
-            console.log(creature.open5e.initiative)
         });
 
         currentEncounterCreatures.sort((a, b) =>  b.open5e.initiative - a.open5e.initiative);
-
         setCurrentEncounterCreatures([...currentEncounterCreatures]);
 
     }
@@ -186,7 +183,7 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
         <>
             <div className='column columnBorder'>
                 <div className='infoContainer'>
-                    <EncounterListTopInfo savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} lastEncounterName={lastEncounterName} currentEncounterCreatures={currentEncounterCreatures} clickEncounterDropdownMenuX={clickEncounterDropdownMenuX} handleSaveEncounter={handleSaveEncounter} handleNewEncounter={handleNewEncounter} saveMessageColor={saveMessageColor} showSaveMessage={showSaveMessage} isSaveDisabled={isSaveDisabled}/>
+                    <EncounterListTopInfo savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} lastEncounterName={lastEncounterName} currentEncounterCreatures={currentEncounterCreatures} setSavedEncounters={setSavedEncounters} handleSaveEncounter={handleSaveEncounter} handleNewEncounter={handleNewEncounter} saveMessageColor={saveMessageColor} showSaveMessage={showSaveMessage} isSaveDisabled={isSaveDisabled}/>
                     <div className='encounterTitleContainer'>
                         {showEncounterTitleEdit ? ( 
                             <EncounterListTitleEdit inputRef={inputRef} encounterName={encounterName} handleEditTitleChange={handleEditTitleChange} handleCloseEditBox={handleCloseEditBox}/>
@@ -195,7 +192,7 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
                         )}
                     </div>
                     {currentEncounterCreatures.length ? (
-                        <EncounterList currentEncounterCreatures={currentEncounterCreatures} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} />
+                        <EncounterList setCurrentEncounterCreatures={setCurrentEncounterCreatures} currentEncounterCreatures={currentEncounterCreatures} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} />
                     ) : (
                         <div className='encounterCreaturesNoItemsContainer'> 
                             <div className='encounterCreaturesNoItems'>
@@ -209,7 +206,7 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
                         </div>
                         
                     )}
-                    <div className='dmViewButtonContainer'>
+                    <div className='dummyButtons'>
                         <button className='dmViewButton' onClick={() => handleAddExtra('dummy')} >  Add Dummy </button>
                         <button className='dmViewButton' onClick={() => handleAddExtra('global')} >  Add Global Token </button>
                     </div>

@@ -106,15 +106,13 @@ function addSign(modNumber) {
 }
 
 const StatBlock = ({creature, img, closeFunction }) => {
-
     return (
-
             <div className='statBlock'>
                 <div className='infoContainer'>
                     <button className='statblockX' onClick={closeFunction}>❌</button>
                     <div className="topCard">
                         <div className='topInfo shadowBox'>
-                            <img className="img" src={img} alt={"Search Img"}/>
+                            <img className="img" src={img} alt={"Creature Img"}/>
 
                             <h1 className='creatureName titleFontFamily'>{creature.name}</h1>
                             <div className='creatureType'>
@@ -125,9 +123,15 @@ const StatBlock = ({creature, img, closeFunction }) => {
                             <div className='stickyStatGrid textShadow' >
                                 <p className="stickyStatItem"><strong>AC</strong>&nbsp;{creature.armor_class} {creature.armor_desc && <span className='extraInfo'>&nbsp;({creature.armor_desc}) </span>} </p>
                                 <p className="stickyStatItem"><strong>Initiative</strong>&nbsp;{addSign(creature.dexterity_save)} <span className='extraInfo'>&nbsp;({creature.dexterity_save+10})</span></p>
-                                <p className="stickyStatItem"><strong>HP</strong>&nbsp;{creature.hit_points}/{creature.hit_points} <span className='extraInfo'>&nbsp;({creature.hit_dice})</span></p>
+                                <p className="stickyStatItem stickyStatExtraWide">
+                                    <strong>HP</strong>&nbsp;{creature.hit_points_current}/{creature.hit_points} 
+                                    {creature.hit_points_temp !== 0 && (
+                                        <span className='tempHp'>&nbsp;(+{creature.hit_points_temp}) </span>
+                                    )}
+                                    <span className='extraInfo'>&nbsp;({creature.hit_dice})</span>
+                                </p>
                                 <p className="stickyStatItem"></p>
-                                <p className="stickyStatItem">
+                                <p className="stickyStatItem stickyStatExtraWide">
                                     <strong>Speed</strong>&nbsp;
                                     {Object.entries(creature.speed).map(([key, value], index, array) => (
                                         <span key={index + key}>
