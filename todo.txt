@@ -38,6 +38,9 @@ import export encouter list
 
 BROKEN 
 ----
+when a creature is not available on dnd beyond they have 0/0 hp which makes them  have a skull
+blood was given to all griffons when one was below hp, probably because same name
+
 when bad guys are in list, play is available even if not saved
 dummys dont get initiative, neither do environment but for different reason
 Auto init somes doesnt sort right, i think this is when its the same creature but not sure
