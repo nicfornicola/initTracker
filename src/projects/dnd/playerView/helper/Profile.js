@@ -1,15 +1,14 @@
 export class Profile {
     constructor(creature = null, playerHpData = null ) {
         const type = creature.userName ? "player" : "monster"
-        
         this.id = creature.id;
+        this.guid = creature.guid;
         this.name = creature.name;
         this.initiative = creature.initiative;
         this.avatarUrl = creature.avatarUrl || "https://www.dndbeyond.com/avatars/42718/687/1581111423-121476494.jpeg";
         this.type = type;
         this.effects = [];
 
-        
 
         if(type === "player") {
             this.monsterCurrentHp = null
@@ -20,8 +19,8 @@ export class Profile {
             this.tempHp = playerHpData.tempHp
             this.exhaustionLvl = playerHpData.exhaustionLvl
             this.deathSaves = playerHpData.deathSaves
-        } else if(creature.id.includes("open5e")) {
-            this.id = Math.floor(Math.random() * 1000) + 1
+        } else if(creature.id.toString().includes("open5e")) {
+            this.id = Math.floor(Math.random() * 1000) + 1 // Give it an id, for some reason
             this.monsterCurrentHp = creature.open5e.hit_points_current || 0;
             this.maxHp = creature.open5e.hit_points || 0;
             this.maxHpBonus = null;
@@ -43,9 +42,4 @@ export class Profile {
             this.deathSaves = null;
         }
     }
-
-    log() {
-        console.log(`${this}`);
-    }
-
 }

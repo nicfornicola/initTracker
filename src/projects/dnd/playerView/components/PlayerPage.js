@@ -30,7 +30,7 @@ import { Profile } from '../helper/Profile.js'
 import { sortCreaturesByInitiative, effectObjs } from '../constants.js';
 import Tooltip from './Tooltip.js';
 import YouTubeEmbed from './YouTubeEmbed.js';
-
+import { generateUniqueId } from '../../dmView/constants.js';
 
 function PlayerPage() {
     const [creatures, setCreatures] = useState([]);
@@ -65,6 +65,7 @@ function PlayerPage() {
 
             // Iterate over the first array using a for loop
             const updatedCreatures = creatures.map(creature => {
+                // Need to use creature.id since its from dnd beyond
                 const matchedRefresh = refreshedData.find(data => data.id === creature.id);
 
                 if (matchedRefresh) {
@@ -162,25 +163,27 @@ function PlayerPage() {
     const loadProfiles = async () => {
         try {
             console.log(gameId)
-            //Get all monster stats (except image)
+            // Get all monster stats (except image)
             const data = await getCreatures(gameId);
             if(data) {
                 const {monsters, players} = data.data;
 
-                //Get player stats for HP
+                // Get player stats for HP
                 const charData = await getCharacterStats(players);
                 const creaturesData = [...monsters, ...players]
                 const creatures = creaturesData.map(creature => {
                     let playerHpData = null
-                    if(creature.userName) // Only look if its a player
+                    if(creature.userName) // Only look if its a player and use id since its from dnd beyond
                         playerHpData = charData.find(d => d.id.toString() === creature.id);
-
+                    
+                    creature.guid = generateUniqueId();
                     return new Profile(creature, playerHpData)
                 });
                 
                 const monsterIcons = await getMonstersAvatars(creatures);
                 monsterIcons.data.forEach(monsterIcon => {
                     creatures.forEach(creature => {
+                        // creature.id needs to be used instead of guid because its from dndBeyond
                         if(creature.id === monsterIcon.id && creature.type === 'monster') {
                             creature.avatarUrl = monsterIcon.avatarUrl
                         }
@@ -251,11 +254,6 @@ function PlayerPage() {
             }
             window.addEventListener('storage', getRefreshedLocalEncounter);
         }
-
-       
-
-        console.log("!!")
-        console.log(creatures)
 
         // Refresh every 5 minutes, when refreshed this way, show check mark for 45 seconds
         const intervalId = setInterval(() => {
@@ -360,6 +358,7 @@ function PlayerPage() {
 
         }
     }
+    console.log("====")
 
     return (
         <div className="dndBackground" onClick={() => setClickedCreature(null)} style={{backgroundImage: backGroundImage ? `url(${backGroundImage})` : 'none'}}>
