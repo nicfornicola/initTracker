@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
 
-const EncounterListItem = ({index, creatureListItem, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
+const EncounterListItem = ({index, setPlayerViewOnCreatureChange, creatureListItem, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
     const [openEditWidget, setOpenEditWidget] = useState(false);
     const [hpChange, setHpChange] = useState(0);
     const [tempHp, setTempHp] = useState(creatureListItem.open5e.hit_points_temp);
@@ -11,6 +11,9 @@ const EncounterListItem = ({index, creatureListItem, encounterSelectedCreature, 
     useEffect(() => {
         if(encounterSelectedCreature !== null && creature.guid === encounterSelectedCreature.guid)
             setEncounterSelectedCreature(creature)
+        
+        console.log("reload")
+        setPlayerViewOnCreatureChange()
         // eslint-disable-next-line
     }, [creature]);
 
@@ -79,8 +82,12 @@ const EncounterListItem = ({index, creatureListItem, encounterSelectedCreature, 
 
     const handleInitiativeChange = (event) => {
         let init = parseInt(event.target.value)
-        creature.open5e.initiative = isNaN(init) ? '0' : init
-        setCreature({...creature})
+        if(creature.open5e.initiative !== init) {
+            creature.open5e.initiative = isNaN(init) ? '0' : init
+            setCreature({...creature})
+            resort()
+        }
+            
     }
 
     const handleArmorClassChange = (event) => {
@@ -91,7 +98,7 @@ const EncounterListItem = ({index, creatureListItem, encounterSelectedCreature, 
 
     const handleHightlight = (e) => {
         e.target.select();
-      };
+    };
 
     return (
         <>
@@ -100,7 +107,7 @@ const EncounterListItem = ({index, creatureListItem, encounterSelectedCreature, 
             >   
                 <div className='encounterCreatureContainer'>
                     <div className='initiativeInputContainer'>
-                        <input className='inputButton' onFocus={handleHightlight} onBlur={resort} type='text' value={creature.open5e.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
+                        <input className='inputButton' onFocus={handleHightlight} type='text' value={creature.open5e.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                     </div>
                     <div className="monsterEncounterIconContainer">
                         <img className="monsterEncounterIcon" src={creature.avatarUrl} alt={"list Icon"} />
@@ -108,7 +115,7 @@ const EncounterListItem = ({index, creatureListItem, encounterSelectedCreature, 
                     
                     <div className='listItemMiddleStats'>
                         <div className='nameInputContainer'>
-                            <input className='nameInput' type='text' defaultValue={creature.open5e.name} onChange={handleChangeName} onClick={(event) => event.stopPropagation()}/>
+                            <input className='nameInput' type='text' defaultValue={creature.open5e.name} onBlur={handleChangeName} onClick={(event) => event.stopPropagation()}/>
                         </div>
                         <div className='armorClassContainer'>
                             <div>

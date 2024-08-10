@@ -77,7 +77,8 @@ export const levelXPData = {
     '27': 105000,
     '28': 120000,
     '29': 135000,
-    '30': 155000
+    '30': 155000,
+    '--': "--"
 };
 
 export const dummyOpen5e = {
@@ -151,6 +152,75 @@ export const dummyOpen5e = {
     "name_default": "Dummy",
     "hit_points_default": 4,
     "hit_points_current": 4,
+    "hit_points_temp": 0,
+    "hit_points_override": 0,
+    "initiative": 0,
+    "last_damage": null
+}
+
+
+export const envObject = {
+    "slug": "Env/Lair",
+    "desc": "A falling piller, exploding magma, the world is your oyster! And that oyster will blow up at the end of the round. Poor souls...",
+    "name": "Environment/Lair",
+    "size": "",
+    "type": "",
+    "subtype": "",
+    "group": "",
+    "alignment": "",
+    "armor_class": 0,
+    "armor_desc": null,
+    "hit_points": 0,
+    "hit_dice": "",
+    "speed": {
+        "walk": 0
+    },
+    "strength": 10,
+    "dexterity": 10,
+    "constitution": 10,
+    "intelligence": 10,
+    "wisdom": 10,
+    "charisma": 10,
+    "strength_save": null,
+    "dexterity_save": null,
+    "constitution_save": null,
+    "intelligence_save": null,
+    "wisdom_save": null,
+    "charisma_save": null,
+    "perception": null,
+    "skills": {},
+    "damage_vulnerabilities": "",
+    "damage_resistances": "",
+    "damage_immunities": "",
+    "condition_immunities": "",
+    "senses": "passive Perception 10",
+    "languages": "Terren",
+    "challenge_rating": "--",
+    "cr": "--",
+    "actions": [
+        {
+            "name": "Super Earth Combo",
+            "desc": "Melee Weapon Attack: +100 to hit, reach - are you on earth?, alot of targets. Hit: 5000 (10d100) force damage.",
+        }
+    ],
+    "bonus_actions": null,
+    "reactions": null,
+    "legendary_desc": "",
+    "legendary_actions": null,
+    "special_abilities": null,
+    "spell_list": [],
+    "page_no": 0,
+    "environments": [
+        "Earth",
+        "Space?"
+    ],
+    "img_main": null,
+    "document__title": "Nic's Lair",
+    "document__license_url": "",
+    "document__url": "",
+    "name_default": "Environment/Lair",
+    "hit_points_default":  0,
+    "hit_points_current": 0,
     "hit_points_temp": 0,
     "hit_points_override": 0,
     "initiative": 0,

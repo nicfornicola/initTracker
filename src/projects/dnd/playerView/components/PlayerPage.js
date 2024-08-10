@@ -67,18 +67,24 @@ function PlayerPage() {
             const updatedCreatures = creatures.map(creature => {
                 // Need to use creature.id since its from dnd beyond
                 const matchedRefresh = refreshedData.find(data => data.id === creature.id);
-
+                    
                 if (matchedRefresh) {
                     // getCharacterStats doesnt return initiative, that is from the encounter service, maybe make another button to reset player initiation i know thats a lot of buttons
-                    const hpChange = matchedRefresh.removedHp !== undefined && matchedRefresh.removedHp !== creature.removedHp
-                    const exhaustionChange = matchedRefresh.exhaustionLvl !== undefined && matchedRefresh.exhaustionLvl !== creature.exhaustionLvl
+                    // const hpChange = matchedRefresh.removedHp !== undefined && matchedRefresh.removedHp !== creature.removedHp
+                    // const overrideHpChange = matchedRefresh.removedHp !== undefined && matchedRefresh.removedHp !== creature.removedHp
+                    // const exhaustionChange = matchedRefresh.exhaustionLvl !== undefined && matchedRefresh.exhaustionLvl !== creature.exhaustionLvl
+                    
+                    // Leaving all of this in incase it breaks. just override creature data with new refresh data and if its different great if its not great
                     const change = {
                         ...creature,
-                        removedHp: hpChange ? matchedRefresh.removedHp : creature.removedHp,
-                        exhaustionLvl: exhaustionChange ? matchedRefresh.exhaustionLvl : creature.exhaustionLvl,
-                        deathSaves: matchedRefresh.deathSaves
-
+                        ...matchedRefresh
+                        // removedHp: hpChange ? matchedRefresh.removedHp : creature.removedHp,
+                        // exhaustionLvl: exhaustionChange ? matchedRefresh.exhaustionLvl : creature.exhaustionLvl,
+                        // deathSaves: matchedRefresh.deathSaves
                     }
+                    
+                    console.log("change", change)
+
                     return change;
                 } else {
                     return creature;
@@ -112,7 +118,29 @@ function PlayerPage() {
         
                 // Function to update a single creature's data
                 const updateSingleCreature = (creature, matchedRefresh) => {
-                    const hpHasChanged = matchedRefresh.currentHitPoints !== creature.monsterCurrentHp;
+
+                    const maxHpIsZero = matchedRefresh.maximumHitPoints === 0
+                    if(maxHpIsZero) {
+                        // If somone does not own the creature they start at 0/0 
+                        // so this is to make sure it stays at 1/1 on a refresh
+                        // If the users overrides there hp it will get caught above
+                        if (!creature.isReleased) {
+                            matchedRefresh.currentHitPoints = 1
+                            matchedRefresh.maximumHitPoints = 1;
+                        } else {
+                            // If someone overrides a creatures hp, then removes the override dndbeyond thinkgs maxhp is 0
+                            // since its not we save creature.defaultHP set the maxHP back to the correct value
+                            // If maxhp is 0 dndbeyond will just send a negative number for currentHP when the creature takes damage
+                            // this is why we must add that number to default to get the new current. 
+                            // This is a bug with dnd beyond
+                            // i.e. maxHp = 0, currentHp = -10, default = 50, 50 + (-10)
+                            matchedRefresh.currentHitPoints = creature.defaultHP - Math.abs(matchedRefresh.currentHitPoints)
+                            matchedRefresh.maximumHitPoints = creature.defaultHP;
+                        }
+                    }
+
+                    const currentHpHasChanged = matchedRefresh.currentHitPoints !== creature.monsterCurrentHp;
+                    const maxHpHasChanged = matchedRefresh.maximumHitPoints !== creature.maxHp;
                     const initiativeHasChanged = matchedRefresh.initiative !== creature.initiative;
         
                     // Check if initiative has changed and mark for resorting if needed
@@ -121,7 +149,8 @@ function PlayerPage() {
                     // Update creature properties based on whether it's a monster or a player
                     return {
                         ...creature,
-                        monsterCurrentHp: matchedRefresh.userName === undefined && hpHasChanged ? matchedRefresh.currentHitPoints : creature.monsterCurrentHp,
+                        monsterCurrentHp: matchedRefresh.userName === undefined && currentHpHasChanged ? matchedRefresh.currentHitPoints : creature.monsterCurrentHp,
+                        maxHp: matchedRefresh.userName === undefined && maxHpHasChanged ? matchedRefresh.maximumHitPoints : creature.maxHp,
                         initiative: initiativeHasChanged ? matchedRefresh.initiative : creature.initiative,
                     };
                 };
@@ -186,6 +215,8 @@ function PlayerPage() {
                         // creature.id needs to be used instead of guid because its from dndBeyond
                         if(creature.id === monsterIcon.id && creature.type === 'monster') {
                             creature.avatarUrl = monsterIcon.avatarUrl
+                            creature.isReleased = monsterIcon.isReleased
+                            creature.defaultHP = monsterIcon.averageHitPoints
                         }
                     });
                 })

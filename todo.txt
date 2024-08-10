@@ -1,13 +1,9 @@
 
-offline mod - add creatures from a list names and portaits without dnd beyonds help
+offline mod
 -----
-DM view (extra options - and portraits) - encounter creatures list
-Player view (only portraits) - encounter creatures list
-encounter list - initiative, name, hp, ac, add effect - hide - remove button 
-quick edit - change name, hp (only can see in dm view), AC
+upload creature images
+make custom names show up
 
-TODO
------
 make stat blocks have a hide for now button that shows a little leaf to reappear
 move buttons from player view to dm view
 import export encouter list
@@ -30,11 +26,20 @@ import export encouter list
 
     encounter list changes 
     --
-        add natural 1's and 20's to auto roll
         toggle hide
         add effects 
         current turn marker
         toggle ally/neutral/enemy in encounter list
+
+
+playerview
+------
+    add x button to remove uploadedLinks and images
+    add button to resize images and add more options to move their positions
+
+TODO
+-----
+
 
 BROKEN 
 ----
@@ -69,21 +74,10 @@ add environment token under encounter list
 
 
 
-playerview
-------
-    add x button to remove uploadedLinks and images
-    add button to resize images and their positions
-
-
-king
-----
-make icons percntages of screen because they are too small for big screen
-add family tree 
-
-
 
 FIXED
 ----
+player override hp is not calculated in refresh
 Good guys dont properly reload their HP when the refresh all button is clicked - works for good buy refresh
 All icons dont reload their dead overlay when refresh buttons are clicked - current workaround, reload page
 combat timer - stop/start? quick options 30 seconds - 1 min 2 min 5 min
@@ -93,3 +87,11 @@ refresh on reveal
 add death saves
 add auto refresh 5 minutes or so
 added youtube video link upload for backgrounds
+
+
+
+
+king
+----
+make icons percntages of screen because they are too small for big screen
+add family tree 

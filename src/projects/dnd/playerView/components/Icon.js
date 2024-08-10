@@ -33,8 +33,7 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies, enemyBloodToggleTy
     const showIcon = creature.initiative >= 0
     const showInitiativeBox = creature.initiative !== null;
     const isExhausted = creature.exhaustionLvl > 0
-
-
+    
     const handleImageClick = (event) => {
         event.stopPropagation(); // Prevent propagation to parent
         setClickedCreature(creature);
@@ -88,13 +87,13 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies, enemyBloodToggleTy
         if (enemyBloodToggleType === 2)
             showEnemyHp = true;
 
+        console.log(creature.name, creature.monsterCurrentHp, creature.maxHp)
         if (currentHp / creature.maxHp < 0.55 && enemyBloodToggleType !== 0) {
             isBloodied = true;
             bloodImg = setBloodImg(creature)
         }
     } else { // Global
         cardBoxShadow = globalHpBoxShadow;
-
     }
 
     let isGlobal = creature.type === "global"

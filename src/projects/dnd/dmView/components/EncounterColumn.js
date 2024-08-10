@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import StatBlock from './StatBlock';
-import { generateUniqueId, dummyOpen5e } from '../constants';
+import { generateUniqueId, dummyOpen5e, envObject } from '../constants';
 import GlobalImg from '../pics/global.png'
 import EncounterListTopInfo from './EncounterListTopInfo'
 import DropdownMenu from './DropdownMenu';
@@ -144,7 +144,8 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
             avatarUrl: GlobalImg,
             name: "Environment/Lair",
             guid: generateUniqueId(),
-            open5e: {hit_points: null}
+            open5e: {hit_points: 0, initiative: 0}
+            
         }
 
         if(type === "dummy") {
@@ -158,11 +159,20 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
                 hit_points_default: 20,
                 hit_points_override: 0,
                 hit_points_temp: 0,
-                initiative: 0,
                 ...dummyOpen5e
             }
-
             console.log(dummyObj)
+        } else {
+            dummyObj.open5e = {
+                ...envObject,
+                name: "Environment/Lair",
+                hit_points: 0, 
+                armor_class: 0, 
+                hit_points_current: 0,
+                hit_points_default: 0,
+                hit_points_override: 0,
+                hit_points_temp: 0,
+            }
         }
 
         setCurrentEncounterCreatures(prev => [...prev, dummyObj]);
@@ -192,7 +202,7 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
                         )}
                     </div>
                     {currentEncounterCreatures.length ? (
-                        <EncounterList setCurrentEncounterCreatures={setCurrentEncounterCreatures} currentEncounterCreatures={currentEncounterCreatures} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} />
+                        <EncounterList handleSaveEncounter={handleSaveEncounter} setCurrentEncounterCreatures={setCurrentEncounterCreatures} currentEncounterCreatures={currentEncounterCreatures} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} />
                     ) : (
                         <div className='encounterCreaturesNoItemsContainer'> 
                             <div className='encounterCreaturesNoItems'>
