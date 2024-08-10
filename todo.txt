@@ -2,7 +2,6 @@
 offline mod
 -----
 upload creature images
-make custom names show up
 
 make stat blocks have a hide for now button that shows a little leaf to reappear
 move buttons from player view to dm view

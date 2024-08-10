@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
+import uploadImage from '../pics/uploadImage.png'
 
 
-const EncounterListItem = ({index, setPlayerViewOnCreatureChange, creatureListItem, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
+const EncounterListItem = ({index, handleUploadMonsterImage, setPlayerViewOnCreatureChange, creatureListItem, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
     const [openEditWidget, setOpenEditWidget] = useState(false);
     const [hpChange, setHpChange] = useState(0);
     const [tempHp, setTempHp] = useState(creatureListItem.open5e.hit_points_temp);
@@ -69,8 +70,12 @@ const EncounterListItem = ({index, setPlayerViewOnCreatureChange, creatureListIt
     }
 
     const handleChangeName = (event) => {
-        creature.open5e.name = event.target.value
-        setCreature({...creature})
+        let newName = event.target.value
+        if(creature.open5e.name !== newName) {
+            creature.open5e.name = event.target.value
+            setCreature({...creature})
+        }
+         
     }
 
     const handleTempHp = (event) => {
@@ -109,9 +114,13 @@ const EncounterListItem = ({index, setPlayerViewOnCreatureChange, creatureListIt
                     <div className='initiativeInputContainer'>
                         <input className='inputButton' onFocus={handleHightlight} type='text' value={creature.open5e.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                     </div>
-                    <div className="monsterEncounterIconContainer">
+                    <div className="monsterEncounterIconContainer" onClick={() => handleUploadMonsterImage(creature)}>
                         <img className="monsterEncounterIcon" src={creature.avatarUrl} alt={"list Icon"} />
+                        <div className='uploadIconContainer'>
+                            <img className="uploadIcon" src={uploadImage} alt={"list Icon"} />
+                        </div>
                     </div>
+
                     
                     <div className='listItemMiddleStats'>
                         <div className='nameInputContainer'>

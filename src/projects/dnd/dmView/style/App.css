@@ -643,12 +643,32 @@ input {
 
 .monsterEncounterIconContainer {
     position: relative;
-    padding: 2px 2px 0px 2px;
+    width: 35%;
+    background-color: #000000;
+    margin: 0px 5px 0px 5px;
 }
 
+.monsterEncounterIconContainer:hover .uploadIconContainer {
+    opacity: 1;
+}
+
+.uploadIconContainer,
 .monsterEncounterIcon {
-    width: 50px;
-    border-radius: 5px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.uploadIconContainer {
+    opacity: 0;
+    background-color: #ffffff4d;
+}
+
+.uploadIcon {
+    position: relative;
+    left: calc(50% - 10px);
+    top: calc(25%);
+    width: 25px;
 }
 
 .encounterCreaturesHpContainer {

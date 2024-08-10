@@ -7,6 +7,7 @@ import DropdownMenu from './DropdownMenu';
 import EncounterListTitleEdit from './EncounterListTitleEdit'
 import EncounterListTitle from './EncounterListTitle'
 import EncounterList from './EncounterList'
+import UploadMonsterImage from './UploadMonsterImage'
 
 function addToLocalSavedEncounter(jsonArray, newJsonObject) {
 
@@ -43,6 +44,8 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
     const [showSaveMessage, setShowSaveMessage] = useState(false);
     const [saveMessageColor, setSaveMessageColor] = useState("");
     const [isSaveDisabled, setIsSaveDisabled] = useState(currentEncounterCreatures?.length === 0);
+    const [uploadIconMenu, setUploadIconMenu] = useState(false);
+    const [uploadIconCreature, setUploadIconCreature] = useState(null);
     const inputRef = useRef(null);
 
     useEffect(() => {
@@ -90,6 +93,7 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
         let newEncounter = {encounterName: encounterName, id: encounterId || generateUniqueId(), currentEncounterCreatures: currentEncounterCreatures}
         setLocalPlayerViewEncounter(newEncounter)
         setEncounterId(newEncounter.id)
+        // Overwrites if exists, appends if new
         const updatedSavedEncountersList = addToLocalSavedEncounter(savedEncountersList, newEncounter);
         // Setting this list to update the encounter list
         setSavedEncounters(updatedSavedEncountersList)
@@ -189,6 +193,12 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
 
     }
 
+    const handleUploadMonsterImage = (creature) => {
+        console.log("uploadnewimage")
+        setUploadIconMenu(true)
+        setUploadIconCreature(creature)
+    }
+
     return (
         <>
             <div className='column columnBorder'>
@@ -202,7 +212,7 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
                         )}
                     </div>
                     {currentEncounterCreatures.length ? (
-                        <EncounterList handleSaveEncounter={handleSaveEncounter} setCurrentEncounterCreatures={setCurrentEncounterCreatures} currentEncounterCreatures={currentEncounterCreatures} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} />
+                        <EncounterList handleSaveEncounter={handleSaveEncounter} handleUploadMonsterImage={handleUploadMonsterImage} setCurrentEncounterCreatures={setCurrentEncounterCreatures} currentEncounterCreatures={currentEncounterCreatures} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} />
                     ) : (
                         <div className='encounterCreaturesNoItemsContainer'> 
                             <div className='encounterCreaturesNoItems'>
@@ -214,7 +224,6 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
                                 ) : ( <>Add a creature to create an encounter!</>)}
                             </div>
                         </div>
-                        
                     )}
                     <div className='dummyButtons'>
                         <button className='dmViewButton' onClick={() => handleAddExtra('dummy')} >  Add Dummy </button>
@@ -223,13 +232,14 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
                 </div>
                 
             </div>
-            {encounterSelectedCreature  ? (
+            {encounterSelectedCreature ? (
                 <div className='column animated-box'>
                     <StatBlock creature={encounterSelectedCreature.open5e} img={encounterSelectedCreature.avatarUrl} closeFunction={() => setEncounterSelectedCreature(false)}/>
                 </div>
             ) : (
                 <div> No Encounter Creature Selected </div>
             )}
+            <UploadMonsterImage handleSaveEncounter={handleSaveEncounter} uploadIconMenu={uploadIconMenu} setCurrentEncounterCreatures={setCurrentEncounterCreatures} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} currentEncounterCreatures={currentEncounterCreatures} />
         </>
   );
 }
