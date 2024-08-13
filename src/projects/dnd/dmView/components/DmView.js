@@ -21,6 +21,7 @@ const DmView = () => {
 
     return (
         <div className='dmView'>
+            <div className='measure'></div>
             <SearchList setCurrentEncounterCreatures={setCurrentEncounterCreatures}></SearchList>
             <EncounterColumn currentEncounterCreatures={currentEncounterCreatures} setCurrentEncounterCreatures={setCurrentEncounterCreatures}/>
         </div>

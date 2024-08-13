@@ -1,7 +1,6 @@
 
 offline mod
 -----
-upload creature images
 
 make stat blocks have a hide for now button that shows a little leaf to reappear
 move buttons from player view to dm view
@@ -42,9 +41,6 @@ TODO
 
 BROKEN 
 ----
-when a creature is not available on dnd beyond they have 0/0 hp which makes them  have a skull
-unconfirmed - blood was given to all griffens when one was below hp, probably because same name
-
 when bad guys are in list, play is available even if not saved
 dummys dont get initiative, neither do environment but for different reason
 Auto init somes doesnt sort right, i think this is when its the same creature but not sure
@@ -52,6 +48,7 @@ Auto init somes doesnt sort right, i think this is when its the same creature bu
 
 DONE - offline mode
 ------
+upload creature images
 change name
 encounter start button
 change ac
@@ -76,6 +73,7 @@ add environment token under encounter list
 
 FIXED
 ----
+when a creature is not available on dnd beyond they have 0/0 hp which makes them  have a skull
 player override hp is not calculated in refresh
 Good guys dont properly reload their HP when the refresh all button is clicked - works for good buy refresh
 All icons dont reload their dead overlay when refresh buttons are clicked - current workaround, reload page

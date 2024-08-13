@@ -204,13 +204,14 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
                     </div>
                 </div>
             </div>
+            <div className='column animated-label'>
             {searchSelectedCreature ? (
-                <div className='column animated-box'>
-                    <StatBlock creature={searchSelectedCreature.open5e} img={searchSelectedCreature.avatarUrl} closeFunction={() => setSearchSelectedCreature(false)}/>
-                </div>
+                <StatBlock creature={searchSelectedCreature.open5e} img={searchSelectedCreature.avatarUrl} closeFunction={() => setSearchSelectedCreature(false)}/>
             ) : (
-                <div> No Search Creature Selected </div>
+                <>{'No Search Creature Selected'}</>
             )}
+            </div>
+            
         </>
     );
 }

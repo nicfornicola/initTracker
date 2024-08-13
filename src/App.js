@@ -13,7 +13,7 @@ function App() {
 
     return (
         <Routes>
-            <Route path="/" element={<>Hello, I am Nic Fornicola, welcome to my website, if your looking for the dnd thing go to nicfornicola.com/dnd</>}/>
+            <Route path="/" element={<>Hello, I am Nic Fornicola, welcome to my website, if your looking for the dnd thing go to nicfornicola.com/dnd/dm</>}/>
             <Route path="/blog" element={<Blog/>}/>
             <Route path="/dnd/:gameId?" element={<PlayerPage/>} />
             <Route path="/dnd/dm/" element={<DmView/>} />

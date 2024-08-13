@@ -1,14 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import uploadImage from '../pics/uploadImage.png'
 
 
-const EncounterListItem = ({index, handleUploadMonsterImage, setPlayerViewOnCreatureChange, creatureListItem, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
+const EncounterListItem = ({index, listSizeRect, scrollPosition, handleUploadMonsterImage, setPlayerViewOnCreatureChange, creatureListItem, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
     const [openEditWidget, setOpenEditWidget] = useState(false);
     const [hpChange, setHpChange] = useState(0);
     const [tempHp, setTempHp] = useState(creatureListItem.open5e.hit_points_temp);
     const [overrideHp, setOverrideHp] = useState(creatureListItem.open5e.hit_points_override || 0);
     const [creature, setCreature] = useState(creatureListItem)
-    
+    const [isInside, setIsInside] = useState(true)
+    const [widgetPosition, setWidgetPosition] = useState({})
+    const buttonRef = useRef(null)
+
     useEffect(() => {
         if(encounterSelectedCreature !== null && creature.guid === encounterSelectedCreature.guid)
             setEncounterSelectedCreature(creature)
@@ -18,8 +21,20 @@ const EncounterListItem = ({index, handleUploadMonsterImage, setPlayerViewOnCrea
         // eslint-disable-next-line
     }, [creature]);
 
+
+    useEffect(() => {
+        console.log(openEditWidget, buttonRef.current)
+       if(openEditWidget && buttonRef.current) {
+            const rect = buttonRef.current.getBoundingClientRect();
+            setWidgetPosition(rect)
+            setIsInside(listSizeRect.top < rect.bottom - rect.height/2 && listSizeRect.bottom > rect.top + rect.height/2)
+
+       }
+    }, [openEditWidget, scrollPosition, listSizeRect]);
+
+    console.log(widgetPosition)
     const openEditCreatureStats = (event) => {
-        event.stopPropagation(); 
+        event.stopPropagation()
         setOpenEditWidget(!openEditWidget)
     }
 
@@ -47,6 +62,7 @@ const EncounterListItem = ({index, handleUploadMonsterImage, setPlayerViewOnCrea
         if(creature.open5e.hit_points_current > creature.open5e.hit_points)
             creature.open5e.hit_points_current = creature.open5e.hit_points
 
+        setOpenEditWidget(!openEditWidget)
         setCreature({...creature})
     }
 
@@ -106,11 +122,10 @@ const EncounterListItem = ({index, handleUploadMonsterImage, setPlayerViewOnCrea
     };
 
     return (
-        <>
-            <li className='listItem animated-box'
+            <li className='listItem'
                 onClick={() => setEncounterSelectedCreature(creature)}
             >   
-                <div className='encounterCreatureContainer'>
+                <div className='encounterCreatureContainer animated-box'>
                     <div className='initiativeInputContainer'>
                         <input className='inputButton' onFocus={handleHightlight} type='text' value={creature.open5e.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                     </div>
@@ -140,7 +155,7 @@ const EncounterListItem = ({index, handleUploadMonsterImage, setPlayerViewOnCrea
 
                     {creature.open5e.hit_points !== null  ? 
                         <div className='encounterCreaturesHpContainer'>
-                            <button className='encounterCreaturesHp' onClick={(event) => openEditCreatureStats(event)}>
+                            <button className='encounterCreaturesHp' onClick={(event) => openEditCreatureStats(event)}  ref={buttonRef}>
                                 {creature.open5e.hit_points_current}
                                 <span>/</span>
                                 {creature.open5e.hit_points}
@@ -152,31 +167,35 @@ const EncounterListItem = ({index, handleUploadMonsterImage, setPlayerViewOnCrea
                     :
                         <div className='encounterCreaturesHp'/>
                     }
+                    <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
+                        X
+                    </button>
                 </div>
-                <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
-                    X
-                </button>
+                {openEditWidget && isInside && ( 
+                    <div className='editStatsContainer editHpGrow' style={{ top: widgetPosition.top - 10, left: widgetPosition.right + 20, height: widgetPosition.height+20}}>
+                        <div className="infoContainerFlag"/>
+                        <div className='hpChanges'>
+                            <div className='editHpContainer'>
+                                <button className='editHpButton healButton' onClick={() => handleChangeHpCreature("heal")}>HEAL</button>
+                                <input className='editStatsInput' type='text' placeholder={"0"} onChange={(event) => setHpChange(parseInt(event.target.value))}  autoFocus/>
+                                <button className='editHpButton damageButton' onClick={() => handleChangeHpCreature("damage")}>DAMAGE</button>
+                            </div>
+                            <div className='extraHpContainer'>
+                                <div className='extraHpInputs'>
+                                    <label className='hpTitle' htmlFor='temphp'>Temp.</label>
+                                    <input id='temphp' type='text' className='editStatsInput' value={tempHp || 0} onChange={handleTempHp}/>
+                                </div>
+                                <div className='extraHpInputs'>
+                                    <label className='hpTitle' htmlFor='override'>Override</label>
+                                    <input id='override' type='text' className='editStatsInput' defaultValue={overrideHp || 0} onChange={handleOverrideHp}/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                )}
             </li>
            
-            {openEditWidget && ( 
-                <div className='editStatsContainer shadowBox editHpGrow '>
-                    <div className="infoContainerFlag"/>
-
-                    <div className='overHpContainer'>
-                        <label className='hpTitle' htmlFor='temphp'>Temp HP</label>
-                        <input id='temphp' type='text' className='editStatsInput' value={tempHp || 0} onChange={handleTempHp}/>
-                        <label className='hpTitle' htmlFor='override'>Override HP </label>
-                        <input id='override' type='text' className='editStatsInput' defaultValue={overrideHp || 0} onChange={handleOverrideHp}/>
-                    </div>
-
-                    <div className='editHpContainer'>
-                        <button className='editHpButton healButton' onClick={() => handleChangeHpCreature("heal")}>HEAL</button>
-                        <input className='editStatsInput' type='text' placeholder={"0"} onChange={(event) => setHpChange(parseInt(event.target.value))} autoFocus/>
-                        <button className='editHpButton damageButton' onClick={() => handleChangeHpCreature("damage")}>DAMAGE</button>
-                    </div>
-                </div>
-            )}
-        </>
   );
 }
 

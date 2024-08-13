@@ -233,11 +233,11 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
                 
             </div>
             {encounterSelectedCreature ? (
-                <div className='column animated-box'>
+                <div className='column animated-label'>
                     <StatBlock creature={encounterSelectedCreature.open5e} img={encounterSelectedCreature.avatarUrl} closeFunction={() => setEncounterSelectedCreature(false)}/>
                 </div>
             ) : (
-                <div> No Encounter Creature Selected </div>
+                <div className='column animated-label'> No Encounter Creature Selected </div>
             )}
             <UploadMonsterImage handleSaveEncounter={handleSaveEncounter} uploadIconMenu={uploadIconMenu} setCurrentEncounterCreatures={setCurrentEncounterCreatures} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} currentEncounterCreatures={currentEncounterCreatures} />
         </>
