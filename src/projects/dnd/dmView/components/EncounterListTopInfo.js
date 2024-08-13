@@ -7,8 +7,8 @@ const EncounterListTopInfo = ({savedEncounters, setSavedEncounters, handleLoadEn
             <h3 className='titleFontFamily'>Create Encounter</h3>
             <div className='dmViewButtonContainer'>
                 <DropdownMenu savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters} handleLoadEncounter={handleLoadEncounter} lastEncounterName={lastEncounterName} currentEncounterCreatures={currentEncounterCreatures} clickEncounterDropdownMenuX={clickEncounterDropdownMenuX}/>
-                <button className='dmViewButton' onClick={handleSaveEncounter} disabled={isSaveDisabled} style={{backgroundColor: saveMessageColor}}>  {showSaveMessage ? <>Encounter Saved!</> : <>Save Encounter</>} </button>
                 <button className='dmViewButton' onClick={handleNewEncounter} >  New Encounter </button>
+                <button className='dmViewButton' onClick={handleSaveEncounter} disabled={isSaveDisabled} style={{border: saveMessageColor}}>  {showSaveMessage ? <> Saved! </> : <>Save Encounter</>} </button>
             </div>
         </div>
     );

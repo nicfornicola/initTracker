@@ -1,7 +1,6 @@
 
 offline mod
 -----
-
 make stat blocks have a hide for now button that shows a little leaf to reappear
 move buttons from player view to dm view
 import export encouter list
@@ -12,6 +11,8 @@ import export encouter list
         
     statblock
     --
+        Slot-tracking with check marks of things like legendary actions, and anything else with limited use
+        But even better would be being able to auto-reset things with turn limits and such, like legendary actions.
         add (i) next to AC or name that is homebrewed
         on hover of a spell it shows a tooltip of what the spell is from the spell_list that is found in open5e creature
         add hover (i) on statblock to see the creature desc
@@ -24,6 +25,7 @@ import export encouter list
 
     encounter list changes 
     --
+        
         toggle hide
         add effects 
         current turn marker
@@ -38,13 +40,10 @@ playerview
 TODO
 -----
 
-
 BROKEN 
 ----
-when bad guys are in list, play is available even if not saved
-dummys dont get initiative, neither do environment but for different reason
-Auto init somes doesnt sort right, i think this is when its the same creature but not sure
-
+enironment stat card is SO fucked
+when bad guys are in list, play is available even if not saved or no name
 
 DONE - offline mode
 ------
@@ -73,6 +72,8 @@ add environment token under encounter list
 
 FIXED
 ----
+Auto init somes doesnt sort right, i think this is when its the same creature but not sure
+dummys dont get initiative, neither do environment but for different reason
 when a creature is not available on dnd beyond they have 0/0 hp which makes them  have a skull
 player override hp is not calculated in refresh
 Good guys dont properly reload their HP when the refresh all button is clicked - works for good buy refresh

@@ -137,12 +137,11 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
         titleColor = 'grey'
 
     useEffect(() => {
-        setSaveMessageColor(showSaveMessage ? "#08d82b" : "")
+        // setSaveMessageColor(showSaveMessage ? "#08d82b" : "")
+        setSaveMessageColor(showSaveMessage ? "2px solid #08d82b" : "")
     }, [showSaveMessage]);
 
     const handleAddExtra = (type) => {
-        console.log("adding extra", type)
-
         const dummyObj = {
             id: "open5e-" + type,
             avatarUrl: GlobalImg,
@@ -165,7 +164,6 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
                 hit_points_temp: 0,
                 ...dummyOpen5e
             }
-            console.log(dummyObj)
         } else {
             dummyObj.open5e = {
                 ...envObject,
@@ -194,7 +192,6 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
     }
 
     const handleUploadMonsterImage = (creature) => {
-        console.log("uploadnewimage")
         setUploadIconMenu(true)
         setUploadIconCreature(creature)
     }
