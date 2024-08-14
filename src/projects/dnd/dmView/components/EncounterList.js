@@ -17,7 +17,6 @@ const EncounterList = ({handleSaveEncounter, handleUploadMonsterImage, setCurren
         if(listElement) {
             listElement.addEventListener('scroll', handleScroll)
             const rect = listRef.current.getBoundingClientRect()
-            // console.log("UL:", rect.top, rect.bottom)
             setListSizeRect(rect)
         } 
 

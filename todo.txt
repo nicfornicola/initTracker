@@ -7,6 +7,7 @@ import export encouter list
 
     search list
     --
+        add button instead of just clicking any where so you can click an read stats without adding to encounter
         toggle visible button  
         
     statblock

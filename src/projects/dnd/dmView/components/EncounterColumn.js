@@ -34,19 +34,23 @@ function setLocalPlayerViewEncounter(encounter) {
     localStorage.setItem('playerViewEncounter', JSON.stringify(encounter));
 }
 
-const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreatures}) => {
+const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreatures, localSavedEncounters, showSearchList}) => {
     const [encounterId, setEncounterId] = useState(null);
     const [encounterSelectedCreature, setEncounterSelectedCreature] = useState(null);
     const [encounterName, setEncounterName] = useState('Name Your Encounter');
     const [lastEncounterName, setLastEncounterName] = useState(encounterName);
     const [showEncounterTitleEdit, setShowEncounterTitleEdit] = useState(false);
-    const [savedEncounters, setSavedEncounters] = useState(JSON.parse(localStorage.getItem('savedEncounters')));
+    const [savedEncounters, setSavedEncounters] = useState(localSavedEncounters);
     const [showSaveMessage, setShowSaveMessage] = useState(false);
     const [saveMessageColor, setSaveMessageColor] = useState("");
     const [isSaveDisabled, setIsSaveDisabled] = useState(currentEncounterCreatures?.length === 0);
     const [uploadIconMenu, setUploadIconMenu] = useState(false);
     const [uploadIconCreature, setUploadIconCreature] = useState(null);
     const inputRef = useRef(null);
+
+    useEffect(() => {
+        setSavedEncounters(localSavedEncounters)
+    }, [localSavedEncounters]);
 
     useEffect(() => {
         setIsSaveDisabled(currentEncounterCreatures?.length === 0)
@@ -198,7 +202,7 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
 
     return (
         <>
-            <div className='column columnBorder'>
+            <div className={`column columnBorder ${showSearchList ? '' : 'expand'}`}>
                 <div className='infoContainer'>
                     <EncounterListTopInfo savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} lastEncounterName={lastEncounterName} currentEncounterCreatures={currentEncounterCreatures} setSavedEncounters={setSavedEncounters} handleSaveEncounter={handleSaveEncounter} handleNewEncounter={handleNewEncounter} saveMessageColor={saveMessageColor} showSaveMessage={showSaveMessage} isSaveDisabled={isSaveDisabled}/>
                     <div className='encounterTitleContainer'>
@@ -229,13 +233,14 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
                 </div>
                 
             </div>
-            {encounterSelectedCreature ? (
-                <div className='column animated-label'>
+            <div className={`column animated-label ${showSearchList ? '' : 'expand'}`}>
+                {encounterSelectedCreature ? (
                     <StatBlock creature={encounterSelectedCreature.open5e} img={encounterSelectedCreature.avatarUrl} closeFunction={() => setEncounterSelectedCreature(false)}/>
-                </div>
-            ) : (
-                <div className='column animated-label'> No Encounter Creature Selected </div>
-            )}
+                ) : (
+                    <>No Encounter Creature Selected</>
+                )}
+            </div>
+
             <UploadMonsterImage handleSaveEncounter={handleSaveEncounter} uploadIconMenu={uploadIconMenu} setCurrentEncounterCreatures={setCurrentEncounterCreatures} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} currentEncounterCreatures={currentEncounterCreatures} />
         </>
   );
