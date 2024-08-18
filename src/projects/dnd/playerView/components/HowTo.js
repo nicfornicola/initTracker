@@ -30,7 +30,7 @@ function HowTo({backGroundImage}) {
                     <ul>
                         <li>
                             <a style={{color: "white"}} href="/dnd/aa3f3817-f44b-4116-b2e5-39e1eebc9f7d">
-                                nicfornicola.com/dnd/aa3f3817-f44b-4116-b2e5-39e1eebc9f7d
+                                dmbuddy.com/dnd/aa3f3817-f44b-4116-b2e5-39e1eebc9f7d
                             </a>
                         </li>
                     </ul>

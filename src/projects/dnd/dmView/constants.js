@@ -7,7 +7,7 @@ import TomeOfBeasts2 from './monsterJsons/TomeOfBeasts2.json';
 import TomeOfBeasts3 from './monsterJsons/TomeOfBeasts3.json';
 import TomeOfBeasts2023 from './monsterJsons/TomeOfBeasts2023.json';
 
-export const proxyUrl = window.location.href.includes("nicfornicola.com") 
+export const proxyUrl = window.location.href.includes("dmbuddy.com") 
                         ? 'https://nics-cors-anywhere-99e39b544c5d.herokuapp.com/' 
                         : "";
 

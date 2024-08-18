@@ -49,7 +49,7 @@ import background23 from "./pics/backgrounds/adventureTime.gif"
 import background24 from "./pics/backgrounds/fire.gif"
 
 // export const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-export const proxyUrl = window.location.href.includes("nicfornicola.com") 
+export const proxyUrl = window.location.href.includes("dmbuddy.com") 
                         ? 'https://nics-cors-anywhere-99e39b544c5d.herokuapp.com/' 
                         : "";
                         
