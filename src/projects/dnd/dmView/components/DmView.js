@@ -58,7 +58,7 @@ const DmView = () => {
     
     return (
         <div className='dmView'>
-            <SideMenu uploadLocalStorage={uploadLocalStorage} showSearchList={showSearchList} setShowSearchList={setShowSearchList}/>
+            <SideMenu uploadLocalStorage={uploadLocalStorage} setCurrentEncounterCreatures={setCurrentEncounterCreatures} showSearchList={showSearchList} setShowSearchList={setShowSearchList}/>
             {showSearchList &&  
                 <SearchList setCurrentEncounterCreatures={setCurrentEncounterCreatures} ></SearchList>
             }

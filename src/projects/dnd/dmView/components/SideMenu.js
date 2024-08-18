@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import Search from '../pics/search.png'
 import Download from '../pics/download.png'
 import JsonImg from '../pics/json.png'
+import ChampionImage from '../../playerView/pics/icons/refreshPlayers.png'
+import { getCharacterStats } from '../../playerView/api/getCharacterStats';
+import { getMaxHp } from '../../playerView/api/getMaxHp';
 
+ 
 
 function downloadLocalStorage() {
     // Create an object to store all local storage data
@@ -32,8 +36,11 @@ function downloadLocalStorage() {
 }
 
 
-function SideMenu({uploadLocalStorage, showSearchList, setShowSearchList}) {
+function SideMenu({uploadLocalStorage, setCurrentEncounterCreatures, showSearchList, setShowSearchList}) {
     const [isOpen, setIsOpen] = useState(false);
+    const [playerNumbers, setPlayerNumbers] = useState([]);
+    const [inputValue, setInputValue] = useState('');
+
 
     // Toggle the menu state
     const toggleMenu = () => {
@@ -43,6 +50,22 @@ function SideMenu({uploadLocalStorage, showSearchList, setShowSearchList}) {
     const handleImageClick = () => {
         document.getElementById('fileInput').click();
     };
+
+    const handlePlayerNumbers = (event) => {
+        let str = event.target.value;
+        console.log(str)
+        setInputValue(str)
+        const array = str.split(',');
+        console.log(array)
+        setPlayerNumbers(array)
+
+    }
+
+    const handleDndCharacterImport = () => {
+        console.log("dnd", playerNumbers)
+        setPlayerNumbers([])
+        setInputValue('')
+    }
 
     return (
         <div className={`side-menu ${isOpen ? 'open' : ''}`}>
@@ -65,6 +88,18 @@ function SideMenu({uploadLocalStorage, showSearchList, setShowSearchList}) {
                         style={{ display: 'none' }}
                         onChange={uploadLocalStorage}
                     />
+                </li>
+                <li className='menuItem' onClick={() => setIsOpen(true)}>
+                    <img src={ChampionImage} alt="Click to Upload" className="menuIcon" />
+                    <input
+                        type="text"
+                        accept='.json'
+                        id="fileInput"
+                        placeholder='DndBeyond Chararacter Upload'
+                        value={inputValue}
+                        onChange={handlePlayerNumbers}
+                    />
+                    <button className='submitButton' onClick={() => handleDndCharacterImport()}>✅</button>
                 </li>
             </ul>
         </div>

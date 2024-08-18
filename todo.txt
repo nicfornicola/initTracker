@@ -3,7 +3,6 @@ offline mod
 -----
 make stat blocks have a hide for now button that shows a little leaf to reappear
 move buttons from player view to dm view
-import export encouter list
 
     search list
     --
@@ -48,6 +47,8 @@ when bad guys are in list, play is available even if not saved or no name
 
 DONE - offline mode
 ------
+import export encouter list
+
 upload creature images
 change name
 encounter start button
