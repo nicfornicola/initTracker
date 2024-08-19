@@ -3,10 +3,7 @@ import Search from '../pics/search.png'
 import Download from '../pics/download.png'
 import JsonImg from '../pics/json.png'
 import ChampionImage from '../../playerView/pics/icons/refreshPlayers.png'
-import { getCharacterStats } from '../../playerView/api/getCharacterStats';
-import { getMaxHp } from '../../playerView/api/getMaxHp';
-
- 
+import { ImportDndBeyondCharacters } from '../api/ImportDndBeyondCharacters'
 
 function downloadLocalStorage() {
     // Create an object to store all local storage data
@@ -35,7 +32,6 @@ function downloadLocalStorage() {
     document.body.removeChild(a);
 }
 
-
 function SideMenu({uploadLocalStorage, setCurrentEncounterCreatures, showSearchList, setShowSearchList}) {
     const [isOpen, setIsOpen] = useState(false);
     const [playerNumbers, setPlayerNumbers] = useState([]);
@@ -52,17 +48,19 @@ function SideMenu({uploadLocalStorage, setCurrentEncounterCreatures, showSearchL
     };
 
     const handlePlayerNumbers = (event) => {
-        let str = event.target.value;
-        console.log(str)
-        setInputValue(str)
-        const array = str.split(',');
-        console.log(array)
-        setPlayerNumbers(array)
-
+        let input = event.target.value;
+        const numbersArray = input.replace(/\s+/g, '').split(',');
+        setInputValue(input)
+        setPlayerNumbers(numbersArray)
     }
 
-    const handleDndCharacterImport = () => {
-        console.log("dnd", playerNumbers)
+    //['124519382', '124686426', '124687100', '125381766', '125717017', '125809224']
+    const handleDndCharacterImport = async () => {
+        console.log("From Character Import - ")
+        const playerData = await ImportDndBeyondCharacters(playerNumbers);
+        console.log(playerNumbers, playerData)
+
+        setCurrentEncounterCreatures((prev) => [...prev, ...playerData])
         setPlayerNumbers([])
         setInputValue('')
     }
@@ -91,6 +89,7 @@ function SideMenu({uploadLocalStorage, setCurrentEncounterCreatures, showSearchL
                 </li>
                 <li className='menuItem' onClick={() => setIsOpen(true)}>
                     <img src={ChampionImage} alt="Click to Upload" className="menuIcon" />
+                    <button className='submitButton' onClick={() => handleDndCharacterImport()}>✅</button>
                     <input
                         type="text"
                         accept='.json'
@@ -99,7 +98,6 @@ function SideMenu({uploadLocalStorage, setCurrentEncounterCreatures, showSearchL
                         value={inputValue}
                         onChange={handlePlayerNumbers}
                     />
-                    <button className='submitButton' onClick={() => handleDndCharacterImport()}>✅</button>
                 </li>
             </ul>
         </div>

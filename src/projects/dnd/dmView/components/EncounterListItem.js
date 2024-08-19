@@ -10,6 +10,9 @@ const EncounterListItem = ({index, listSizeRect, scrollPosition, handleUploadMon
     const [widgetPosition, setWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0})
     const buttonRef = useRef(null)
 
+    console.log("open5e")
+    console.log(creatureListItem)
+
     useEffect(() => {
         if(encounterSelectedCreature !== null && creature.guid === encounterSelectedCreature.guid)
             setEncounterSelectedCreature(creature)
@@ -106,7 +109,7 @@ const EncounterListItem = ({index, listSizeRect, scrollPosition, handleUploadMon
         setCreature({...creature})
     }
 
-    const handleHightlight = (e) => {
+    const handleHighlight = (e) => {
         e.target.select();
     };
 
@@ -116,7 +119,7 @@ const EncounterListItem = ({index, listSizeRect, scrollPosition, handleUploadMon
             >   
                 <div className='encounterCreatureContainer animated-box'>
                     <div className='initiativeInputContainer'>
-                        <input className='inputButton' onFocus={handleHightlight} type='text' value={creature.open5e.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
+                        <input className='inputButton' onFocus={handleHighlight} type='text' value={creature.open5e.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                     </div>
                     <div className="monsterEncounterIconContainer" onClick={() => handleUploadMonsterImage(creature)}>
                         <img className="monsterEncounterIcon" src={creature.avatarUrl} alt={"list Icon"} />
@@ -133,11 +136,11 @@ const EncounterListItem = ({index, listSizeRect, scrollPosition, handleUploadMon
                         <div className='armorClassContainer'>
                             <div>
                                 <label htmlFor='ac'>AC</label>
-                                <input id='ac' className='middleStatsInput' onFocus={handleHightlight} type='text' defaultValue={creature.open5e.armor_class} onChange={handleArmorClassChange} onClick={(event) => event.stopPropagation()}/>
+                                <input id='ac' className='middleStatsInput' onFocus={handleHighlight} type='text' defaultValue={creature.open5e.armor_class} onChange={handleArmorClassChange} onClick={(event) => event.stopPropagation()}/>
                             </div>
                             <div>
                                 <label htmlFor='init'>Init Bonus</label>
-                                <input id='init'className='middleStatsInput' onFocus={handleHightlight} disabled={true}  type='text' defaultValue={creature.open5e.dexterity_save ? '+' + creature.open5e.dexterity_save : '+0'} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
+                                <input id='init'className='middleStatsInput' onFocus={handleHighlight} disabled={true}  type='text' defaultValue={creature.open5e.dexterity_save ? '+' + creature.open5e.dexterity_save : '+0'} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                             </div>
                         </div>
                     </div>
@@ -166,17 +169,17 @@ const EncounterListItem = ({index, listSizeRect, scrollPosition, handleUploadMon
                         <div className='hpChanges'>
                             <div className='editHpContainer'>
                                 <button className='editHpButton healButton' onClick={() => handleChangeHpCreature("heal")}>HEAL</button>
-                                <input className='editStatsInput' type='number' value={hpChange} onFocus={handleHightlight} onChange={(event) => setHpChange(parseInt(event.target.value))} autoFocus/>
+                                <input className='editStatsInput' type='number' value={hpChange} onFocus={handleHighlight} onChange={(event) => setHpChange(parseInt(event.target.value))} autoFocus/>
                                 <button className='editHpButton damageButton' onClick={() => handleChangeHpCreature("damage")}>DAMAGE</button>
                             </div>
                             <div className='extraHpContainer'>
                                 <div className='extraHpInputs' >
                                     <label className='hpTitle tempHp' style={{color: creature.open5e.hit_points_temp === 0 ? 'grey' : ''}} htmlFor='temphp'><strong>Temp HP</strong></label>
-                                    <input id='temphp' type='number' className='editStatsInputExtra tempHp' value={creature.open5e.hit_points_temp} style={{color: creature.open5e.hit_points_temp === 0 ? 'grey' : ''}} onFocus={handleHightlight} onChange={handleTempHp}/>
+                                    <input id='temphp' type='number' className='editStatsInputExtra tempHp' value={creature.open5e.hit_points_temp} style={{color: creature.open5e.hit_points_temp === 0 ? 'grey' : ''}} onFocus={handleHighlight} onChange={handleTempHp}/>
                                 </div>
                                 <div className='extraHpInputs'>
                                     <label className='hpTitle' htmlFor='override' style={{color: creature.open5e.hit_points_override === 0 ? 'grey' : ''}}><strong>Override HP</strong></label>
-                                    <input id='override' type='number' className='editStatsInputExtra' value={creature.open5e.hit_points_override} style={{color: creature.open5e.hit_points_override === 0 ? 'grey' : ''}} onFocus={handleHightlight} onChange={handleOverrideHp}/>
+                                    <input id='override' type='number' className='editStatsInputExtra' value={creature.open5e.hit_points_override} style={{color: creature.open5e.hit_points_override === 0 ? 'grey' : ''}} onFocus={handleHighlight} onChange={handleOverrideHp}/>
                                 </div>
                             </div>
                         </div>

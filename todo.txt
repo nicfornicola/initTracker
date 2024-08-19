@@ -11,6 +11,7 @@ move buttons from player view to dm view
         
     statblock
     --
+        customize more stuff in stat block
         Slot-tracking with check marks of things like legendary actions, and anything else with limited use
         But even better would be being able to auto-reset things with turn limits and such, like legendary actions.
         add (i) next to AC or name that is homebrewed
@@ -21,11 +22,11 @@ move buttons from player view to dm view
 
     saved encounter list 
     -- 
+        track initative and make next button, current turn at top of list and loop or chevron next to item
         add quick look to see encounters names of creatures
 
     encounter list changes 
     --
-        
         toggle hide
         add effects 
         current turn marker
@@ -36,6 +37,7 @@ playerview
 ------
     add x button to remove uploadedLinks and images
     add button to resize images and add more options to move their positions
+    different tiers of blood to match what is going on in game, light, med, heavy blood
 
 TODO
 -----

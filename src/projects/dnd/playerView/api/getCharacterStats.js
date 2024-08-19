@@ -2,10 +2,9 @@ import axios from 'axios';
 import { getMaxHp } from './getMaxHp';
 import { proxyUrl } from '../constants';
 
-export const getCharacterStats = async (data) => {
+export const getCharacterStats = async (playerIds) => {
     console.log("Character-service in getCharacterStats - playerHP")
 
-    const playerIds = data.map(player => player.id);
     let i = 1;
     try {
         const baseUrl = `${proxyUrl}https://character-service.dndbeyond.com/character/v5/character/`;

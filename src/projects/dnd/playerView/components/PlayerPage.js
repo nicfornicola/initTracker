@@ -196,9 +196,10 @@ function PlayerPage() {
             const data = await getCreatures(gameId);
             if(data) {
                 const {monsters, players} = data.data;
+                const playerIds = players.map(player => player.id);
 
                 // Get player stats for HP
-                const charData = await getCharacterStats(players);
+                const charData = await getCharacterStats(playerIds);
                 const creaturesData = [...monsters, ...players]
                 const creatures = creaturesData.map(creature => {
                     let playerHpData = null
@@ -267,10 +268,12 @@ function PlayerPage() {
 
 
     useEffect(() => {
-        console.log("main load")
+        console.log("Main load")
+        // If getting dndbeyond encounter
         if (creatures.length === 0 && gameId && !error) {
             loadProfiles();
             console.log("loadProfiles")
+        // If dm play button
         } else if (creatures.length === 0 && !gameId && !error) {
             let savedCurrentEncounter = JSON.parse(localStorage.getItem('playerViewEncounter'))
             console.log("localStorage")

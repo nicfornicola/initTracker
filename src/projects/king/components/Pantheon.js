@@ -3,16 +3,16 @@ import React from 'react';
 
 import aaurelion from '../pics/aaurelion.jpg'
 import claael from '../pics/claael.jpg'
-import creator from '../pics/creator.jpg'
+// import creator from '../pics/creator.jpg'
 import diaadree from '../pics/diaadree.jpg'
 import osaalo from '../pics/osaalo.jpg'
 import naal from '../pics/naal.jpg'
 import naath from '../pics/naath.jpg'
 import yathira from '../pics/yathira.jpg'
-import mylaakBattle from '../pics/mylaakBattle.jpg'
+// import mylaakBattle from '../pics/mylaakBattle.jpg'
 import mylaakChaos from '../pics/mylaakChaos.jpg'
-import mylaakRegal from '../pics/mylaakRegal.jpg'
-import mylaakImbued from '../pics/mylaakImbued.jpg'
+// import mylaakRegal from '../pics/mylaakRegal.jpg'
+// import mylaakImbued from '../pics/mylaakImbued.jpg'
 import Card from './Card';
 
 const Pantheon = () => {
