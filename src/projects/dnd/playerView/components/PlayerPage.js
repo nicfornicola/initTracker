@@ -68,25 +68,12 @@ function PlayerPage() {
             const updatedCreatures = creatures.map(creature => {
                 // Need to use creature.id since its from dnd beyond
                 const matchedRefresh = refreshedData.find(data => data.id === creature.id);
-                console.log("!", creature.name)
-                console.log(refreshedData)
-                console.log(matchedRefresh)
 
                 if (matchedRefresh) {
-                    // getCharacterStats doesnt return initiative, that is from the encounter service, maybe make another button to reset player initiation i know thats a lot of buttons
-                    // const hpChange = matchedRefresh.removedHp !== undefined && matchedRefresh.removedHp !== creature.removedHp
-                    // const overrideHpChange = matchedRefresh.removedHp !== undefined && matchedRefresh.removedHp !== creature.removedHp
-                    // const exhaustionChange = matchedRefresh.exhaustionLvl !== undefined && matchedRefresh.exhaustionLvl !== creature.exhaustionLvl
-                    
-                    // Leaving all of this in incase it breaks. just override creature data with new refresh data and if its different great if its not great
                     const change = {
                         ...creature,
                         ...matchedRefresh
-                        // removedHp: hpChange ? matchedRefresh.removedHp : creature.removedHp,
-                        // exhaustionLvl: exhaustionChange ? matchedRefresh.exhaustionLvl : creature.exhaustionLvl,
-                        // deathSaves: matchedRefresh.deathSaves
                     }
-                    
                     return change;
                 } else {
                     return creature;
@@ -195,7 +182,6 @@ function PlayerPage() {
             console.log(gameId)
             // Get all monster stats (except image)
             const data = await getCreatures(gameId);
-            console.log(data)
             if(data) {
                 const {monsters, players} = data.data;
                 const playerIds = players.map(player => player.id);
@@ -234,7 +220,6 @@ function PlayerPage() {
 
                 setLoading(false) 
                 console.log("Creatures Set!")
-                console.log("creatures", creatures)
 
             }
         } catch (error) {

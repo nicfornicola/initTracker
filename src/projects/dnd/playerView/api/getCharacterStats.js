@@ -21,7 +21,6 @@ export const getCharacterStats = async (playerIds) => {
                     },
                     withCredentials: false,
                 });
-                console.log("res", response.data.data)
 
                 const resData = response.data.data;
                 let maxHp = getMaxHp(resData); // Ensure getMaxHp is used correctly
