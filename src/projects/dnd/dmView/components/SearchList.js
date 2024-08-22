@@ -164,7 +164,6 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
         }
 
         let newCreature = {...creature, guid: generateUniqueId(), open5e: appendedOpen5e}
-        console.log("Selected:", newCreature.name, newCreature)
 
         setSearchSelectedCreature(newCreature);
         setCurrentEncounterCreatures(prev => [...prev, newCreature]);

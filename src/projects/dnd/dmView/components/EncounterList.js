@@ -41,13 +41,11 @@ const EncounterList = ({handleSaveEncounter, handleUploadMonsterImage, setCurren
     return (
         <div className='encounterCreaturesList' ref={listRef}>
             {currentEncounterCreatures.map((creatureListItem, index) => (
-                <>
-                    {creatureListItem.open5e !== undefined ?
-                        <EncounterListItem key={creatureListItem.guid + index} index={index} listSizeRect={listSizeRect} scrollPosition={scrollPosition} handleUploadMonsterImage={handleUploadMonsterImage} resort={resort} setPlayerViewOnCreatureChange={setPlayerViewOnCreatureChange} creatureListItem={creatureListItem} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX}/>
-                        :
-                        <EncounterListItemDB key={creatureListItem.guid + index} index={index} handleUploadMonsterImage={handleUploadMonsterImage} setPlayerViewOnCreatureChange={setPlayerViewOnCreatureChange} creatureListItem={creatureListItem} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} resort={resort}/>
-                    }
-                </>
+                creatureListItem.open5e !== undefined ?
+                    <EncounterListItem key={creatureListItem.guid + index} index={index} listSizeRect={listSizeRect} scrollPosition={scrollPosition} handleUploadMonsterImage={handleUploadMonsterImage} resort={resort} setPlayerViewOnCreatureChange={setPlayerViewOnCreatureChange} creatureListItem={creatureListItem} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX}/>
+                    :
+                    <EncounterListItemDB key={creatureListItem.guid + index} index={index} handleUploadMonsterImage={handleUploadMonsterImage} setPlayerViewOnCreatureChange={setPlayerViewOnCreatureChange} creatureListItem={creatureListItem} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} resort={resort}/>
+                
             ))}
         </div>
   );

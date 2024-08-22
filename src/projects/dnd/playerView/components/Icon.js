@@ -54,7 +54,6 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies, enemyBloodToggleTy
     let cardBoxShadow;
     const monsterBoxShadow = {boxShadow: '0px 3px 8px 5px rgba(203, 38, 19, 1)'};
     const playerBoxShadow = {boxShadow: '0px 3px 8px 5px rgba(0, 230, 64, 1)'};
-
     if (isPlayer) {
         let namesArr = creature.name.split(' ');
         name = namesArr[0];
@@ -87,7 +86,6 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies, enemyBloodToggleTy
         if (enemyBloodToggleType === 2)
             showEnemyHp = true;
 
-        console.log(creature.name, creature.monsterCurrentHp, creature.maxHp)
         if (currentHp / creature.maxHp < 0.55 && enemyBloodToggleType !== 0) {
             isBloodied = true;
             bloodImg = setBloodImg(creature)

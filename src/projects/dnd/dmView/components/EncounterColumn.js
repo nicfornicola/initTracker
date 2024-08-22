@@ -187,10 +187,18 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
     const handleAutoRollInitiative = (event) => {
         event.stopPropagation()
         currentEncounterCreatures.forEach(creature => {
-            creature.open5e.initiative = Math.floor(Math.random() * 20) + 1 + creature.open5e.dexterity_save
+            if("open5e" in creature)
+                creature.open5e.initiative = Math.floor(Math.random() * 20) + 1 + creature.open5e.dexterity_save
+            else if("dnd_b" in creature)
+                creature.dnd_b.initiative = Math.floor(Math.random() * 20) + 1 // does not calc player dex bonus
         });
 
-        currentEncounterCreatures.sort((a, b) =>  b.open5e.initiative - a.open5e.initiative);
+        currentEncounterCreatures.sort((a, b) => {
+            const aInitiative = a.open5e?.initiative ?? a.dnd_b?.initiative ?? 0;
+            const bInitiative = b.open5e?.initiative ?? b.dnd_b?.initiative ?? 0;
+            return bInitiative - aInitiative;
+        });        
+        
         setCurrentEncounterCreatures([...currentEncounterCreatures]);
 
     }

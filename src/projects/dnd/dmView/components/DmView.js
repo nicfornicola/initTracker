@@ -53,8 +53,6 @@ const DmView = () => {
         // Read the file
         reader.readAsText(file);
     }
-
-    console.log(localSavedEncounters)
     
     return (
         <div className='dmView'>

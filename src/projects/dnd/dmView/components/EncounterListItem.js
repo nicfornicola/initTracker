@@ -10,14 +10,10 @@ const EncounterListItem = ({index, listSizeRect, scrollPosition, handleUploadMon
     const [widgetPosition, setWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0})
     const buttonRef = useRef(null)
 
-    console.log("open5e")
-    console.log(creatureListItem)
-
     useEffect(() => {
         if(encounterSelectedCreature !== null && creature.guid === encounterSelectedCreature.guid)
             setEncounterSelectedCreature(creature)
         
-        console.log("Reloaded:", index, creature.name)
         setPlayerViewOnCreatureChange()
         // eslint-disable-next-line
     }, [creature]);

@@ -51,6 +51,7 @@ function PlayerPage() {
     const [arrowButton, setArrowButton] = useState(upArrow);
     const [enemyBloodToggleType, setEnemyBloodToggleType] = useState(0);
     const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(bloodIcon);
+    const [autoRefresh, setAutoRefresh] = useState(false);
     const { gameId } = useParams();
     const isOfflineMode = window.location.href.includes("playerView");
 
@@ -58,16 +59,19 @@ function PlayerPage() {
         try {
             console.log("Refreshing Player Health")
             console.log("----------------")
-        
             //Get player stats for HP
             const filteredPlayers = creatures.filter(item => item.type === 'player');
-            const refreshedData = await getCharacterStats(filteredPlayers);
+            const playerIds = filteredPlayers.map(player => player.id);
 
+            const refreshedData = await getCharacterStats(playerIds);
             // Iterate over the first array using a for loop
             const updatedCreatures = creatures.map(creature => {
                 // Need to use creature.id since its from dnd beyond
                 const matchedRefresh = refreshedData.find(data => data.id === creature.id);
-                    
+                console.log("!", creature.name)
+                console.log(refreshedData)
+                console.log(matchedRefresh)
+
                 if (matchedRefresh) {
                     // getCharacterStats doesnt return initiative, that is from the encounter service, maybe make another button to reset player initiation i know thats a lot of buttons
                     // const hpChange = matchedRefresh.removedHp !== undefined && matchedRefresh.removedHp !== creature.removedHp
@@ -83,8 +87,6 @@ function PlayerPage() {
                         // deathSaves: matchedRefresh.deathSaves
                     }
                     
-                    console.log("change", change)
-
                     return change;
                 } else {
                     return creature;
@@ -118,7 +120,6 @@ function PlayerPage() {
         
                 // Function to update a single creature's data
                 const updateSingleCreature = (creature, matchedRefresh) => {
-
                     const maxHpIsZero = matchedRefresh.maximumHitPoints === 0
                     if(maxHpIsZero) {
                         // If somone does not own the creature they start at 0/0 
@@ -194,12 +195,14 @@ function PlayerPage() {
             console.log(gameId)
             // Get all monster stats (except image)
             const data = await getCreatures(gameId);
+            console.log(data)
             if(data) {
                 const {monsters, players} = data.data;
                 const playerIds = players.map(player => player.id);
 
                 // Get player stats for HP
                 const charData = await getCharacterStats(playerIds);
+
                 const creaturesData = [...monsters, ...players]
                 const creatures = creaturesData.map(creature => {
                     let playerHpData = null
@@ -231,6 +234,8 @@ function PlayerPage() {
 
                 setLoading(false) 
                 console.log("Creatures Set!")
+                console.log("creatures", creatures)
+
             }
         } catch (error) {
             console.log(error)
@@ -279,6 +284,12 @@ function PlayerPage() {
             console.log("localStorage")
             console.log(savedCurrentEncounter.currentEncounterCreatures)
 
+            savedCurrentEncounter.currentEncounterCreatures.forEach(creature => {
+                if("dnd_b" in creature) {
+                    setAutoRefresh(true)
+                }
+            });
+
             setCreatures([...open5eToProfile(savedCurrentEncounter.currentEncounterCreatures)])
             setLoading(false)
 
@@ -291,7 +302,7 @@ function PlayerPage() {
 
         // Refresh every 5 minutes, when refreshed this way, show check mark for 45 seconds
         const intervalId = setInterval(() => {
-            if(gameId) {
+            if(gameId || autoRefresh) {
                 console.log("🔄AUTO-REFRESH🔄")
                 handleRefresh(3);
                 setRecentlyRefreshed(true)

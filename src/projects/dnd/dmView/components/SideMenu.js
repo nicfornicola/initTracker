@@ -54,11 +54,9 @@ function SideMenu({uploadLocalStorage, setCurrentEncounterCreatures, showSearchL
         setPlayerNumbers(numbersArray)
     }
 
-    //['124519382', '124686426', '124687100', '125381766', '125717017', '125809224']
+    //124519382, 124686426, 124687100, 125381766, 125717017, 125809224]
     const handleDndCharacterImport = async () => {
-        console.log("From Character Import - ")
         const playerData = await ImportDndBeyondCharacters(playerNumbers);
-        console.log(playerNumbers, playerData)
 
         setCurrentEncounterCreatures((prev) => [...prev, ...playerData])
         setPlayerNumbers([])
