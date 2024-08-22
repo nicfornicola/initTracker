@@ -98,6 +98,7 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies, enemyBloodToggleTy
     let isDead = (currentHp <= 0 || creature.exhaustionLvl === 6) && !isGlobal
     let showHp = (isPlayer && foundHp) || (!isPlayer && showEnemyHp)
     let showTempHp = creature.tempHp > 0
+    console.log(creature)
     let showDeathSaves = isPlayer && foundHp && (creature.deathSaves.successCount >= 0 && creature.deathSaves.failCount >= 0)
 
     if(hideDeadEnemies && !isPlayer  && isDead ) {
@@ -152,7 +153,7 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies, enemyBloodToggleTy
                                     {currentHp}/{creature.maxHp}
                                     
                                     {showTempHp && ( 
-                                        <>(+<a href='example.com' className='tempHp'>{creature.tempHp}</a>)</>
+                                        <span className='tempHp'>(+{creature.tempHp})</span>
                                     )}
                                 </div>
                             </div>

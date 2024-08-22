@@ -9,7 +9,7 @@ import command from './pics/effects/command.png';
 import confused from './pics/effects/confused.png'; 
 import disguised from './pics/effects/disguised.png'; 
 import ensnared from './pics/effects/ensnared.png'; 
-import faireFire from './pics/effects/faireFire.png'; 
+import faerieFire from './pics/effects/faireFire.png'; 
 import guidance from './pics/effects/guidance.png'; 
 import guidingBolt from './pics/effects/guidingBolt.png'; 
 import hex from './pics/effects/hex.png'; 
@@ -113,7 +113,7 @@ export const effectObjs = [
     {img: confused, effect: "Confused"}, 
     {img: disguised, effect: "Disguised"}, 
     {img: ensnared, effect: "Ensnared"}, 
-    {img: faireFire, effect: "Faire Fire"}, 
+    {img: faerieFire, effect: "Faerie Fire"}, 
     {img: guidance, effect: "Guidance"}, 
     {img: guidingBolt, effect: "Guiding Bolt"}, 
     {img: hex, effect: "Hexed"}, 

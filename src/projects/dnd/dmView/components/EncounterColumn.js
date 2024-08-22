@@ -148,6 +148,7 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
     const handleAddExtra = (type) => {
         const dummyObj = {
             id: "open5e-" + type,
+            type: type,
             avatarUrl: GlobalImg,
             name: "Environment/Lair",
             guid: generateUniqueId(),
@@ -155,19 +156,33 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
             
         }
 
-        if(type === "dummy") {
-            dummyObj.avatarUrl = "https://www.dndbeyond.com/Content/Skins/Waterdeep/images/icons/monsters/beast.jpg"
-            dummyObj.name = "Dummy"
+        if(type === "monster" || type === "player") {
+            if(type === "player") {
+                dummyObj.avatarUrl = "https://www.dndbeyond.com/Content/Skins/Waterdeep/images/icons/monsters/humanoid.jpg"
+                dummyObj.name = "Player"
+                dummyObj.deathSaves = {
+                    "failCount": 0,
+                    "successCount": 0,
+                    "isStabilized": true
+                }
+            }
+
+            if(type === "monster") {
+                dummyObj.avatarUrl = "https://www.dndbeyond.com/Content/Skins/Waterdeep/images/icons/monsters/beast.jpg"
+                dummyObj.name = "monster"
+            }
+
             dummyObj.open5e = {
-                name: "Dummy",
+                ...dummyOpen5e,
+                name: dummyObj.name,
                 hit_points: 20, 
                 armor_class: 10, 
                 hit_points_current: 20,
                 hit_points_default: 20,
                 hit_points_override: 0,
                 hit_points_temp: 0,
-                ...dummyOpen5e
             }
+        
         } else {
             dummyObj.open5e = {
                 ...envObject,
@@ -235,8 +250,9 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
                         </div>
                     )}
                     <div className='dummyButtons'>
-                        <button className='dmViewButton' onClick={() => handleAddExtra('dummy')} >  Add Dummy </button>
-                        <button className='dmViewButton' onClick={() => handleAddExtra('global')} >  Add Global Token </button>
+                        <button className='dmViewButton' onClick={() => handleAddExtra('player')}> Add Player </button>
+                        <button className='dmViewButton' onClick={() => handleAddExtra('monster')}> Add Dummy </button>
+                        <button className='dmViewButton' onClick={() => handleAddExtra('global')}> Add Global Token </button>
                     </div>
                 </div>
                 

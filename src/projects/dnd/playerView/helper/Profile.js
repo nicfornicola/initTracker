@@ -5,11 +5,12 @@ export class Profile {
         // this.type = type;
         this.effects = [];
 
-        console.log("dnd_b", creature)
-        console.log("playerHpData", playerHpData)
+
 
         // if coming from /dnd/dm
         if(creature.id.toString().includes("open5e")) {
+            // console.log("dnd_b", creature)
+            // console.log("playerHpData", playerHpData)
             this.name = creature.open5e.name; // Get custom names
             this.id = Math.floor(Math.random() * 1000) + 1 // Give it an id, to match dnd beyond stuff
             this.monsterCurrentHp = creature.open5e.hit_points_current || 0;
@@ -19,9 +20,9 @@ export class Profile {
             this.removedHp =  null;
             this.tempHp = creature.open5e.hit_points_temp;
             this.exhaustionLvl = null;
-            this.deathSaves = null;
+            this.deathSaves = creature.deathSaves;
             this.initiative = creature.open5e.initiative || 0;
-            this.type = creature.id.includes("global") ? "global" : "monster";
+            this.type = creature.type || "monster"; // when creatures are added from dmb they do not get a type so default monster
         // if coming from /dnd/dm 
         } else if("dnd_b" in creature) {
             this.name = creature.dnd_b.name; 
@@ -36,6 +37,7 @@ export class Profile {
             this.deathSaves = creature.dnd_b.deathSaves
             this.initiative = creature.dnd_b.initiative || 0;
             this.type = "player";
+            this.from = creature.from;
         } else { // else is from dnd beyond
             const type = creature.userName ? "player" : "monster"
             this.name = playerHpData?.name || creature.name; //try to get the name from playerhp or default for monster and unloaded
@@ -43,7 +45,7 @@ export class Profile {
             this.initiative = creature.initiative;
             this.type = type;
             if(type === "player") {
-                this.avatarUrl = playerHpData.avatarUrl || "https://www.dndbeyond.com/avatars/42718/687/1581111423-121476494.jpeg";
+                this.avatarUrl = playerHpData.avatarUrl || creature.avatarUrl || "https://www.dndbeyond.com/avatars/42718/687/1581111423-121476494.jpeg";
                 this.maxHp = playerHpData.maxHp
                 this.maxHpBonus = playerHpData.maxHpBonus
                 this.maxHpOverride = playerHpData.maxHpOverride
@@ -52,6 +54,7 @@ export class Profile {
                 this.exhaustionLvl = playerHpData.exhaustionLvl
                 this.deathSaves = playerHpData.deathSaves
                 this.monsterCurrentHp = null
+                this.from = "dnd_b";
             } else if(type === "monster") {
                 if (creature.maximumHitPoints === 0) {
                     this.monsterCurrentHp = 1

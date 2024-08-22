@@ -10,6 +10,7 @@ export const getCharacterStats = async (playerIds) => {
         const baseUrl = `${proxyUrl}https://character-service.dndbeyond.com/character/v5/character/`;
         const promises = playerIds.map(async (playerId) => {
             try {
+                
                 if(playerId.includes("dnd_b"))
                     playerId = playerId.match(/\d+/g);         
 

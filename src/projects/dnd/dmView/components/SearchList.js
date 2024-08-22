@@ -159,8 +159,6 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
                         hit_points_override: 0,
                         initiative: 0,
                         last_damage: null
-                        
-                       
         }
 
         let newCreature = {...creature, guid: generateUniqueId(), open5e: appendedOpen5e}

@@ -57,7 +57,7 @@ function SideMenu({uploadLocalStorage, setCurrentEncounterCreatures, showSearchL
     //124519382, 124686426, 124687100, 125381766, 125717017, 125809224]
     const handleDndCharacterImport = async () => {
         const playerData = await ImportDndBeyondCharacters(playerNumbers);
-
+        console.log(playerData)
         setCurrentEncounterCreatures((prev) => [...prev, ...playerData])
         setPlayerNumbers([])
         setInputValue('')

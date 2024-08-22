@@ -61,7 +61,9 @@ function PlayerPage() {
             console.log("----------------")
             //Get player stats for HP
             const filteredPlayers = creatures.filter(item => item.type === 'player');
-            const playerIds = filteredPlayers.map(player => player.id);
+            const playerIds = filteredPlayers
+                .filter(player => player.from && player.from === "dnd_b") // Filter players where "from" exists and equals "dnd_b"
+                .map(player => player.id.toString()); // Map to get the ids as strings
 
             const refreshedData = await getCharacterStats(playerIds);
             // Iterate over the first array using a for loop
@@ -84,7 +86,7 @@ function PlayerPage() {
             setRefreshPlayersCheck(false);
             setRefreshCheck(refreshMonstersCheck && refreshPlayersCheck);
             console.log("Players Refreshed!")
-            return updatedCreatures
+            return updatedCreatures;
 
         } catch (error) {
             console.log(error)
@@ -256,21 +258,31 @@ function PlayerPage() {
         return open5eProfiles
     }
 
+    useEffect(() => {
+        if(recentlyRefreshed) {
+            const timer = setTimeout(() => {
+                setRecentlyRefreshed(false)
+            }, 45000); // 45 seconds in milliseconds
+            return () => clearInterval(timer);
+        }
+    }, [recentlyRefreshed])
 
     useEffect(() => {
-        console.log("Main load")
+        
         // If getting dndbeyond encounter
         if (creatures.length === 0 && gameId && !error) {
+            console.log("Main load - loadProfiles()")
             loadProfiles();
-            console.log("loadProfiles")
         // If dm play button
         } else if (creatures.length === 0 && !gameId && !error) {
             let savedCurrentEncounter = JSON.parse(localStorage.getItem('playerViewEncounter'))
-            console.log("localStorage")
+            console.log("Local Storage")
             console.log(savedCurrentEncounter.currentEncounterCreatures)
 
             savedCurrentEncounter.currentEncounterCreatures.forEach(creature => {
-                if("dnd_b" in creature) {
+                console.log(creature, "=======================================")
+                if(creature.from === "dnd_b") {
+                    console.log("AUTOFRESH TRUE")
                     setAutoRefresh(true)
                 }
             });
@@ -278,7 +290,7 @@ function PlayerPage() {
             setCreatures([...open5eToProfile(savedCurrentEncounter.currentEncounterCreatures)])
             setLoading(false)
 
-            const getRefreshedLocalEncounter= () => {
+            const getRefreshedLocalEncounter = () => {
                 console.log("storage RELOAD")
                 setCreatures([...open5eToProfile(JSON.parse(localStorage.getItem('playerViewEncounter')).currentEncounterCreatures)])
             }
@@ -287,17 +299,20 @@ function PlayerPage() {
 
         // Refresh every 5 minutes, when refreshed this way, show check mark for 45 seconds
         const intervalId = setInterval(() => {
-            if(gameId || autoRefresh) {
-                console.log("🔄AUTO-REFRESH🔄")
+            console.log("INTERVAL")
+            if(gameId) {
+                console.log("🔄AUTO-REFRESH DND_B🔄")
                 handleRefresh(3);
                 setRecentlyRefreshed(true)
-                const timer = setTimeout(() => {
-                    setRecentlyRefreshed(false)
-                }, 45000); // 45 seconds in milliseconds
-                return () => clearInterval(timer);
-
             }
-        }, 2 * 60.0 * 1000.0); // 5 minutes in milliseconds
+
+            if(autoRefresh) {
+                console.log("🔄AUTO-REFRESH DMB")
+                handleRefresh(1);
+                setRecentlyRefreshed(true)
+            }
+        // X minutes in milliseconds
+        }, .5 * 60.0 * 1000.0); 
 
         // Cleanup interval on component unmount
         return () => clearInterval(intervalId);
