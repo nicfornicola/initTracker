@@ -52,6 +52,9 @@ function PlayerPage() {
     const [enemyBloodToggleType, setEnemyBloodToggleType] = useState(0);
     const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(bloodIcon);
     const [autoRefresh, setAutoRefresh] = useState(false);
+    const [turnNum, setTurnNum] = useState(0);
+    const [roundNum, setRoundNum] = useState(0);
+
     const { gameId } = useParams();
     const isOfflineMode = window.location.href.includes("playerView");
 
@@ -185,7 +188,10 @@ function PlayerPage() {
             // Get all monster stats (except image)
             const data = await getCreatures(gameId);
             if(data) {
+                console.log(data)
                 const {monsters, players} = data.data;
+                setTurnNum(data.data.turnNum)
+                setRoundNum(data.data.roundNum)
                 const playerIds = players.map(player => player.id);
 
                 // Get player stats for HP
@@ -407,7 +413,7 @@ function PlayerPage() {
 
     return (
         <div className="dndBackground" onClick={() => setClickedCreature(null)} style={{backgroundImage: backGroundImage ? `url(${backGroundImage})` : 'none'}}>
-        
+            <p>{roundNum}</p>
             {youtubeLink !== "" && !backGroundImage && 
                 <YouTubeEmbed embedUrl={youtubeLink}/>
             }
@@ -415,12 +421,12 @@ function PlayerPage() {
             {loading && (<div className='loading'>Loading...</div>)}
             {((!foundCreatures && !loading) && (isOfflineMode && creatures.length === 0)) && (<div className='loading'>No Players or Monsters found in encounter id - {gameId}</div>)}
             <div className="cardContainer" style={cardContainerStyle}>
-                {creatures.map((creature) => { 
+                {creatures.map((creature, index) => { 
 
                     if ((creature.type === 'monster' || creature.type === 'global') && hideEnemies) {
                         return null;
                     }
-                    return <Icon key={uuidv4()} creature={creature} setClickedCreature={setClickedCreature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggleType={enemyBloodToggleType} />;
+                    return <Icon key={uuidv4()} isTurn={turnNum === index+1} creature={creature} setClickedCreature={setClickedCreature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggleType={enemyBloodToggleType} />;
                 })}
             </div>
 

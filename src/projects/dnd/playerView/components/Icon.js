@@ -26,7 +26,7 @@ function setBloodImg(creature) {
 }
 
 // ProfileCard Component
-const Icon = ({creature, setClickedCreature, hideDeadEnemies, enemyBloodToggleType}) => {
+const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBloodToggleType}) => {
     const isPlayer = creature.type === "player";
     const effectsFound = creature.effects.length > 0
     const foundHp = creature.maxHp !== null;
@@ -34,6 +34,9 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies, enemyBloodToggleTy
     const showInitiativeBox = creature.initiative !== null;
     const isExhausted = creature.exhaustionLvl > 0
     
+    if(isTurn)
+        console.log(creature.name, "TURRRN")
+
     const handleImageClick = (event) => {
         event.stopPropagation(); // Prevent propagation to parent
         setClickedCreature(creature);
@@ -113,8 +116,16 @@ const Icon = ({creature, setClickedCreature, hideDeadEnemies, enemyBloodToggleTy
                     <div>
                         <div className='image-container'>
                             <img className="image" src={creature.avatarUrl} alt={name} />
-                            <div className="imageSmoke"/>
-                            
+                            <div
+                                className="imageSmoke"
+                                style={{
+                                    background: isTurn
+                                    ? 'linear-gradient(to top, hsl(197, 100%, 66%), #00000000)' // Light blue
+                                    : 'linear-gradient(to top, #0000009c, #00000000)'
+
+
+                                }}
+                            />                            
                             {isDead && !isGlobal && (
                                 <>
                                     <img className="image overlay-skull" src={skullpng} alt="" />
