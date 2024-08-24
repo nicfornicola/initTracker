@@ -37,7 +37,6 @@ function SideMenu({uploadLocalStorage, setCurrentEncounterCreatures, showSearchL
     const [playerNumbers, setPlayerNumbers] = useState([]);
     const [inputValue, setInputValue] = useState('');
 
-
     // Toggle the menu state
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -57,7 +56,6 @@ function SideMenu({uploadLocalStorage, setCurrentEncounterCreatures, showSearchL
     //124519382, 124686426, 124687100, 125381766, 125717017, 125809224]
     const handleDndCharacterImport = async () => {
         const playerData = await ImportDndBeyondCharacters(playerNumbers);
-        console.log(playerData)
         setCurrentEncounterCreatures((prev) => [...prev, ...playerData])
         setPlayerNumbers([])
         setInputValue('')
@@ -86,16 +84,25 @@ function SideMenu({uploadLocalStorage, setCurrentEncounterCreatures, showSearchL
                     />
                 </li>
                 <li className='menuItem' onClick={() => setIsOpen(true)}>
-                    <img src={ChampionImage} alt="Click to Upload" className="menuIcon" />
-                    <button className='submitButton' onClick={() => handleDndCharacterImport()}>✅</button>
-                    <input
-                        type="text"
-                        accept='.json'
-                        id="fileInput"
-                        placeholder='DndBeyond Chararacter Upload'
-                        value={inputValue}
-                        onChange={handlePlayerNumbers}
-                    />
+                    <div className='dndBImportContainer'>
+                        <img src={ChampionImage} alt="Click to Upload" className="menuIcon" />
+                        <div className='dndBImportButtons'>
+                            <input
+                                className='dndbInput'
+                                type="text"
+                                accept='.json'
+                                id="fileInput"
+                                placeholder='DndB Character ID'
+                                value={inputValue}
+                                onChange={handlePlayerNumbers}
+                            />
+                            <div>
+                                {inputValue.length !== 0 && <button className='submitButton' onClick={() => handleDndCharacterImport()}>✅</button>}
+                                {inputValue.length !== 0 && <button className='submitButton' onClick={() => setInputValue('')}>❌</button>}
+                            </div>
+                        </div>
+                    </div>
+                    
                 </li>
             </ul>
         </div>

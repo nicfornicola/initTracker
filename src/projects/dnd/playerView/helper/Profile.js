@@ -2,15 +2,10 @@ export class Profile {
     constructor(creature = null, playerHpData = null ) {
         this.guid = creature.guid;
         this.avatarUrl = creature.avatarUrl || "https://www.dndbeyond.com/avatars/42718/687/1581111423-121476494.jpeg";
-        // this.type = type;
         this.effects = [];
 
-
-
-        // if coming from /dnd/dm
+        // if coming from /dnd/dm - generated players, monsters and dummies
         if(creature.id.toString().includes("open5e")) {
-            // console.log("dnd_b", creature)
-            // console.log("playerHpData", playerHpData)
             this.name = creature.open5e.name; // Get custom names
             this.id = Math.floor(Math.random() * 1000) + 1 // Give it an id, to match dnd beyond stuff
             this.monsterCurrentHp = creature.open5e.hit_points_current || 0;
@@ -23,7 +18,7 @@ export class Profile {
             this.deathSaves = creature.deathSaves;
             this.initiative = creature.open5e.initiative || 0;
             this.type = creature.type || "monster"; // when creatures are added from dmb they do not get a type so default monster
-        // if coming from /dnd/dm 
+        // if coming from /dnd/dm but imported from dnd_beyond
         } else if("dnd_b" in creature) {
             this.name = creature.dnd_b.name; 
             this.id = creature.id;

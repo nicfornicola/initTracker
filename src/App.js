@@ -19,6 +19,7 @@ function App() {
             <Route path="/dnd/dm/" element={<DmView/>} />
             <Route path="/dnd/dm/playerView" element={<PlayerPage/>} />
             <Route path="/king/" element={<Pantheon />} />
+            <Route path="/dnd/dm/max/" element={<div style={{fontSize: '50px'}}>129114069,125681347,129132878,129107853,125382402</div>} />
         </Routes>
     );
 }

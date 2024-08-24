@@ -286,7 +286,6 @@ hr {
     opacity: 1;
 }
 
-
 .overlay-skull {
     background-color: #651d1d;
     opacity: .35; 
@@ -351,6 +350,19 @@ hr {
     transition: opacity 0.3s;
 }
 
+.roundNum {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: x-large;
+    display: inline;
+}
+
+.roundNum .tooltiptext {
+    position: relative;
+    left: 0px;
+    height: fit-content;
+}
 
 .options-container .tooltiptext,
 .refresh-container .tooltiptext {

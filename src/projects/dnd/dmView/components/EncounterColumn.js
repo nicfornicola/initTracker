@@ -75,7 +75,6 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
     };
 
     const handleLoadEncounter = (encounter) => {
-        console.log("handleLoadEncounter", encounter)
         setCurrentEncounterCreatures(encounter.currentEncounterCreatures)
         setEncounterName(encounter.encounterName)
         setEncounterId(encounter.id)
@@ -111,13 +110,11 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
         setShowEncounterTitleEdit(false)
 
         if(type === "save") {
-            console.log("save")
             handleSaveEncounter()
             setLastEncounterName(encounterName)
         }
         else if(type === "close") {
             setEncounterName(lastEncounterName)
-            console.log("no save")
         }
     };    
 

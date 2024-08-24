@@ -94,7 +94,13 @@ export const sortCreaturesByInitiative = (creatures) => {
             return -1; // `a` (initiative !== null) should come before `b` (initiative === null)
         } else if (a.initiative !== null && b.initiative !== null) {
             // Both initiatives are not null, compare them numerically
-            return b.initiative - a.initiative;
+            const initiativeComparison = b.initiative - a.initiative;
+            if (initiativeComparison !== 0) {
+                return initiativeComparison;
+            } else {
+                // Initiatives are the same, compare by creature.name alphabetically
+                return a.name.localeCompare(b.name);
+            }
         } else {
             return 0; // Both are null, maintain the current order
         }

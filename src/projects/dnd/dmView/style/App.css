@@ -43,6 +43,10 @@
    padding: 0px;
 }
 
+.listItem:hover .searchListCreatureContainer {
+    background-color: rgb(186, 186, 186);
+}
+
 .monsterSearchItem {
     position: relative;
     width: 95%;
@@ -52,7 +56,13 @@
     display: flex;
     justify-content: space-between;
     transition: background-color 0.1s ease;
+}
 
+.monsterSearchAdd {
+    position: relative;
+    width: 10%;
+    right: 0px;
+    opacity: 0;
 }
 
 .monsterSearchSource {
@@ -83,10 +93,6 @@
     border: 0px;
     background-color: #00000000;
     cursor: pointer;
-}
-
-.monsterSearchItem:hover {
-    background-color: rgb(186, 186, 186);
 }
 
 .encounterCreatureX:hover,
@@ -473,12 +479,40 @@ input {
     padding-bottom: 1%;
 }
   
+.searchListCreatureContainer,
 .encounterCreatureContainer {
     display: flex;
     border: 1px solid #ccc;
     background-color: #e0d9b7;
 }
 
+.searchListCreatureContainer {
+    justify-content: space-between
+}
+
+.searchListCreatureContainer:hover .monsterSearchAdd {
+    opacity: 1;
+}
+
+.dndBImportContainer {
+    display: flex;
+    padding-top: 10px;
+}
+
+.dndBImportButtons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.dndbInput {
+    width: 80%;
+    margin: 0;
+}
+
+.dndBInputContainer {
+    display: flex;
+}
 
 
 .encounterMonsterName {
@@ -786,17 +820,17 @@ input {
 
 /* Style for the menu content */
 .menu {
-    display: flex;
-    flex-direction: column;
     color: white;
     overflow: hidden;
     list-style: none;
     padding: 0px;
     white-space: nowrap;
+    width: 100%;
 }
 
 .menuItem {
     cursor: pointer;
+    width: 100%;
 }
 
 .menuIcon {

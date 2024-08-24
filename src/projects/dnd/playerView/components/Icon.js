@@ -34,9 +34,6 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
     const showInitiativeBox = creature.initiative !== null;
     const isExhausted = creature.exhaustionLvl > 0
     
-    if(isTurn)
-        console.log(creature.name, "TURRRN")
-
     const handleImageClick = (event) => {
         event.stopPropagation(); // Prevent propagation to parent
         setClickedCreature(creature);
@@ -101,7 +98,6 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
     let isDead = (currentHp <= 0 || creature.exhaustionLvl === 6) && !isGlobal
     let showHp = (isPlayer && foundHp) || (!isPlayer && showEnemyHp)
     let showTempHp = creature.tempHp > 0
-    console.log(creature)
     let showDeathSaves = isPlayer && foundHp && (creature.deathSaves.successCount >= 0 && creature.deathSaves.failCount >= 0)
 
     if(hideDeadEnemies && !isPlayer  && isDead ) {
@@ -112,19 +108,21 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
     return (
         <>
             { showIcon && (
-                <div className="card" style={cardBoxShadow} onClick={(event) => handleImageClick(event)}>
-                    <div>
+                    <div
+                        className="card"
+                        style={{...cardBoxShadow, background: isTurn ? 'linear-gradient(to top, rgba(11, 204, 255, 0.85), rgba(11, 204, 255, .5))' : ''}}
+                        onClick={(event) => handleImageClick(event)}
+                    >
+                        <div>
                         <div className='image-container'>
                             <img className="image" src={creature.avatarUrl} alt={name} />
                             <div
                                 className="imageSmoke"
-                                style={{
-                                    background: isTurn
-                                    ? 'linear-gradient(to top, hsl(197, 100%, 66%), #00000000)' // Light blue
-                                    : 'linear-gradient(to top, #0000009c, #00000000)'
-
-
-                                }}
+                                // style={{
+                                //     background: isTurn
+                                //     ? 'linear-gradient(to top, hsl(197, 100%, 66%), #00000000)' // Light blue
+                                //     : 'linear-gradient(to top, #0000009c, #00000000)'
+                                // }}
                             />                            
                             {isDead && !isGlobal && (
                                 <>

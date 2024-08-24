@@ -96,7 +96,6 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
             if(test) {
                 return {avatarUrl: "https://www.dndbeyond.com/avatars/0/10/636238825974097081.jpeg", largeAvatarUrl: "https://www.dndbeyond.com/avatars/thumbnails/30761/774/400/347/638061093283829548.png"}
             } else {
-                console.log("API")
                 const urlName = name.replace(/ /g, '-');
                 const url = `${proxyUrl}https://monster-service.dndbeyond.com/v1/Monster?search=${urlName}&take=1`
                 const response = await axios.get(url).then(res => {
@@ -133,14 +132,15 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
     };
 
     // Sets the selected creature in search bar on left and gets the data from open5e
-    const handleSearchSelectCreature = async (creature) => {
+    const handleSearchSelectCreature = async (creature, action, event) => {
+        event.stopPropagation();
         try {
             if('open5e' in creature) {
-                handleAddCreatureToEncounter(creature);
+                handleAddCreatureToEncounter(creature, action);
             } else {
                 await axios.get(creature.link).then(res => {
                     creature.open5e = res.data;
-                    handleAddCreatureToEncounter(creature)
+                    handleAddCreatureToEncounter(creature, action)
                     return creature
                 })
             }
@@ -150,7 +150,7 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
         }  
     };
 
-    const handleAddCreatureToEncounter = (creature) => {
+    const handleAddCreatureToEncounter = (creature, action) => {
         let appendedOpen5e = {...creature.open5e,
                         name_default: creature.open5e.name,
                         hit_points_default: creature.open5e.hit_points,
@@ -163,8 +163,10 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
 
         let newCreature = {...creature, guid: generateUniqueId(), open5e: appendedOpen5e}
 
-        setSearchSelectedCreature(newCreature);
-        setCurrentEncounterCreatures(prev => [...prev, newCreature]);
+        if(action === "add")
+            setCurrentEncounterCreatures(prev => [...prev, newCreature]);
+        else if(action === "select")
+            setSearchSelectedCreature(newCreature);
     };
 
     return (
@@ -186,15 +188,21 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
                         <ul className='monsterSearchList'>
                             {displayedItems.map((item, index) => (
                                 <li
-                                    className='monsterSearchItem animated-label'
+                                    // className='monsterSearchItem animated-label'
+                                    className='listItem'
                                     key={item.id + item.filterDimensions.source}
-                                    onClick={() => handleSearchSelectCreature(item)}
+                                    onClick={(e) => handleSearchSelectCreature(item, "select", e)}
                                 >
-                                    <span>
-                                        <img className="monsterSearchIcon" src={item.avatarUrl} alt={"list Icon"} />
-                                        {index} {item.name} - <span className='monsterSearchSource'>{item.filterDimensions.sourceShort}</span>
-                                    </span>
-                                
+                                    <div className='searchListCreatureContainer animated-box'>
+                                        <span>
+                                            <img className="monsterSearchIcon" src={item.avatarUrl} alt={"list Icon"} />
+                                            {index} {item.name} - <span className='monsterSearchSource'>{item.filterDimensions.sourceShort}</span>
+                                        </span>
+                                        <button className='monsterSearchAdd' onClick={(e) => handleSearchSelectCreature(item, "add", e)}>
+                                            ➕
+                                        </button>
+                                    </div>
+                                    
                                 </li>
                             ))}
                         </ul>

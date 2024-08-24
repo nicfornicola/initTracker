@@ -105,7 +105,9 @@ function PlayerPage() {
                 console.log("----------------");
         
                 // Fetch the latest data for monsters and players
-                const { data: { monsters, players } } = await getCreatures(gameId);
+                const { data: { monsters, players, turnNum, roundNum, inProgress } } = await getCreatures(gameId);
+                handleTurns(inProgress, turnNum, roundNum)
+
                 const allRefreshedCreatures = [...monsters, ...players];
         
                 let needToResort = false;
@@ -188,10 +190,8 @@ function PlayerPage() {
             // Get all monster stats (except image)
             const data = await getCreatures(gameId);
             if(data) {
-                console.log(data)
-                const {monsters, players} = data.data;
-                setTurnNum(data.data.turnNum)
-                setRoundNum(data.data.roundNum)
+                const {monsters, players, turnNum, roundNum, inProgress} = data.data;
+                handleTurns(inProgress, turnNum, roundNum)
                 const playerIds = players.map(player => player.id);
 
                 // Get player stats for HP
@@ -236,6 +236,17 @@ function PlayerPage() {
             setError(true)
         }  
     };
+
+    const handleTurns = (inProgress, tNum, rNum) => {
+        if(inProgress) {
+            setTurnNum(tNum)
+            setRoundNum(rNum)
+        }
+        else {
+            setTurnNum(0)
+            setRoundNum(0)
+        }
+    }
 
     const handleRefresh = (type) => {
         if (type === 1) {
@@ -286,9 +297,7 @@ function PlayerPage() {
             console.log(savedCurrentEncounter.currentEncounterCreatures)
 
             savedCurrentEncounter.currentEncounterCreatures.forEach(creature => {
-                console.log(creature, "=======================================")
                 if(creature.from === "dnd_b") {
-                    console.log("AUTOFRESH TRUE")
                     setAutoRefresh(true)
                 }
             });
@@ -305,7 +314,6 @@ function PlayerPage() {
 
         // Refresh every 5 minutes, when refreshed this way, show check mark for 45 seconds
         const intervalId = setInterval(() => {
-            console.log("INTERVAL")
             if(gameId) {
                 console.log("🔄AUTO-REFRESH DND_B🔄")
                 handleRefresh(3);
@@ -318,7 +326,7 @@ function PlayerPage() {
                 setRecentlyRefreshed(true)
             }
         // X minutes in milliseconds
-        }, .5 * 60.0 * 1000.0); 
+        }, 1 * 60.0 * 1000.0); 
 
         // Cleanup interval on component unmount
         return () => clearInterval(intervalId);
@@ -409,11 +417,18 @@ function PlayerPage() {
 
         }
     }
-    console.log("====")
 
     return (
         <div className="dndBackground" onClick={() => setClickedCreature(null)} style={{backgroundImage: backGroundImage ? `url(${backGroundImage})` : 'none'}}>
-            <p>{roundNum}</p>
+            {roundNum !== 0 && 
+                <div className='roundNum'>
+                    <div className='option'>{roundNum}</div>
+                    <Tooltip message={"Combat Round"}/>
+                </div>
+            }
+            
+            
+
             {youtubeLink !== "" && !backGroundImage && 
                 <YouTubeEmbed embedUrl={youtubeLink}/>
             }
