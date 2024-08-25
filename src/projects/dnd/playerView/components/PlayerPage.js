@@ -30,7 +30,7 @@ import { Profile } from '../helper/Profile.js'
 import { sortCreaturesByInitiative, effectObjs } from '../constants.js';
 import Tooltip from './Tooltip.js';
 import YouTubeEmbed from './YouTubeEmbed.js';
-import { generateUniqueId } from '../../dmView/constants.js';
+import { generateUniqueId, setLocalPlayerViewEncounter } from '../../dmView/constants.js';
 
 function PlayerPage() {
     const [creatures, setCreatures] = useState([]);
@@ -54,7 +54,7 @@ function PlayerPage() {
     const [autoRefresh, setAutoRefresh] = useState(false);
     const [turnNum, setTurnNum] = useState(0);
     const [roundNum, setRoundNum] = useState(0);
-
+    const playerViewEncounterID = JSON.parse(localStorage.getItem('playerViewEncounter')).id
     const { gameId } = useParams();
     const isOfflineMode = window.location.href.includes("playerView");
 
@@ -69,22 +69,45 @@ function PlayerPage() {
                 .map(player => player.id.toString()); // Map to get the ids as strings
 
             const refreshedData = await getCharacterStats(playerIds);
+            
+            let savedEncounters = JSON.parse(localStorage.getItem('savedEncounters'));
+            let currentSavedEncounter = savedEncounters.find(e => e.id === playerViewEncounterID);
             // Iterate over the first array using a for loop
             const updatedCreatures = creatures.map(creature => {
                 // Need to use creature.id since its from dnd beyond
                 const matchedRefresh = refreshedData.find(data => data.id === creature.id);
 
                 if (matchedRefresh) {
+
                     const change = {
                         ...creature,
                         ...matchedRefresh
                     }
+
+                    currentSavedEncounter.currentEncounterCreatures.forEach(savedCreature => {
+                        if(savedCreature.id === change.id) {
+                            savedCreature.name = change.name;
+                            savedCreature.avatarUrl = change.avatarUrl;
+                            savedCreature.dnd_b.hit_points = change.maxHp;
+                            savedCreature.dnd_b.hit_points_current = change.maxHp - change.removedHp;
+                            savedCreature.dnd_b.maxHpBonus = change.maxHpBonus;
+                            savedCreature.dnd_b.maxHpOverride = change.maxHpOverride;
+                            savedCreature.dnd_b.removedHp = change.removedHp;
+                            savedCreature.dnd_b.hit_points_temp = change.tempHp;
+                            savedCreature.dnd_b.exhaustionLvl = change.exhaustionLvl;
+                            savedCreature.dnd_b.deathSaves = change.deathSaves;
+                            savedCreature.dnd_b.initiative = change.initiative;
+                            
+                        }
+                    })
+
                     return change;
                 } else {
                     return creature;
                 }
             });
-                
+            localStorage.setItem('savedEncounters', JSON.stringify(savedEncounters));
+
             setCreatures([...updatedCreatures]);
             setRefreshPlayersCheck(false);
             setRefreshCheck(refreshMonstersCheck && refreshPlayersCheck);
@@ -305,9 +328,11 @@ function PlayerPage() {
             setCreatures([...open5eToProfile(savedCurrentEncounter.currentEncounterCreatures)])
             setLoading(false)
 
-            const getRefreshedLocalEncounter = () => {
-                console.log("storage RELOAD")
-                setCreatures([...open5eToProfile(JSON.parse(localStorage.getItem('playerViewEncounter')).currentEncounterCreatures)])
+            const getRefreshedLocalEncounter = (event) => {
+                if (event.key === 'playerViewEncounter') {
+                    const updatedEncounter = JSON.parse(localStorage.getItem('playerViewEncounter'));
+                    setCreatures([...open5eToProfile(updatedEncounter.currentEncounterCreatures)]);
+                }
             }
             window.addEventListener('storage', getRefreshedLocalEncounter);
         }

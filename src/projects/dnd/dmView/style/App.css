@@ -771,16 +771,14 @@ input {
 }
  
 .encounterCreatureX {
-    position: absolute;
-    top: 0;
-    right: 20%;
+    display: flex;
+    position: relative;
     opacity: 0;
     background: none;
     border: none;
     color: red;
     font-weight: bolder;
     cursor: pointer;
-
 }
 
 /* Side menu  */

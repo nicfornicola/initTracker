@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import uploadImage from '../pics/uploadImage.png'
 
 
 const EncounterListItem = ({index, handleUploadMonsterImage, creatureListItem, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
     const [creature, setCreature] = useState(creatureListItem)
 
+    useEffect(() => {
+        setCreature(creatureListItem)
+    }, [creatureListItem])
 
     const handleInitiativeChange = (event) => {
         let init = parseInt(event.target.value)
@@ -47,7 +50,11 @@ const EncounterListItem = ({index, handleUploadMonsterImage, creatureListItem, s
                             </div>
                         </div>
                     </div>
-
+                    <div>
+                        <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
+                            X
+                        </button>
+                    </div>
                     {creature.dnd_b.hit_points !== null  ? 
                         <div className='encounterCreaturesHpContainer'>
                             <button disabled className='encounterCreaturesHp' >
@@ -62,9 +69,6 @@ const EncounterListItem = ({index, handleUploadMonsterImage, creatureListItem, s
                     :
                         <div className='encounterCreaturesHp'/>
                     }
-                    <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
-                        X
-                    </button>
                 </div>
             </li>
            

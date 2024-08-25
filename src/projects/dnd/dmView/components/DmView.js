@@ -1,4 +1,4 @@
-import React, { useState  } from 'react';
+import React, { useEffect, useState  } from 'react';
 import '../style/App.css';
 import SearchList from './SearchList.js';
 import EncounterColumn from './EncounterColumn.js';
@@ -23,8 +23,23 @@ const DmView = () => {
     const [currentEncounterCreatures, setCurrentEncounterCreatures] = useState([]);
     const [localSavedEncounters, setLocalSavedEncounters] = useState(JSON.parse(localStorage.getItem('savedEncounters')));
     const [showSearchList, setShowSearchList] = useState(true);
-   
+
     getLocalStorageSize()
+
+    useEffect(() => {
+        // Current problem, dndb character auto refreshes, but after auto refresh, dndB hp/dmg doesnt refresh?? not sure
+        const handleCurrentEncounterLocalChange = (event) => {
+            if (event.key === 'savedEncounters') {
+                let savedEncounter = JSON.parse(localStorage.getItem('savedEncounters'))
+                let playerViewId = JSON.parse(localStorage.getItem('playerViewEncounter')).id;
+                let loadedCurrentEncounter = savedEncounter.find(currentEncounter => currentEncounter.id === playerViewId)
+                setCurrentEncounterCreatures(loadedCurrentEncounter.currentEncounterCreatures)
+            }
+        }
+        window.addEventListener('storage', handleCurrentEncounterLocalChange);
+    }, [])
+
+    
     
     const uploadLocalStorage = (event) => {
         const file = event.target.files[0];

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import StatBlock from './StatBlock';
-import { generateUniqueId, dummyOpen5e, envObject } from '../constants';
+import { generateUniqueId, dummyOpen5e, envObject, setLocalPlayerViewEncounter } from '../constants';
 import GlobalImg from '../pics/global.png'
 import EncounterListTopInfo from './EncounterListTopInfo'
 import DropdownMenu from './DropdownMenu';
@@ -10,28 +10,25 @@ import EncounterList from './EncounterList'
 import UploadMonsterImage from './UploadMonsterImage'
 
 function addToLocalSavedEncounter(jsonArray, newJsonObject) {
-
     if(jsonArray === null) {
         jsonArray = []
     }
     
-    // Find the index of the existing object with the same encounter name
+    // Find the index of the existing object with the same encounter id
     const index = jsonArray.findIndex(item => item['id'] === newJsonObject['id']);
 
     if (index !== -1) {
         // Overwrite the existing object
+        console.log("Overwriting:", newJsonObject.encounterName)
         jsonArray[index] = newJsonObject;
     } else {
         // Add the new object to the array
+        console.log("New Encounter:", newJsonObject.encounterName)
         jsonArray.push(newJsonObject);
     }
     localStorage.setItem('savedEncounters', JSON.stringify(jsonArray));
 
     return jsonArray;
-}
-
-function setLocalPlayerViewEncounter(encounter) {
-    localStorage.setItem('playerViewEncounter', JSON.stringify(encounter));
 }
 
 const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreatures, localSavedEncounters, showSearchList}) => {
@@ -126,7 +123,6 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
         window.open(`${url}playerView`, '_blank');
         savedEncounters.forEach(e => {
             if(e.encounterName === encounterName) {
-                console.log("SETTING " + encounterName + " in LOCAL STORAGE")
                 setLocalPlayerViewEncounter(e)
             }
         });

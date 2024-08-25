@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import uploadImage from '../pics/uploadImage.png'
 
 
-const EncounterListItem = ({index, listSizeRect, scrollPosition, handleUploadMonsterImage, setPlayerViewOnCreatureChange, creatureListItem, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
+const EncounterListItem = ({index, listSizeRect, setCurrentEncounterCreatures, scrollPosition, handleUploadMonsterImage, setPlayerViewOnCreatureChange, creatureListItem, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
     const [openEditWidget, setOpenEditWidget] = useState(false);
     const [hpChange, setHpChange] = useState(0);
     const [creature, setCreature] = useState(creatureListItem)
@@ -13,11 +13,15 @@ const EncounterListItem = ({index, listSizeRect, scrollPosition, handleUploadMon
     useEffect(() => {
         if(encounterSelectedCreature !== null && creature.guid === encounterSelectedCreature.guid)
             setEncounterSelectedCreature(creature)
-        
-        setPlayerViewOnCreatureChange()
+
+        setCurrentEncounterCreatures((prevCreatures) => 
+            prevCreatures.map((item) => 
+                item.id === creature.id ? creature : item
+            )
+        );
+
         // eslint-disable-next-line
     }, [creature]);
-
 
     useEffect(() => {
        if(openEditWidget && buttonRef.current) {
@@ -80,7 +84,6 @@ const EncounterListItem = ({index, listSizeRect, scrollPosition, handleUploadMon
             creature.open5e.name = event.target.value
             setCreature({...creature})
         }
-         
     }
 
     const handleTempHp = (event) => {
@@ -139,10 +142,17 @@ const EncounterListItem = ({index, listSizeRect, scrollPosition, handleUploadMon
                                 <input id='init'className='middleStatsInput' onFocus={handleHighlight} disabled={true}  type='text' defaultValue={creature.open5e.dexterity_save ? '+' + creature.open5e.dexterity_save : '+0'} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                             </div>
                         </div>
+                        
                     </div>
-
+                    <div>
+                        <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
+                            X
+                        </button>
+                    </div>
+                   
                     {creature.open5e.hit_points !== null  ? 
                         <div className='encounterCreaturesHpContainer'>
+                            
                             <button className='encounterCreaturesHp' onClick={(event) => openEditCreatureStats(event)}  ref={buttonRef}>
                                 {creature.open5e.hit_points_current}
                                 <span>/</span>
@@ -155,9 +165,7 @@ const EncounterListItem = ({index, listSizeRect, scrollPosition, handleUploadMon
                     :
                         <div className='encounterCreaturesHp'/>
                     }
-                    <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
-                        X
-                    </button>
+                    
                 </div>
                 {openEditWidget && isInside && ( 
                     <div className='editStatsContainer editHpGrow' onClick={(event) => event.stopPropagation()} style={{ top: widgetPosition.top - 10, left: widgetPosition.right + 20, height: widgetPosition.height*4}}>

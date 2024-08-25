@@ -1,6 +1,7 @@
 
 offline mod
 -----
+I can get campaine info from the character api at the bottom
 make stat blocks have a hide for now button that shows a little leaf to reappear
 move buttons from player view to dm view
 
@@ -44,9 +45,6 @@ playerview
 
 BROKEN 
 ----
-dnd_b imports reset to their SAVED LOCAL hp when any other saved local thing is updated, need to save new data to local when refresh
-DMB player hp doesnt change when updated
-
 enironment stat card is SO fucked
 when bad guys are in list, play is available even if not saved or no name
 auto refresh timer broken on auto refresh for DMB
@@ -82,6 +80,9 @@ add environment token under encounter list
 
 FIXED
 ----
+dnd_b imports reset to their SAVED LOCAL hp when any other saved local thing is updated, need to save new data to local when refresh
+DMB player hp doesnt change when updated
+
 Auto init somes doesnt sort right, i think this is when its the same creature but not sure
 dummys dont get initiative, neither do environment but for different reason
 when a creature is not available on dnd beyond they have 0/0 hp which makes them  have a skull

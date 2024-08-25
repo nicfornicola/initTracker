@@ -18,6 +18,10 @@ export const generateUniqueId = () => {
     return Math.random().toString(36).substring(2, 12).toUpperCase();
 }
 
+export const setLocalPlayerViewEncounter = (encounter) => {
+    localStorage.setItem('playerViewEncounter', JSON.stringify(encounter));
+}
+
 let combinedArray = [...CoreRules,
                      ...CreatureCodex,
                      ...CriticalRole,
