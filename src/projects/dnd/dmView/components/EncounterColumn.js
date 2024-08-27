@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import StatBlock from './StatBlock';
-import { generateUniqueId, dummyOpen5e, envObject, setLocalPlayerViewEncounter } from '../constants';
+import { generateUniqueId, dummyOpen5e, envObject, setLocalPlayerViewEncounter, sortCreatureArray } from '../constants';
 import GlobalImg from '../pics/global.png'
 import EncounterListTopInfo from './EncounterListTopInfo'
 import DropdownMenu from './DropdownMenu';
@@ -43,11 +43,18 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
     const [isSaveDisabled, setIsSaveDisabled] = useState(currentEncounterCreatures?.length === 0);
     const [uploadIconMenu, setUploadIconMenu] = useState(false);
     const [uploadIconCreature, setUploadIconCreature] = useState(null);
+    const [roundNum, setRoundNum] = useState(1);
+    const [turnNum, setTurnNum] = useState(0);
     const inputRef = useRef(null);
 
     useEffect(() => {
         setSavedEncounters(localSavedEncounters)
     }, [localSavedEncounters]);
+
+    useEffect(() => {
+        handleSaveEncounter()
+        // eslint-disable-next-line
+    }, [turnNum]);
 
     useEffect(() => {
         setIsSaveDisabled(currentEncounterCreatures?.length === 0)
@@ -90,7 +97,7 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
 
     const handleSaveEncounter = () => {
         const savedEncountersList = JSON.parse(localStorage.getItem('savedEncounters')) || [];
-        let newEncounter = {encounterName: encounterName, id: encounterId || generateUniqueId(), currentEncounterCreatures: currentEncounterCreatures}
+        let newEncounter = {encounterName: encounterName, id: encounterId || generateUniqueId(), roundNum: roundNum, turnNum: turnNum, currentEncounterCreatures: currentEncounterCreatures}
         setLocalPlayerViewEncounter(newEncounter)
         setEncounterId(newEncounter.id)
         // Overwrites if exists, appends if new
@@ -128,13 +135,8 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
         });
         event.stopPropagation(); 
     };
-   
-    let titleColor = ''
-    if (encounterName === 'Name Your Encounter')
-        titleColor = 'grey'
 
     useEffect(() => {
-        // setSaveMessageColor(showSaveMessage ? "#08d82b" : "")
         setSaveMessageColor(showSaveMessage ? "2px solid #08d82b" : "")
     }, [showSaveMessage]);
 
@@ -199,18 +201,50 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
                 creature.open5e.initiative = Math.floor(Math.random() * 20) + 1 + creature.open5e.dexterity_save
             else if("dnd_b" in creature)
                 creature.dnd_b.initiative = Math.floor(Math.random() * 20) + 1 // does not calc player dex bonus
-        });
-
-        currentEncounterCreatures.sort((a, b) => {
-            const aInitiative = a.open5e?.initiative ?? a.dnd_b?.initiative ?? 0;
-            const bInitiative = b.open5e?.initiative ?? b.dnd_b?.initiative ?? 0;
-            return bInitiative - aInitiative;
-        });        
+        });      
         
-        setCurrentEncounterCreatures([...currentEncounterCreatures]);
+        setCurrentEncounterCreatures([...sortCreatureArray(currentEncounterCreatures) ]);
+    }   
+    
+    const handleTurnNums = (action = null, e = null) => {
+        if(e) e.stopPropagation();
+        if(action === "next") {
+            setTurnNum(prevTurn => {
+                if(roundNum === 0) {
+                    setRoundNum(1)
+                }
 
+                if(prevTurn === currentEncounterCreatures.length) {
+                    setRoundNum(prevRound => prevRound+1)
+                    return 1;
+                }
+
+                return prevTurn+1
+            })
+        } else if(action === "prev") {
+            let minTurn = 1
+            if (roundNum >= 1 || turnNum > minTurn) {
+                setTurnNum(() => {
+                    if(roundNum === 1 && turnNum === 1) {
+                        setRoundNum(prevRound => prevRound-1)
+                        return turnNum-1
+                    }
+
+                    if(turnNum === minTurn) {
+                        setRoundNum(prevRound => prevRound-1)
+                        return currentEncounterCreatures.length;
+                    }
+
+                    return turnNum-1
+
+                })
+            }
+            
+        }
+
+        return {"roundNum": roundNum, "turnNum": turnNum}
     }
-
+ 
     const handleUploadMonsterImage = (creature) => {
         setUploadIconMenu(true)
         setUploadIconCreature(creature)
@@ -225,11 +259,11 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
                         {showEncounterTitleEdit ? ( 
                             <EncounterListTitleEdit inputRef={inputRef} encounterName={encounterName} handleEditTitleChange={handleEditTitleChange} handleCloseEditBox={handleCloseEditBox}/>
                         ) : (
-                            <EncounterListTitle setShowEncounterTitleEdit={setShowEncounterTitleEdit} titleColor={titleColor} encounterName={encounterName} currentEncounterCreatures={currentEncounterCreatures} handleStartEncounter={handleStartEncounter} handleAutoRollInitiative={handleAutoRollInitiative}/>
+                            <EncounterListTitle setShowEncounterTitleEdit={setShowEncounterTitleEdit}  handleTurnNums={handleTurnNums} encounterName={encounterName} currentEncounterCreatures={currentEncounterCreatures} handleStartEncounter={handleStartEncounter} handleAutoRollInitiative={handleAutoRollInitiative}/>
                         )}
                     </div>
                     {currentEncounterCreatures.length ? (
-                        <EncounterList handleSaveEncounter={handleSaveEncounter} handleUploadMonsterImage={handleUploadMonsterImage} setCurrentEncounterCreatures={setCurrentEncounterCreatures} currentEncounterCreatures={currentEncounterCreatures} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} />
+                        <EncounterList handleSaveEncounter={handleSaveEncounter} turnNum={turnNum} handleUploadMonsterImage={handleUploadMonsterImage} setCurrentEncounterCreatures={setCurrentEncounterCreatures} currentEncounterCreatures={currentEncounterCreatures} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} />
                     ) : (
                         <div className='encounterCreaturesNoItemsContainer'> 
                             <div className='encounterCreaturesNoItems'>

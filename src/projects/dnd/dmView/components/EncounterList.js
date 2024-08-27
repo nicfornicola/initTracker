@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import EncounterListItem from './EncounterListItem'
 import EncounterListItemDB from './EncounterListItemDB'
+import {sortCreatureArray} from '../constants'
 
-const EncounterList = ({handleSaveEncounter, handleUploadMonsterImage, setCurrentEncounterCreatures, currentEncounterCreatures, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX}) => {
+const EncounterList = ({handleSaveEncounter, turnNum, handleUploadMonsterImage, setCurrentEncounterCreatures, currentEncounterCreatures, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX}) => {
     const [scrollPosition, setScrollPosition] = useState(0);
     const [listSizeRect, setListSizeRect] = useState(0);
     const listRef = useRef(null);
@@ -29,9 +30,7 @@ const EncounterList = ({handleSaveEncounter, handleUploadMonsterImage, setCurren
     }, [])
 
     const resort = () => {
-        currentEncounterCreatures.sort((a, b) =>  b.open5e.initiative - a.open5e.initiative);
-        setCurrentEncounterCreatures([...currentEncounterCreatures]);
-        setPlayerViewOnCreatureChange()
+        setCurrentEncounterCreatures([...sortCreatureArray(currentEncounterCreatures)]);
     }
 
     const setPlayerViewOnCreatureChange = () => {
@@ -41,15 +40,16 @@ const EncounterList = ({handleSaveEncounter, handleUploadMonsterImage, setCurren
 
     useEffect(() => {
         setPlayerViewOnCreatureChange()
+        // eslint-disable-next-line
     }, [currentEncounterCreatures])
 
     return (
         <div className='encounterCreaturesList' ref={listRef}>
             {currentEncounterCreatures.map((creatureListItem, index) => (
                 creatureListItem.open5e !== undefined ?
-                    <EncounterListItem key={creatureListItem.guid + index} index={index} setCurrentEncounterCreatures={setCurrentEncounterCreatures} listSizeRect={listSizeRect} scrollPosition={scrollPosition} handleUploadMonsterImage={handleUploadMonsterImage} resort={resort} setPlayerViewOnCreatureChange={setPlayerViewOnCreatureChange} creatureListItem={creatureListItem} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX}/>
+                    <EncounterListItem key={creatureListItem.guid + index} index={index} isTurn={index+1 === turnNum} setCurrentEncounterCreatures={setCurrentEncounterCreatures} listSizeRect={listSizeRect} scrollPosition={scrollPosition} handleUploadMonsterImage={handleUploadMonsterImage} resort={resort} setPlayerViewOnCreatureChange={setPlayerViewOnCreatureChange} creatureListItem={creatureListItem} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX}/>
                     :
-                    <EncounterListItemDB key={creatureListItem.guid + index} index={index} handleUploadMonsterImage={handleUploadMonsterImage} setPlayerViewOnCreatureChange={setPlayerViewOnCreatureChange} creatureListItem={creatureListItem} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} resort={resort}/>
+                    <EncounterListItemDB key={creatureListItem.guid + index} index={index} isTurn={index+1 === turnNum} setCurrentEncounterCreatures={setCurrentEncounterCreatures} handleUploadMonsterImage={handleUploadMonsterImage} setPlayerViewOnCreatureChange={setPlayerViewOnCreatureChange} creatureListItem={creatureListItem} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} resort={resort}/>
                 
             ))}
         </div>

@@ -30,7 +30,7 @@ import { Profile } from '../helper/Profile.js'
 import { sortCreaturesByInitiative, effectObjs } from '../constants.js';
 import Tooltip from './Tooltip.js';
 import YouTubeEmbed from './YouTubeEmbed.js';
-import { generateUniqueId, setLocalPlayerViewEncounter } from '../../dmView/constants.js';
+import { generateUniqueId } from '../../dmView/constants.js';
 
 function PlayerPage() {
     const [creatures, setCreatures] = useState([]);
@@ -332,11 +332,12 @@ function PlayerPage() {
                 if (event.key === 'playerViewEncounter') {
                     const updatedEncounter = JSON.parse(localStorage.getItem('playerViewEncounter'));
                     setCreatures([...open5eToProfile(updatedEncounter.currentEncounterCreatures)]);
+                    setRoundNum(updatedEncounter.roundNum)
+                    setTurnNum(updatedEncounter.turnNum)
                 }
             }
             window.addEventListener('storage', getRefreshedLocalEncounter);
         }
-
         // Refresh every 5 minutes, when refreshed this way, show check mark for 45 seconds
         const intervalId = setInterval(() => {
             if(gameId) {

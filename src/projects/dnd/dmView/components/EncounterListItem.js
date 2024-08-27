@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import uploadImage from '../pics/uploadImage.png'
 
 
-const EncounterListItem = ({index, listSizeRect, setCurrentEncounterCreatures, scrollPosition, handleUploadMonsterImage, setPlayerViewOnCreatureChange, creatureListItem, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
+const EncounterListItem = ({index, listSizeRect, isTurn, setCurrentEncounterCreatures, scrollPosition, handleUploadMonsterImage, setPlayerViewOnCreatureChange, creatureListItem, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
     const [openEditWidget, setOpenEditWidget] = useState(false);
     const [hpChange, setHpChange] = useState(0);
     const [creature, setCreature] = useState(creatureListItem)
@@ -14,9 +14,10 @@ const EncounterListItem = ({index, listSizeRect, setCurrentEncounterCreatures, s
         if(encounterSelectedCreature !== null && creature.guid === encounterSelectedCreature.guid)
             setEncounterSelectedCreature(creature)
 
+        // If creature change then update it in the list to cause a rerender
         setCurrentEncounterCreatures((prevCreatures) => 
-            prevCreatures.map((item) => 
-                item.id === creature.id ? creature : item
+            prevCreatures.map((oldCreature) => 
+                oldCreature.guid === creature.guid ? creature : oldCreature
             )
         );
 
@@ -112,9 +113,23 @@ const EncounterListItem = ({index, listSizeRect, setCurrentEncounterCreatures, s
         e.target.select();
     };
 
+    let isDead = creature.open5e.hit_points_current === 0
+    let isBloodied = creature.open5e.hit_points_current/creature.open5e.hit_points < .55
+    let color = ""
+    if(isDead) {
+        color = "red"
+    } else if(isBloodied) {
+        color = "orange"
+    }
+    
+    let hpStyle = {color: color, borderColor: color}
+
+
+
     return (
             <li className='listItem'
                 onClick={() => setEncounterSelectedCreature(creature)}
+                style={{border: isTurn ? '5px solid rgba(11, 204, 255)' : ''}}
             >   
                 <div className='encounterCreatureContainer animated-box'>
                     <div className='initiativeInputContainer'>
@@ -153,7 +168,7 @@ const EncounterListItem = ({index, listSizeRect, setCurrentEncounterCreatures, s
                     {creature.open5e.hit_points !== null  ? 
                         <div className='encounterCreaturesHpContainer'>
                             
-                            <button className='encounterCreaturesHp' onClick={(event) => openEditCreatureStats(event)}  ref={buttonRef}>
+                            <button className='encounterCreaturesHp' style={hpStyle} onClick={(event) => openEditCreatureStats(event)}  ref={buttonRef}>
                                 {creature.open5e.hit_points_current}
                                 <span>/</span>
                                 {creature.open5e.hit_points}

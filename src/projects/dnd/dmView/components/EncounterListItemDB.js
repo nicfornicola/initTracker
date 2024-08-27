@@ -2,12 +2,24 @@ import React, {useState, useEffect} from 'react';
 import uploadImage from '../pics/uploadImage.png'
 
 
-const EncounterListItem = ({index, handleUploadMonsterImage, creatureListItem, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
+const EncounterListItem = ({index, handleUploadMonsterImage, creatureListItem, isTurn, setCurrentEncounterCreatures, clickEncounterCreatureX, resort}) => {
     const [creature, setCreature] = useState(creatureListItem)
+    const [currentHP, setCurrentHP] = useState(creatureListItem.dnd_b.hit_points_current)
 
     useEffect(() => {
-        setCreature(creatureListItem)
-    }, [creatureListItem])
+        // If creature change then update it in the list to cause a rerender
+        setCurrentEncounterCreatures((prevCreatures) => 
+            prevCreatures.map((oldCreature) => 
+                oldCreature.guid === creature.guid ? creature : oldCreature
+            )
+        );
+
+        // eslint-disable-next-line
+    }, [creature]);
+    
+    useEffect(() => {
+        setCurrentHP(creatureListItem.dnd_b.hit_points_current)
+    }, [creatureListItem.dnd_b.hit_points_current])
 
     const handleInitiativeChange = (event) => {
         let init = parseInt(event.target.value)
@@ -23,7 +35,7 @@ const EncounterListItem = ({index, handleUploadMonsterImage, creatureListItem, s
     };
 
     return (
-            <li className='listItem'>   
+            <li className='listItem' style={{border: isTurn ? '5px solid rgba(11, 204, 255)' : ''}}>   
                 <div className='encounterCreatureContainer animated-box'>
                     <div className='initiativeInputContainer'>
                         <input className='inputButton' onFocus={handleHighlight} type='text' value={creature.dnd_b.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
@@ -58,7 +70,7 @@ const EncounterListItem = ({index, handleUploadMonsterImage, creatureListItem, s
                     {creature.dnd_b.hit_points !== null  ? 
                         <div className='encounterCreaturesHpContainer'>
                             <button disabled className='encounterCreaturesHp' >
-                                {creature.dnd_b.hit_points_current}
+                                {currentHP}
                                 <span>/</span>
                                 {creature.dnd_b.hit_points}
                                 {creature.dnd_b.hit_points_temp !== 0 && (

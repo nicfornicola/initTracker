@@ -413,6 +413,27 @@ input {
     display: flex;
 }
 
+.encounterTitleButtonGroup {
+    display: flex;
+    width: 100%;
+}
+
+.dmStartButtons {
+    display: flex;
+    width: 100%;
+}
+
+.turnButtons {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.turnText {
+    display: flex;
+    flex-direction: column;
+}
+
 .dmViewButton {
     padding: 1% 1.5%;
     cursor: pointer;
@@ -476,7 +497,7 @@ input {
 }
 
 .listItem {
-    padding-bottom: 1%;
+    margin-bottom: 1%;
 }
   
 .searchListCreatureContainer,

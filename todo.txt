@@ -45,6 +45,9 @@ playerview
 
 BROKEN 
 ----
+saving new encounter on refresh? which freezes and crashes stuff
+Same creatures share hp no for some reason when damaging and healing
+on autorefresh dmb when no dnd_b avatar gets bugged because I dont set a default
 enironment stat card is SO fucked
 when bad guys are in list, play is available even if not saved or no name
 auto refresh timer broken on auto refresh for DMB

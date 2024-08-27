@@ -15,8 +15,38 @@ export const proxyUrl = window.location.href.includes("dmbuddy.com")
 proxyUrl === "" ? console.log("No Proxy") : console.log("Using Proxy")
 
 export const generateUniqueId = () => {
-    return Math.random().toString(36).substring(2, 12).toUpperCase();
+    let num = Math.random().toString(36).substring(2, 12).toUpperCase();
+    return num
 }
+
+export const sortCreatureArray = (array) => {
+    return array.sort((a, b) => {
+        // Extract initiative and name for both objects
+        const initiativeA = a.open5e?.initiative ?? a.dnd_b?.initiative;
+        const initiativeB = b.open5e?.initiative ?? b.dnd_b?.initiative;
+        const nameA = a.open5e?.name ?? a.dnd_b?.name;
+        const nameB = b.open5e?.name ?? b.dnd_b?.name;
+
+        // Handle cases where one initiative is null
+        if (initiativeA === null && initiativeB !== null) {
+            return 1;
+        } else if (initiativeA !== null && initiativeB === null) {
+            return -1;
+        } else if (initiativeA !== null && initiativeB !== null) {
+            // Both initiatives are not null, compare them numerically
+            const initiativeComparison = initiativeB - initiativeA;
+            if (initiativeComparison !== 0) {
+                return initiativeComparison;
+            } else {
+                // Initiatives are the same, compare by name alphabetically
+                return nameA.localeCompare(nameB);
+            }
+        } else {
+            return 0; // Both are null, maintain the current order
+        }
+    });
+}
+
 
 export const setLocalPlayerViewEncounter = (encounter) => {
     localStorage.setItem('playerViewEncounter', JSON.stringify(encounter));

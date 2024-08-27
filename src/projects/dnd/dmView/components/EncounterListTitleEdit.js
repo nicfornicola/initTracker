@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EncounterListTitleEdit = ({inputRef, encounterName, handleEditTitleChange, handleCloseEditBox}) => {
+const EncounterListTitleEdit = ({inputRef, encounterName, handleEditTitleChange, handleCloseEditBox}) => {    
     return (
         <>
             <label className='titleLabel animated-label' htmlFor="titleEdit" >Name Your Encounter</label>

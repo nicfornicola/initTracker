@@ -27,7 +27,6 @@ const DmView = () => {
     getLocalStorageSize()
 
     useEffect(() => {
-        // Current problem, dndb character auto refreshes, but after auto refresh, dndB hp/dmg doesnt refresh?? not sure
         const handleCurrentEncounterLocalChange = (event) => {
             if (event.key === 'savedEncounters') {
                 let savedEncounter = JSON.parse(localStorage.getItem('savedEncounters'))
