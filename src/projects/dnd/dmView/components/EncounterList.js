@@ -46,10 +46,10 @@ const EncounterList = ({handleSaveEncounter, turnNum, handleUploadMonsterImage, 
     return (
         <div className='encounterCreaturesList' ref={listRef}>
             {currentEncounterCreatures.map((creatureListItem, index) => (
-                creatureListItem.open5e !== undefined ?
+                // creatureListItem.open5e !== undefined ?
                     <EncounterListItem key={creatureListItem.guid + index} index={index} isTurn={index+1 === turnNum} setCurrentEncounterCreatures={setCurrentEncounterCreatures} listSizeRect={listSizeRect} scrollPosition={scrollPosition} handleUploadMonsterImage={handleUploadMonsterImage} resort={resort} setPlayerViewOnCreatureChange={setPlayerViewOnCreatureChange} creatureListItem={creatureListItem} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX}/>
-                    :
-                    <EncounterListItemDB key={creatureListItem.guid + index} index={index} isTurn={index+1 === turnNum} setCurrentEncounterCreatures={setCurrentEncounterCreatures} handleUploadMonsterImage={handleUploadMonsterImage} setPlayerViewOnCreatureChange={setPlayerViewOnCreatureChange} creatureListItem={creatureListItem} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} resort={resort}/>
+                    // :
+                    // <EncounterListItemDB key={creatureListItem.guid + index} index={index} isTurn={index+1 === turnNum} setCurrentEncounterCreatures={setCurrentEncounterCreatures} handleUploadMonsterImage={handleUploadMonsterImage} setPlayerViewOnCreatureChange={setPlayerViewOnCreatureChange} creatureListItem={creatureListItem} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} resort={resort}/>
                 
             ))}
         </div>

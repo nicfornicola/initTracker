@@ -52,7 +52,10 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
     }, [localSavedEncounters]);
 
     useEffect(() => {
-        handleSaveEncounter()
+        if(encounterName !== "Name Your Encounter") {
+            handleSaveEncounter()
+
+        }
         // eslint-disable-next-line
     }, [turnNum]);
 
@@ -98,6 +101,7 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
     const handleSaveEncounter = () => {
         const savedEncountersList = JSON.parse(localStorage.getItem('savedEncounters')) || [];
         let newEncounter = {encounterName: encounterName, id: encounterId || generateUniqueId(), roundNum: roundNum, turnNum: turnNum, currentEncounterCreatures: currentEncounterCreatures}
+
         setLocalPlayerViewEncounter(newEncounter)
         setEncounterId(newEncounter.id)
         // Overwrites if exists, appends if new
@@ -108,6 +112,7 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
         setTimeout(() => {
             setShowSaveMessage(false);
         }, 800); // Hide the message after 5 seconds
+        
     };
 
     const handleCloseEditBox = (type) => {
@@ -286,7 +291,7 @@ const EncounterColumn = ({currentEncounterCreatures, setCurrentEncounterCreature
             </div>
             <div className={`column animated-label ${showSearchList ? '' : 'expand'}`}>
                 {encounterSelectedCreature ? (
-                    <StatBlock creature={encounterSelectedCreature.open5e} img={encounterSelectedCreature.avatarUrl} closeFunction={() => setEncounterSelectedCreature(false)}/>
+                    <StatBlock creature={encounterSelectedCreature} img={encounterSelectedCreature.avatarUrl} closeFunction={() => setEncounterSelectedCreature(false)}/>
                 ) : (
                     <>No Encounter Creature Selected</>
                 )}

@@ -19,55 +19,10 @@ function getLocalStorageSize() {
     console.log(`Approximate size: ${sizeInMB.toFixed(2)} MB`);
 }
 
-const DmView = () => {
-    const [currentEncounterCreatures, setCurrentEncounterCreatures] = useState([]);
-    const [localSavedEncounters, setLocalSavedEncounters] = useState(JSON.parse(localStorage.getItem('savedEncounters')));
+const DmView = ({currentEncounterCreatures, setCurrentEncounterCreatures, uploadLocalStorage, localSavedEncounters}) => {
+    getLocalStorageSize()
     const [showSearchList, setShowSearchList] = useState(true);
 
-    getLocalStorageSize()
-
-    useEffect(() => {
-        const handleCurrentEncounterLocalChange = (event) => {
-            if (event.key === 'savedEncounters') {
-                let savedEncounter = JSON.parse(localStorage.getItem('savedEncounters'))
-                let playerViewId = JSON.parse(localStorage.getItem('playerViewEncounter')).id;
-                let loadedCurrentEncounter = savedEncounter.find(currentEncounter => currentEncounter.id === playerViewId)
-                setCurrentEncounterCreatures(loadedCurrentEncounter.currentEncounterCreatures)
-            }
-        }
-        window.addEventListener('storage', handleCurrentEncounterLocalChange);
-    }, [])
-
-    
-    
-    const uploadLocalStorage = (event) => {
-        const file = event.target.files[0];
-
-        const reader = new FileReader();
-        // Read the file content as text
-        reader.onload = function(event) {
-            try {
-                // Parse the JSON data
-                const localStorageData = JSON.parse(event.target.result);
-
-                // Set each key-value pair in local storage
-                for (const key in localStorageData) {
-                    if (localStorageData.hasOwnProperty(key)) {
-                        localStorage.setItem(key, localStorageData[key]);
-                    }
-                }
-
-                setLocalSavedEncounters([...JSON.parse(localStorage.getItem('savedEncounters'))])
-                console.log("Local storage data has been successfully set.");
-            } catch (error) {
-                console.error("Error parsing JSON file:", error);
-            }
-        };
-
-        // Read the file
-        reader.readAsText(file);
-    }
-    
     return (
         <div className='dmView'>
             <SideMenu uploadLocalStorage={uploadLocalStorage} setCurrentEncounterCreatures={setCurrentEncounterCreatures} showSearchList={showSearchList} setShowSearchList={setShowSearchList}/>

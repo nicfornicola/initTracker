@@ -12,7 +12,7 @@ const EncounterListTitle = ({setShowEncounterTitleEdit, handleTurnNums, encounte
         <div className='encounterTitleEditContainer animated-label' onClick={() => setShowEncounterTitleEdit(true)}>                     
             <div className='encounterTitle'><strong style={{color: titleColor}}>{encounterName}</strong></div>
             <div className='encounterTitleEdit'>🖉</div>
-            {currentEncounterCreatures.length > 0 && 
+            {currentEncounterCreatures.length > 0 && encounterName !== "Name Your Encounter" && 
                 <div className='encounterTitleButtonGroup' onClick={(e) => e.stopPropagation()}>
                     <div className='dmStartButtons'>
                         <button className='dmViewButton' onClick={handleAutoRollInitiative}>Auto Initiative</button>
