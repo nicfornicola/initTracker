@@ -94,13 +94,26 @@ const EncounterListItem = ({index, listSizeRect, isTurn, setCurrentEncounterCrea
     }
 
     const handleInitiativeChange = (event) => {
-        let init = parseInt(event.target.value)
-        if(creature.open5e.initiative !== init) {
-            creature.open5e.initiative = isNaN(init) ? '0' : init
+        if(event.target.value === "-") {
+            creature.open5e.initiative = "-"
             setCreature({...creature})
-            resort()
+        } else {
+            let init = parseInt(event.target.value)
+            if(creature.open5e.initiative !== init) {
+                creature.open5e.initiative = isNaN(init) ? "" : init       
+                setCreature({...creature})
+            }
         }
-            
+    }
+    
+    const handleInitiativeCheck = (event) => {
+        let init = parseInt(event.target.value)
+        if(isNaN(init)) {
+            creature.open5e.initiative = 0
+            setCreature({...creature})
+        }
+        resort()
+
     }
 
     const handleArmorClassChange = (event) => {
@@ -133,7 +146,7 @@ const EncounterListItem = ({index, listSizeRect, isTurn, setCurrentEncounterCrea
             >   
                 <div className='encounterCreatureContainer animated-box'>
                     <div className='initiativeInputContainer'>
-                        <input className='inputButton' onFocus={handleHighlight} type='text' value={creature.open5e.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
+                        <input className='inputButton' onFocus={handleHighlight} onBlur={handleInitiativeCheck} type='text' value={creature.open5e.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                     </div>
                     <div className="monsterEncounterIconContainer" onClick={() => handleUploadMonsterImage(creature)}>
                         <img className="monsterEncounterIcon" src={creature.avatarUrl} alt={"list Icon"} />

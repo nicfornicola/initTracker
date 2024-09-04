@@ -26,15 +26,15 @@ export const sortCreatureArray = (array) => {
         const initiativeB = b.open5e?.initiative ?? b.dnd_b?.initiative;
         const nameA = a.open5e?.name ?? a.dnd_b?.name;
         const nameB = b.open5e?.name ?? b.dnd_b?.name;
-
+    
         // Handle cases where one initiative is null
         if (initiativeA === null && initiativeB !== null) {
             return 1;
         } else if (initiativeA !== null && initiativeB === null) {
             return -1;
         } else if (initiativeA !== null && initiativeB !== null) {
-            // Both initiatives are not null, compare them numerically
-            const initiativeComparison = initiativeB - initiativeA;
+            // Both initiatives are not null, compare them numerically using absolute values
+            const initiativeComparison = Math.abs(initiativeB) - Math.abs(initiativeA);
             if (initiativeComparison !== 0) {
                 return initiativeComparison;
             } else {

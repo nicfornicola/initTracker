@@ -22,12 +22,25 @@ const EncounterListItem = ({index, handleUploadMonsterImage, creatureListItem, i
     }, [creatureListItem.dnd_b.hit_points_current])
 
     const handleInitiativeChange = (event) => {
-        let init = parseInt(event.target.value)
-        if(creature.dnd_b.initiative !== init) {
-            creature.dnd_b.initiative = isNaN(init) ? '0' : init
+        if(event.target.value === "-") {
+            creature.dnd_b.initiative = "-"
             setCreature({...creature})
-            resort()
-        }      
+        } else {
+            let init = parseInt(event.target.value)
+            if(creature.dnd_b.initiative !== init) {
+                creature.dnd_b.initiative = isNaN(init) ? "" : init       
+                setCreature({...creature})
+            }
+        }
+    }
+    
+    const handleInitiativeCheck = (event) => {
+        let init = parseInt(event.target.value)
+        if(isNaN(init)) {
+            creature.dnd_b.initiative = 0
+            setCreature({...creature})
+        }
+        resort()
     }
 
     const handleHighlight = (e) => {
@@ -38,7 +51,7 @@ const EncounterListItem = ({index, handleUploadMonsterImage, creatureListItem, i
             <li className='listItem' style={{border: isTurn ? '5px solid rgba(11, 204, 255)' : ''}}>   
                 <div className='encounterCreatureContainer animated-box'>
                     <div className='initiativeInputContainer'>
-                        <input className='inputButton' onFocus={handleHighlight} type='text' value={creature.dnd_b.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
+                        <input className='inputButton' onFocus={handleHighlight} onBlur={handleInitiativeCheck} type='text' value={creature.dnd_b.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                     </div>
                     <div className="monsterEncounterIconContainer" onClick={() => handleUploadMonsterImage(creature)}>
                         <img className="monsterEncounterIcon" src={creature.avatarUrl} alt={"list Icon"} />
