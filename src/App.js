@@ -10,12 +10,12 @@ import Pantheon from './projects/king/components/Pantheon';
 
 import background1 from "./projects/dnd/playerView/pics/backgrounds/fallenCastleBigTree.jpg"
 import bloodIcon from "./projects/dnd/playerView/pics/icons/bloodIcon.png"
-
+import {INIT_ENCOUNTER} from './projects/dnd/dmView/constants'
 
 function App() {
     // Load all encounters from storage
     const [localSavedEncounters, setLocalSavedEncounters] = useState(JSON.parse(localStorage.getItem('savedEncounters')) || []);
-    const [currentEncounterCreatures, setCurrentEncounterCreatures] = useState([]);
+    const [currentEncounter, setCurrentEncounter] = useState(INIT_ENCOUNTER);
     const [playerView, setPlayerView] = useState(JSON.parse(localStorage.getItem('playerViewEncounter')) || []);
     const [autoRefreshDndbPlayers, setAutoRefreshDndbPlayers] = useState(false);
     const [autoRefreshDndbMonsters, setAutoRefreshDndbMonsters] = useState(false);
@@ -39,23 +39,27 @@ function App() {
     const [turnNum, setTurnNum] = useState(0);
     const [roundNum, setRoundNum] = useState(0);
     const [gameId, setGameID] = useState(0);
-    const playerViewEncounterID = JSON.parse(localStorage.getItem('playerViewEncounter')).id
+    // const playerViewEncounterID = JSON.parse(localStorage.getItem('playerViewEncounter')).id
     const isOfflineMode = window.location.href.includes("playerView");
+
 
     useEffect(() => {
         // Check current encounter to see if we need to auto refresh from DNB_B
-        currentEncounterCreatures.forEach(creature => {
-            console.log("currentEncounterCreaturesRefresh...")
-            if(creature.from === "dnd_b") {
-                console.log("dnd_b found...")
-                setAutoRefreshDndbPlayers(true)
-            }
-
-            if(creature.from === "dnd_b_monster") {
-                console.log("dnd_b monster...")
-                setAutoRefreshDndbMonsters(true)
-            }
-        });
+        console.log("currentEncounter App.js effect...")
+        console.log(currentEncounter.currentEncounterCreatures)
+        
+        if(currentEncounter.currentEncounterCreatures) {
+            currentEncounter.currentEncounterCreatures.forEach(creature => {
+                if(creature.from === "dnd_b") {
+                    console.log("dnd_b found...")
+                    setAutoRefreshDndbPlayers(true)
+                } else if(creature.from === "dnd_b_monster") {
+                    console.log("dnd_b monster...")
+                    setAutoRefreshDndbMonsters(true)
+                }
+            });
+        }
+            
 
         const getRefreshedLocalEncounter = (event) => {
             if (event.key === 'playerViewEncounter') {
@@ -94,7 +98,7 @@ function App() {
         return () => clearInterval(intervalId);
     // eslint-disable-next-line
     // maybe on handle load?
-    }, [currentEncounterCreatures]);
+    }, [currentEncounter]);
 
     const handleRefresh = (type) => {
         if (type === 1) {
@@ -145,7 +149,8 @@ function App() {
 
     return (
         <Routes>
-            <Route path="/" element={<DmView currentEncounterCreatures={currentEncounterCreatures} setCurrentEncounterCreatures={setCurrentEncounterCreatures} uploadLocalStorage={uploadLocalStorage} localSavedEncounters={localSavedEncounters}/>}/>
+            <Route path="/" element={<DmView currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} uploadLocalStorage={uploadLocalStorage} localSavedEncounters={localSavedEncounters}/>}/>
+            
             <Route path="/playerView" element={<PlayerPage playerView={playerView} />}/>
             <Route path="/blog" element={<Blog/>}/>
             <Route path="/king/" element={<Pantheon />} />

@@ -21,11 +21,9 @@ export const generateUniqueId = () => {
 
 export const sortCreatureArray = (array) => {
     return array.sort((a, b) => {
-        // Extract initiative and name for both objects
-        const initiativeA = a.open5e?.initiative ?? a.dnd_b?.initiative;
-        const initiativeB = b.open5e?.initiative ?? b.dnd_b?.initiative;
-        const nameA = a.open5e?.name ?? a.dnd_b?.name;
-        const nameB = b.open5e?.name ?? b.dnd_b?.name;
+        // Extract initiative and name from both objects
+        const initiativeA = a.initiative;
+        const initiativeB = b.initiative;
 
         // Handle cases where one initiative is null
         if (initiativeA === null && initiativeB !== null) {
@@ -39,14 +37,23 @@ export const sortCreatureArray = (array) => {
                 return initiativeComparison;
             } else {
                 // Initiatives are the same, compare by name alphabetically
-                return nameA.localeCompare(nameB);
+                return a.name.localeCompare(b.name);
             }
         } else {
             return 0; // Both are null, maintain the current order
         }
     });
-}
+};
 
+export const INIT_ENCOUNTER_NAME = 'Name Your Encounter';
+
+export const INIT_ENCOUNTER = {
+    encounterName: INIT_ENCOUNTER_NAME,
+    id: "",
+    roundNum: 1,
+    turnNum: 0,
+    currentEncounterCreatures: []
+}
 
 export const setLocalPlayerViewEncounter = (encounter) => {
     localStorage.setItem('playerViewEncounter', JSON.stringify(encounter));

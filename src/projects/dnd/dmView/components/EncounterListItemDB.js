@@ -2,16 +2,20 @@ import React, {useState, useEffect} from 'react';
 import uploadImage from '../pics/uploadImage.png'
 
 
-const EncounterListItem = ({index, handleUploadMonsterImage, creatureListItem, isTurn, setCurrentEncounterCreatures, clickEncounterCreatureX, resort}) => {
+const EncounterListItem = ({index, handleUploadMonsterImage, setCurrentEncounter, creatureListItem, isTurn, clickEncounterCreatureX, resort}) => {
     const [creature, setCreature] = useState(creatureListItem)
     const [currentHP, setCurrentHP] = useState(creatureListItem.dnd_b.hit_points_current)
 
     useEffect(() => {
+
         // If creature change then update it in the list to cause a rerender
-        setCurrentEncounterCreatures((prevCreatures) => 
-            prevCreatures.map((oldCreature) => 
-                oldCreature.guid === creature.guid ? creature : oldCreature
-            )
+        setCurrentEncounter(prev => ({
+                ...prev,
+                currentEncounterCreatures: [
+                    prev.currentEncounterCreatures.map(oldCreature => 
+                        oldCreature.guid === creature.guid ? creature : oldCreature)
+                ]
+            })
         );
 
         // eslint-disable-next-line

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 
-const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter, lastEncounterName, currentEncounterCreatures}) => {
+const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter, lastEncounterName, currentEncounter}) => {
     const [selectedEncounterName, setSelectedEncounterName] = useState(lastEncounterName);
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -44,7 +44,7 @@ const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter
 
     let buttonString = "No Saved Encounters"
     if(savedEncounters && savedEncounters.length !== 0) {
-        buttonString = currentEncounterCreatures.length !== 0 ? "Encounter: " + selectedEncounterName : "Encounters..." 
+        buttonString = currentEncounter.currentEncounterCreatures.length !== 0 ? "Encounter: " + selectedEncounterName : "Encounters..." 
     }
 
     return (

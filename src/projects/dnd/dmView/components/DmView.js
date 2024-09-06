@@ -19,17 +19,16 @@ function getLocalStorageSize() {
     console.log(`Approximate size: ${sizeInMB.toFixed(2)} MB`);
 }
 
-const DmView = ({currentEncounterCreatures, setCurrentEncounterCreatures, uploadLocalStorage, localSavedEncounters}) => {
+const DmView = ({currentEncounter, setCurrentEncounter, uploadLocalStorage, localSavedEncounters}) => {
     getLocalStorageSize()
     const [showSearchList, setShowSearchList] = useState(true);
-
     return (
         <div className='dmView'>
-            <SideMenu uploadLocalStorage={uploadLocalStorage} setCurrentEncounterCreatures={setCurrentEncounterCreatures} showSearchList={showSearchList} setShowSearchList={setShowSearchList}/>
+            <SideMenu uploadLocalStorage={uploadLocalStorage} setCurrentEncounter={setCurrentEncounter} showSearchList={showSearchList} setShowSearchList={setShowSearchList}/>
             {showSearchList &&  
-                <SearchList setCurrentEncounterCreatures={setCurrentEncounterCreatures} ></SearchList>
+                <SearchList setCurrentEncounter={setCurrentEncounter}/>
             }
-            <EncounterColumn currentEncounterCreatures={currentEncounterCreatures} setCurrentEncounterCreatures={setCurrentEncounterCreatures} localSavedEncounters={localSavedEncounters} showSearchList={showSearchList}/>
+            <EncounterColumn currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} localSavedEncounters={localSavedEncounters} showSearchList={showSearchList}/>
         </div>
     );
 };

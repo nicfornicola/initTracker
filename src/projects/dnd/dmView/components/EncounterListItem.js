@@ -2,23 +2,27 @@ import React, {useEffect, useState, useRef} from 'react';
 import uploadImage from '../pics/uploadImage.png'
 
 
-const EncounterListItem = ({index, listSizeRect, isTurn, setCurrentEncounterCreatures, scrollPosition, handleUploadMonsterImage, setPlayerViewOnCreatureChange, creatureListItem, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
+const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCurrentEncounter, scrollPosition, handleUploadMonsterImage, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
     const [openEditWidget, setOpenEditWidget] = useState(false);
     const [hpChange, setHpChange] = useState(0);
     const [creature, setCreature] = useState(creatureListItem)
     const [isInside, setIsInside] = useState(true)
     const [widgetPosition, setWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0})
     const buttonRef = useRef(null)
+    console.log(creature)
 
     useEffect(() => {
         if(encounterSelectedCreature !== null && creature.guid === encounterSelectedCreature.guid)
             setEncounterSelectedCreature(creature)
 
         // If creature change then update it in the list to cause a rerender
-        setCurrentEncounterCreatures((prevCreatures) => 
-            prevCreatures.map((oldCreature) => 
-                oldCreature.guid === creature.guid ? creature : oldCreature
-            )
+        setCurrentEncounter(prev => ({
+                ...prev,
+                currentEncounterCreatures: [
+                    ...prev.currentEncounterCreatures.map(
+                        oldCreature => oldCreature.guid === creature.guid ? creature :oldCreature)
+                ]
+            })
         );
 
         // eslint-disable-next-line

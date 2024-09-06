@@ -22,7 +22,7 @@ export const ImportDndBeyondCharacters = async (playerIds) => {
             let maxHp = getMaxHp(resData);
             console.log(i.toString() + "/" + playerIds.length + " " + resData.name + " retrieved");
             i++;
-            return DndBCharacterToDmBMapper(resData)
+            return DndBCharacterToDmBMapper(resData, maxHp)
         } catch (error) {
             console.log(i.toString() + "/" + playerIds.length);
             i++;

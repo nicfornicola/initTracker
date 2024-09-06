@@ -43,7 +43,7 @@ const getImageUrl = (creature) => {
     }
 }
 
-const SearchList = ({setCurrentEncounterCreatures}) => {
+const SearchList = ({setCurrentEncounter}) => {
     const [searchSelectedCreature, setSearchSelectedCreature] = useState(null);
     const [itemsToShow, setItemsToShow] = useState(15);
     const [filteredItems, setFilteredItems] = useState([]);
@@ -151,8 +151,10 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
     const handleAddCreatureToEncounter = (creature, action) => {
         let newCreature = {...creature, guid: generateUniqueId()}
 
-        if(action === "add")
-            setCurrentEncounterCreatures(prev => [...prev, newCreature]);
+        if(action === "add") {
+            console.log("Creature added", creature)
+            setCurrentEncounter(prev => ({...prev, currentEncounterCreatures: [...prev.currentEncounterCreatures, newCreature]}));
+        }
         else if(action === "select")
             setSearchSelectedCreature(newCreature);
     };

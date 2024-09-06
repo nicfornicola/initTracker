@@ -22,6 +22,7 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         "hit_points_current": open5eData.hit_points,
         "hit_points_temp": 0,
         "hit_points_override": 0,
+        "hit_points_modifier": 0,
         "initiative": open5eData.dexterity_save || 0,
         "last_damage": null,
         "effects": [],

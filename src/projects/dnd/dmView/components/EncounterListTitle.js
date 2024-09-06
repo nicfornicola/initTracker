@@ -1,18 +1,24 @@
 import React from 'react';
+import { INIT_ENCOUNTER_NAME } from '../constants';
 
-const EncounterListTitle = ({setShowEncounterTitleEdit, handleTurnNums, encounterName, currentEncounterCreatures, handleStartEncounter, handleAutoRollInitiative}) => {
+const EncounterListTitle = ({handleTurnNums, encounterName, setEncounterName, currentEncounter, handleStartEncounter, handleAutoRollInitiative}) => {
 
-    let titleColor = ''
-    if (encounterName === 'Name Your Encounter')
-        titleColor = 'grey'
-    
+    let titleColor = encounterName === INIT_ENCOUNTER_NAME ? 'grey' : ''
     let {roundNum, turnNum} = handleTurnNums()
 
+    const handleEditTitleChange = (e) => {
+        if (encounterName !== e.target.value) {
+            setEncounterName(e.target.value);
+        }
+    };
+
     return (
-        <div className='encounterTitleEditContainer animated-label' onClick={() => setShowEncounterTitleEdit(true)}>                     
-            <div className='encounterTitle'><strong style={{color: titleColor}}>{encounterName}</strong></div>
-            <div className='encounterTitleEdit'>🖉</div>
-            {currentEncounterCreatures.length > 0 && encounterName !== "Name Your Encounter" && 
+        <div className='encounterTitleEditContainer animated-label'>                     
+            <div className='nameInputContainer'>
+                <input style={{color: titleColor}} className='nameInput' type='text' defaultValue={encounterName} onBlur={handleEditTitleChange} onClick={(event) => event.target.select()}/>
+                <span className='encounterTitleEdit'>🖉</span>
+            </div>
+            {currentEncounter.currentEncounterCreatures.length > 0 && encounterName !== INIT_ENCOUNTER_NAME && 
                 <div className='encounterTitleButtonGroup' onClick={(e) => e.stopPropagation()}>
                     <div className='dmStartButtons'>
                         <button className='dmViewButton' onClick={handleAutoRollInitiative}>Auto Initiative</button>

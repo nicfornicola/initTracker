@@ -32,7 +32,7 @@ function downloadLocalStorage() {
     document.body.removeChild(a);
 }
 
-function SideMenu({uploadLocalStorage, setCurrentEncounterCreatures, showSearchList, setShowSearchList}) {
+function SideMenu({uploadLocalStorage, setCurrentEncounter, showSearchList, setShowSearchList}) {
     const [isOpen, setIsOpen] = useState(false);
     const [playerNumbers, setPlayerNumbers] = useState([]);
     const [inputValue, setInputValue] = useState('');
@@ -56,7 +56,8 @@ function SideMenu({uploadLocalStorage, setCurrentEncounterCreatures, showSearchL
     //124519382, 124686426, 124687100, 125381766, 125717017, 125809224]
     const handleDndCharacterImport = async () => {
         const playerData = await ImportDndBeyondCharacters(playerNumbers);
-        setCurrentEncounterCreatures((prev) => [...prev, ...playerData])
+        console.log("playerData:", playerData)
+        setCurrentEncounter(prev => ({...prev, currentEncounterCreatures: [...prev.currentEncounterCreatures, ...playerData]}))
         setPlayerNumbers([])
         setInputValue('')
     }
