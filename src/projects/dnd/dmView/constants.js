@@ -49,7 +49,7 @@ export const INIT_ENCOUNTER_NAME = 'Name Your Encounter';
 
 export const INIT_ENCOUNTER = {
     encounterName: INIT_ENCOUNTER_NAME,
-    id: "",
+    guid: "",
     roundNum: 1,
     turnNum: 0,
     currentEncounterCreatures: []
@@ -119,10 +119,22 @@ export const levelXPData = {
     '--': "--"
 };
 
-export const dummyOpen5e = {
-    "slug": "Dummy",
-    "desc": "**Commoners** include peasants, serfs, slaves, servants, pilgrims, merchants, artisans, and hermits.",
+export const dummyDefault = {
     "name": "Dummy",
+    "name_default": "Dummy",
+    "from": "dmb",
+    "guid": null,
+    "hit_points": 20,
+    "hit_points_default": 20,
+    "hit_points_current": 20,
+    "hit_points_temp": 0,
+    "hit_points_override": 0,
+    "hit_points_modifier": 0,
+    "initiative": 0,
+    "last_damage": null,
+    "effects": [],
+    "type": "default",
+    "desc": "**Commoners** include peasants, serfs, slaves, servants, pilgrims, merchants, artisans, and hermits.",
     "size": "Medium",
     "type": "",
     "subtype": "",
@@ -130,7 +142,6 @@ export const dummyOpen5e = {
     "alignment": "",
     "armor_class": 10,
     "armor_desc": null,
-    "hit_points": 4,
     "hit_dice": "1d8",
     "speed": {
         "walk": 30
@@ -188,8 +199,8 @@ export const dummyOpen5e = {
     "document__license_url": "http://open5e.com/legal",
     "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
     "name_default": "Dummy",
-    "hit_points_default": 4,
-    "hit_points_current": 4,
+    "hit_points_default": 20,
+    "hit_points_current": 20,
     "hit_points_temp": 0,
     "hit_points_override": 0,
     "initiative": 0,

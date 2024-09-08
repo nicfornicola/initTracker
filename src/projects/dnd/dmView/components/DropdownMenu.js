@@ -1,14 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { INIT_ENCOUNTER_NAME } from '../constants';
 
-
-const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter, lastEncounterName, currentEncounter}) => {
-    const [selectedEncounterName, setSelectedEncounterName] = useState(lastEncounterName);
+const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter, currentEncounter}) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
     function clickEncounterDropdownMenuX(event, encounter) {
         event.stopPropagation();
-        let updatedEncounterList = savedEncounters.filter(e => e.id !== encounter.id)
+        let updatedEncounterList = savedEncounters.filter(e => e.guid !== encounter.guid)
         setSavedEncounters(updatedEncounterList);
         localStorage.setItem('savedEncounters', JSON.stringify(updatedEncounterList));
     }
@@ -30,21 +29,14 @@ const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter
         return () => document.removeEventListener('click', handleClickOutside);
     }, [isOpen]);
 
-    useEffect(() => {
-        setSelectedEncounterName(lastEncounterName)
-    }, [lastEncounterName])
-
-
     const handleOptionClick = (encounter) => {
-        setSelectedEncounterName(encounter.encounterName);
         setIsOpen(false);
-        if(handleLoadEncounter) 
-            handleLoadEncounter(encounter);
+        handleLoadEncounter(encounter);
     };
 
     let buttonString = "No Saved Encounters"
-    if(savedEncounters && savedEncounters.length !== 0) {
-        buttonString = currentEncounter.currentEncounterCreatures.length !== 0 ? "Encounter: " + selectedEncounterName : "Encounters..." 
+    if(savedEncounters?.length !== 0) {
+        buttonString = currentEncounter.encounterName === INIT_ENCOUNTER_NAME ? "Encounters..." : "Encounter: " + currentEncounter.encounterName 
     }
 
     return (

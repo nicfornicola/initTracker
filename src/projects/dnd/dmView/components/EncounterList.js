@@ -40,7 +40,6 @@ const EncounterList = ({currentEncounter, setCurrentEncounter, handleSaveEncount
 
     const setPlayerViewOnCreatureChange = () => {
         if(currentEncounter.encounterName !== INIT_ENCOUNTER_NAME) {
-            console.log("setPlayerViewOnCreatureChange", currentEncounter.encounterName)
             handleSaveEncounter()
         }
     }

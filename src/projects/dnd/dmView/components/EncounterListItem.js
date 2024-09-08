@@ -9,7 +9,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const [isInside, setIsInside] = useState(true)
     const [widgetPosition, setWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0})
     const buttonRef = useRef(null)
-    console.log(creature)
 
     useEffect(() => {
         if(encounterSelectedCreature !== null && creature.guid === encounterSelectedCreature.guid)
