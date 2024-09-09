@@ -28,6 +28,7 @@ function setBloodImg(creature) {
 // ProfileCard Component
 const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBloodToggleType}) => {
     const isPlayer = creature.type === "player";
+    console.log("creauter", creature)
     const effectsFound = creature.effects.length > 0
     const foundHp = creature.maxHp !== null;
     const showIcon = creature.initiative >= 0

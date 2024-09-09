@@ -1,7 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import StatBlock from './StatBlock';
 import { generateUniqueId, dummyDefault, envObject, setLocalPlayerViewEncounter, sortCreatureArray, INIT_ENCOUNTER_NAME, INIT_ENCOUNTER } from '../constants';
-import GlobalImg from '../pics/global.png'
 import EncounterListTopInfo from './EncounterListTopInfo'
 import DropdownMenu from './DropdownMenu';
 import EncounterListTitle from './EncounterListTitle'
@@ -51,7 +50,14 @@ const EncounterColumn = ({currentEncounter, setCurrentEncounter, localSavedEncou
     useEffect(() => {
         if(encounterGuid !== currentEncounter.guid)
             setEncounterGuid(currentEncounter.guid)
-    }, [currentEncounter.guid]);  
+    // eslint-disable-next-line
+    }, [currentEncounter.guid]);      
+    
+    useEffect(() => {
+        if(encounterGuid !== currentEncounter.guid)
+            setCurrentEncounter(prev => ({...prev, guid: encounterGuid}))
+    // eslint-disable-next-line
+    }, [encounterGuid]);  
     
     useEffect(() => {
         setSavedEncounters(localSavedEncounters)
@@ -110,9 +116,11 @@ const EncounterColumn = ({currentEncounter, setCurrentEncounter, localSavedEncou
                 }
 
             setLocalPlayerViewEncounter(newEncounter)
-            if(newEncounter.guid !== currentEncounter.guid)
-                setEncounterGuid(newEncounter.guid)
+            if(newEncounter.guid !== currentEncounter.guid) {
+                setEncounterGuid(newEncounter.guid) 
+            }
             // Overwrites if exists, appends if new
+            console.log(currentEncounter.guid, newEncounter)
             const updatedSavedEncountersList = addToLocalSavedEncounter(savedEncountersList, newEncounter);
             // Setting this list to update the encounter list
             setSavedEncounters(updatedSavedEncountersList)
@@ -139,38 +147,33 @@ const EncounterColumn = ({currentEncounter, setCurrentEncounter, localSavedEncou
     }, [showSaveMessage]);
 
     const handleAddExtra = (type) => {
-        let sharedObj = {
-            type: type,
-            guid: generateUniqueId(),
-        }
-        console.log(type)
 
+        console.log(type)
+        let newDummy = {}
         if(type === "global") {
-            sharedObj = {
+            newDummy = {
                 ...envObject,
-                ...sharedObj,
-                avatarUrl: GlobalImg,
-                type: type,
+                guid: generateUniqueId(),
             }
         } else {
             let url = "https://www.dndbeyond.com/Content/Skins/Waterdeep/images/icons/monsters"
             let beastImg = url + "/beast.jpg"
             let humanImg = url + "/humanoid.jpg"
-            sharedObj = {
+            newDummy = {
                 ...dummyDefault,
-                ...sharedObj,
                 avatarUrl: type === "monster" ? beastImg : humanImg,
                 name: type === "monster" ? "Dummy Monster" : "Dummy Player",
+                type: type,
                 deathSaves: {
                     "failCount": 0,
                     "successCount": 0,
                     "isStabilized": true
-                }
-                
+                },
+                guid: generateUniqueId(),                
             }
         }
-        console.log(sharedObj)
-        setCurrentEncounter(prev => ({...prev, currentEncounterCreatures: [...prev.currentEncounterCreatures, sharedObj]}));
+        console.log(newDummy)
+        setCurrentEncounter(prev => ({...prev, currentEncounterCreatures: [...prev.currentEncounterCreatures, newDummy]}));
     };
 
     const handleAutoRollInitiative = (event) => {

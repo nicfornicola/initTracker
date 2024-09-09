@@ -6,6 +6,8 @@ import TomeOfBeasts1 from './monsterJsons/TomeOfBeasts1.json';
 import TomeOfBeasts2 from './monsterJsons/TomeOfBeasts2.json';
 import TomeOfBeasts3 from './monsterJsons/TomeOfBeasts3.json';
 import TomeOfBeasts2023 from './monsterJsons/TomeOfBeasts2023.json';
+import GlobalImg from './pics/global.png'
+
 
 export const proxyUrl = window.location.href.includes("dmbuddy.com") 
                         ? 'https://nics-cors-anywhere-99e39b544c5d.herokuapp.com/' 
@@ -119,33 +121,27 @@ export const levelXPData = {
     '--': "--"
 };
 
-export const dummyDefault = {
+const sharedItems = {
+    "from": "dmb",
     "name": "Dummy",
     "name_default": "Dummy",
-    "from": "dmb",
-    "guid": null,
-    "hit_points": 20,
-    "hit_points_default": 20,
-    "hit_points_current": 20,
+    "hit_dice": "1d8",
+    "hit_points": 0,
+    "hit_points_default":  0,
+    "hit_points_current": 0,
     "hit_points_temp": 0,
     "hit_points_override": 0,
     "hit_points_modifier": 0,
     "initiative": 0,
     "last_damage": null,
     "effects": [],
-    "type": "default",
-    "desc": "**Commoners** include peasants, serfs, slaves, servants, pilgrims, merchants, artisans, and hermits.",
-    "size": "Medium",
-    "type": "",
-    "subtype": "",
-    "group": "",
-    "alignment": "",
-    "armor_class": 10,
-    "armor_desc": null,
-    "hit_dice": "1d8",
-    "speed": {
-        "walk": 30
-    },
+    "guid": null,
+    "senses": "passive Perception 10",
+    "armor_class": 0,
+    "damage_vulnerabilities": "",
+    "damage_resistances": "",
+    "damage_immunities": "",
+    "condition_immunities": "",
     "strength": 10,
     "dexterity": 10,
     "constitution": 10,
@@ -160,11 +156,36 @@ export const dummyDefault = {
     "charisma_save": null,
     "perception": null,
     "skills": {},
-    "damage_vulnerabilities": "",
-    "damage_resistances": "",
-    "damage_immunities": "",
-    "condition_immunities": "",
-    "senses": "passive Perception 10",
+    "spell_list": [],
+    "bonus_actions": null,
+    "reactions": null,
+    "legendary_desc": "",
+    "legendary_actions": null,
+    "special_abilities": null,
+    "type": "",
+    "subtype": "",
+    "group": "",
+    "alignment": "",
+    "document__slug": "",
+    "document__title": "DmBuddy Dummy",
+    "document__license_url": "",
+    "document__url": "",
+}
+
+export const dummyDefault = {
+    ...sharedItems,
+    "hit_points": 20,
+    "hit_points_default": 20,
+    "hit_points_current": 20,
+    "initiative": 0,
+    "type": "default",
+    "desc": "**Commoners** include peasants, serfs, slaves, servants, pilgrims, merchants, artisans, and hermits.",
+    "size": "Medium",
+    "armor_class": 10,
+    "armor_desc": null,
+    "speed": {
+        "walk": 30
+    },
     "languages": "Common",
     "challenge_rating": "0",
     "cr": 0,
@@ -176,12 +197,6 @@ export const dummyDefault = {
             "damage_dice": "1d4"
         }
     ],
-    "bonus_actions": null,
-    "reactions": null,
-    "legendary_desc": "",
-    "legendary_actions": null,
-    "special_abilities": null,
-    "spell_list": [],
     "page_no": 398,
     "environments": [
         "Hill",
@@ -193,56 +208,20 @@ export const dummyDefault = {
         "Desert",
         "Settlement"
     ],
-    "img_main": null,
-    "document__slug": "wotc-srd",
-    "document__title": "5e Core Rules",
-    "document__license_url": "http://open5e.com/legal",
-    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
-    "name_default": "Dummy",
-    "hit_points_default": 20,
-    "hit_points_current": 20,
-    "hit_points_temp": 0,
-    "hit_points_override": 0,
-    "initiative": 0,
-    "last_damage": null
 }
 
 
 export const envObject = {
-    "slug": "Env/Lair",
+    ...sharedItems,
+    "type": "global",
+    "name": "Env/Lair",
+    "name_default": "Env/Lair",
     "desc": "A falling piller, exploding magma, the world is your oyster! And that oyster will blow up at the end of the round. Poor souls...",
-    "name": "Environment/Lair",
     "size": "",
-    "type": "",
-    "subtype": "",
-    "group": "",
-    "alignment": "",
-    "armor_class": 0,
     "armor_desc": null,
-    "hit_points": 0,
-    "hit_dice": "",
     "speed": {
         "walk": 0
     },
-    "strength": 10,
-    "dexterity": 10,
-    "constitution": 10,
-    "intelligence": 10,
-    "wisdom": 10,
-    "charisma": 10,
-    "strength_save": null,
-    "dexterity_save": null,
-    "constitution_save": null,
-    "intelligence_save": null,
-    "wisdom_save": null,
-    "charisma_save": null,
-    "perception": null,
-    "skills": {},
-    "damage_vulnerabilities": "",
-    "damage_resistances": "",
-    "damage_immunities": "",
-    "condition_immunities": "",
-    "senses": "passive Perception 10",
     "languages": "Terren",
     "challenge_rating": "--",
     "cr": "--",
@@ -252,26 +231,10 @@ export const envObject = {
             "desc": "Melee Weapon Attack: +100 to hit, reach - are you on earth?, alot of targets. Hit: 5000 (10d100) force damage.",
         }
     ],
-    "bonus_actions": null,
-    "reactions": null,
-    "legendary_desc": "",
-    "legendary_actions": null,
-    "special_abilities": null,
-    "spell_list": [],
-    "page_no": 0,
     "environments": [
         "Earth",
         "Space?"
     ],
-    "img_main": null,
-    "document__title": "Nic's Lair",
-    "document__license_url": "",
-    "document__url": "",
-    "name_default": "Environment/Lair",
-    "hit_points_default":  0,
-    "hit_points_current": 0,
-    "hit_points_temp": 0,
-    "hit_points_override": 0,
-    "initiative": 0,
-    "last_damage": null
+    "avatarUrl": GlobalImg,
 }
+
