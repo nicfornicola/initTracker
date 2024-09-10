@@ -367,7 +367,6 @@ hr {
 .options-container .tooltiptext,
 .refresh-container .tooltiptext {
     display: flex;
-    position: absolute;
     bottom: 110%;
 }
 

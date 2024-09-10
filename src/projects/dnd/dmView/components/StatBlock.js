@@ -133,7 +133,8 @@ const StatBlock = ({creature, img, closeFunction }) => {
                                 <p className="stickyStatItem"></p>
                                 <p className="stickyStatItem stickyStatExtraWide">
                                     <strong>Speed</strong>&nbsp;
-                                    {Object.entries(creature.speed).map(([key, value], index, array) => (
+                                    
+                                    {creature.speed && Object.entries(creature.speed).map(([key, value], index, array) => (
                                         <span key={index + key}>
                                             {capsFirstLetter(key)} {value}{index < array.length - 1 ? ',' : ''}&nbsp;
                                         </span>

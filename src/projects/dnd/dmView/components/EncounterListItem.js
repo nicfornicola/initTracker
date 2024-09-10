@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import uploadImage from '../pics/uploadImage.png'
 
 
-const EncounterListItem = ({index, listSizeRect, isTurn, setCurrentEncounterCreatures, scrollPosition, handleUploadMonsterImage, setPlayerViewOnCreatureChange, creatureListItem, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
+const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCurrentEncounter, scrollPosition, handleUploadMonsterImage, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
     const [openEditWidget, setOpenEditWidget] = useState(false);
     const [hpChange, setHpChange] = useState(0);
     const [creature, setCreature] = useState(creatureListItem)
@@ -10,15 +10,25 @@ const EncounterListItem = ({index, listSizeRect, isTurn, setCurrentEncounterCrea
     const [widgetPosition, setWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0})
     const buttonRef = useRef(null)
 
+
+    useEffect(() => {
+        setCreature(creatureListItem)
+
+        // eslint-disable-next-line
+    }, [creatureListItem]);
+
     useEffect(() => {
         if(encounterSelectedCreature !== null && creature.guid === encounterSelectedCreature.guid)
             setEncounterSelectedCreature(creature)
 
         // If creature change then update it in the list to cause a rerender
-        setCurrentEncounterCreatures((prevCreatures) => 
-            prevCreatures.map((oldCreature) => 
-                oldCreature.guid === creature.guid ? creature : oldCreature
-            )
+        setCurrentEncounter(prev => ({
+                ...prev,
+                currentEncounterCreatures: [
+                    ...prev.currentEncounterCreatures.map(
+                        oldCreature => oldCreature.guid === creature.guid ? creature :oldCreature)
+                ]
+            })
         );
 
         // eslint-disable-next-line
@@ -42,24 +52,24 @@ const EncounterListItem = ({index, listSizeRect, isTurn, setCurrentEncounterCrea
         let hpNum = hpChange;
         if(type === 'damage') {
 
-            if(creature.open5e.hit_points_temp > 0) {
-                let tempHpRemainder = creature.open5e.hit_points_temp - hpChange
+            if(creature.hit_points_temp > 0) {
+                let tempHpRemainder = creature.hit_points_temp - hpChange
                 if(tempHpRemainder <= 0) {
                     hpNum = Math.abs(tempHpRemainder)
-                    creature.open5e.hit_points_temp = 0
+                    creature.hit_points_temp = 0
                 } else {
                     hpNum = 0
-                    creature.open5e.hit_points_temp = tempHpRemainder
+                    creature.hit_points_temp = tempHpRemainder
                 }
 
             }
 
             hpNum *= -1                
         }
-        creature.open5e.hit_points_current = creature.open5e.hit_points_current + hpNum
+        creature.hit_points_current = creature.hit_points_current + hpNum
 
-        if(creature.open5e.hit_points_current > creature.open5e.hit_points)
-            creature.open5e.hit_points_current = creature.open5e.hit_points
+        if(creature.hit_points_current > creature.hit_points)
+            creature.hit_points_current = creature.hit_points
 
         setOpenEditWidget(!openEditWidget)
         setCreature({...creature})
@@ -69,11 +79,11 @@ const EncounterListItem = ({index, listSizeRect, isTurn, setCurrentEncounterCrea
         let override = parseInt(event.target.value) || 0
         
         // Set override in creature
-        creature.open5e.hit_points_override = override
+        creature.hit_points_override = override
         // Find old diff between current and max
-        let dif = creature.open5e.hit_points - creature.open5e.hit_points_current
-        creature.open5e.hit_points = override === 0 ? creature.open5e.hit_points_default : override
-        creature.open5e.hit_points_current = creature.open5e.hit_points - dif
+        let dif = creature.hit_points - creature.hit_points_current
+        creature.hit_points = override === 0 ? creature.hit_points_default : override
+        creature.hit_points_current = creature.hit_points - dif
         
         setCreature({...creature})
 
@@ -81,26 +91,26 @@ const EncounterListItem = ({index, listSizeRect, isTurn, setCurrentEncounterCrea
 
     const handleChangeName = (event) => {
         let newName = event.target.value
-        if(creature.open5e.name !== newName) {
-            creature.open5e.name = event.target.value
+        if(creature.name !== newName) {
+            creature.name = event.target.value
             setCreature({...creature})
         }
     }
 
     const handleTempHp = (event) => {
         let tempHp = parseInt(event.target.value)
-        creature.open5e.hit_points_temp = isNaN(tempHp) ? 0 : tempHp
+        creature.hit_points_temp = isNaN(tempHp) ? 0 : tempHp
         setCreature({...creature})
     }
 
     const handleInitiativeChange = (event) => {
         if(event.target.value === "-") {
-            creature.open5e.initiative = "-"
+            creature.initiative = "-"
             setCreature({...creature})
         } else {
             let init = parseInt(event.target.value)
-            if(creature.open5e.initiative !== init) {
-                creature.open5e.initiative = isNaN(init) ? "" : init       
+            if(creature.initiative !== init) {
+                creature.initiative = isNaN(init) ? "" : init       
                 setCreature({...creature})
             }
         }
@@ -109,7 +119,7 @@ const EncounterListItem = ({index, listSizeRect, isTurn, setCurrentEncounterCrea
     const handleInitiativeCheck = (event) => {
         let init = parseInt(event.target.value)
         if(isNaN(init)) {
-            creature.open5e.initiative = 0
+            creature.initiative = 0
             setCreature({...creature})
         }
         resort()
@@ -118,7 +128,7 @@ const EncounterListItem = ({index, listSizeRect, isTurn, setCurrentEncounterCrea
 
     const handleArmorClassChange = (event) => {
         let ac = parseInt(event.target.value)
-        creature.open5e.armor_class = isNaN(ac) ? '0' : ac
+        creature.armor_class = isNaN(ac) ? '0' : ac
         setCreature({...creature})
     }
 
@@ -126,8 +136,8 @@ const EncounterListItem = ({index, listSizeRect, isTurn, setCurrentEncounterCrea
         e.target.select();
     };
 
-    let isDead = creature.open5e.hit_points_current === 0
-    let isBloodied = creature.open5e.hit_points_current/creature.open5e.hit_points < .55
+    let isDead = creature.hit_points_current === 0
+    let isBloodied = creature.hit_points_current/creature.hit_points < .55
     let color = ""
     if(isDead) {
         color = "red"
@@ -146,7 +156,7 @@ const EncounterListItem = ({index, listSizeRect, isTurn, setCurrentEncounterCrea
             >   
                 <div className='encounterCreatureContainer animated-box'>
                     <div className='initiativeInputContainer'>
-                        <input className='inputButton' onFocus={handleHighlight} onBlur={handleInitiativeCheck} type='text' value={creature.open5e.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
+                        <input className='inputButton' onFocus={handleHighlight} onBlur={handleInitiativeCheck} type='text' value={creature.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                     </div>
                     <div className="monsterEncounterIconContainer" onClick={() => handleUploadMonsterImage(creature)}>
                         <img className="monsterEncounterIcon" src={creature.avatarUrl} alt={"list Icon"} />
@@ -158,16 +168,16 @@ const EncounterListItem = ({index, listSizeRect, isTurn, setCurrentEncounterCrea
                     
                     <div className='listItemMiddleStats'>
                         <div className='nameInputContainer'>
-                            <input className='nameInput' type='text' defaultValue={creature.open5e.name} onBlur={handleChangeName} onClick={(event) => event.stopPropagation()}/>
+                            <input className='nameInput' type='text' defaultValue={creature.name} onBlur={handleChangeName} onClick={(event) => event.stopPropagation()}/>
                         </div>
                         <div className='armorClassContainer'>
                             <div>
                                 <label htmlFor='ac'>AC</label>
-                                <input id='ac' className='middleStatsInput' onFocus={handleHighlight} type='text' defaultValue={creature.open5e.armor_class} onChange={handleArmorClassChange} onClick={(event) => event.stopPropagation()}/>
+                                <input id='ac' className='middleStatsInput' onFocus={handleHighlight} type='text' defaultValue={creature.armor_class} onChange={handleArmorClassChange} onClick={(event) => event.stopPropagation()}/>
                             </div>
                             <div>
                                 <label htmlFor='init'>Init Bonus</label>
-                                <input id='init'className='middleStatsInput' onFocus={handleHighlight} disabled={true}  type='text' defaultValue={creature.open5e.dexterity_save ? '+' + creature.open5e.dexterity_save : '+0'} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
+                                <input id='init'className='middleStatsInput' onFocus={handleHighlight} disabled={true}  type='text' defaultValue={creature.dexterity_save ? '+' + creature.dexterity_save : '+0'} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                             </div>
                         </div>
                         
@@ -178,15 +188,15 @@ const EncounterListItem = ({index, listSizeRect, isTurn, setCurrentEncounterCrea
                         </button>
                     </div>
                    
-                    {creature.open5e.hit_points !== null  ? 
+                    {creature.hit_points !== null  ? 
                         <div className='encounterCreaturesHpContainer'>
                             
                             <button className='encounterCreaturesHp' style={hpStyle} onClick={(event) => openEditCreatureStats(event)}  ref={buttonRef}>
-                                {creature.open5e.hit_points_current}
+                                {creature.hit_points_current}
                                 <span>/</span>
-                                {creature.open5e.hit_points}
-                                {creature.open5e.hit_points_temp !== 0 && (
-                                    <span className='tempHp'> (+{creature.open5e.hit_points_temp}) </span>
+                                {creature.hit_points}
+                                {creature.hit_points_temp !== 0 && (
+                                    <span className='tempHp'> (+{creature.hit_points_temp}) </span>
                                 )}
                             </button>
                         </div>
@@ -206,12 +216,12 @@ const EncounterListItem = ({index, listSizeRect, isTurn, setCurrentEncounterCrea
                             </div>
                             <div className='extraHpContainer'>
                                 <div className='extraHpInputs' >
-                                    <label className='hpTitle tempHp' style={{color: creature.open5e.hit_points_temp === 0 ? 'grey' : ''}} htmlFor='temphp'><strong>Temp HP</strong></label>
-                                    <input id='temphp' type='number' className='editStatsInputExtra tempHp' value={creature.open5e.hit_points_temp} style={{color: creature.open5e.hit_points_temp === 0 ? 'grey' : ''}} onFocus={handleHighlight} onChange={handleTempHp}/>
+                                    <label className='hpTitle tempHp' style={{color: creature.hit_points_temp === 0 ? 'grey' : ''}} htmlFor='temphp'><strong>Temp HP</strong></label>
+                                    <input id='temphp' type='number' className='editStatsInputExtra tempHp' value={creature.hit_points_temp} style={{color: creature.hit_points_temp === 0 ? 'grey' : ''}} onFocus={handleHighlight} onChange={handleTempHp}/>
                                 </div>
                                 <div className='extraHpInputs'>
-                                    <label className='hpTitle' htmlFor='override' style={{color: creature.open5e.hit_points_override === 0 ? 'grey' : ''}}><strong>Override HP</strong></label>
-                                    <input id='override' type='number' className='editStatsInputExtra' value={creature.open5e.hit_points_override} style={{color: creature.open5e.hit_points_override === 0 ? 'grey' : ''}} onFocus={handleHighlight} onChange={handleOverrideHp}/>
+                                    <label className='hpTitle' htmlFor='override' style={{color: creature.hit_points_override === 0 ? 'grey' : ''}}><strong>Override HP</strong></label>
+                                    <input id='override' type='number' className='editStatsInputExtra' value={creature.hit_points_override} style={{color: creature.hit_points_override === 0 ? 'grey' : ''}} onFocus={handleHighlight} onChange={handleOverrideHp}/>
                                 </div>
                             </div>
                         </div>

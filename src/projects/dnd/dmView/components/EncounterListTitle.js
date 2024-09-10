@@ -1,18 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect }from 'react';
+import { INIT_ENCOUNTER_NAME } from '../constants';
 
-const EncounterListTitle = ({setShowEncounterTitleEdit, handleTurnNums, encounterName, currentEncounterCreatures, handleStartEncounter, handleAutoRollInitiative}) => {
+const EncounterListTitle = ({handleTurnNums, currentEncounter, setCurrentEncounter, handleStartEncounter, handleAutoRollInitiative, setNameChange}) => {
+    const [encounterName, setEncounterName] = useState(currentEncounter.encounterName);
 
-    let titleColor = ''
-    if (encounterName === 'Name Your Encounter')
-        titleColor = 'grey'
-    
+
+    useEffect(() => {
+        if(encounterName !== currentEncounter.encounterName) {
+            setEncounterName(currentEncounter.encounterName)
+        }
+    }, [currentEncounter.encounterName]);
+
+
+    let titleColor = encounterName === INIT_ENCOUNTER_NAME ? 'grey' : ''
     let {roundNum, turnNum} = handleTurnNums()
 
+    const handleTitleChange = (e) => {
+        if (encounterName !== e.target.value) {
+            setEncounterName(e.target.value);
+        }
+    };
+
+    const handleEncounterNameChange = (e) => {
+        if (currentEncounter.encounterName !== e.target.value) {
+            setEncounterName(e.target.value);
+            setCurrentEncounter(prev => ({...prev, encounterName: e.target.value}))
+            setNameChange(true)
+        }
+    };
+
     return (
-        <div className='encounterTitleEditContainer animated-label' onClick={() => setShowEncounterTitleEdit(true)}>                     
-            <div className='encounterTitle'><strong style={{color: titleColor}}>{encounterName}</strong></div>
-            <div className='encounterTitleEdit'>🖉</div>
-            {currentEncounterCreatures.length > 0 && 
+        <div className='encounterTitleEditContainer animated-label'>                     
+            <div className='nameInputContainer'>
+                <input style={{color: titleColor}} className='nameInput' type='text' value={encounterName} onChange={handleTitleChange} onBlur={handleEncounterNameChange} onClick={(event) => event.target.select()}/>
+                <span className='encounterTitleEdit'>🖉</span>
+            </div>
+            {currentEncounter.currentEncounterCreatures.length > 0 && encounterName !== INIT_ENCOUNTER_NAME && 
                 <div className='encounterTitleButtonGroup' onClick={(e) => e.stopPropagation()}>
                     <div className='dmStartButtons'>
                         <button className='dmViewButton' onClick={handleAutoRollInitiative}>Auto Initiative</button>

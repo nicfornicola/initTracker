@@ -32,14 +32,13 @@ import Tooltip from './Tooltip.js';
 import YouTubeEmbed from './YouTubeEmbed.js';
 import { generateUniqueId } from '../../dmView/constants.js';
 
-function PlayerPage() {
-    const [creatures, setCreatures] = useState([]);
+function PlayerPage({playerView}) {
+    const [creatures, setCreatures] = useState(playerView?.currentEncounterCreatures || []);
     const [clickedCreature, setClickedCreature] = useState(null);
     const [backGroundImage, setBackGroundImage] = useState(background1);
     const [youtubeLink, setYoutubeLink] = useState("");
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [loading, setLoading] = useState(true);
     const [refreshCheck, setRefreshCheck] = useState(false);
     const [refreshPlayersCheck, setRefreshPlayersCheck] = useState(false);
     const [refreshMonstersCheck, setRefreshMonstersCheck] = useState(false);
@@ -51,82 +50,36 @@ function PlayerPage() {
     const [arrowButton, setArrowButton] = useState(upArrow);
     const [enemyBloodToggleType, setEnemyBloodToggleType] = useState(0);
     const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(bloodIcon);
-    const [autoRefresh, setAutoRefresh] = useState(false);
-    const [turnNum, setTurnNum] = useState(0);
-    const [roundNum, setRoundNum] = useState(0);
+    const [autoRefreshDMB, setAutoRefreshDMB] = useState(false);
+    const [turnNum, setTurnNum] = useState(playerView.turnNum);
+    const [roundNum, setRoundNum] = useState(playerView.RoundNum);
     const playerViewEncounterID = JSON.parse(localStorage.getItem('playerViewEncounter')).id
     const { gameId } = useParams();
     const isOfflineMode = window.location.href.includes("playerView");
 
-    const refreshPlayerProfiles = async () => {
-        try {
-            console.log("Refreshing Player Health")
-            console.log("----------------")
-            //Get player stats for HP
-            const filteredPlayers = creatures.filter(item => item.type === 'player');
-            const playerIds = filteredPlayers
-                .filter(player => player.from && player.from === "dnd_b") // Filter players where "from" exists and equals "dnd_b"
-                .map(player => player.id.toString()); // Map to get the ids as strings
+    useEffect(() => {
+        setCreatures([...playerView.currentEncounterCreatures])
+        handleTurns(true, playerView.turnNum, playerView.roundNum)
+    }, [playerView])
 
-            const refreshedData = await getCharacterStats(playerIds);
-            
-            let savedEncounters = JSON.parse(localStorage.getItem('savedEncounters'));
-            let currentSavedEncounter = savedEncounters.find(e => e.id === playerViewEncounterID);
-            // Iterate over the first array using a for loop
-            const updatedCreatures = creatures.map(creature => {
-                // Need to use creature.id since its from dnd beyond
-                const matchedRefresh = refreshedData.find(data => data.id === creature.id);
+    const handleTurns = (inProgress, tNum, rNum) => {
+        if(inProgress) {
+            setTurnNum(tNum)
+            setRoundNum(rNum)
+        }
+        else {
+            setTurnNum(0)
+            setRoundNum(0)
+        }
+    }
 
-                if (matchedRefresh) {
 
-                    const change = {
-                        ...creature,
-                        ...matchedRefresh
-                    }
-
-                    currentSavedEncounter.currentEncounterCreatures.forEach(savedCreature => {
-                        if(savedCreature.id === change.id) {
-                            savedCreature.name = change.name;
-                            savedCreature.avatarUrl = change.avatarUrl;
-                            savedCreature.dnd_b.hit_points = change.maxHp;
-                            savedCreature.dnd_b.hit_points_current = change.maxHp - change.removedHp;
-                            savedCreature.dnd_b.maxHpBonus = change.maxHpBonus;
-                            savedCreature.dnd_b.maxHpOverride = change.maxHpOverride;
-                            savedCreature.dnd_b.removedHp = change.removedHp;
-                            savedCreature.dnd_b.hit_points_temp = change.tempHp;
-                            savedCreature.dnd_b.exhaustionLvl = change.exhaustionLvl;
-                            savedCreature.dnd_b.deathSaves = change.deathSaves;
-                            savedCreature.dnd_b.initiative = change.initiative;
-                            
-                        }
-                    })
-
-                    return change;
-                } else {
-                    return creature;
-                }
-            });
-            localStorage.setItem('savedEncounters', JSON.stringify(savedEncounters));
-
-            setCreatures([...updatedCreatures]);
-            setRefreshPlayersCheck(false);
-            setRefreshCheck(refreshMonstersCheck && refreshPlayersCheck);
-            console.log("Players Refreshed!")
-            return updatedCreatures;
-
-        } catch (error) {
-            console.log(error)
-            setErrorMessage(error)
-            setError(true)
-        }  
-    };
 
     const refreshMonsterProfiles = async (passedCreatures) => {
         try {
             if (!isOfflineMode) {
                 console.log("Refreshing Monster Hp and Initiatives");
                 console.log("----------------");
-        
                 // Fetch the latest data for monsters and players
                 const { data: { monsters, players, turnNum, roundNum, inProgress } } = await getCreatures(gameId);
                 handleTurns(inProgress, turnNum, roundNum)
@@ -190,8 +143,7 @@ function PlayerPage() {
         
                 // Update the state with the new creature list
                 setCreatures([...updatedCreatures]);
-                setRefreshMonstersCheck(false);
-                setRefreshCheck(refreshMonstersCheck && refreshPlayersCheck);
+                
         
                 console.log("Monsters Refreshed!");
                 return updatedCreatures;
@@ -199,7 +151,8 @@ function PlayerPage() {
                 console.log("Offline mode refresh")
             }
 
-
+            setRefreshMonstersCheck(false);
+            setRefreshCheck(refreshMonstersCheck && refreshPlayersCheck);
         } catch (error) {
             console.error("Error refreshing monster profiles:", error);
             setErrorMessage(error);
@@ -249,7 +202,6 @@ function PlayerPage() {
                     setFoundCreatures(false)
                 }
 
-                setLoading(false) 
                 console.log("Creatures Set!")
 
             }
@@ -260,121 +212,60 @@ function PlayerPage() {
         }  
     };
 
-    const handleTurns = (inProgress, tNum, rNum) => {
-        if(inProgress) {
-            setTurnNum(tNum)
-            setRoundNum(rNum)
-        }
-        else {
-            setTurnNum(0)
-            setRoundNum(0)
-        }
-    }
 
-    const handleRefresh = (type) => {
-        if (type === 1) {
-            setRefreshPlayersCheck(true);
-            refreshPlayerProfiles();
-        }
-        else if (type === 2) {
-            setRefreshMonstersCheck(true);
-            refreshMonsterProfiles();
-           
-        }
-        else if (type === 3) {
-            console.log("==============")
-            console.log("Refreshing All")
-            console.log("==============")
-            setRefreshCheck(true);
-            refreshPlayerProfiles().then(passedCreatures => refreshMonsterProfiles(passedCreatures))
-        }
-    };
 
-    const open5eToProfile = (open5eCreatures) => {
-        //map offline monsters to profile
-        const open5eProfiles = open5eCreatures.map(open5eCreature => {
-            return new Profile(open5eCreature)
-        });
-        return open5eProfiles
-    }
+    // useEffect(() => {
+    //     if(recentlyRefreshed) {
+    //         const timer = setTimeout(() => {
+    //             setRecentlyRefreshed(false)
+    //         }, 45000); // 45 seconds in milliseconds
+    //         return () => clearInterval(timer);
+    //     }
+    // }, [recentlyRefreshed])
 
-    useEffect(() => {
-        if(recentlyRefreshed) {
-            const timer = setTimeout(() => {
-                setRecentlyRefreshed(false)
-            }, 45000); // 45 seconds in milliseconds
-            return () => clearInterval(timer);
-        }
-    }, [recentlyRefreshed])
+    // useEffect(() => {
+    //     // If getting dndbeyond encounter
+    //     if (creatures.length === 0 && gameId && !error) {
+    //         console.log("Main load - loadProfiles()")
+    //         loadProfiles();
+    //     // If dm play button
+    //     } else if (creatures.length === 0 && !gameId && !error) {
+    //         console.log("playerview encounter load")
 
-    useEffect(() => {
-        
-        // If getting dndbeyond encounter
-        if (creatures.length === 0 && gameId && !error) {
-            console.log("Main load - loadProfiles()")
-            loadProfiles();
-        // If dm play button
-        } else if (creatures.length === 0 && !gameId && !error) {
-            let savedCurrentEncounter = JSON.parse(localStorage.getItem('playerViewEncounter'))
-            console.log("Local Storage")
-            console.log(savedCurrentEncounter.currentEncounterCreatures)
+    //         let playerViewEncounter = JSON.parse(localStorage.getItem('playerViewEncounter'))
+    //         if(playerViewEncounter.creatures) {
+    //             console.log("Local Storage")
+    //             console.log(playerViewEncounter.creatures)
+    
+    //             playerViewEncounter.creatures.forEach(creature => {
+    //                 if(creature.from === "dnd_b") {
+    //                     setAutoRefreshDMB(true)
+    //                 }
+    //             });
+    
+    //             setCreatures([...playerViewEncounter.creatures])
+    //         }
+    //     }
+    //     // Refresh every 5 minutes, when refreshed this way, show check mark for 45 seconds
+    //     const intervalId = setInterval(() => {
+    //         if(gameId) {
+    //             console.log("🔄AUTO-REFRESH DND_B🔄")
+    //             handleRefresh(3);
+    //             setRecentlyRefreshed(true)
+    //         }
 
-            savedCurrentEncounter.currentEncounterCreatures.forEach(creature => {
-                if(creature.from === "dnd_b") {
-                    setAutoRefresh(true)
-                }
-            });
+    //         if(autoRefreshDMB) {
+    //             console.log("🔄AUTO-REFRESH DMB")
+    //             handleRefresh(1);
+    //             setRecentlyRefreshed(true)
+    //         }
+    //     // X minutes in milliseconds
+    //     }, 1 * 60.0 * 1000.0); 
 
-            setCreatures([...open5eToProfile(savedCurrentEncounter.currentEncounterCreatures)])
-            setLoading(false)
-
-            const getRefreshedLocalEncounter = (event) => {
-                if (event.key === 'playerViewEncounter') {
-                    const updatedEncounter = JSON.parse(localStorage.getItem('playerViewEncounter'));
-                    setCreatures([...open5eToProfile(updatedEncounter.currentEncounterCreatures)]);
-                    setRoundNum(updatedEncounter.roundNum)
-                    setTurnNum(updatedEncounter.turnNum)
-                }
-            }
-            window.addEventListener('storage', getRefreshedLocalEncounter);
-        }
-        // Refresh every 5 minutes, when refreshed this way, show check mark for 45 seconds
-        const intervalId = setInterval(() => {
-            if(gameId) {
-                console.log("🔄AUTO-REFRESH DND_B🔄")
-                handleRefresh(3);
-                setRecentlyRefreshed(true)
-            }
-
-            if(autoRefresh) {
-                console.log("🔄AUTO-REFRESH DMB")
-                handleRefresh(1);
-                setRecentlyRefreshed(true)
-            }
-        // X minutes in milliseconds
-        }, 1 * 60.0 * 1000.0); 
-
-        // Cleanup interval on component unmount
-        return () => clearInterval(intervalId);
-    // eslint-disable-next-line
-    }, [creatures]);
-
-    if(gameId && error) {
-        return (
-            <div>
-                <HowTo />
-                <br/>
-                    If it still doesnt work Encounter ID might be wrong... idk
-                <br/>
-                <li>Error: {errorMessage.message}</li> 
-            </div>
-        )
-    }
-    if(!gameId && !isOfflineMode) {
-        return (
-            <HowTo backGroundImage={backGroundImage}/>
-        )
-    }
+    //     // Cleanup interval on component unmount
+    //     return () => clearInterval(intervalId);
+    // // eslint-disable-next-line
+    // }, [creatures]);
 
     // Update Creature in the creatures array with new effects
     const updateCreature = (updatedCreature) => {
@@ -398,8 +289,29 @@ function PlayerPage() {
 
     };
 
+    const handleRefresh = (type) => {
+        console.log("Refresh Type Player Page (SHOULD NOT SEE THIS):", type)
+
+        if (type === 1) {
+            setRefreshPlayersCheck(true);
+            // refreshPlayerProfiles();
+        }
+        else if (type === 2) {
+            setRefreshMonstersCheck(true);
+            refreshMonsterProfiles();
+           
+        }
+        else if (type === 3) {
+            console.log("==============")
+            console.log("Refreshing All")
+            console.log("==============")
+            setRefreshCheck(true);
+            // refreshPlayerProfiles().then(passedCreatures => refreshMonsterProfiles(passedCreatures))
+        }
+    };
+
     const handleHideEnemies = () => {
-        if(hideEnemies) // If hideEnemies is true, then refresh before revealing enemies
+        if(hideEnemies && !isOfflineMode) // If hideEnemies is true, then refresh before revealing enemies
             handleRefresh(2)
 
         setHideEnemies(!hideEnemies)
@@ -443,7 +355,7 @@ function PlayerPage() {
 
         }
     }
-
+    
     return (
         <div className="dndBackground" onClick={() => setClickedCreature(null)} style={{backgroundImage: backGroundImage ? `url(${backGroundImage})` : 'none'}}>
             {roundNum !== 0 && 
@@ -453,24 +365,22 @@ function PlayerPage() {
                 </div>
             }
             
-            
-
             {youtubeLink !== "" && !backGroundImage && 
                 <YouTubeEmbed embedUrl={youtubeLink}/>
             }
 
-            {loading && (<div className='loading'>Loading...</div>)}
-            {((!foundCreatures && !loading) && (isOfflineMode && creatures.length === 0)) && (<div className='loading'>No Players or Monsters found in encounter id - {gameId}</div>)}
             <div className="cardContainer" style={cardContainerStyle}>
-                {creatures.map((creature, index) => { 
+                {creatures.length === 0 ? (
+                    <div className='loading'>No Creatures found...</div>
+                ) : (
+                    creatures.map((creature, index) => { 
+                        return ((creature.type === 'monster' || creature.type === 'global') && hideEnemies) 
+                        ? null
+                        : <Icon key={uuidv4()} isTurn={turnNum === index+1} creature={creature} setClickedCreature={setClickedCreature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggleType={enemyBloodToggleType} />;
+                    })
+                )}
 
-                    if ((creature.type === 'monster' || creature.type === 'global') && hideEnemies) {
-                        return null;
-                    }
-                    return <Icon key={uuidv4()} isTurn={turnNum === index+1} creature={creature} setClickedCreature={setClickedCreature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggleType={enemyBloodToggleType} />;
-                })}
             </div>
-
             <div className='options-container'>                
                 <img className="option" src={arrowButton} alt={"change style"} onClick={handleMovePortraits} />
                 <Tooltip message={"Icon Position"}/>
@@ -512,21 +422,28 @@ function PlayerPage() {
                 {recentlyRefreshed &&
                     <img className="option" src={greenCheck} alt={"refresh"}/>
                 }
+                
                 <img className="option" src={refreshPlayersCheck ? greenCheck : refreshPlayers} alt={"refresh"} onClick={() => handleRefresh(1)} />
-                <span className="tooltiptext" >
+                <span className="tooltiptext" style={{left: isOfflineMode ? '-50%' : ''}}>
                     Last <img src={refreshPlayersCheck ? greenCheck : refreshPlayers} alt={"refresh"} onClick={() => handleRefresh(1)} />
                     <RefreshTimer singleRefresh={refreshPlayersCheck} totalRefresh={refreshCheck}/>
                 </span>
-                <img className="option" src={refreshMonstersCheck ? greenCheck : refreshMonster} alt={"refresh"} onClick={() => handleRefresh(2)} />
-                <span className="tooltiptext">
-                    Last <img src={refreshMonstersCheck ? greenCheck : refreshMonster} alt={"refresh"} onClick={() => handleRefresh(2)} />
-                    <RefreshTimer singleRefresh={refreshMonstersCheck} totalRefresh={refreshCheck} />
-                </span>
-                <img className="option" src={refreshCheck ? greenCheck : refresh} alt={"refresh"} onClick={() => handleRefresh(3)} />
-                <span className="tooltiptext">
-                    Last <img src={refreshCheck ? greenCheck : refresh} alt={"refresh"} onClick={() => handleRefresh(3)} />
-                    <RefreshTimer totalRefresh={refreshCheck}/>
-                </span>
+
+                {!isOfflineMode && 
+                    <>
+                        <img className="option" src={refreshMonstersCheck ? greenCheck : refreshMonster} alt={"refresh"} onClick={() => handleRefresh(2)} />
+                        <span className="tooltiptext">
+                            Last <img src={refreshMonstersCheck ? greenCheck : refreshMonster} alt={"refresh"} onClick={() => handleRefresh(2)} />
+                            <RefreshTimer singleRefresh={refreshMonstersCheck} totalRefresh={refreshCheck} />
+                        </span>
+                
+                        <img className="option" src={refreshCheck ? greenCheck : refresh} alt={"refresh"} onClick={() => handleRefresh(3)} />
+                        <span className="tooltiptext">
+                            Last <img src={refreshCheck ? greenCheck : refresh} alt={"refresh"} onClick={() => handleRefresh(3)} />
+                            <RefreshTimer totalRefresh={refreshCheck}/>
+                        </span>
+                    </>
+                }
             </div>
             
         </div> 

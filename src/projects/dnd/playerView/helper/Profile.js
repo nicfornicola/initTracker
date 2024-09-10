@@ -4,6 +4,19 @@ export class Profile {
         this.avatarUrl = creature.avatarUrl || "https://www.dndbeyond.com/avatars/42718/687/1581111423-121476494.jpeg";
         this.effects = [];
 
+        this.name = creature.open5e.name; // Get custom names
+        this.id = Math.floor(Math.random() * 1000) + 1 // Give it an id, to match dnd beyond stuff
+        this.monsterCurrentHp = creature.open5e.hit_points_current || 0;
+        this.maxHp = creature.open5e.hit_points || 0;
+        this.maxHpBonus = null;
+        this.maxHpOverride =  null;
+        this.removedHp =  null;
+        this.tempHp = creature.open5e.hit_points_temp;
+        this.exhaustionLvl = null;
+        this.deathSaves = creature.deathSaves;
+        this.initiative = creature.open5e.initiative || 0;
+        this.type = creature.type
+
         // if coming from /dnd/dm - generated players, monsters and dummies
         if(creature.id.toString().includes("open5e")) {
             this.name = creature.open5e.name; // Get custom names

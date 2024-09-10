@@ -40,10 +40,9 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
     };
 
     let showEnemyHp = false;
-    let currentHp;
     let isBloodied = false;
     let bloodImg;
-    let name = ""
+    let name = isPlayer ? "" : creature.name
     let lastName = ""
 
     let hpBoxShadow;
@@ -55,38 +54,36 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
     const monsterBoxShadow = {boxShadow: '0px 3px 8px 5px rgba(203, 38, 19, 1)'};
     const playerBoxShadow = {boxShadow: '0px 3px 8px 5px rgba(0, 230, 64, 1)'};
     if (isPlayer) {
+
         let namesArr = creature.name.split(' ');
         name = namesArr[0];
         if (namesArr.length > 1) {
             lastName = creature.name.substring(creature.name.indexOf(' ') + 1);
         }
-
-        if (foundHp) {
-            currentHp = creature.maxHp - creature.removedHp
-            if (currentHp / creature.maxHp < 0.20) {
-                isBloodied = true;
-                hpBoxShadow = playerLowHpBoxShadow;
-            } else if (currentHp / creature.maxHp < 0.55) {
-                isBloodied = true;
-                hpBoxShadow = playerMediumHpBoxShadow;
-            }
-
-            if(isBloodied) {
-                bloodImg = setBloodImg(creature)
-            }
-
+        
+        let hpPercent = creature.hit_points_current / creature.hit_points;
+        if (hpPercent < 0.20) {
+            isBloodied = true;
+            hpBoxShadow = playerLowHpBoxShadow;
+        } else if (hpPercent < 0.55) {
+            isBloodied = true;
+            hpBoxShadow = playerMediumHpBoxShadow;
         }
+
+        if(isBloodied) {
+            bloodImg = setBloodImg(creature)
+        }
+
         cardBoxShadow = playerBoxShadow
 
     } else if(creature.type === "monster") { // it's a Monster
-        name = creature.name;
-        currentHp = creature.monsterCurrentHp
         cardBoxShadow = monsterBoxShadow;
 
         if (enemyBloodToggleType === 2)
             showEnemyHp = true;
 
-        if (currentHp / creature.maxHp < 0.55 && enemyBloodToggleType !== 0) {
+        let hpPercent = creature.hit_points_current / creature.hit_points;
+        if (hpPercent < 0.55 && enemyBloodToggleType !== 0) {
             isBloodied = true;
             bloodImg = setBloodImg(creature)
         }
@@ -95,9 +92,8 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
     }
 
     let isGlobal = creature.type === "global"
-    let isDead = (currentHp <= 0 || creature.exhaustionLvl === 6) && !isGlobal
+    let isDead = (creature.hit_points_current <= 0 || creature.exhaustionLvl === 6) && !isGlobal
     let showHp = (isPlayer && foundHp) || (!isPlayer && showEnemyHp)
-    let showTempHp = creature.tempHp > 0
     let showDeathSaves = isPlayer && foundHp && (creature.deathSaves.successCount >= 0 && creature.deathSaves.failCount >= 0)
 
     if(hideDeadEnemies && !isPlayer  && isDead ) {
@@ -116,14 +112,7 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
                         <div>
                         <div className='image-container'>
                             <img className="image" src={creature.avatarUrl} alt={name} />
-                            <div
-                                className="imageSmoke"
-                                // style={{
-                                //     background: isTurn
-                                //     ? 'linear-gradient(to top, hsl(197, 100%, 66%), #00000000)' // Light blue
-                                //     : 'linear-gradient(to top, #0000009c, #00000000)'
-                                // }}
-                            />                            
+                            <div className="imageSmoke"/>                            
                             {isDead && !isGlobal && (
                                 <>
                                     <img className="image overlay-skull" src={skullpng} alt="" />
@@ -159,10 +148,10 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
                         {showHp && ( 
                             <div className="hp-box" style={hpBoxShadow}>
                                 <div className="hp">
-                                    {currentHp}/{creature.maxHp}
+                                    {creature.hit_points_current}/{creature.hit_points}
                                     
-                                    {showTempHp && ( 
-                                        <span className='tempHp'>(+{creature.tempHp})</span>
+                                    {creature.hit_points_temp > 0 && ( 
+                                        <span className='tempHp'>(+{creature.hit_points_temp})</span>
                                     )}
                                 </div>
                             </div>

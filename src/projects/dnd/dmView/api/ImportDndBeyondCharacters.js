@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { getMaxHp } from '../../playerView/api/getMaxHp';
+import { getSkillDetails } from '../../playerView/api/getSkillDetails';
 import { proxyUrl, generateUniqueId } from '../constants';
-
+import DndBCharacterToDmBMapper from '../mappers/DndBCharacterToDmBMapper'
 export const ImportDndBeyondCharacters = async (playerIds) => {
     console.log("Import Character-service in ImportDndBeyondCharacters");
     let i = 1;
@@ -19,36 +19,10 @@ export const ImportDndBeyondCharacters = async (playerIds) => {
             });
 
             const resData = response.data.data;
-            let maxHp = getMaxHp(resData);
-
             console.log(i.toString() + "/" + playerIds.length + " " + resData.name + " retrieved");
             i++;
-            let exLvl = resData.conditions.find(obj => obj.id === 4);
-            return {
-                avatarUrl: resData.decorations.avatarUrl || 'https://www.dndbeyond.com/Content/Skins/Waterdeep/images/icons/monsters/humanoid.jpg',
-                guid: generateUniqueId(),
-                link: "",
-                id: playerId.toString(),
-                name: resData.name,
-                path: "",
-                searchHint: "",
-                from: "dnd_b",
-                dnd_b: {
-                    type: "player",
-                    name: resData.name,
-                    status: response.status,
-                    id: playerId.toString(),
-                    hit_points: maxHp,
-                    hit_points_current: maxHp - resData.removedHitPoints,
-                    maxHpBonus: resData.bonusHitPoints,
-                    maxHpOverride: resData.overrideHitPoints,
-                    removedHp: resData.removedHitPoints,
-                    hit_points_temp: resData.temporaryHitPoints,
-                    exhaustionLvl: exLvl ? exLvl.level : 0,
-                    deathSaves: resData.deathSaves,
-                    initiative: 0
-                }
-            };
+            let skillDetails = getSkillDetails(resData)
+            return DndBCharacterToDmBMapper(resData, skillDetails)
         } catch (error) {
             console.log(i.toString() + "/" + playerIds.length);
             i++;

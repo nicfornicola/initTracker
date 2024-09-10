@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getMaxHp } from './getMaxHp';
+// import { getMaxHp } from './getMaxHp';
 import { proxyUrl } from '../constants';
 
 export const getCharacterStats = async (playerIds) => {
@@ -24,7 +24,7 @@ export const getCharacterStats = async (playerIds) => {
                 });
 
                 const resData = response.data.data;
-                let maxHp = getMaxHp(resData); // Ensure getMaxHp is used correctly
+                // let maxHp = getMaxHp(resData); // Ensure getMaxHp is used correctly
 
                 console.log(i.toString() + "/" + playerIds.length + " " + resData.name + " retrieved")
                 i++;
@@ -32,7 +32,7 @@ export const getCharacterStats = async (playerIds) => {
                 return {
                     status: response.status,
                     id: resData.id.toString(),
-                    maxHp: maxHp,
+                    // maxHp: maxHp,
                     maxHpBonus: resData.bonusHitPoints,
                     maxHpOverride: resData.overrideHitPoints,
                     removedHp: resData.removedHitPoints,

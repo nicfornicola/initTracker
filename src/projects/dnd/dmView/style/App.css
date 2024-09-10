@@ -170,6 +170,10 @@ input {
     width: 90%;
 }
 
+.encounterTitleEditContainer .nameInput {
+    font-size: larger;
+}
+
 .encounterTitle {
     border-bottom: 1px solid #ccc;
     cursor: pointer;
@@ -181,8 +185,7 @@ input {
     visibility: hidden; 
 }
 
-.encounterTitle:hover + .encounterTitleEdit,
-.encounterTitleEdit:hover {
+.nameInput:hover + .encounterTitleEdit {
     visibility: visible; 
     cursor: pointer;
 }

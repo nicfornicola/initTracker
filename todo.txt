@@ -41,17 +41,13 @@ playerview
     add x button to remove uploadedLinks and images
     add button to resize images and add more options to move their positions
     different tiers of blood to match what is going on in game, light, med, heavy blood
+    do a little loading wheel to show next refresh on dnd_b mode
 
 
 BROKEN 
 ----
-saving new encounter on refresh? which freezes and crashes stuff
-Same creatures share hp no for some reason when damaging and healing
-on autorefresh dmb when no dnd_b avatar gets bugged because I dont set a default
 enironment stat card is SO fucked
-when bad guys are in list, play is available even if not saved or no name
 auto refresh timer broken on auto refresh for DMB
-on enemy show do not auto refresh unless you have dnd_beyond enemies
 dnd_b imports show their hp from time of import and then auto refresh to the current amount - fix is hit a refresh on page load to make sure its up to date 
 somtimes can have two encounter of the same name
 
@@ -83,6 +79,11 @@ add environment token under encounter list
 
 FIXED
 ----
+on enemy show do not auto refresh unless you have dnd_beyond enemies
+when bad guys are in list, play is available even if not saved or no name
+on autorefresh dmb when no dnd_b avatar gets bugged because I dont set a default
+saving new encounter on refresh? which freezes and crashes stuff
+Same creatures share hp no for some reason when damaging and healing
 dnd_b imports reset to their SAVED LOCAL hp when any other saved local thing is updated, need to save new data to local when refresh
 DMB player hp doesnt change when updated
 

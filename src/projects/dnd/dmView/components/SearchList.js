@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import {monsterList, imagesAvailable, proxyUrl, generateUniqueId} from '../constants'
 import axios from 'axios';
 import StatBlock from './StatBlock';
+import Open5eToDmBMapper from '../mappers/Open5eToDmBMapper'
 
 // Function to get the image URL based on the type
 const getImageUrl = (creature) => {
@@ -42,7 +43,7 @@ const getImageUrl = (creature) => {
     }
 }
 
-const SearchList = ({setCurrentEncounterCreatures}) => {
+const SearchList = ({setCurrentEncounter}) => {
     const [searchSelectedCreature, setSearchSelectedCreature] = useState(null);
     const [itemsToShow, setItemsToShow] = useState(15);
     const [filteredItems, setFilteredItems] = useState([]);
@@ -131,19 +132,16 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
         }
     };
 
-    // Sets the selected creature in search bar on left and gets the data from open5e
+    // Set the selected creature in search bar on left and gets the data from open5e
     const handleSearchSelectCreature = async (creature, action, event) => {
         event.stopPropagation();
+
         try {
-            if('open5e' in creature) {
-                handleAddCreatureToEncounter(creature, action);
-            } else {
-                await axios.get(creature.link).then(res => {
-                    creature.open5e = res.data;
-                    handleAddCreatureToEncounter(creature, action)
-                    return creature
-                })
-            }
+            let selectedCreature = await axios.get(creature.link).then(res => {
+                return Open5eToDmBMapper(res.data, creature.avatarUrl)
+            })
+
+            handleAddCreatureToEncounter(selectedCreature, action)
 
         } catch (error) {
             console.log(error)
@@ -151,20 +149,12 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
     };
 
     const handleAddCreatureToEncounter = (creature, action) => {
-        let appendedOpen5e = {...creature.open5e,
-                        name_default: creature.open5e.name,
-                        hit_points_default: creature.open5e.hit_points,
-                        hit_points_current: creature.open5e.hit_points,
-                        hit_points_temp: 0,
-                        hit_points_override: 0,
-                        initiative: 0,
-                        last_damage: null
+        let newCreature = {...creature, guid: generateUniqueId()}
+
+        if(action === "add") {
+            console.log("Creature added", creature)
+            setCurrentEncounter(prev => ({...prev, currentEncounterCreatures: [...prev.currentEncounterCreatures, newCreature]}));
         }
-
-        let newCreature = {...creature, guid: generateUniqueId(), open5e: appendedOpen5e}
-
-        if(action === "add")
-            setCurrentEncounterCreatures(prev => [...prev, newCreature]);
         else if(action === "select")
             setSearchSelectedCreature(newCreature);
     };
@@ -211,7 +201,7 @@ const SearchList = ({setCurrentEncounterCreatures}) => {
             </div>
             <div className='column animated-label'>
             {searchSelectedCreature ? (
-                <StatBlock creature={searchSelectedCreature.open5e} img={searchSelectedCreature.avatarUrl} closeFunction={() => setSearchSelectedCreature(false)}/>
+                <StatBlock creature={searchSelectedCreature} img={searchSelectedCreature.avatarUrl} closeFunction={() => setSearchSelectedCreature(false)}/>
             ) : (
                 <>{'No Search Creature Selected'}</>
             )}

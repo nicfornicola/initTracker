@@ -4,9 +4,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import FileUpload from './FileUpload';
 import GridMap from './GridMap';
 
-
-const ImagePopup = ({handleSaveEncounter, uploadIconCreature, setCurrentEncounterCreatures, currentEncounterCreatures, setUploadIconMenu, uploadIconMenu}) => {
-
+const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, currentEncounterCreatures, setUploadIconMenu, uploadIconMenu}) => {
     const [uploadedIcons, setUploadedIcons] = useState(JSON.parse(localStorage.getItem('uploadedIcons')) || []);
     const dialogRef = useRef(null);
 
@@ -30,25 +28,26 @@ const ImagePopup = ({handleSaveEncounter, uploadIconCreature, setCurrentEncounte
                 creature.avatarUrl = src
             }
         });
-        setCurrentEncounterCreatures([...currentEncounterCreatures])
-        handleSaveEncounter(currentEncounterCreatures)
-
+        setCurrentEncounter(prev => ({...prev, currentEncounterCreatures: [...prev.currentEncounterCreatures]}))
     };
 
   return (
         <Dialog open={uploadIconMenu} onClose={() => setUploadIconMenu(false)} ref={dialogRef} >
             <DialogContent >
-                {uploadedIcons.length > 0 && (
+                {uploadedIcons.length > 0 ? (
                     <>     
                         <label htmlFor="grid" className='uploadedTitle'>Uploaded Images</label>
                         <hr/>
                         <GridMap imageArr={uploadedIcons} handleClick={(handleClick)}/>
                     </>
+                ) : (
+                    <div>Uploaded Images will apear here...</div>
                 )}
+
             </DialogContent>
             <FileUpload uploadedFiles={uploadedIcons} setUploadedFiles={setUploadedIcons}/>
         </Dialog>
   );
 };
 
-export default ImagePopup;
+export default UploadMonsterImage;
