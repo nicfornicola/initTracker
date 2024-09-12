@@ -172,7 +172,7 @@ export const getSkillDetails = (data) => {
         inventory.push(itemDictionary);
     });
 
-    return {maxHp, armorClass, inventory};
+    return {maxHp, armorClass, inventory, skills_json_array};
 };
 
 export default getSkillDetails;

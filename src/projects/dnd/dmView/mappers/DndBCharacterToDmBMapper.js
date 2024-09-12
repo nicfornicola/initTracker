@@ -2,7 +2,7 @@ import {generateUniqueId } from '../constants';
 
 export const DndBCharacterToDmBMapper = async (dndBeyondRes, skillDetails) => {
 
-    let {maxHp, armorClass, inventory} = skillDetails;
+    let {maxHp, armorClass, inventory, skills_json_array} = skillDetails;
     let calculatedHp = dndBeyondRes.overrideHitPoints ? dndBeyondRes.overrideHitPoints : maxHp;
     console.log("=============")
     console.log(dndBeyondRes)
@@ -37,6 +37,7 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, skillDetails) => {
         "inspiration": dndBeyondRes.inspiration,
         "armor_class": armorClass,
         "inventory": inventory,
+        "skills": skills_json_array,
     }
 };
 
