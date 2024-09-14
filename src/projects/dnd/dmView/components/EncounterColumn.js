@@ -1,15 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import StatBlock from './StatBlock';
-import { generateUniqueId, dummyDefault, envObject, setLocalPlayerViewEncounter, sortCreatureArray, INIT_ENCOUNTER_NAME, INIT_ENCOUNTER } from '../constants';
+import { generateUniqueId, dummyDefault, envObject, setLocalPlayerViewEncounter, sortCreatureArray, INIT_ENCOUNTER_NAME } from '../constants';
 import EncounterListTopInfo from './EncounterListTopInfo'
 import DropdownMenu from './DropdownMenu';
 import EncounterListTitle from './EncounterListTitle'
 import EncounterList from './EncounterList'
 import UploadMonsterImage from './UploadMonsterImage'
 
+// function compareObjects(obj1, obj2) {
+//     let differences = [];
+
+//     // Compare properties from obj1 to obj2
+//     for (let key in obj1) {
+//         if (obj1.hasOwnProperty(key)) {
+//             if (obj1[key] !== obj2[key]) {
+//                 differences.push({
+//                     key: key,
+//                     obj1Value: obj1[key],
+//                     obj2Value: obj2[key] || "Property not present in obj2"
+//                 });
+//             }
+//         }
+//     }
+
+//     // Check for properties in obj2 that are not in obj1
+//     for (let key in obj2) {
+//         if (obj2.hasOwnProperty(key) && !(key in obj1)) {
+//             differences.push({
+//                 key: key,
+//                 obj1Value: "Property not present in obj1",
+//                 obj2Value: obj2[key]
+//             });
+//         }
+//     }
+
+//     return differences;
+// }
+
 function addToLocalSavedEncounter(jsonArray, newEncounter) {
     if(jsonArray === null) jsonArray = []
-    
+    console.log("-----")
+    console.log(jsonArray)
+    console.log(newEncounter)
     
     // Find the index of the existing object with the same encounter guid
     const index = jsonArray.findIndex(item => item['guid'] === newEncounter['guid']);
@@ -17,6 +49,8 @@ function addToLocalSavedEncounter(jsonArray, newEncounter) {
     let saveType = "Saved Changes to Existing - "
     if (index !== -1) {
         // Overwrite the existing object if its found
+        // const result = compareObjects(jsonArray[index], newEncounter);
+        // console.table(result);    
         jsonArray[index] = newEncounter;
     } else {
         // Add the new object to the array if nothing exists already
@@ -30,15 +64,13 @@ function addToLocalSavedEncounter(jsonArray, newEncounter) {
 
     return jsonArray;
 }
-const EncounterColumn = ({currentEncounter, setCurrentEncounter, localSavedEncounters, showSearchList}) => {
+const EncounterColumn = ({currentEncounter, handleLoadEncounter, setCurrentEncounter, savedEncounters, setSavedEncounters, showSearchList, handleNewEncounter, setEncounterGuid}) => {
     console.count("EncounterColumn")
 
-    const [encounterGuid, setEncounterGuid] = useState(currentEncounter.guid);
     const [roundNum, setRoundNum] = useState(currentEncounter.roundNum);
     const [turnNum, setTurnNum] = useState(currentEncounter.roundNum);
 
     const [encounterSelectedCreature, setEncounterSelectedCreature] = useState(null);
-    const [savedEncounters, setSavedEncounters] = useState(localSavedEncounters);
     const [showSaveMessage, setShowSaveMessage] = useState(false);
     const [saveMessageColor, setSaveMessageColor] = useState("");
     const [isSaveDisabled, setIsSaveDisabled] = useState(currentEncounter.currentEncounterCreatures.length === 0);
@@ -46,22 +78,6 @@ const EncounterColumn = ({currentEncounter, setCurrentEncounter, localSavedEncou
     const [uploadIconCreature, setUploadIconCreature] = useState(null);
 
     const [nameChange, setNameChange] = useState(false)
-
-    useEffect(() => {
-        if(encounterGuid !== currentEncounter.guid)
-            setEncounterGuid(currentEncounter.guid)
-    // eslint-disable-next-line
-    }, [currentEncounter.guid]);      
-    
-    useEffect(() => {
-        if(encounterGuid !== currentEncounter.guid)
-            setCurrentEncounter(prev => ({...prev, guid: encounterGuid}))
-    // eslint-disable-next-line
-    }, [encounterGuid]);  
-    
-    useEffect(() => {
-        setSavedEncounters(localSavedEncounters)
-    }, [localSavedEncounters]);
 
     useEffect(() => {
         if(nameChange) {
@@ -90,19 +106,7 @@ const EncounterColumn = ({currentEncounter, setCurrentEncounter, localSavedEncou
             setEncounterSelectedCreature(null)
         }        
 
-    };
-
-    const handleLoadEncounter = (encounter) => {
-        console.log("%cLoaded: " + encounter.encounterName, "background: #fdfd96;")
-        setCurrentEncounter({...encounter})
-    };    
-    
-    const handleNewEncounter = () => {
-        console.log("%c=== New Encounter ===", "background: green;")
-        let newGuid = generateUniqueId();
-        setCurrentEncounter({...INIT_ENCOUNTER, guid: newGuid})
-        setEncounterGuid(newGuid)
-    };
+    };  
 
     const handleSaveEncounter = () => {
         if(currentEncounter.encounterName !== INIT_ENCOUNTER_NAME) {
@@ -114,16 +118,19 @@ const EncounterColumn = ({currentEncounter, setCurrentEncounter, localSavedEncou
                     turnNum: turnNum,
                     currentEncounterCreatures: currentEncounter.currentEncounterCreatures
                 }
+            
 
-            setLocalPlayerViewEncounter(newEncounter)
             if(newEncounter.guid !== currentEncounter.guid) {
+                console.log("CHANGED GUID", newEncounter.guid)
                 setEncounterGuid(newEncounter.guid) 
             }
+            
             // Overwrites if exists, appends if new
             const updatedSavedEncountersList = addToLocalSavedEncounter(savedEncountersList, newEncounter);
             // Setting this list to update the encounter list
             setSavedEncounters(updatedSavedEncountersList)
             setShowSaveMessage(true);
+            setLocalPlayerViewEncounter(newEncounter)
             setTimeout(() => {
                 setShowSaveMessage(false);
             }, 800); // Hide the message after 5 seconds

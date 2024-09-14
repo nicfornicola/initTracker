@@ -3,6 +3,12 @@ import '../style/App.css';
 import SearchList from './SearchList.js';
 import EncounterColumn from './EncounterColumn.js';
 import SideMenu from './SideMenu.js';
+import InputEncounterId from './InputEncounterId.js';
+import InputCharacterId from './InputCharacterId.js';
+import NewEncounterButton from './NewEncounterButton.js';
+import { generateUniqueId, INIT_ENCOUNTER} from '../constants';
+import DropdownMenu from './DropdownMenu.js';
+
 
 function getLocalStorageSize() {
     let totalSize = 0;
@@ -22,14 +28,76 @@ function getLocalStorageSize() {
 const DmView = ({currentEncounter, setCurrentEncounter, uploadLocalStorage, localSavedEncounters}) => {
     getLocalStorageSize()
     const [showSearchList, setShowSearchList] = useState(true);
+    const [onFirstLoad, setOnFirstLoad] = useState(true);
+    const [encounterGuid, setEncounterGuid] = useState(currentEncounter.guid);
+    const [savedEncounters, setSavedEncounters] = useState(localSavedEncounters);
+
+    const handleNewEncounter = () => {
+        console.log("%c=== New Encounter ===", "background: green;")
+        let newGuid = generateUniqueId();
+        setCurrentEncounter({...INIT_ENCOUNTER, guid: newGuid})
+        setEncounterGuid(newGuid)
+    };
+
+    useEffect(() => {
+        if(onFirstLoad && currentEncounter.guid !== "")
+            setOnFirstLoad(false)
+        // eslint-disable-next-line
+    }, [currentEncounter]);    
+
+    useEffect(() => {
+        setSavedEncounters(localSavedEncounters)
+        // eslint-disable-next-line
+    }, [localSavedEncounters]); 
+
+    const handleLoadEncounter = (encounter) => {
+        console.log("%cLoaded: " + encounter.encounterName, "background: #fdfd96;")
+        setCurrentEncounter({...encounter})
+    };  
+
     return (
         <div className='dmView'>
-            <SideMenu uploadLocalStorage={uploadLocalStorage} setCurrentEncounter={setCurrentEncounter} showSearchList={showSearchList} setShowSearchList={setShowSearchList}/>
-            {showSearchList &&  
-                <SearchList setCurrentEncounter={setCurrentEncounter}/>
-            }
-            <EncounterColumn currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} localSavedEncounters={localSavedEncounters} showSearchList={showSearchList}/>
-        </div>
+            { onFirstLoad ? ( 
+                <div className='firstLoadMenu'>
+                    <div className='firstLoadOptions'>
+                        DmBuddy.com
+                        <span>
+                            Encounter Builder, Player View, Dnd Beyond Importing, Home Brew Focused
+                        </span>
+
+                    </div>
+                    <div className='firstLoadOptions'>
+                    </div>
+
+                    <div className='firstLoadOptions'>
+                        Create a New Encounter using DmBuddy's Encounter Builder
+                        <NewEncounterButton handleNewEncounter={handleNewEncounter} />  
+                        {savedEncounters.length !== 0 && 
+                            <DropdownMenu setSavedEncounters={setSavedEncounters} savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter}/> 
+                        }
+                        </div>
+
+                    
+                    <div className='firstLoadOptions'>
+                        Import an encounter built in DnD Beyond
+                        <InputEncounterId setCurrentEncounter={setCurrentEncounter}/>
+                        OR
+                        <span>Import Dnd Beyond Player Characters</span>
+                        <InputCharacterId setCurrentEncounter={setCurrentEncounter}/>
+
+                    </div>
+
+                </div>
+            ) : ( 
+                <>
+                    <SideMenu uploadLocalStorage={uploadLocalStorage} setCurrentEncounter={setCurrentEncounter} showSearchList={showSearchList} setShowSearchList={setShowSearchList}/>
+                    {showSearchList &&  
+                        <SearchList setCurrentEncounter={setCurrentEncounter}/>
+                    }
+                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters} setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} setEncounterGuid={setEncounterGuid} localSavedEncounters={localSavedEncounters} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter}/>
+                </>
+            )}
+             </div>
     );
 };
 

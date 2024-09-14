@@ -29,6 +29,7 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         "type": "monster",
         "creature_type": open5eData.type,
         "inspiration": false,
+        "hidden": false
 
     }
 };

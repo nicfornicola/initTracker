@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getSkillDetails } from '../../playerView/api/getSkillDetails';
-import { proxyUrl, generateUniqueId } from '../constants';
+import { proxyUrl } from '../constants';
 import DndBCharacterToDmBMapper from '../mappers/DndBCharacterToDmBMapper'
 export const ImportDndBeyondCharacters = async (playerIds) => {
     console.log("Import Character-service in ImportDndBeyondCharacters");
@@ -26,7 +26,6 @@ export const ImportDndBeyondCharacters = async (playerIds) => {
         } catch (error) {
             console.log(i.toString() + "/" + playerIds.length + " failed! (" + playerId +")");
             i++;
-            console.log(error)
             if (error.response) {
                 if (error.response.status === 404) {
                     alert(`Could not find ID: '${playerId}' \n\nDnd Beyond Error: ${error.response.status}`);

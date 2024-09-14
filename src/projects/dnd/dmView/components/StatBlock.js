@@ -106,6 +106,7 @@ function addSign(modNumber) {
 }
 
 const StatBlock = ({creature, img, closeFunction }) => {
+    console.log(creature)
     return (
             <div className='statBlock'>
                 <div className='infoContainer'>

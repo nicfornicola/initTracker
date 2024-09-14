@@ -2,10 +2,6 @@ import {generateUniqueId } from '../constants';
 
 export const DndBMonsterToDmBMapper = async (monsterRes, encounterMonsterRes) => {
 
-    console.log(monsterRes)
-    console.log(encounterMonsterRes)
-    console.log("===")
-
     return {
         "name": encounterMonsterRes.name,
         "name_default": encounterMonsterRes.name,
@@ -31,6 +27,8 @@ export const DndBMonsterToDmBMapper = async (monsterRes, encounterMonsterRes) =>
         "inventory": [],
         "movement": monsterRes.movements,
         "skills": monsterRes.stats,
+        "hidden": false
+
     }
 };
 

@@ -4,12 +4,12 @@ import {React, useState, useEffect} from 'react';
 import { Route, Routes } from 'react-router-dom';
 import PlayerPage from './projects/dnd/playerView/components/PlayerPage';
 import DmView from './projects/dnd/dmView/components/DmView';
-import { refreshMonsterProfiles, refreshPlayerProfiles } from './projects/dnd/dmView/refresh/refresh';
+import { refreshMonsterProfiles } from './projects/dnd/dmView/refresh/refresh';
 import Blog from './projects/blog/components/Blog';
 import Pantheon from './projects/king/components/Pantheon';
 
-import background1 from "./projects/dnd/playerView/pics/backgrounds/fallenCastleBigTree.jpg"
-import bloodIcon from "./projects/dnd/playerView/pics/icons/bloodIcon.png"
+// import background1 from "./projects/dnd/playerView/pics/backgrounds/fallenCastleBigTree.jpg"
+// import bloodIcon from "./projects/dnd/playerView/pics/icons/bloodIcon.png"
 import {INIT_ENCOUNTER} from './projects/dnd/dmView/constants'
 import HowTo from './projects/dnd/dmView/components/HowToDMB';
 import { ImportDndBeyondCharacters } from './projects/dnd/dmView/api/ImportDndBeyondCharacters'
@@ -23,26 +23,24 @@ function App() {
     const [autoRefreshDndbPlayers, setAutoRefreshDndbPlayers] = useState(false);
     const [autoRefreshDndbMonsters, setAutoRefreshDndbMonsters] = useState(false);
     const [encounterStarted, setEncounterStarted] = useState(false);
-    const [autoRefreshDMB, setAutoRefreshDMB] = useState(false);
     const [refreshCheck, setRefreshCheck] = useState(false);
     const [refreshPlayersCheck, setRefreshPlayersCheck] = useState(false);
     const [refreshMonstersCheck, setRefreshMonstersCheck] = useState(false);
-    const [backGroundImage, setBackGroundImage] = useState(background1);
-    const [youtubeLink, setYoutubeLink] = useState("");
-    const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
-    const [loading, setLoading] = useState(true);
 
-    const [hideEnemies, setHideEnemies] = useState(true);
-    const [hideDeadEnemies, setHideDeadEnemies] = useState(false);
-    const [recentlyRefreshed, setRecentlyRefreshed] = useState(false);
-    const [enemyBloodToggleType, setEnemyBloodToggleType] = useState(0);
-    const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(bloodIcon);
-    const [turnNum, setTurnNum] = useState(0);
-    const [roundNum, setRoundNum] = useState(0);
-    const [gameId, setGameID] = useState(0);
-    const playerViewEncounterID = JSON.parse(localStorage.getItem('playerViewEncounter'))?.id
-    const isOfflineMode = window.location.href.includes("playerView");
+    // const [error, setError] = useState(false);
+    // const [errorMessage, setErrorMessage] = useState("");
+    // const [turnNum, setTurnNum] = useState(0);
+    // const [roundNum, setRoundNum] = useState(0);
+    // const [hideEnemies, setHideEnemies] = useState(true);
+    // const [hideDeadEnemies, setHideDeadEnemies] = useState(false);
+    // const [recentlyRefreshed, setRecentlyRefreshed] = useState(false);
+    // const [enemyBloodToggleType, setEnemyBloodToggleType] = useState(0);
+    // const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(bloodIcon);
+    // const [backGroundImage, setBackGroundImage] = useState(background1);
+    // const [youtubeLink, setYoutubeLink] = useState("");
+    // const [loading, setLoading] = useState(true);
+    // const [autoRefreshDMB, setAutoRefreshDMB] = useState(false);
+
 
 
     const refreshPlayerProfiles = async () => {
@@ -90,8 +88,8 @@ function App() {
             return updatedCreatures;
         } catch (error) {
             console.log(error)
-            setErrorMessage(error)
-            setError(true)
+            // setErrorMessage(error)
+            // setError(true)
         }  
     };
 
@@ -119,13 +117,11 @@ function App() {
     useEffect(() => {
         // Check current encounter to see if we need to auto refresh from DNB_B
         console.log("currentEncounter App.js effect...")
-        console.log(currentEncounter.currentEncounterCreatures)
         if(currentEncounter.currentEncounterCreatures) {
             let foundPlayer = false;
             let foundMonster = false;
 
             currentEncounter.currentEncounterCreatures.forEach(creature => {
-                console.log("creature", creature)
                 if(creature.from === "dnd_b") {
                     console.log("dnd_b found...")
                     foundPlayer = true;
@@ -135,7 +131,7 @@ function App() {
                 }
             });
             
-            console.log("foundPlayer:", foundPlayer)
+            console.log("Found Player:", foundPlayer)
             setAutoRefreshDndbPlayers(foundPlayer)
             setAutoRefreshDndbMonsters(foundMonster)
         }
@@ -146,8 +142,8 @@ function App() {
                 const updatedPlayerView = JSON.parse(localStorage.getItem('playerViewEncounter'));
                 console.log("playerviewupdated", updatedPlayerView)
                 setPlayerView({...updatedPlayerView});
-                setRoundNum(updatedPlayerView.roundNum)
-                setTurnNum(updatedPlayerView.turnNum)
+                // setRoundNum(updatedPlayerView.roundNum)
+                // setTurnNum(updatedPlayerView.turnNum)
             }
         }
         window.addEventListener('storage', getRefreshedLocalEncounter);
@@ -155,7 +151,7 @@ function App() {
         let intervalId = 0
         // Refresh every 1 or 5 minutes
         if (autoRefreshDndbPlayers || autoRefreshDndbMonsters) {
-            let refreshTimer = encounterStarted ? .2 : .2;
+            let refreshTimer = encounterStarted ? 1 : 10;
             console.log("Auto Refresh in Minutes", refreshTimer)
 
             intervalId = setInterval(() => {
@@ -214,14 +210,10 @@ function App() {
     return (
         <Routes>
             <Route path="/" element={<DmView currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} uploadLocalStorage={uploadLocalStorage} localSavedEncounters={localSavedEncounters}/>}/>
-            
             <Route path="/playerView" element={<PlayerPage playerView={playerView} />}/>
-            <Route path="/blog" element={<Blog/>}/>
-            <Route path="/dnd/:gameId?" element={<PlayerPage/>} />
-            <Route path="/dnd/dm/" element={<DmView/>} />
-            <Route path="/dnd/dm/playerView" element={<PlayerPage/>} />
             <Route path="/help" element={<HowTo/>} />
             <Route path="/king/" element={<Pantheon />} />
+            <Route path="/blog" element={<Blog/>}/>
             <Route path="/max/" element={<div style={{fontSize: '50px'}}>129114069,125681347,129132878,129107853,125382402</div>} />
         </Routes>
     );

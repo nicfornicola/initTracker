@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import EncounterListItem from './EncounterListItem'
-import EncounterListItemDB from './EncounterListItemDB'
 import {sortCreatureArray, INIT_ENCOUNTER_NAME} from '../constants'
 
 const EncounterList = ({currentEncounter, setCurrentEncounter, handleSaveEncounter, turnNum, handleUploadMonsterImage, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX}) => {

@@ -91,7 +91,7 @@ export const getSkillDetails = (data) => {
     console.log("skills", skills_json_array)
 
     // =================
-    let nakedArmorClass = 10 + skills_json_array[1].modifier;
+    // let nakedArmorClass = 10 + skills_json_array[1].modifier;
     let armorClass = 0;
 
     let shieldAcOnDexSaves = { shieldAc: 0, active: false, restrictions: [] };

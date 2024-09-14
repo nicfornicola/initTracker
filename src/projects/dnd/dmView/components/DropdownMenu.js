@@ -12,22 +12,18 @@ const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter
         localStorage.setItem('savedEncounters', JSON.stringify(updatedEncounterList));
     }
     
+    const handleClickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setIsOpen(false);
+        }
+    };
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setIsOpen(false);
-            }
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutside);
         };
-    
-        if (isOpen) {
-            document.addEventListener('click', handleClickOutside);
-        } else {
-            document.removeEventListener('click', handleClickOutside);
-        }
-    
-        return () => document.removeEventListener('click', handleClickOutside);
-    }, [isOpen]);
+      }, []);
 
     const handleOptionClick = (encounter) => {
         setIsOpen(false);
@@ -40,13 +36,13 @@ const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter
     }
 
     return (
-        <div className="dropdown">
-            <button ref={dropdownRef} className="dmViewButton" onClick={() => setIsOpen(!isOpen)}>
+        <div className="dropdown" ref={dropdownRef}>
+            <button className="dmViewButton" onClick={() => setIsOpen(!isOpen)}>
                 {buttonString}
             </button>
-            {isOpen && savedEncounters && (
-                <ul className="dropdown-menu animatedMenu">
-                    {savedEncounters.map((encounter, index) => (
+        {isOpen && savedEncounters.length !== 0 && (
+          <ul className="dropdownMenu">
+            {savedEncounters.map((encounter, index) => (
                         <li
                             key={encounter.encounterName + index}
                             onClick={() => handleOptionClick(encounter)}
@@ -58,9 +54,9 @@ const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter
                             </button>
                         </li>
                     ))}
-                </ul>
-            )}
-        </div>
+          </ul>
+        )}
+      </div>
     );
 };
 

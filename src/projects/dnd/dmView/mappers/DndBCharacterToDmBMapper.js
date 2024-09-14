@@ -4,12 +4,6 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, skillDetails) => {
 
     let {maxHp, armorClass, inventory, skills_json_array} = skillDetails;
     let calculatedHp = dndBeyondRes.overrideHitPoints ? dndBeyondRes.overrideHitPoints : maxHp;
-    console.log("=============")
-    console.log(dndBeyondRes)
-    console.log(maxHp)
-    console.log(armorClass)
-    console.log(inventory)
-    console.log("=============")
 
     return {
         "name": dndBeyondRes.name,
@@ -38,6 +32,8 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, skillDetails) => {
         "armor_class": armorClass,
         "inventory": inventory,
         "skills": skills_json_array,
+        "hidden": false
+
     }
 };
 

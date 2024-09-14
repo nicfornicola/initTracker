@@ -20,7 +20,6 @@ export const ImportDndBeyondMonsters = async (encounterMonsters) => {
             withCredentials: false, // Include credentials if needed
         });
         monstersRes = response.data.data;
-        console.log("?", monstersRes)
         encounterMonsters.forEach(encounterMonster => {
             const foundMonsterRes = monstersRes.find(monster => monster.id === encounterMonster.id);
 
@@ -39,7 +38,6 @@ export const ImportDndBeyondMonsters = async (encounterMonsters) => {
     const successfulResponses = allSettledResponses
         .filter(result => result.status === "fulfilled" && result.value !== null)
         .map(result => result.value);
-    console.log(successfulResponses)
 
     return successfulResponses
 
