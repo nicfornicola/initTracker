@@ -2,7 +2,7 @@ import '../style/App.css';
 import React, { useState, useRef, useEffect } from 'react';
 import { Dialog, DialogContent } from '@mui/material';
 import { backgroundImages } from '../constants';
-import FileUpload from './FileUpload';
+import FileUpload from '../../dmView/components/FileUpload';
 import TextInput from './TextInput';
 import GridMap from './GridMap';
 
@@ -31,11 +31,15 @@ const ImagePopup = ({setBackGroundImage, setYoutubeLink}) => {
         return () => { document.removeEventListener('mousedown', handleClickOutside); };
     }, [open]);
 
+    const handleSetBackground = (type, src) => {
+        localStorage.setItem("currentBackground", JSON.stringify({type: type, src: src}));
 
+    }
     const handleClick = (src, isYoutubeLink) => {
         if (isYoutubeLink) { // https://www.youtube.com/watch?v=H-bd0eyF-HA&ab_channel=AnimatedBattleMaps
             const videoId = src.split("vi/")[1].split('/max')[0];
             if (videoId) {
+                console.log("youtube")
                 let embedUrl = "https://www.youtube.com/embed/" + videoId
 
                 const params = {
@@ -52,14 +56,18 @@ const ImagePopup = ({setBackGroundImage, setYoutubeLink}) => {
                 embedUrl += `?${queryParams}`;
                 setYoutubeLink(embedUrl)
                 setBackGroundImage(null);
+                handleSetBackground("youtube", embedUrl)
+
 
             } else {
                 console.error('Invalid YouTube URL');
                 return;
             }
         } else {
+            console.log("background")
             setBackGroundImage(src);
             setYoutubeLink("")
+            handleSetBackground("image", src)
         }
 
     };
@@ -89,7 +97,7 @@ const ImagePopup = ({setBackGroundImage, setYoutubeLink}) => {
                 )}
                 <GridMap imageArr={backgroundImages} handleClick={handleClick}/>
             </DialogContent>
-            <FileUpload uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles}/>
+            <FileUpload uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles} storageKey={"uploadedBackgrounds"} />
             <TextInput setYoutubeLink={setYoutubeLink} setUploadedLinks={setUploadedLinks} uploadedLinks={uploadedLinks} setOpen={setOpen}/>
 
         </Dialog>

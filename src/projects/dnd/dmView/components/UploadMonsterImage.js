@@ -5,7 +5,7 @@ import FileUpload from './FileUpload';
 import GridMap from './GridMap';
 
 const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, currentEncounterCreatures, setUploadIconMenu, uploadIconMenu}) => {
-    const [uploadedIcons, setUploadedIcons] = useState(JSON.parse(localStorage.getItem('uploadedIcons')) || []);
+    const [uploadedAvatars, setUploadedAvatars] = useState(JSON.parse(localStorage.getItem('uploadedAvatars')) || []);
     const dialogRef = useRef(null);
 
     useEffect(() => {
@@ -34,18 +34,18 @@ const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, currentEnc
   return (
         <Dialog open={uploadIconMenu} onClose={() => setUploadIconMenu(false)} ref={dialogRef} >
             <DialogContent >
-                {uploadedIcons.length > 0 ? (
+                {uploadedAvatars.length > 0 ? (
                     <>     
                         <label htmlFor="grid" className='uploadedTitle'>Uploaded Images</label>
                         <hr/>
-                        <GridMap imageArr={uploadedIcons} handleClick={(handleClick)}/>
+                        <GridMap imageArr={uploadedAvatars} handleClick={(handleClick)}/>
                     </>
                 ) : (
                     <div>Uploaded Images will apear here...</div>
                 )}
 
             </DialogContent>
-            <FileUpload uploadedFiles={uploadedIcons} setUploadedFiles={setUploadedIcons}/>
+            <FileUpload uploadedFiles={uploadedAvatars} setUploadedFiles={setUploadedAvatars} storageKey={"uploadedAvatars"}/>
         </Dialog>
   );
 };

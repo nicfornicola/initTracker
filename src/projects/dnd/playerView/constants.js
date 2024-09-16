@@ -48,13 +48,6 @@ import background22 from "./pics/backgrounds/church.gif"
 import background23 from "./pics/backgrounds/adventureTime.gif"
 import background24 from "./pics/backgrounds/fire.gif"
 
-// export const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-export const proxyUrl = window.location.href.includes("dmbuddy.com") 
-                        ? 'https://nics-cors-anywhere-99e39b544c5d.herokuapp.com/' 
-                        : "";
-                        
-proxyUrl === "" ? console.log("No Proxy") : console.log("Using Proxy")
-
 export const backgroundImages = [
     background1,
     background2,
@@ -81,6 +74,13 @@ export const backgroundImages = [
     background23,
     background24
 ];
+
+// export const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+export const proxyUrl = window.location.href.includes("dmbuddy.com") 
+                        ? 'https://nics-cors-anywhere-99e39b544c5d.herokuapp.com/' 
+                        : "";
+                        
+proxyUrl === "" ? console.log("No Proxy") : console.log("Using Proxy")
 
 export const skills_long = ["Strength Score", "Dexterity Score", "Constitution Score", "Intelligence Score", "Wisdom Score", "Charisma Score"];
 export const skill_codes = [3520, 3521, 3522, 3523, 3524, 3525];

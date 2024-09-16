@@ -64,7 +64,7 @@ function addToLocalSavedEncounter(jsonArray, newEncounter) {
 
     return jsonArray;
 }
-const EncounterColumn = ({currentEncounter, handleLoadEncounter, setCurrentEncounter, savedEncounters, setSavedEncounters, showSearchList, handleNewEncounter, setEncounterGuid}) => {
+const EncounterColumn = ({currentEncounter, handleLoadEncounter, setCurrentEncounter, hideEnemies, setHideEnemies, savedEncounters, setSavedEncounters, handleRefresh,  refreshCheck, autoRefresh, showSearchList, handleNewEncounter, setEncounterGuid}) => {
     console.count("EncounterColumn")
 
     const [roundNum, setRoundNum] = useState(currentEncounter.roundNum);
@@ -241,7 +241,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, setCurrentEncou
                 <div className='infoContainer'>
                     <EncounterListTopInfo savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} encounterName={currentEncounter.encounterName} currentEncounter={currentEncounter} setSavedEncounters={setSavedEncounters} handleSaveEncounter={handleSaveEncounter} handleNewEncounter={handleNewEncounter} saveMessageColor={saveMessageColor} showSaveMessage={showSaveMessage} isSaveDisabled={isSaveDisabled}/>
                     <div className='encounterTitleContainer'>
-                        <EncounterListTitle setNameChange={setNameChange} handleTurnNums={handleTurnNums} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleStartEncounter={handleStartEncounter} handleAutoRollInitiative={handleAutoRollInitiative}/>
+                        <EncounterListTitle setNameChange={setNameChange} handleTurnNums={handleTurnNums} hideEnemies={hideEnemies} setHideEnemies={setHideEnemies} handleRefresh={handleRefresh} refreshCheck={refreshCheck} autoRefresh={autoRefresh} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleStartEncounter={handleStartEncounter} handleAutoRollInitiative={handleAutoRollInitiative}/>
                     </div>
                     {currentEncounter.currentEncounterCreatures.length ? (
                         <EncounterList currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleSaveEncounter={handleSaveEncounter} turnNum={turnNum} handleUploadMonsterImage={handleUploadMonsterImage} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} />

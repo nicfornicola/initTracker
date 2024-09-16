@@ -2,7 +2,7 @@ import '../style/App.css';
 import React, { useState, useEffect } from 'react';
 import Icon from './Icon';
 import Effect from './Effect';
-import ImagePopup from './BackgroundButton.js';
+import ImagePopup from './ImagePopup.js';
 import Timer from './Timer.js'
 import RefreshTimer from './RefreshTimer.js'
 import { getCreatures } from '../api/getCreatures.js';
@@ -32,7 +32,7 @@ import Tooltip from './Tooltip.js';
 import YouTubeEmbed from './YouTubeEmbed.js';
 import { generateUniqueId } from '../../dmView/constants.js';
 
-function PlayerPage({playerView}) {
+function PlayerPage({playerView, playerViewBackground, hideEnemies}) {
     const [creatures, setCreatures] = useState(playerView?.currentEncounterCreatures || []);
     const [clickedCreature, setClickedCreature] = useState(null);
     const [backGroundImage, setBackGroundImage] = useState(background1);
@@ -42,7 +42,6 @@ function PlayerPage({playerView}) {
     const [refreshCheck, setRefreshCheck] = useState(false);
     const [refreshPlayersCheck, setRefreshPlayersCheck] = useState(false);
     const [refreshMonstersCheck, setRefreshMonstersCheck] = useState(false);
-    const [hideEnemies, setHideEnemies] = useState(true);
     const [hideDeadEnemies, setHideDeadEnemies] = useState(false);
     const [recentlyRefreshed, setRecentlyRefreshed] = useState(false);
     const [foundCreatures, setFoundCreatures] = useState(null);
@@ -309,24 +308,6 @@ function PlayerPage({playerView}) {
             // refreshPlayerProfiles().then(passedCreatures => refreshMonsterProfiles(passedCreatures))
         }
     };
-
-    const handleHideEnemies = () => {
-        if(hideEnemies && !isOfflineMode) // If hideEnemies is true, then refresh before revealing enemies
-            handleRefresh(2)
-
-        setHideEnemies(!hideEnemies)
-    } 
-
-    const handleEnemyBlood = () => {
-        setEnemyBloodToggleType(enemyBloodToggleType === 2 ? 0 : enemyBloodToggleType + 1)
-        if(enemyBloodToggleType === 0) {
-            setEnemyBloodToggleImage(bloodIcon)
-        } else if(enemyBloodToggleType === 1) {
-            setEnemyBloodToggleImage(bloodIconSlash)
-        } else if(enemyBloodToggleType === 2) {
-            setEnemyBloodToggleImage(bloodIconMinus)
-        }
-    } 
     
     const handleMovePortraits = () => {
         if('bottom' in cardContainerStyle) {
@@ -355,9 +336,9 @@ function PlayerPage({playerView}) {
 
         }
     }
-    
+    console.log(playerView)
     return (
-        <div className="dndBackground" onClick={() => setClickedCreature(null)} style={{backgroundImage: backGroundImage ? `url(${backGroundImage})` : 'none'}}>
+        <div className="dndBackground" onClick={() => setClickedCreature(null)} style={{backgroundImage: playerViewBackground.type === "image" && playerViewBackground.src ? `url(${playerViewBackground.src})` : 'none'}}>
             {roundNum !== 0 && 
                 <div className='roundNum'>
                     <div className='option'>{roundNum}</div>
@@ -365,8 +346,8 @@ function PlayerPage({playerView}) {
                 </div>
             }
             
-            {youtubeLink !== "" && !backGroundImage && 
-                <YouTubeEmbed embedUrl={youtubeLink}/>
+            { playerViewBackground.type === "youtube" && 
+                <YouTubeEmbed embedUrl={playerViewBackground.src}/>
             }
 
             <div className="cardContainer" style={cardContainerStyle}>
@@ -374,33 +355,13 @@ function PlayerPage({playerView}) {
                     <div className='loading'>No Creatures found...</div>
                 ) : (
                     creatures.map((creature, index) => { 
-                        return ((creature.type === 'monster' || creature.type === 'global') && hideEnemies) 
+                        return ((creature.type === 'monster' || creature.type === 'global') && (creature.hidden || hideEnemies )) 
                         ? null
                         : <Icon key={uuidv4()} isTurn={turnNum === index+1} creature={creature} setClickedCreature={setClickedCreature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggleType={enemyBloodToggleType} />;
                     })
                 )}
 
             </div>
-            <div className='options-container'>                
-                <img className="option" src={arrowButton} alt={"change style"} onClick={handleMovePortraits} />
-                <Tooltip message={"Icon Position"}/>
-
-                <img className="option" src={enemyBloodToggleImage} alt={"enemy blood"} onClick={handleEnemyBlood} />
-                <Tooltip message={(enemyBloodToggleType === 0 ? "Show Enemy Blood" : (enemyBloodToggleType === 1 ? "Show Enemy HP" : "Hide Enemy Blood & HP"))}/>
-
-                <img className="option" src={hideEnemies ? eyeOpen : eyeClosed} alt={"showEnemies"} onClick={handleHideEnemies} />
-                <Tooltip message={(hideEnemies ? "Show" : "Hide") + " Enemies"}/>
-                { !hideEnemies && 
-                    <>
-                        <img className="option" src={hideDeadEnemies ? skullButton : skullButtonNot} alt={"showDeadEnemies"} onClick={() => setHideDeadEnemies(!hideDeadEnemies)} />
-                        <Tooltip message={(hideDeadEnemies ? "Show" : "Hide") + " Dead Enemies"}/>
-                    </>
-                }
-                <ImagePopup setBackGroundImage={setBackGroundImage} setYoutubeLink={setYoutubeLink} />
-                <Timer />
-                
-            </div>
-
 
             {clickedCreature && (
                 <div className='effectsBarContainer'>

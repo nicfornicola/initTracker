@@ -25,12 +25,14 @@ function getLocalStorageSize() {
     console.log(`Approximate size: ${sizeInMB.toFixed(2)} MB`);
 }
 
-const DmView = ({currentEncounter, setCurrentEncounter, uploadLocalStorage, localSavedEncounters}) => {
+const DmView = ({currentEncounter, setCurrentEncounter, handleRefresh, refreshCheck, autoRefresh, uploadLocalStorage, localSavedEncounters}) => {
     getLocalStorageSize()
     const [showSearchList, setShowSearchList] = useState(true);
     const [onFirstLoad, setOnFirstLoad] = useState(true);
     const [encounterGuid, setEncounterGuid] = useState(currentEncounter.guid);
     const [savedEncounters, setSavedEncounters] = useState(localSavedEncounters);
+    const [hideEnemies, setHideEnemies] = useState(true);
+
 
     const handleNewEncounter = () => {
         console.log("%c=== New Encounter ===", "background: green;")
@@ -53,6 +55,9 @@ const DmView = ({currentEncounter, setCurrentEncounter, uploadLocalStorage, loca
     const handleLoadEncounter = (encounter) => {
         console.log("%cLoaded: " + encounter.encounterName, "background: #fdfd96;")
         setCurrentEncounter({...encounter})
+        localStorage.setItem('hideEnemies', JSON.stringify(true));
+        setHideEnemies(true)
+
     };  
 
     return (
@@ -94,7 +99,7 @@ const DmView = ({currentEncounter, setCurrentEncounter, uploadLocalStorage, loca
                     {showSearchList &&  
                         <SearchList setCurrentEncounter={setCurrentEncounter}/>
                     }
-                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters} setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} setEncounterGuid={setEncounterGuid} localSavedEncounters={localSavedEncounters} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter}/>
+                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} hideEnemies={hideEnemies} setHideEnemies={setHideEnemies} setSavedEncounters={setSavedEncounters} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} encounterGuid={encounterGuid} setEncounterGuid={setEncounterGuid} localSavedEncounters={localSavedEncounters} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter}/>
                 </>
             )}
              </div>
