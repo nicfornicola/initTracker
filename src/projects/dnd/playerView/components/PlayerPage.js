@@ -2,41 +2,28 @@ import '../style/App.css';
 import React, { useState, useEffect } from 'react';
 import Icon from './Icon';
 import Effect from './Effect';
-import ImagePopup from './ImagePopup.js';
-import Timer from './Timer.js'
 import RefreshTimer from './RefreshTimer.js'
 import { getCreatures } from '../api/getCreatures.js';
 import { getMonstersAvatars } from '../api/getMonstersAvatars.js';
 import { getCharacterStats } from '../api/getCharacterStats.js';
-import HowTo from './HowTo.js';
 import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
 import refreshPlayers from '../pics/icons/refreshPlayers.png'; 
 import refresh from '../pics/icons/refresh.png'; 
 import refreshMonster from '../pics/icons/refreshMonsters.png'; 
 import greenCheck from '../pics/icons/check.png'; 
-import eyeClosed from '../pics/icons/eyeClosed.png'; 
-import eyeOpen from '../pics/icons/eyeOpen.png'; 
-import skullButton from '../pics/icons/skullButton.jpg'; 
-import skullButtonNot from '../pics/icons/skullButtonNot.jpg'; 
-import background1 from "../pics/backgrounds/fallenCastleBigTree.jpg"
 import upArrow from "../pics/icons/upArrow.png"
 import downArrow from "../pics/icons/downArrow.png"
 import noArrow from "../pics/icons/noArrow.jpg"
-import bloodIcon from "../pics/icons/bloodIcon.png"
-import bloodIconMinus from "../pics/icons/bloodIconMinus.png"
-import bloodIconSlash from "../pics/icons/bloodIconSlash.png"
 import { Profile } from '../helper/Profile.js' 
 import { sortCreaturesByInitiative, effectObjs } from '../constants.js';
 import Tooltip from './Tooltip.js';
 import YouTubeEmbed from './YouTubeEmbed.js';
 import { generateUniqueId } from '../../dmView/constants.js';
 
-function PlayerPage({playerView, playerViewBackground, hideEnemies}) {
+function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodToggle}) {
     const [creatures, setCreatures] = useState(playerView?.currentEncounterCreatures || []);
     const [clickedCreature, setClickedCreature] = useState(null);
-    const [backGroundImage, setBackGroundImage] = useState(background1);
-    const [youtubeLink, setYoutubeLink] = useState("");
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [refreshCheck, setRefreshCheck] = useState(false);
@@ -47,14 +34,12 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies}) {
     const [foundCreatures, setFoundCreatures] = useState(null);
     const [cardContainerStyle, setCardContainerStyle] = useState({width: '80%'});
     const [arrowButton, setArrowButton] = useState(upArrow);
-    const [enemyBloodToggleType, setEnemyBloodToggleType] = useState(0);
-    const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(bloodIcon);
     const [autoRefreshDMB, setAutoRefreshDMB] = useState(false);
     const [turnNum, setTurnNum] = useState(playerView.turnNum);
     const [roundNum, setRoundNum] = useState(playerView.RoundNum);
-    const playerViewEncounterID = JSON.parse(localStorage.getItem('playerViewEncounter')).id
     const { gameId } = useParams();
     const isOfflineMode = window.location.href.includes("playerView");
+    console.log(enemyBloodToggle)
 
     useEffect(() => {
         setCreatures([...playerView.currentEncounterCreatures])
@@ -357,7 +342,7 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies}) {
                     creatures.map((creature, index) => { 
                         return ((creature.type === 'monster' || creature.type === 'global') && (creature.hidden || hideEnemies )) 
                         ? null
-                        : <Icon key={uuidv4()} isTurn={turnNum === index+1} creature={creature} setClickedCreature={setClickedCreature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggleType={enemyBloodToggleType} />;
+                        : <Icon key={uuidv4()} isTurn={turnNum === index+1} creature={creature} setClickedCreature={setClickedCreature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggle={enemyBloodToggle} />;
                     })
                 )}
 

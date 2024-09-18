@@ -25,7 +25,7 @@ function getLocalStorageSize() {
     console.log(`Approximate size: ${sizeInMB.toFixed(2)} MB`);
 }
 
-const DmView = ({currentEncounter, setCurrentEncounter, handleRefresh, refreshCheck, autoRefresh, uploadLocalStorage, localSavedEncounters}) => {
+const DmView = ({currentEncounter, setCurrentEncounter, handleRefresh, refreshCheck, autoRefresh, uploadLocalStorage, enemyBloodToggle, setEnemyBloodToggle, localSavedEncounters}) => {
     getLocalStorageSize()
     const [showSearchList, setShowSearchList] = useState(true);
     const [onFirstLoad, setOnFirstLoad] = useState(true);
@@ -99,7 +99,7 @@ const DmView = ({currentEncounter, setCurrentEncounter, handleRefresh, refreshCh
                     {showSearchList &&  
                         <SearchList setCurrentEncounter={setCurrentEncounter}/>
                     }
-                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} hideEnemies={hideEnemies} setHideEnemies={setHideEnemies} setSavedEncounters={setSavedEncounters} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} encounterGuid={encounterGuid} setEncounterGuid={setEncounterGuid} localSavedEncounters={localSavedEncounters} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter}/>
+                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} hideEnemies={hideEnemies} setHideEnemies={setHideEnemies} setSavedEncounters={setSavedEncounters} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} encounterGuid={encounterGuid} setEncounterGuid={setEncounterGuid} localSavedEncounters={localSavedEncounters} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter}/>
                 </>
             )}
              </div>

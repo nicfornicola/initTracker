@@ -26,7 +26,7 @@ function setBloodImg(creature) {
 }
 
 // ProfileCard Component
-const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBloodToggleType}) => {
+const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBloodToggle}) => {
     const isPlayer = creature.type === "player";
     const effectsFound = creature.effects.length > 0
     const foundHp = creature.maxHp !== null;
@@ -79,11 +79,11 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
     } else if(creature.type === "monster") { // it's a Monster
         cardBoxShadow = monsterBoxShadow;
 
-        if (enemyBloodToggleType === 2)
+        if (enemyBloodToggle === 2)
             showEnemyHp = true;
 
         let hpPercent = creature.hit_points_current / creature.hit_points;
-        if (hpPercent < 0.55 && enemyBloodToggleType !== 0) {
+        if (hpPercent < 0.55 && enemyBloodToggle !== 0) {
             isBloodied = true;
             bloodImg = setBloodImg(creature)
         }

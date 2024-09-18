@@ -21,7 +21,7 @@ import ImagePopup from "../../playerView/components/ImagePopup"
 import Timer from '../../playerView/components/Timer';
 import RefreshTimer from '../../playerView/components/RefreshTimer';
 
-const EncounterListTitle = ({handleTurnNums, currentEncounter, setCurrentEncounter, handleStartEncounter, hideEnemies, setHideEnemies, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange}) => {
+const EncounterListTitle = ({handleTurnNums, currentEncounter, setCurrentEncounter, handleStartEncounter, hideEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange}) => {
     const [encounterName, setEncounterName] = useState(currentEncounter.encounterName);
     const [backGroundImage, setBackGroundImage] = useState(background1);
     const [youtubeLink, setYoutubeLink] = useState("");
@@ -29,10 +29,10 @@ const EncounterListTitle = ({handleTurnNums, currentEncounter, setCurrentEncount
     const [recentlyRefreshed, setRecentlyRefreshed] = useState(false);
     const [cardContainerStyle, setCardContainerStyle] = useState({width: '80%'});
     const [arrowButton, setArrowButton] = useState(upArrow);
-    const [enemyBloodToggleType, setEnemyBloodToggleType] = useState(0);
-    const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(bloodIcon);
     const [arrowToggleType, setArrowToggleType] = useState(0);
     const [showRefreshButton, setAutoRefreshDMB] = useState(autoRefresh);
+    const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(bloodIcon);
+
 
     useEffect(() => {
         setAutoRefreshDMB(autoRefresh)
@@ -47,11 +47,18 @@ const EncounterListTitle = ({handleTurnNums, currentEncounter, setCurrentEncount
     }
 
     const handleEnemyBlood = () => {
-        let type = enemyBloodToggleType + 1
-        if(type === 0) { setEnemyBloodToggleImage(bloodIcon) } 
-        else if(type === 1) { setEnemyBloodToggleImage(bloodIconSlash) } 
-        else if(type === 2) { setEnemyBloodToggleImage(bloodIconMinus) } 
-        setEnemyBloodToggleType(type === 2 ? -1 : type)
+
+        let newToggle = parseInt(enemyBloodToggle) + 1
+        console.log("handleEnemtBlood", newToggle, enemyBloodToggle)
+        let type = newToggle === 3 ? 0 : newToggle
+        setEnemyBloodToggle(type)
+        localStorage.setItem('enemyBloodToggle', JSON.stringify(type));
+
+        let newImage = undefined
+        if(type === 0) { newImage = bloodIcon } 
+        else if(type === 1) { newImage = bloodIconSlash } 
+        else if(type === 2) { newImage = bloodIconMinus } 
+        setEnemyBloodToggleImage(newImage) 
     } 
 
     const handleHideEnemies = () => {
@@ -105,7 +112,7 @@ const EncounterListTitle = ({handleTurnNums, currentEncounter, setCurrentEncount
                         <Tooltip message={(hideDeadEnemies ? "Show" : "Hide") + " Dead Enemies"}/>
                     </>
                     <img className="option" src={enemyBloodToggleImage} alt={"enemy blood"} onClick={handleEnemyBlood} />
-                    <Tooltip message={(enemyBloodToggleType === 0 ? "Show Enemy Blood" : (enemyBloodToggleType === 1 ? "Show Enemy HP" : "Hide Enemy Blood & HP"))}/>
+                    <Tooltip message={(enemyBloodToggle === 0 ? "Show Enemy Blood" : (enemyBloodToggle === 1 ? "Show Enemy HP" : "Hide Enemy Blood & HP"))}/>
                     <img className="option" src={hideEnemies ? eyeOpen : eyeClosed} alt={"showEnemies"} onClick={handleHideEnemies} />
                     <Tooltip message={(hideEnemies ? "Show" : "Hide") + " Enemies"}/>
                     <Timer />

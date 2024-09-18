@@ -28,8 +28,14 @@ function App() {
     const [encounterStarted, setEncounterStarted] = useState(false);
     const [refreshCheck, setRefreshCheck] = useState(false);
     const [hideEnemies, setHideEnemies] = useState(localStorage.getItem('hideEnemies') || true);
-    const [refreshPlayersCheck, setRefreshPlayersCheck] = useState(false);
-    const [refreshMonstersCheck, setRefreshMonstersCheck] = useState(false);
+    const [enemyBloodToggle, setEnemyBloodToggle] = useState(localStorage.getItem('enemyBloodToggle') || 1);
+    console.log(localStorage.getItem('enemyBloodToggle'))
+    if(localStorage.getItem('enemyBloodToggle') === null) {
+        console.log("set enemyBloodToggle")
+        localStorage.setItem('enemyBloodToggle', JSON.stringify(1));
+
+    }
+
 
 
     // const [error, setError] = useState(false);
@@ -149,9 +155,12 @@ function App() {
                 const updatedCurrentBackground = JSON.parse(localStorage.getItem('currentBackground'));
                 console.log("updatedCurrentBackground", updatedCurrentBackground)
                 setPlayerViewBackground({...updatedCurrentBackground});
-            } if (event.key === 'hideEnemies') {
+            } else if (event.key === 'hideEnemies') {
                 console.log("hiddenEnemies")
                 setHideEnemies(JSON.parse(localStorage.getItem('hideEnemies')));
+            } else if (event.key === 'enemyBloodToggle') {
+                console.log("enemyBloodToggle", enemyBloodToggle)
+                setEnemyBloodToggle(JSON.parse(localStorage.getItem('enemyBloodToggle')));
             }
         }
         window.addEventListener('storage', getRefreshedLocalEncounter);
@@ -210,8 +219,8 @@ function App() {
     console.log("APP", currentEncounter)
     return (
         <Routes>
-            <Route path="/" element={<DmView currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} refreshCheck={refreshCheck} autoRefresh={autoRefresh} uploadLocalStorage={uploadLocalStorage} localSavedEncounters={localSavedEncounters}/>}/>
-            <Route path="/playerView" element={<PlayerPage playerView={playerView} playerViewBackground={playerViewBackground} hideEnemies={hideEnemies} />}/>
+            <Route path="/" element={<DmView currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} refreshCheck={refreshCheck} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} autoRefresh={autoRefresh} uploadLocalStorage={uploadLocalStorage} localSavedEncounters={localSavedEncounters}/>}/>
+            <Route path="/playerView" element={<PlayerPage playerView={playerView} playerViewBackground={playerViewBackground} hideEnemies={hideEnemies} enemyBloodToggle={enemyBloodToggle}/>}/>
             <Route path="/help" element={<HowTo/>} />
             <Route path="/king/" element={<Pantheon />} />
             <Route path="/blog" element={<Blog/>}/>
