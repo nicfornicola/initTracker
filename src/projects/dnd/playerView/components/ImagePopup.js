@@ -8,6 +8,7 @@ import GridMap from './GridMap';
 
 import backgroundButton from "../pics/icons/backgroundButton.png"
 import Tooltip from './Tooltip';
+import OptionButton from '../../dmView/components/OptionButton';
 
 const ImagePopup = ({setBackGroundImage, setYoutubeLink}) => {
     const [open, setOpen] = useState(false);
@@ -74,9 +75,7 @@ const ImagePopup = ({setBackGroundImage, setYoutubeLink}) => {
 
   return (
     <>
-        <img className="option" alt='backgroundButton' src={backgroundButton} onClick={() => setOpen(true)}/>
-        <Tooltip message={"Set Background"}/>
-
+        <OptionButton src={backgroundButton} message={"Set Background"} onClickFunction={() => setOpen(true)}/>
         <Dialog open={open} onClose={handleClose} ref={dialogRef} >
             <DialogContent >
                 {uploadedLinks.length > 0 && (

@@ -20,19 +20,18 @@ import Tooltip from "../../playerView/components/Tooltip"
 import ImagePopup from "../../playerView/components/ImagePopup"
 import Timer from '../../playerView/components/Timer';
 import RefreshTimer from '../../playerView/components/RefreshTimer';
+import OptionButton from './OptionButton';
 
-const EncounterListTitle = ({handleTurnNums, currentEncounter, setCurrentEncounter, handleStartEncounter, hideEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange}) => {
+const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounter, handleStartEncounter, hideEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, hideDeadEnemies, setHideDeadEnemies, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange}) => {
     const [encounterName, setEncounterName] = useState(currentEncounter.encounterName);
     const [backGroundImage, setBackGroundImage] = useState(background1);
     const [youtubeLink, setYoutubeLink] = useState("");
-    const [hideDeadEnemies, setHideDeadEnemies] = useState(false);
     const [recentlyRefreshed, setRecentlyRefreshed] = useState(false);
     const [cardContainerStyle, setCardContainerStyle] = useState({width: '80%'});
     const [arrowButton, setArrowButton] = useState(upArrow);
     const [arrowToggleType, setArrowToggleType] = useState(0);
     const [showRefreshButton, setAutoRefreshDMB] = useState(autoRefresh);
     const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(bloodIcon);
-
 
     useEffect(() => {
         setAutoRefreshDMB(autoRefresh)
@@ -65,8 +64,14 @@ const EncounterListTitle = ({handleTurnNums, currentEncounter, setCurrentEncount
         // if(hideEnemies && !isOfflineMode) // If hideEnemies is true, then refresh before revealing enemies
             // handleRefresh(2)
         setHideEnemies(!hideEnemies)
-        localStorage.setItem('hideEnemies', JSON.stringify(!hideEnemies));
+        localStorage.setItem('hideEnemies', !hideEnemies);
+    } 
 
+    const handleHideDeadEnemies = () => {
+        // if(hideEnemies && !isOfflineMode) // If hideEnemies is true, then refresh before revealing enemies
+            // handleRefresh(2)
+        setHideDeadEnemies(!hideDeadEnemies)
+        localStorage.setItem('hideDeadEnemies', !hideDeadEnemies);
     } 
 
     useEffect(() => {
@@ -95,69 +100,59 @@ const EncounterListTitle = ({handleTurnNums, currentEncounter, setCurrentEncount
 
     console.log(autoRefresh, refreshCheck)
     return (
-        <div className='encounterTitleEditContainer animated-label'>                     
-            <div className='nameInputContainer'>
+        <div className='encounterControlsContainer'>
+            <div>
                 <input style={{color: titleColor}} className='nameInput' type='text' value={encounterName} onChange={handleTitleChange} onBlur={handleEncounterNameChange} onClick={(event) => event.target.select()}/>
                 <span className='encounterTitleEdit'>🖉</span>
-                <div className='dmStartButtons'>
-                    <button className='dmViewButton' onClick={handleAutoRollInitiative}>Auto Initiative</button>
-                    <button className='dmViewButton' onClick={handleStartEncounter}>Play</button>
-                </div>
-                <div className='dmLowOptions'>
-                    <img className="option" src={arrowButton} alt={"change style"} onClick={handleMovePortraits} />
-                    <Tooltip message={"Icon Position"}/>
-                    <ImagePopup setBackGroundImage={setBackGroundImage} setYoutubeLink={setYoutubeLink} />
-                    <>
-                        <img className="option" src={hideDeadEnemies ? skullButton : skullButtonNot} alt={"showDeadEnemies"} onClick={() => setHideDeadEnemies(!hideDeadEnemies)} />
-                        <Tooltip message={(hideDeadEnemies ? "Show" : "Hide") + " Dead Enemies"}/>
-                    </>
-                    <img className="option" src={enemyBloodToggleImage} alt={"enemy blood"} onClick={handleEnemyBlood} />
-                    <Tooltip message={(enemyBloodToggle === 0 ? "Show Enemy Blood" : (enemyBloodToggle === 1 ? "Show Enemy HP" : "Hide Enemy Blood & HP"))}/>
-                    <img className="option" src={hideEnemies ? eyeOpen : eyeClosed} alt={"showEnemies"} onClick={handleHideEnemies} />
-                    <Tooltip message={(hideEnemies ? "Show" : "Hide") + " Enemies"}/>
-                    <Timer />
-                    {recentlyRefreshed &&
-                    <img className="option" src={greenCheck} alt={"refresh"}/>
-                }
-
-
-                
-                {showRefreshButton &&
-                    <>
+            </div>
+            <div className='encounterControls'> 
+                <div className='encounterControlsLeft'>
+                    <div className='dmStartButtons'>
+                        <button className='dmViewButton' onClick={handleAutoRollInitiative}>Roll Init.</button>
+                        <button className='dmViewButton' onClick={handleStartEncounter}>Player View</button>
+                    </div>
+                    <div className='dmLowOptions'>
+                        <OptionButton src={arrowButton} message={"Player View Icon Position"} onClickFunction={handleMovePortraits}/>
+                        <ImagePopup setBackGroundImage={setBackGroundImage} setYoutubeLink={setYoutubeLink} />                    
+                        {showRefreshButton &&
+                            <>
+                                {recentlyRefreshed &&
+                                    <img className="option" src={greenCheck} alt={"refresh"}/>
+                                }   
+                                <img className="option" src={refreshCheck ? greenCheck : refresh} alt={"refresh"} onClick={() => handleRefresh()} />
+                                <span className="tooltiptext">
+                                    Last <img src={refreshCheck ? greenCheck : refresh} alt={"refresh"} onClick={() => handleRefresh()} />
+                                    <RefreshTimer totalRefresh={refreshCheck}/>
+                                </span>
+                            </> 
+                        }     
                         {recentlyRefreshed &&
                             <img className="option" src={greenCheck} alt={"refresh"}/>
-                        }   
-                        <img className="option" src={refreshCheck ? greenCheck : refresh} alt={"refresh"} onClick={() => handleRefresh()} />
-                        <span className="tooltiptext">
-                            Last <img src={refreshCheck ? greenCheck : refresh} alt={"refresh"} onClick={() => handleRefresh()} />
-                            <RefreshTimer totalRefresh={refreshCheck}/>
-                        </span>
-                    </> 
-                }               
-
+                        }     
+                        <Timer />     
+                    </div>
                 </div>
-            </div>
-            {currentEncounter.currentEncounterCreatures.length > 0 && encounterName !== INIT_ENCOUNTER_NAME && 
-                <div className='encounterTitleButtonGroup' onClick={(e) => e.stopPropagation()}>
-                    
-                    <div className='turnButtons'>
-                        
-                        <button className='dmViewButton' onClick={(e) => handleTurnNums('prev', e)}> {'<<'} </button>
-                        <div className='turnText'>
-                            <div>
-                                Round: {roundNum}
-                            </div>
-                            <div>
-                                Turn: {turnNum}
-                            </div>
+                <div className='encounterCountrolsRight'>
+                    {currentEncounter.currentEncounterCreatures.length > 0 && encounterName !== INIT_ENCOUNTER_NAME && 
+                        <div className='encounterTitleButtonGroup' onClick={(e) => e.stopPropagation()}>
+                                <button className='dmViewButton' onClick={(e) => handleTurnNums('prev', e)}> {'<<'} </button>
+                                <div className='turnText'>
+                                    R: {roundNum} - T: {turnNum} 
+                                </div>
+                                <button className='dmViewButton' onClick={(e) => handleTurnNums('next', e)}> {'>>'} </button>
                         </div>
-                        <button className='dmViewButton' onClick={(e) => handleTurnNums('next', e)}> {'>>'} </button>
+                    }
+                    <div className='dmLowOptions'>
+                        <OptionButton src={hideDeadEnemies ? skullButton : skullButtonNot} message={(hideDeadEnemies ? "Show" : "Hide") + " Dead Enemies"} onClickFunction={handleHideDeadEnemies}/>
+                        <OptionButton src={enemyBloodToggleImage} message={enemyBloodToggle === 0 ? "Show Enemy Blood" : (enemyBloodToggle === 1 ? "Show Enemy HP" : "Hide Enemy Blood & HP")} onClickFunction={handleEnemyBlood}/>
+                        <OptionButton src={hideEnemies ? eyeClosed : eyeOpen} message={(hideEnemies ? "Show" : "Hide") + " Enemies"} onClickFunction={handleHideEnemies}/>
                     </div>
                     
                 </div>
-            }
+            </div>
+            
         </div>
     );
 }
 
-export default EncounterListTitle;
+export default EncounterControls;

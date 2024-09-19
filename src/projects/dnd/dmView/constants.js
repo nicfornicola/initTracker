@@ -170,6 +170,7 @@ const sharedItems = {
     "document__title": "DmBuddy Dummy",
     "document__license_url": "",
     "document__url": "",
+    "hidden": false
 }
 
 export const dummyDefault = {

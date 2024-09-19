@@ -334,7 +334,7 @@ hr {
 
 .tooltiptext {
     visibility: hidden;
-    background-color: rgb(46, 46, 46);
+    background-color: rgb(71, 71, 71);
     color: white;
     text-align: center;
     padding: 5px;
@@ -345,6 +345,7 @@ hr {
     transform: translateX(-50%); 
     opacity: 1;
     transition: opacity 0.3s;
+    z-index: 1;
 }
 
 .roundNum {
@@ -372,6 +373,12 @@ hr {
     text-align: center;
 }
 
+.optionWrapper {
+    position: relative;
+    text-align: center;
+}
+
+.optionWrapper .tooltiptext,
 .avatarEffectsBar .tooltiptext,
 .effectWrapper .tooltiptext {
     bottom: 110%;

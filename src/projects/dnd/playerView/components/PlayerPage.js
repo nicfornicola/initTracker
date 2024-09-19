@@ -21,7 +21,7 @@ import Tooltip from './Tooltip.js';
 import YouTubeEmbed from './YouTubeEmbed.js';
 import { generateUniqueId } from '../../dmView/constants.js';
 
-function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodToggle}) {
+function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodToggle, hideDeadEnemies}) {
     const [creatures, setCreatures] = useState(playerView?.currentEncounterCreatures || []);
     const [clickedCreature, setClickedCreature] = useState(null);
     const [error, setError] = useState(false);
@@ -29,7 +29,6 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
     const [refreshCheck, setRefreshCheck] = useState(false);
     const [refreshPlayersCheck, setRefreshPlayersCheck] = useState(false);
     const [refreshMonstersCheck, setRefreshMonstersCheck] = useState(false);
-    const [hideDeadEnemies, setHideDeadEnemies] = useState(false);
     const [recentlyRefreshed, setRecentlyRefreshed] = useState(false);
     const [foundCreatures, setFoundCreatures] = useState(null);
     const [cardContainerStyle, setCardContainerStyle] = useState({width: '80%'});
@@ -340,7 +339,7 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
                     <div className='loading'>No Creatures found...</div>
                 ) : (
                     creatures.map((creature, index) => { 
-                        return ((creature.type === 'monster' || creature.type === 'global') && (creature.hidden || hideEnemies )) 
+                        return (((creature.type === 'monster' || creature.type === 'global') && hideEnemies) || creature.hidden) 
                         ? null
                         : <Icon key={uuidv4()} isTurn={turnNum === index+1} creature={creature} setClickedCreature={setClickedCreature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggle={enemyBloodToggle} />;
                     })

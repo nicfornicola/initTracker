@@ -173,23 +173,42 @@ input {
     margin-top: 10px; 
 }
 
-.encounterTitleContainer {
-    margin-top: 10%;
-}
 
 .titleLabel {
     color: grey;
     font-weight: bold;
 }
     
-
-.encounterTitleEditContainer {
-    position: relative;
+.dmLowOptions {
     display: flex;
-    width: 90%;
 }
 
-.encounterTitleEditContainer .nameInput {
+.encounterControlsContainer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 90%;
+    margin-top: 2%;
+}
+.encounterControls {
+ display: flex;
+}
+
+.encounterControlsLeft {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+}
+
+.encounterCountrolsRight {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+}
+
+.encounterControlsContainer .nameInput {
     font-size: larger;
 }
 
@@ -449,6 +468,7 @@ input {
 .turnText {
     display: flex;
     flex-direction: column;
+    font-size: small;
 }
 
 .dmViewButton {
@@ -570,12 +590,6 @@ input {
 .listItemMiddleStats {
     display: flex;
     flex-direction: column;
-}
-
-.nameInputContainer {
-    position: relative;
-    width: 100%;
-    padding-bottom: 5px;
 }
 
 .nameInput {

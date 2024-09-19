@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import uploadImage from '../pics/uploadImage.png'
 import eyeClosed from '../../playerView/pics/icons/eyeClosed.png'; 
 import eyeOpen from '../../playerView/pics/icons/eyeOpen.png'; 
-import Tooltip from "../../playerView/components/Tooltip"
+import OptionButton from '../../dmView/components/OptionButton';
 
 const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCurrentEncounter, scrollPosition, handleUploadMonsterImage, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
     const [openEditWidget, setOpenEditWidget] = useState(false);
@@ -190,8 +190,9 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                         </div>
                         
                     </div>
-                    <img className="option" src={hidden ? eyeClosed : eyeOpen} alt={"showEnemies"} onClick={handleHideEnemy} />
-                    {/* <Tooltip message={(hidden ? "Show" : "Hide")}/> */}
+
+                    <OptionButton src={hidden ? eyeClosed : eyeOpen}  message={(hidden ? "Show" : "Hide")} onClickFunction={handleHideEnemy} />
+
                     <div>
                         <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
                             X

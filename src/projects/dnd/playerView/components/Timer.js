@@ -4,6 +4,7 @@ import play from '../pics/icons/play.png';
 import restart from '../pics/icons/restart.png'; 
 import timer from '../pics/icons/timer.png'; 
 import Tooltip from './Tooltip';
+import OptionButton from '../../dmView/components/OptionButton';
 
 
 const secondsToMinutes = (seconds) => {
@@ -40,14 +41,11 @@ const Timer = () => {
 
     return (
         <>
-            <img className="option" src={timer} alt={"refresh"} onClick={() => setShowTimerOptions(!showTimerOptions)}/>
-            <Tooltip message={"Timer"}/>
+            <OptionButton src={timer} message={"Timer"} onClickFunction={() => setShowTimerOptions(!showTimerOptions)}/>
             {showTimerOptions && 
                 <>
-                    <img className="option" src={restart} alt={"refresh"} onClick={() => setReset(true)}/>
-                    <Tooltip message={"Restart"}/>
-                    <img className="option" src={pause ?  play : pauseButton} alt={"refresh"} onClick={() => setPause(!pause)}/>
-                    <Tooltip message={pause ?  "Play" : "Pause"}/>
+                    <OptionButton src={restart}  message={"Restart"}onClickFunction={() => setReset(true)} />
+                    <OptionButton src={pause ?  play : pauseButton}  message={pause ?  "Play" : "Pause"} onClickFunction={() => setPause(!pause)} />
                     <div className='option timer'>
                         {secondsToMinutes(seconds)}
                     </div>
