@@ -8,9 +8,7 @@ import { refreshMonsterProfiles } from './projects/dnd/dmView/refresh/refresh';
 import Blog from './projects/blog/components/Blog';
 import Pantheon from './projects/king/components/Pantheon';
 
-// import background1 from "./projects/dnd/playerView/pics/backgrounds/fallenCastleBigTree.jpg"
-// import bloodIcon from "./projects/dnd/playerView/pics/icons/bloodIcon.png"
-import {INIT_ENCOUNTER, background13} from './projects/dnd/dmView/constants'
+import {INIT_ENCOUNTER, LONG_REFRESH, SHORT_REFRESH, background13} from './projects/dnd/dmView/constants'
 import HowTo from './projects/dnd/dmView/components/HowToDMB';
 import { ImportDndBeyondCharacters } from './projects/dnd/dmView/api/ImportDndBeyondCharacters'
 import defaultBackground from "./projects/dnd/playerView/pics/backgrounds/happyTavern.png"
@@ -42,23 +40,23 @@ function App() {
         localStorage.setItem('hideDeadEnemies', false);
     }
 
+    useEffect(() => {
+        if(refreshCheck) {
+            const timer = setTimeout(() => {
+                setRefreshCheck(false)
+            }, 15000); 
+            return () => clearInterval(timer);
+        }
+    }, [refreshCheck])
 
-
-    // const [error, setError] = useState(false);
-    // const [errorMessage, setErrorMessage] = useState("");
-    // const [turnNum, setTurnNum] = useState(0);
-    // const [roundNum, setRoundNum] = useState(0);
-    // const [hideEnemies, setHideEnemies] = useState(true);
-    // const [hideDeadEnemies, setHideDeadEnemies] = useState(false);
-    // const [recentlyRefreshed, setRecentlyRefreshed] = useState(false);
-    // const [enemyBloodToggleType, setEnemyBloodToggleType] = useState(0);
-    // const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(bloodIcon);
-    // const [backGroundImage, setBackGroundImage] = useState(background1);
-    // const [youtubeLink, setYoutubeLink] = useState("");
-    // const [loading, setLoading] = useState(true);
-    // const [autoRefreshDMB, setAutoRefreshDMB] = useState(false);
-
-
+    useEffect(() => {
+        if(refreshCheck) {
+            const timer = setTimeout(() => {
+                setRefreshCheck(false)
+            }, 15000); 
+            return () => clearInterval(timer);
+        }
+    }, [refreshCheck])
 
     const refreshPlayerProfiles = async () => {
         try {
@@ -178,7 +176,7 @@ function App() {
         let intervalId = 0
         // Refresh every 1 or 5 minutes
         if (autoRefreshDndbPlayers || autoRefreshDndbMonsters) {
-            let refreshTimer = encounterStarted ? 1 : 10;
+            let refreshTimer = encounterStarted ? SHORT_REFRESH : SHORT_REFRESH;
             console.log("Auto Refresh in Minutes", refreshTimer)
 
             intervalId = setInterval(() => {
@@ -228,7 +226,7 @@ function App() {
     console.log("APP", currentEncounter)
     return (
         <Routes>
-            <Route path="/" element={<DmView currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} refreshCheck={refreshCheck} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} autoRefresh={autoRefresh} uploadLocalStorage={uploadLocalStorage} localSavedEncounters={localSavedEncounters}/>}/>
+            <Route path="/" element={<DmView currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} playerViewBackground={playerViewBackground} setPlayerViewBackground={setPlayerViewBackground} handleRefresh={handleRefresh} refreshCheck={refreshCheck} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} autoRefresh={autoRefresh} uploadLocalStorage={uploadLocalStorage} localSavedEncounters={localSavedEncounters}/>}/>
             <Route path="/playerView" element={<PlayerPage playerView={playerView} playerViewBackground={playerViewBackground} hideEnemies={hideEnemies} enemyBloodToggle={enemyBloodToggle} hideDeadEnemies={hideDeadEnemies}/>} />
             <Route path="/help" element={<HowTo/>} />
             <Route path="/king/" element={<Pantheon />} />

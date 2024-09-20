@@ -8,6 +8,8 @@ import TomeOfBeasts3 from './monsterJsons/TomeOfBeasts3.json';
 import TomeOfBeasts2023 from './monsterJsons/TomeOfBeasts2023.json';
 import GlobalImg from './pics/global.png'
 
+export const LONG_REFRESH = 10
+export const SHORT_REFRESH = 1
 
 export const proxyUrl = window.location.href.includes("dmbuddy.com") 
                         ? 'https://nics-cors-anywhere-99e39b544c5d.herokuapp.com/' 

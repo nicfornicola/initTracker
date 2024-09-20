@@ -8,6 +8,7 @@ import InputCharacterId from './InputCharacterId.js';
 import NewEncounterButton from './NewEncounterButton.js';
 import { generateUniqueId, INIT_ENCOUNTER} from '../constants';
 import DropdownMenu from './DropdownMenu.js';
+import YouTubeEmbed from './../../playerView/components/YouTubeEmbed.js';
 
 
 function getLocalStorageSize() {
@@ -25,7 +26,7 @@ function getLocalStorageSize() {
     console.log(`Approximate size: ${sizeInMB.toFixed(2)} MB`);
 }
 
-const DmView = ({currentEncounter, setCurrentEncounter, handleRefresh, hideDeadEnemies, setHideDeadEnemies, refreshCheck, autoRefresh, uploadLocalStorage, enemyBloodToggle, setEnemyBloodToggle, localSavedEncounters}) => {
+const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, setPlayerViewBackground, handleRefresh, hideDeadEnemies, setHideDeadEnemies, refreshCheck, autoRefresh, uploadLocalStorage, enemyBloodToggle, setEnemyBloodToggle, localSavedEncounters}) => {
     getLocalStorageSize()
     const [showSearchList, setShowSearchList] = useState(true);
     const [onFirstLoad, setOnFirstLoad] = useState(true);
@@ -59,9 +60,13 @@ const DmView = ({currentEncounter, setCurrentEncounter, handleRefresh, hideDeadE
         setHideEnemies(true)
 
     };  
-
+    console.log(playerViewBackground)
     return (
-        <div className='dmView'>
+        <div className="dmView" style={{backgroundImage: playerViewBackground.type === "image" && playerViewBackground.src ? `url(${playerViewBackground.src})` : 'none'}}>
+            { playerViewBackground.type === "youtube" && 
+                <YouTubeEmbed embedUrl={playerViewBackground.src}/>
+            }
+
             { onFirstLoad ? ( 
                 <div className='firstLoadMenu'>
                     <div className='firstLoadOptions'>
@@ -99,7 +104,7 @@ const DmView = ({currentEncounter, setCurrentEncounter, handleRefresh, hideDeadE
                     {showSearchList &&  
                         <SearchList setCurrentEncounter={setCurrentEncounter}/>
                     }
-                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} hideEnemies={hideEnemies} setHideEnemies={setHideEnemies} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} setSavedEncounters={setSavedEncounters} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} encounterGuid={encounterGuid} setEncounterGuid={setEncounterGuid} localSavedEncounters={localSavedEncounters} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter}/>
+                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} hideEnemies={hideEnemies} setPlayerViewBackground={setPlayerViewBackground} setHideEnemies={setHideEnemies} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} setSavedEncounters={setSavedEncounters} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} encounterGuid={encounterGuid} setEncounterGuid={setEncounterGuid} localSavedEncounters={localSavedEncounters} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter}/>
                 </>
             )}
              </div>

@@ -1,9 +1,6 @@
 import React, { useState, useEffect }from 'react';
 import { INIT_ENCOUNTER_NAME } from '../constants';
-import Options from './Options';
-import refreshPlayers from '../../playerView/pics/icons/refreshPlayers.png'; 
-import refresh from '../../playerView/pics/icons/refresh.png'; 
-import refreshMonster from '../../playerView/pics/icons/refreshMonsters.png'; 
+import refresh from '../pics/icons/refresh.png';
 import greenCheck from '../../playerView/pics/icons/check.png'; 
 import eyeClosed from '../../playerView/pics/icons/eyeClosed.png'; 
 import eyeOpen from '../../playerView/pics/icons/eyeOpen.png'; 
@@ -16,17 +13,14 @@ import noArrow from "../../playerView/pics/icons/noArrow.jpg"
 import bloodIcon from "../../playerView/pics/icons/bloodIcon.png"
 import bloodIconMinus from "../../playerView/pics/icons/bloodIconMinus.png"
 import bloodIconSlash from "../../playerView/pics/icons/bloodIconSlash.png"
-import Tooltip from "../../playerView/components/Tooltip"
 import ImagePopup from "../../playerView/components/ImagePopup"
 import Timer from '../../playerView/components/Timer';
 import RefreshTimer from '../../playerView/components/RefreshTimer';
 import OptionButton from './OptionButton';
 
-const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounter, handleStartEncounter, hideEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, hideDeadEnemies, setHideDeadEnemies, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange}) => {
+const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounter, setPlayerViewBackground, handleStartEncounter, hideEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, hideDeadEnemies, setHideDeadEnemies, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange}) => {
     const [encounterName, setEncounterName] = useState(currentEncounter.encounterName);
-    const [backGroundImage, setBackGroundImage] = useState(background1);
     const [youtubeLink, setYoutubeLink] = useState("");
-    const [recentlyRefreshed, setRecentlyRefreshed] = useState(false);
     const [cardContainerStyle, setCardContainerStyle] = useState({width: '80%'});
     const [arrowButton, setArrowButton] = useState(upArrow);
     const [arrowToggleType, setArrowToggleType] = useState(0);
@@ -113,40 +107,31 @@ const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounte
                     </div>
                     <div className='dmLowOptions'>
                         <OptionButton src={arrowButton} message={"Player View Icon Position"} onClickFunction={handleMovePortraits}/>
-                        <ImagePopup setBackGroundImage={setBackGroundImage} setYoutubeLink={setYoutubeLink} />                    
+                        <ImagePopup setPlayerViewBackground={setPlayerViewBackground} setYoutubeLink={setYoutubeLink} />                    
                         {showRefreshButton &&
-                            <>
-                                {recentlyRefreshed &&
-                                    <img className="option" src={greenCheck} alt={"refresh"}/>
-                                }   
-                                <img className="option" src={refreshCheck ? greenCheck : refresh} alt={"refresh"} onClick={() => handleRefresh()} />
-                                <span className="tooltiptext">
-                                    Last <img src={refreshCheck ? greenCheck : refresh} alt={"refresh"} onClick={() => handleRefresh()} />
-                                    <RefreshTimer totalRefresh={refreshCheck}/>
-                                </span>
-                            </> 
-                        }     
-                        {recentlyRefreshed &&
-                            <img className="option" src={greenCheck} alt={"refresh"}/>
-                        }     
+                            <OptionButton src={refreshCheck ? greenCheck : refresh} message={<RefreshTimer refresh={refreshCheck}/>} onClickFunction={() => handleRefresh()} />
+                        }         
                         <Timer />     
                     </div>
                 </div>
                 <div className='encounterCountrolsRight'>
                     {currentEncounter.currentEncounterCreatures.length > 0 && encounterName !== INIT_ENCOUNTER_NAME && 
-                        <div className='encounterTitleButtonGroup' onClick={(e) => e.stopPropagation()}>
-                                <button className='dmViewButton' onClick={(e) => handleTurnNums('prev', e)}> {'<<'} </button>
-                                <div className='turnText'>
-                                    R: {roundNum} - T: {turnNum} 
-                                </div>
-                                <button className='dmViewButton' onClick={(e) => handleTurnNums('next', e)}> {'>>'} </button>
-                        </div>
+                        <>
+                            <div className='encounterTitleButtonGroup' onClick={(e) => e.stopPropagation()}>
+                                    <button className='dmViewButton' onClick={(e) => handleTurnNums('prev', e)}> {'<<'} </button>
+                                    <div className='turnText'>
+                                        R: {roundNum} - T: {turnNum} 
+                                    </div>
+                                    <button className='dmViewButton' onClick={(e) => handleTurnNums('next', e)}> {'>>'} </button>
+                            </div>
+                            <div className='dmLowOptions'>
+                                <OptionButton src={hideDeadEnemies ? skullButton : skullButtonNot} message={(hideDeadEnemies ? "Show" : "Hide") + " Dead Enemies"} onClickFunction={handleHideDeadEnemies}/>
+                                <OptionButton src={enemyBloodToggleImage} message={enemyBloodToggle === 0 ? "Show Enemy Blood" : (enemyBloodToggle === 1 ? "Show Enemy HP" : "Hide Enemy Blood & HP")} onClickFunction={handleEnemyBlood}/>
+                                <OptionButton src={hideEnemies ? eyeClosed : eyeOpen} message={"Enemies " + (hideEnemies ? "Hidden" : "Visible")} onClickFunction={handleHideEnemies}/>
+                            </div>
+                        </>
                     }
-                    <div className='dmLowOptions'>
-                        <OptionButton src={hideDeadEnemies ? skullButton : skullButtonNot} message={(hideDeadEnemies ? "Show" : "Hide") + " Dead Enemies"} onClickFunction={handleHideDeadEnemies}/>
-                        <OptionButton src={enemyBloodToggleImage} message={enemyBloodToggle === 0 ? "Show Enemy Blood" : (enemyBloodToggle === 1 ? "Show Enemy HP" : "Hide Enemy Blood & HP")} onClickFunction={handleEnemyBlood}/>
-                        <OptionButton src={hideEnemies ? eyeClosed : eyeOpen} message={(hideEnemies ? "Show" : "Hide") + " Enemies"} onClickFunction={handleHideEnemies}/>
-                    </div>
+                    
                     
                 </div>
             </div>

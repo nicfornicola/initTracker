@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Tooltip from "../../playerView/components/Tooltip"
+import '../../playerView/style/App.css';
 
 const OptionButton = ({src, message, onClickFunction}) => {
     return (

@@ -36,6 +36,7 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
     
     const handleImageClick = (event) => {
         event.stopPropagation(); // Prevent propagation to parent
+        console.log("clicked creatures")
         setClickedCreature(creature);
     };
 

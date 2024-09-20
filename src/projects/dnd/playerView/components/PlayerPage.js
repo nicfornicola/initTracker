@@ -195,61 +195,6 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
         }  
     };
 
-
-
-    // useEffect(() => {
-    //     if(recentlyRefreshed) {
-    //         const timer = setTimeout(() => {
-    //             setRecentlyRefreshed(false)
-    //         }, 45000); // 45 seconds in milliseconds
-    //         return () => clearInterval(timer);
-    //     }
-    // }, [recentlyRefreshed])
-
-    // useEffect(() => {
-    //     // If getting dndbeyond encounter
-    //     if (creatures.length === 0 && gameId && !error) {
-    //         console.log("Main load - loadProfiles()")
-    //         loadProfiles();
-    //     // If dm play button
-    //     } else if (creatures.length === 0 && !gameId && !error) {
-    //         console.log("playerview encounter load")
-
-    //         let playerViewEncounter = JSON.parse(localStorage.getItem('playerViewEncounter'))
-    //         if(playerViewEncounter.creatures) {
-    //             console.log("Local Storage")
-    //             console.log(playerViewEncounter.creatures)
-    
-    //             playerViewEncounter.creatures.forEach(creature => {
-    //                 if(creature.from === "dnd_b") {
-    //                     setAutoRefreshDMB(true)
-    //                 }
-    //             });
-    
-    //             setCreatures([...playerViewEncounter.creatures])
-    //         }
-    //     }
-    //     // Refresh every 5 minutes, when refreshed this way, show check mark for 45 seconds
-    //     const intervalId = setInterval(() => {
-    //         if(gameId) {
-    //             console.log("🔄AUTO-REFRESH DND_B🔄")
-    //             handleRefresh(3);
-    //             setRecentlyRefreshed(true)
-    //         }
-
-    //         if(autoRefreshDMB) {
-    //             console.log("🔄AUTO-REFRESH DMB")
-    //             handleRefresh(1);
-    //             setRecentlyRefreshed(true)
-    //         }
-    //     // X minutes in milliseconds
-    //     }, 1 * 60.0 * 1000.0); 
-
-    //     // Cleanup interval on component unmount
-    //     return () => clearInterval(intervalId);
-    // // eslint-disable-next-line
-    // }, [creatures]);
-
     // Update Creature in the creatures array with new effects
     const updateCreature = (updatedCreature) => {
         setCreatures((prevCreatures) => {
@@ -320,7 +265,8 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
 
         }
     }
-    console.log(playerView)
+
+    console.log(creatures)
     return (
         <div className="dndBackground" onClick={() => setClickedCreature(null)} style={{backgroundImage: playerViewBackground.type === "image" && playerViewBackground.src ? `url(${playerViewBackground.src})` : 'none'}}>
             {roundNum !== 0 && 
@@ -362,35 +308,6 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
                     </div>
                 </div>
             )}
-
-            <div className='refresh-container'>
-                {recentlyRefreshed &&
-                    <img className="option" src={greenCheck} alt={"refresh"}/>
-                }
-                
-                <img className="option" src={refreshPlayersCheck ? greenCheck : refreshPlayers} alt={"refresh"} onClick={() => handleRefresh(1)} />
-                <span className="tooltiptext" style={{left: isOfflineMode ? '-50%' : ''}}>
-                    Last <img src={refreshPlayersCheck ? greenCheck : refreshPlayers} alt={"refresh"} onClick={() => handleRefresh(1)} />
-                    <RefreshTimer singleRefresh={refreshPlayersCheck} totalRefresh={refreshCheck}/>
-                </span>
-
-                {!isOfflineMode && 
-                    <>
-                        <img className="option" src={refreshMonstersCheck ? greenCheck : refreshMonster} alt={"refresh"} onClick={() => handleRefresh(2)} />
-                        <span className="tooltiptext">
-                            Last <img src={refreshMonstersCheck ? greenCheck : refreshMonster} alt={"refresh"} onClick={() => handleRefresh(2)} />
-                            <RefreshTimer singleRefresh={refreshMonstersCheck} totalRefresh={refreshCheck} />
-                        </span>
-                
-                        <img className="option" src={refreshCheck ? greenCheck : refresh} alt={"refresh"} onClick={() => handleRefresh(3)} />
-                        <span className="tooltiptext">
-                            Last <img src={refreshCheck ? greenCheck : refresh} alt={"refresh"} onClick={() => handleRefresh(3)} />
-                            <RefreshTimer totalRefresh={refreshCheck}/>
-                        </span>
-                    </>
-                }
-            </div>
-            
         </div> 
     );
 }

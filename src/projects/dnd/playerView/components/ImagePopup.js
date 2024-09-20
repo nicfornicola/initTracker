@@ -10,7 +10,7 @@ import backgroundButton from "../pics/icons/backgroundButton.png"
 import Tooltip from './Tooltip';
 import OptionButton from '../../dmView/components/OptionButton';
 
-const ImagePopup = ({setBackGroundImage, setYoutubeLink}) => {
+const ImagePopup = ({setPlayerViewBackground, setYoutubeLink}) => {
     const [open, setOpen] = useState(false);
     const [uploadedFiles, setUploadedFiles] = useState(JSON.parse(localStorage.getItem('uploadedBackgrounds')) || []);
     const [uploadedLinks, setUploadedLinks] = useState(JSON.parse(localStorage.getItem('uploadedLinks')) || []);
@@ -34,8 +34,9 @@ const ImagePopup = ({setBackGroundImage, setYoutubeLink}) => {
 
     const handleSetBackground = (type, src) => {
         localStorage.setItem("currentBackground", JSON.stringify({type: type, src: src}));
-
+        setPlayerViewBackground({type: type, src: src})
     }
+
     const handleClick = (src, isYoutubeLink) => {
         if (isYoutubeLink) { // https://www.youtube.com/watch?v=H-bd0eyF-HA&ab_channel=AnimatedBattleMaps
             const videoId = src.split("vi/")[1].split('/max')[0];
@@ -55,10 +56,7 @@ const ImagePopup = ({setBackGroundImage, setYoutubeLink}) => {
                 // Mute by default and turn off controls so they dont show everytime on hover
                 const queryParams = new URLSearchParams(params).toString();
                 embedUrl += `?${queryParams}`;
-                setYoutubeLink(embedUrl)
-                setBackGroundImage(null);
                 handleSetBackground("youtube", embedUrl)
-
 
             } else {
                 console.error('Invalid YouTube URL');
@@ -66,8 +64,6 @@ const ImagePopup = ({setBackGroundImage, setYoutubeLink}) => {
             }
         } else {
             console.log("background")
-            setBackGroundImage(src);
-            setYoutubeLink("")
             handleSetBackground("image", src)
         }
 
