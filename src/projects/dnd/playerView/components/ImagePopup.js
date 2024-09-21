@@ -41,7 +41,6 @@ const ImagePopup = ({setPlayerViewBackground, setYoutubeLink}) => {
         if (isYoutubeLink) { // https://www.youtube.com/watch?v=H-bd0eyF-HA&ab_channel=AnimatedBattleMaps
             const videoId = src.split("vi/")[1].split('/max')[0];
             if (videoId) {
-                console.log("youtube")
                 let embedUrl = "https://www.youtube.com/embed/" + videoId
 
                 const params = {
@@ -63,7 +62,6 @@ const ImagePopup = ({setPlayerViewBackground, setYoutubeLink}) => {
                 return;
             }
         } else {
-            console.log("background")
             handleSetBackground("image", src)
         }
 

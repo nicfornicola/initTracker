@@ -60,7 +60,7 @@ const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, se
         setHideEnemies(true)
 
     };  
-    console.log(playerViewBackground)
+
     return (
         <div className="dmView" style={{backgroundImage: playerViewBackground.type === "image" && playerViewBackground.src ? `url(${playerViewBackground.src})` : 'none'}}>
             { playerViewBackground.type === "youtube" && 
@@ -68,36 +68,46 @@ const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, se
             }
 
             { onFirstLoad ? ( 
-                <div className='firstLoadMenu'>
-                    <div className='firstLoadOptions'>
-                        DmBuddy.com
-                        <span>
-                            Encounter Builder, Player View, Dnd Beyond Importing, Home Brew Focused
-                        </span>
-
-                    </div>
-                    <div className='firstLoadOptions'>
-                    </div>
-
-                    <div className='firstLoadOptions'>
-                        Create a New Encounter using DmBuddy's Encounter Builder
-                        <NewEncounterButton handleNewEncounter={handleNewEncounter} />  
-                        {savedEncounters.length !== 0 && 
-                            <DropdownMenu setSavedEncounters={setSavedEncounters} savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter}/> 
-                        }
+                <div className='firstLoadMenuContainer'>
+                    <div className='firstLoadMenu'>
+                        <a className='helpLink' href='/help'>DmBuddy.com/help</a>
+                        <div className='firstLoadOptions'>
+                            <h1>DmBuddy.com</h1>
+                            <span>
+                                Home Brew Focused Encounter Building and Player View
+                            </span>
+                            <span className='firstLoadExtra'>
+                                (with Dnd Beyond Importing)
+                            </span>
+                            
                         </div>
 
-                    
-                    <div className='firstLoadOptions'>
-                        Import an encounter built in DnD Beyond
-                        <InputEncounterId setCurrentEncounter={setCurrentEncounter}/>
-                        OR
-                        <span>Import Dnd Beyond Player Characters</span>
-                        <InputCharacterId setCurrentEncounter={setCurrentEncounter}/>
+                        <div className='firstLoadOptions'>
+                            Create a
+                            <NewEncounterButton handleNewEncounter={handleNewEncounter} />  
+                        </div>
 
+                        <div className='firstLoadOptions'>
+                            {savedEncounters.length !== 0 && (
+                                <>
+                                    Select from your
+                                    <DropdownMenu setSavedEncounters={setSavedEncounters} savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter}/> 
+                                </>
+                            
+                            )}
+                        </div>
+
+                        
+                        <div className='firstLoadOptionsImports'>
+                            Import an encounter from Dnd Beyond
+                            <InputEncounterId setCurrentEncounter={setCurrentEncounter}/>
+                            or
+                            <span>Import Dnd Beyond Character</span>
+                            <InputCharacterId setCurrentEncounter={setCurrentEncounter}/>
+                        </div>
                     </div>
-
                 </div>
+
             ) : ( 
                 <>
                     <SideMenu uploadLocalStorage={uploadLocalStorage} setCurrentEncounter={setCurrentEncounter} showSearchList={showSearchList} setShowSearchList={setShowSearchList}/>

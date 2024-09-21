@@ -9,9 +9,6 @@ import UploadMonsterImage from './UploadMonsterImage'
 
 function addToLocalSavedEncounter(jsonArray, newEncounter) {
     if(jsonArray === null) jsonArray = []
-    console.log("-----")
-    console.log(jsonArray)
-    console.log(newEncounter)
     
     // Find the index of the existing object with the same encounter guid
     const index = jsonArray.findIndex(item => item['guid'] === newEncounter['guid']);
@@ -91,7 +88,6 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, setCurrentEncou
             
 
             if(newEncounter.guid !== currentEncounter.guid) {
-                console.log("CHANGED GUID", newEncounter.guid)
                 setEncounterGuid(newEncounter.guid) 
             }
             
@@ -152,7 +148,6 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, setCurrentEncou
 
     const handleAutoRollInitiative = (event) => {
         event.stopPropagation()
-        console.log("Auto Roll")
         currentEncounter.currentEncounterCreatures.forEach(creature => {
             let initBonus = creature.dexterity_save ? creature.dexterity_save : 0
             creature.initiative = Math.floor(Math.random() * 20) + 1 + initBonus

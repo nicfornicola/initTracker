@@ -42,7 +42,6 @@ const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounte
     const handleEnemyBlood = () => {
 
         let newToggle = parseInt(enemyBloodToggle) + 1
-        console.log("handleEnemtBlood", newToggle, enemyBloodToggle)
         let type = newToggle === 3 ? 0 : newToggle
         setEnemyBloodToggle(type)
         localStorage.setItem('enemyBloodToggle', JSON.stringify(type));
@@ -92,7 +91,6 @@ const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounte
         }
     };
 
-    console.log(autoRefresh, refreshCheck)
     return (
         <div className='encounterControlsContainer'>
             <div>
@@ -115,7 +113,7 @@ const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounte
                     </div>
                 </div>
                 <div className='encounterCountrolsRight'>
-                    {currentEncounter.currentEncounterCreatures.length > 0 && encounterName !== INIT_ENCOUNTER_NAME && 
+                    {currentEncounter.currentEncounterCreatures.length > 0 && 
                         <>
                             <div className='encounterTitleButtonGroup' onClick={(e) => e.stopPropagation()}>
                                     <button className='dmViewButton' onClick={(e) => handleTurnNums('prev', e)}> {'<<'} </button>

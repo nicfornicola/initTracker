@@ -1,20 +1,19 @@
 
 offline mod
 -----
-I can get campaine info from the character api at the bottom
-make stat blocks have a hide for now button that shows a little leaf to reappear
-move buttons from player view to dm view
 
     menu
     --
-        upload all chars from a campaign
+        upload all chars from a campaign - I can get campaign players info from the character api at the bottom
+
 
     search list
     --
-        add button instead of just clicking any where so you can click an read stats without adding to encounter
         
     statblock
     --
+        make stat blocks spots show more then one, see redesign 
+        make stat blocks have a hide for now button that shows a little leaf to reappear
         customize more stuff in stat block
         Slot-tracking with check marks of things like legendary actions, and anything else with limited use
         But even better would be being able to auto-reset things with turn limits and such, like legendary actions.
@@ -26,14 +25,12 @@ move buttons from player view to dm view
 
     saved encounter list 
     -- 
-        track initative and make next button, current turn at top of list and loop or chevron next to item
         add quick look to see encounters names of creatures
 
     encounter list changes 
     --
-        toggle hide
+        when doing next turn on last member, auto scroll to top if off the screen
         add effects 
-        current turn marker
         toggle ally/neutral/enemy in encounter list
 
 playerview
@@ -47,12 +44,18 @@ playerview
 BROKEN 
 ----
 enironment stat card is SO fucked
-auto refresh timer broken on auto refresh for DMB
 dnd_b imports show their hp from time of import and then auto refresh to the current amount - fix is hit a refresh on page load to make sure its up to date 
-somtimes can have two encounter of the same name
 
 DONE - offline mode
 ------
+add button instead of just clicking any where so you can click an read stats without adding to encounter
+track initative and make next button,
+current turn marker
+toggle hide
+move buttons from player view to dm view
+auto refresh timer broken on auto refresh for DMB
+somtimes can have two encounter of the same name
+
 current turn tracked on refresh from dndb
 import export encouter list
 toggle visible button  
@@ -100,8 +103,6 @@ refresh on reveal
 add death saves
 add auto refresh 5 minutes or so
 added youtube video link upload for backgrounds
-
-
 
 
 king

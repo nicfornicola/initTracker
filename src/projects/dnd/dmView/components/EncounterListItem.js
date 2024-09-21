@@ -156,7 +156,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     let hpStyle = {color: color, borderColor: color}
 
 
-    console.log(creature)
     return (
             <li className='listItem'
                 onClick={() => setEncounterSelectedCreature(creature)}

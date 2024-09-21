@@ -31,12 +31,10 @@ function App() {
     
     console.log(localStorage.getItem('enemyBloodToggle'))
     if(localStorage.getItem('enemyBloodToggle') === null) {
-        console.log("set enemyBloodToggle")
         localStorage.setItem('enemyBloodToggle', 1);
     }
 
     if(localStorage.getItem('hideDeadEnemies') === null) {
-        console.log("set hideDeadEnemies")
         localStorage.setItem('hideDeadEnemies', false);
     }
 
@@ -65,19 +63,14 @@ function App() {
             //Get player stats for HP
             const filteredPlayers = currentEncounter.currentEncounterCreatures.filter(creature => creature.type === 'player' && creature.from === 'dnd_b');
             const playerIds = filteredPlayers.map(player => player.dnd_b_player_id.toString()); // Map to get the ids as strings
-            console.log(playerIds)
             const refreshedData = await ImportDndBeyondCharacters(playerIds);
-            console.log("updatedCreature:", refreshedData)
-            console.log("updatedCreature:", currentEncounter.currentEncounterCreatures)
 
             // Iterate over the first array using a for loop
             const updatedCreatures = currentEncounter.currentEncounterCreatures.map(creature => {
                 const refreshedPlayer = refreshedData.find(data => data.dnd_b_player_id === creature.dnd_b_player_id);
-                console.log("refreshPlayer:", refreshedPlayer)
 
                 // If the current creature is found in the refreshedData list then refresh data but keep a few of the old stuff
                 if (refreshedPlayer) {
-
                     creature = {
                         ...refreshedPlayer,
                         name: creature.name,
@@ -86,11 +79,10 @@ function App() {
                         initiative: creature.initiative, // might remove this in the future for auto initiative in the dnd_b app
                         // avatarUrl: creature.avatarUrl
                     }
-                    console.log("REFRESHED:", creature)
+                    console.log("REFRESHED:", creature.name)
 
                 } else {
-                    console.log("NOT REFRESHED:", creature)
-
+                    console.log("NOT REFRESHED:", creature.name)
                 }
 
                 return creature
@@ -135,10 +127,8 @@ function App() {
 
             currentEncounter.currentEncounterCreatures.forEach(creature => {
                 if(creature.from === "dnd_b") {
-                    console.log("dnd_b found...")
                     foundPlayer = true;
                 } else if(creature.from === "dnd_b_monster") {
-                    console.log("dnd_b monster...")
                     foundMonster = true;
                 }
             });
@@ -151,22 +141,18 @@ function App() {
             
 
         const getRefreshedLocalEncounter = (event) => {
+            console.log("storageKey: ", event.key)
             if (event.key === 'playerViewEncounter') {
                 const updatedPlayerView = JSON.parse(localStorage.getItem('playerViewEncounter'));
-                console.log("playerviewupdated", updatedPlayerView)
                 setPlayerView({...updatedPlayerView});
             } else if (event.key === 'currentBackground') {
                 const updatedCurrentBackground = JSON.parse(localStorage.getItem('currentBackground'));
-                console.log("updatedCurrentBackground", updatedCurrentBackground)
                 setPlayerViewBackground({...updatedCurrentBackground});
             } else if (event.key === 'hideEnemies') {
-                console.log("hiddenEnemies")
                 setHideEnemies(JSON.parse(localStorage.getItem('hideEnemies')));
             } else if (event.key === 'enemyBloodToggle') {
-                console.log("enemyBloodToggle", enemyBloodToggle)
                 setEnemyBloodToggle(JSON.parse(localStorage.getItem('enemyBloodToggle')));
             } else if (event.key === 'hideDeadEnemies') {
-                console.log("hideDeadEnemies", hideDeadEnemies)
                 setHideDeadEnemies(JSON.parse(localStorage.getItem('hideDeadEnemies')));
             }
         }
@@ -223,7 +209,6 @@ function App() {
         reader.readAsText(file);
     }
 
-    console.log("APP", currentEncounter)
     return (
         <Routes>
             <Route path="/" element={<DmView currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} playerViewBackground={playerViewBackground} setPlayerViewBackground={setPlayerViewBackground} handleRefresh={handleRefresh} refreshCheck={refreshCheck} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} autoRefresh={autoRefresh} uploadLocalStorage={uploadLocalStorage} localSavedEncounters={localSavedEncounters}/>}/>

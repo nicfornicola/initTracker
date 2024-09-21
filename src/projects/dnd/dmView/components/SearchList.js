@@ -152,7 +152,6 @@ const SearchList = ({setCurrentEncounter}) => {
         let newCreature = {...creature, guid: generateUniqueId()}
 
         if(action === "add") {
-            console.log("Creature added", creature)
             setCurrentEncounter(prev => ({...prev, currentEncounterCreatures: [...prev.currentEncounterCreatures, newCreature]}));
         }
         else if(action === "select")

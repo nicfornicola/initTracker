@@ -2,6 +2,7 @@ import React from 'react';
 
 const resizeImage = (img, maxWidth, maxHeight, quality) => {
     return new Promise((resolve) => {
+        console.log("resizing!")
         const canvas = document.createElement('canvas');
         let width = img.width;
         let height = img.height;
@@ -21,6 +22,7 @@ const resizeImage = (img, maxWidth, maxHeight, quality) => {
         canvas.height = height;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, width, height);
+        console.table("!!", width, height)
 
         // Convert the canvas to a base64 string with reduced quality
         const dataUrl = canvas.toDataURL('image/jpeg', quality);
@@ -41,13 +43,15 @@ const FileUpload = ({uploadedFiles, setUploadedFiles, storageKey}) => {
                 img.src = e.target.result;
 
                 img.onload = async () => {
-                    const maxWidth = 300; // Maximum width
-                    const maxHeight = 300; // Maximum height
-                    const quality = 0.7; // Image quality (0.1 to 1)
+                    const maxWidth = storageKey === "uploadedBackgrounds" ? 1280 : 300; // Maximum width
+                    const maxHeight = storageKey === "uploadedBackgrounds" ? 720 : 300; // Maximum height
+                    const quality = storageKey === "uploadedBackgrounds" ? .9 : 0.7; // Image quality (0.1 to 1)
 
                     const resizedImage = await resizeImage(img, maxWidth, maxHeight, quality);
-                    setUploadedFiles((prevFiles) => [...prevFiles, resizedImage]);
+
                     console.log("storageKey", storageKey)
+                    console.table(img)
+                    setUploadedFiles((prevFiles) => [...prevFiles, resizedImage]);
                     localStorage.setItem(storageKey, JSON.stringify([...uploadedFiles, resizedImage]));
 
                 };

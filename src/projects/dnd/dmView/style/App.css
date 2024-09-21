@@ -39,23 +39,55 @@
     align-items: center; 
 }
 
+.firstLoadMenuContainer {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
 .firstLoadMenu {
     position: relative;
     display: flex;
     flex-direction: column;
     top: 20%;
-    width: 100%;
+    width: 40%;
     height: 50%;
     justify-content: space-around;
-    align-items: center
+    align-items: center;
+    background-color: #1f1f1fc2;
+    color: #ffffff;
+    border-radius: 30px;
+}
+
+.helpLink {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    color: #f1f1f1;
+    font-size: smaller;
+    font-weight: normal;
 }
 
 .firstLoadOptions {
     display: flex;
     flex-direction: column;
-    width: 100%;
     justify-content: space-around;
-    align-items: center
+    align-items: center;
+    width: 100%;
+}
+
+.firstLoadOptionsImports {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    font-size: small;
+}
+
+.firstLoadExtra {
+    font-style: italic;
+    font-size: small;
 }
 
 .searchBar {
@@ -534,6 +566,7 @@ input {
     top: 100%;
     left: 0;
     background-color: white;
+    color: rgb(0, 0, 0);
     border: 1px solid #ccc;
     padding: 10px;
     list-style: none;
