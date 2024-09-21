@@ -7,10 +7,9 @@ import TextInput from './TextInput';
 import GridMap from './GridMap';
 
 import backgroundButton from "../pics/icons/backgroundButton.png"
-import Tooltip from './Tooltip';
 import OptionButton from '../../dmView/components/OptionButton';
 
-const ImagePopup = ({setPlayerViewBackground, setYoutubeLink}) => {
+const ImagePopup = ({setPlayerViewBackground}) => {
     const [open, setOpen] = useState(false);
     const [uploadedFiles, setUploadedFiles] = useState(JSON.parse(localStorage.getItem('uploadedBackgrounds')) || []);
     const [uploadedLinks, setUploadedLinks] = useState(JSON.parse(localStorage.getItem('uploadedLinks')) || []);
@@ -91,7 +90,7 @@ const ImagePopup = ({setPlayerViewBackground, setYoutubeLink}) => {
                 <GridMap imageArr={backgroundImages} handleClick={handleClick}/>
             </DialogContent>
             <FileUpload uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles} storageKey={"uploadedBackgrounds"} />
-            <TextInput setYoutubeLink={setYoutubeLink} setUploadedLinks={setUploadedLinks} uploadedLinks={uploadedLinks} setOpen={setOpen}/>
+            <TextInput setUploadedLinks={setUploadedLinks} uploadedLinks={uploadedLinks}/>
 
         </Dialog>
 

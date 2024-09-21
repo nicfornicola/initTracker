@@ -28,7 +28,8 @@ function App() {
     const [hideEnemies, setHideEnemies] = useState(localStorage.getItem('hideEnemies') || true);
     const [enemyBloodToggle, setEnemyBloodToggle] = useState(localStorage.getItem('enemyBloodToggle') || 1);
     const [hideDeadEnemies, setHideDeadEnemies] = useState(localStorage.getItem('hideDeadEnemies') || false);
-    
+    const [cardContainerStyle, setCardContainerStyle] = useState({width: '80%'});
+
     console.log(localStorage.getItem('enemyBloodToggle'))
     if(localStorage.getItem('enemyBloodToggle') === null) {
         localStorage.setItem('enemyBloodToggle', 1);
@@ -154,6 +155,8 @@ function App() {
                 setEnemyBloodToggle(JSON.parse(localStorage.getItem('enemyBloodToggle')));
             } else if (event.key === 'hideDeadEnemies') {
                 setHideDeadEnemies(JSON.parse(localStorage.getItem('hideDeadEnemies')));
+            } else if (event.key === 'cardContainerStyle') {
+                setCardContainerStyle(JSON.parse(localStorage.getItem('cardContainerStyle')));
             }
         }
         window.addEventListener('storage', getRefreshedLocalEncounter);
@@ -211,8 +214,8 @@ function App() {
 
     return (
         <Routes>
-            <Route path="/" element={<DmView currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} playerViewBackground={playerViewBackground} setPlayerViewBackground={setPlayerViewBackground} handleRefresh={handleRefresh} refreshCheck={refreshCheck} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} autoRefresh={autoRefresh} uploadLocalStorage={uploadLocalStorage} localSavedEncounters={localSavedEncounters}/>}/>
-            <Route path="/playerView" element={<PlayerPage playerView={playerView} playerViewBackground={playerViewBackground} hideEnemies={hideEnemies} enemyBloodToggle={enemyBloodToggle} hideDeadEnemies={hideDeadEnemies}/>} />
+            <Route path="/" element={<DmView currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} cardContainerStyle={cardContainerStyle} setCardContainerStyle={setCardContainerStyle} playerViewBackground={playerViewBackground} setPlayerViewBackground={setPlayerViewBackground} handleRefresh={handleRefresh} refreshCheck={refreshCheck} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} autoRefresh={autoRefresh} uploadLocalStorage={uploadLocalStorage} localSavedEncounters={localSavedEncounters}/>}/>
+            <Route path="/playerView" element={<PlayerPage playerView={playerView} playerViewBackground={playerViewBackground} hideEnemies={hideEnemies} cardContainerStyle={cardContainerStyle} enemyBloodToggle={enemyBloodToggle} hideDeadEnemies={hideDeadEnemies}/>} />
             <Route path="/help" element={<HowTo/>} />
             <Route path="/king/" element={<Pantheon />} />
             <Route path="/blog" element={<Blog/>}/>

@@ -954,15 +954,28 @@ input {
     padding: 0px;
     white-space: nowrap;
     width: 100%;
+    height: fit-content;
+    
 }
 
 .menuItem {
+    color: white;
     cursor: pointer;
     width: 100%;
 }
 
 .menuIcon {
     width: 35px;
+}
+
+.menuItemLow {
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+}
+
+.menuHelpLink {
+    color: #f1f1f1;
 }
 
 .clickable-image {

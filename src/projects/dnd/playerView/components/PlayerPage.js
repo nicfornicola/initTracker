@@ -2,16 +2,11 @@ import '../style/App.css';
 import React, { useState, useEffect } from 'react';
 import Icon from './Icon';
 import Effect from './Effect';
-import RefreshTimer from './RefreshTimer.js'
 import { getCreatures } from '../api/getCreatures.js';
 import { getMonstersAvatars } from '../api/getMonstersAvatars.js';
 import { getCharacterStats } from '../api/getCharacterStats.js';
 import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
-import refreshPlayers from '../pics/icons/refreshPlayers.png'; 
-import refresh from '../pics/icons/refresh.png'; 
-import refreshMonster from '../pics/icons/refreshMonsters.png'; 
-import greenCheck from '../pics/icons/check.png'; 
 import upArrow from "../pics/icons/upArrow.png"
 import downArrow from "../pics/icons/downArrow.png"
 import noArrow from "../pics/icons/noArrow.jpg"
@@ -21,7 +16,7 @@ import Tooltip from './Tooltip.js';
 import YouTubeEmbed from './YouTubeEmbed.js';
 import { generateUniqueId } from '../../dmView/constants.js';
 
-function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodToggle, hideDeadEnemies}) {
+function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodToggle, hideDeadEnemies, cardContainerStyle}) {
     const [creatures, setCreatures] = useState(playerView?.currentEncounterCreatures || []);
     const [clickedCreature, setClickedCreature] = useState(null);
     const [error, setError] = useState(false);
@@ -29,16 +24,13 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
     const [refreshCheck, setRefreshCheck] = useState(false);
     const [refreshPlayersCheck, setRefreshPlayersCheck] = useState(false);
     const [refreshMonstersCheck, setRefreshMonstersCheck] = useState(false);
-    const [recentlyRefreshed, setRecentlyRefreshed] = useState(false);
     const [foundCreatures, setFoundCreatures] = useState(null);
-    const [cardContainerStyle, setCardContainerStyle] = useState({width: '80%'});
     const [arrowButton, setArrowButton] = useState(upArrow);
-    const [autoRefreshDMB, setAutoRefreshDMB] = useState(false);
     const [turnNum, setTurnNum] = useState(playerView.turnNum);
     const [roundNum, setRoundNum] = useState(playerView.RoundNum);
     const { gameId } = useParams();
     const isOfflineMode = window.location.href.includes("playerView");
-    console.log(enemyBloodToggle)
+    console.log(cardContainerStyle)
 
     useEffect(() => {
         setCreatures([...playerView.currentEncounterCreatures])
@@ -237,34 +229,6 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
             // refreshPlayerProfiles().then(passedCreatures => refreshMonsterProfiles(passedCreatures))
         }
     };
-    
-    const handleMovePortraits = () => {
-        if('bottom' in cardContainerStyle) {
-            // middle style
-            const newCardContainerStyle = {
-                width: '80%',
-            }
-            setCardContainerStyle(newCardContainerStyle)
-            setArrowButton(upArrow)
-        } else if('top' in cardContainerStyle) {
-            // bottom style
-            const newCardContainerStyle = {
-                width: '95%',
-                bottom: '0%'
-            }
-            setCardContainerStyle(newCardContainerStyle)
-            setArrowButton(noArrow)
-        } else {
-            // top style
-            const newCardContainerStyle = {
-                width: '95%',
-                top: '0%'
-            }
-            setCardContainerStyle(newCardContainerStyle)
-            setArrowButton(downArrow)
-
-        }
-    }
 
     console.log(creatures)
     return (

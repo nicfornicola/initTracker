@@ -6,7 +6,6 @@ import eyeClosed from '../../playerView/pics/icons/eyeClosed.png';
 import eyeOpen from '../../playerView/pics/icons/eyeOpen.png'; 
 import skullButton from '../../playerView/pics/icons/skullButton.jpg'; 
 import skullButtonNot from '../../playerView/pics/icons/skullButtonNot.jpg'; 
-import background1 from "../../playerView/pics/backgrounds/fallenCastleBigTree.jpg"
 import upArrow from "../../playerView/pics/icons/upArrow.png"
 import downArrow from "../../playerView/pics/icons/downArrow.png"
 import noArrow from "../../playerView/pics/icons/noArrow.jpg"
@@ -18,14 +17,12 @@ import Timer from '../../playerView/components/Timer';
 import RefreshTimer from '../../playerView/components/RefreshTimer';
 import OptionButton from './OptionButton';
 
-const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounter, setPlayerViewBackground, handleStartEncounter, hideEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, hideDeadEnemies, setHideDeadEnemies, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange}) => {
+const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounter, setPlayerViewBackground, setCardContainerStyle, handleStartEncounter, hideEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, hideDeadEnemies, setHideDeadEnemies, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange}) => {
     const [encounterName, setEncounterName] = useState(currentEncounter.encounterName);
-    const [youtubeLink, setYoutubeLink] = useState("");
-    const [cardContainerStyle, setCardContainerStyle] = useState({width: '80%'});
     const [arrowButton, setArrowButton] = useState(upArrow);
     const [arrowToggleType, setArrowToggleType] = useState(0);
     const [showRefreshButton, setAutoRefreshDMB] = useState(autoRefresh);
-    const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(bloodIcon);
+    const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(bloodIconMinus);
 
     useEffect(() => {
         setAutoRefreshDMB(autoRefresh)
@@ -33,9 +30,24 @@ const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounte
 
     const handleMovePortraits = () => {
         let type = arrowToggleType + 1
-        if(type === 0) { setArrowButton(upArrow) }
-        else if(type === 1) { setArrowButton(noArrow) } 
-        else if(type === 2) { setArrowButton(downArrow) }
+        let newStyle = {}
+        if(type === 0) { 
+            setArrowButton(upArrow) 
+            newStyle.width ='80%';
+        }
+        else if(type === 1) { 
+            setArrowButton(downArrow) 
+            newStyle.width ='95%';
+            newStyle.top ='0%';
+        } 
+        else if(type === 2) { 
+            setArrowButton(noArrow) 
+            newStyle.width ='95%';
+            newStyle.bottom ='0%';
+        }
+
+        localStorage.setItem('cardContainerStyle', JSON.stringify(newStyle));
+        setCardContainerStyle(newStyle)
         setArrowToggleType(type === 2 ? -1 : type)
     }
 
@@ -47,22 +59,20 @@ const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounte
         localStorage.setItem('enemyBloodToggle', JSON.stringify(type));
 
         let newImage = undefined
-        if(type === 0) { newImage = bloodIcon } 
-        else if(type === 1) { newImage = bloodIconSlash } 
-        else if(type === 2) { newImage = bloodIconMinus } 
+        if(type === 0) { newImage = bloodIconSlash } 
+        else if(type === 1) { newImage = bloodIconMinus } 
+        else if(type === 2) { newImage = bloodIcon } 
         setEnemyBloodToggleImage(newImage) 
     } 
 
     const handleHideEnemies = () => {
-        // if(hideEnemies && !isOfflineMode) // If hideEnemies is true, then refresh before revealing enemies
-            // handleRefresh(2)
+        if(autoRefresh && hideEnemies) // If hideEnemies is true, then refresh before revealing enemies
+            handleRefresh()
         setHideEnemies(!hideEnemies)
         localStorage.setItem('hideEnemies', !hideEnemies);
     } 
 
     const handleHideDeadEnemies = () => {
-        // if(hideEnemies && !isOfflineMode) // If hideEnemies is true, then refresh before revealing enemies
-            // handleRefresh(2)
         setHideDeadEnemies(!hideDeadEnemies)
         localStorage.setItem('hideDeadEnemies', !hideDeadEnemies);
     } 
@@ -105,7 +115,7 @@ const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounte
                     </div>
                     <div className='dmLowOptions'>
                         <OptionButton src={arrowButton} message={"Player View Icon Position"} onClickFunction={handleMovePortraits}/>
-                        <ImagePopup setPlayerViewBackground={setPlayerViewBackground} setYoutubeLink={setYoutubeLink} />                    
+                        <ImagePopup setPlayerViewBackground={setPlayerViewBackground} />                    
                         {showRefreshButton &&
                             <OptionButton src={refreshCheck ? greenCheck : refresh} message={<RefreshTimer refresh={refreshCheck}/>} onClickFunction={() => handleRefresh()} />
                         }         

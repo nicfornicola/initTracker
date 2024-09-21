@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Search from '../pics/search.png'
 import Download from '../pics/download.png'
 import JsonImg from '../pics/json.png'
+import questionMark from '../pics/icons/questionMark.png'
 import InputCharacterId from './InputCharacterId';
 import InputEncounterId from './InputEncounterId';
 
@@ -72,7 +73,11 @@ function SideMenu({uploadLocalStorage, setCurrentEncounter, showSearchList, setS
                 <li className='menuItem' onClick={() => setIsOpen(true)}>
                     <InputEncounterId setCurrentEncounter={setCurrentEncounter} />
                 </li>
+                <li className='menuItemLow'>
+                    <a className='menuHelpLink' href='/help'> <img src={questionMark} alt="Click to Upload" className="menuIcon" /> Help  Page</a>
+                </li>
             </ul>
+            
         </div>
     );
 }

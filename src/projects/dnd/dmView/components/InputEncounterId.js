@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { generateUniqueId } from '../constants';
-import ChampionImage from '../../playerView/pics/icons/refreshPlayers.png'
+import EncounterImage from '../pics/icons/importDndBEncounter.png'
 import { ImportDndBeyondCharacters } from '../api/ImportDndBeyondCharacters'
 import { ImportDndBeyondEncounter } from '../api/ImportDndBeyondEncounter'
 import { ImportDndBeyondMonsters } from '../api/ImportDndBeyondMonsters'
@@ -46,7 +46,7 @@ function InputEncounterId({setCurrentEncounter}) {
 
     return (
         <div className='dndBImportContainer'>
-            <img src={ChampionImage} alt="Click to Upload" className="menuIcon" />
+            <img src={EncounterImage} alt="Click to Upload" className="menuIcon" />
             <div className='dndBImportButtons'>
                 <input
                     className='dndbInput'

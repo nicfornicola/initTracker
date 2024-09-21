@@ -159,7 +159,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     return (
             <li className='listItem'
                 onClick={() => setEncounterSelectedCreature(creature)}
-                style={{border: isTurn ? '5px solid rgba(11, 204, 255)' : ''}}
+                style={{border: isTurn ? '5px solid rgba(11, 204, 255)' : '', borderRadius: 0}}
             >   
                 <div className='encounterCreatureContainer animated-box'>
                     <div className='initiativeInputContainer'>
