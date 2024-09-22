@@ -352,17 +352,15 @@ hr {
 
 .roundNum {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 10px;
+    left: 10px;
     font-size: x-large;
     display: inline;
-}
-
-.roundNum .tooltiptext {
-    position: relative;
-    left: 0px;
-    height: fit-content;
-}
+    text-shadow: 
+        -1px -1px 0 white,  
+        1px -1px 0 white,  
+        -1px 1px 0 white,  
+        1px 1px 0 white; /* Create the white outline effect */}
 
 .options-container .tooltiptext,
 .refresh-container .tooltiptext {

@@ -35,6 +35,7 @@ offline mod
 
 playerview
 ------
+    death saves for offline mode, put it in the hp box
     add x button to remove uploadedLinks and images
     add button to resize images and add more options to move their positions
     different tiers of blood to match what is going on in game, light, med, heavy blood

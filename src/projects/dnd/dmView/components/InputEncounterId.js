@@ -38,9 +38,7 @@ function InputEncounterId({setCurrentEncounter}) {
                 console.log("Creatures Imported!")
             }
         } catch (error) {
-            console.log(error)
-            // setErrorMessage(error)
-            // setError(true)
+            console.warn(error)
         }  
     }
 

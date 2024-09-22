@@ -51,8 +51,9 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
     const globalHpBoxShadow = {boxShadow: '1px 1px 8px 5px rgba(255, 255, 255)'};
 
     let cardBoxShadow;
-    const monsterBoxShadow = {boxShadow: '0px 3px 8px 5px rgba(203, 38, 19, 1)'};
-    const playerBoxShadow = {boxShadow: '0px 3px 8px 5px rgba(0, 230, 64, 1)'};
+    let shadowString = '0px 0px 5px 5px'
+    const monsterBoxShadow = {boxShadow: shadowString + ' rgba(203, 38, 19, 1)'};
+    const playerBoxShadow = {boxShadow: shadowString + ' rgba(0, 230, 64, 1)'};
     if (isPlayer) {
 
         let namesArr = creature.name.split(' ');
@@ -104,12 +105,15 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
     return (
         <>
             { showIcon && (
-                    <div
-                        className="card"
-                        style={{...cardBoxShadow, background: isTurn ? 'linear-gradient(to top, rgba(11, 204, 255, 0.85), rgba(11, 204, 255, .5))' : ''}}
-                        onClick={(event) => handleImageClick(event)}
-                    >
-                        <div>
+                <div
+                    className="card"
+                    style={{...cardBoxShadow, 
+                        background: isTurn ? 'linear-gradient(to top, rgba(11, 204, 255, 0.85), rgba(11, 204, 255, .5))' : '',
+                        opacity: isDead && !isPlayer ? .5 : 1
+                    }}
+                    onClick={(event) => handleImageClick(event)}
+                >
+                    <div>
                         <div className='image-container'>
                             <img className="image" src={creature.avatarUrl} alt={name} />
                             <div className="imageSmoke"/>                            
@@ -123,7 +127,7 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
                                 
                             )}
 
-                            {isBloodied && (
+                            {isBloodied && !isDead && (
                                 <img className="image overlay-blood" src={bloodImg} alt="" />
                             )}
 
@@ -142,7 +146,7 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
                             )}
                         </div>
 
-                        <div className="name">{name}</div> 
+                        <div className="name" style={{opacity: 1}}>{name}</div> 
                         <div className='lastName'> {lastName}</div>
 
                         {showHp && ( 
@@ -169,7 +173,7 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
 
                     </div>
                 </div>
-            ) }
+            )}
         </>
     );
 };

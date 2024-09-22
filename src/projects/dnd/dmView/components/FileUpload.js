@@ -2,7 +2,6 @@ import React from 'react';
 
 const resizeImage = (img, maxWidth, maxHeight, quality) => {
     return new Promise((resolve) => {
-        console.log("resizing!")
         const canvas = document.createElement('canvas');
         let width = img.width;
         let height = img.height;
@@ -50,7 +49,6 @@ const FileUpload = ({uploadedFiles, setUploadedFiles, storageKey}) => {
                     const resizedImage = await resizeImage(img, maxWidth, maxHeight, quality);
 
                     console.log("storageKey", storageKey)
-                    console.table(img)
                     setUploadedFiles((prevFiles) => [...prevFiles, resizedImage]);
                     localStorage.setItem(storageKey, JSON.stringify([...uploadedFiles, resizedImage]));
 

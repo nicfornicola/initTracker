@@ -144,7 +144,7 @@ const SearchList = ({setCurrentEncounter}) => {
             handleAddCreatureToEncounter(selectedCreature, action)
 
         } catch (error) {
-            console.log(error)
+            console.warn(error)
         }  
     };
 
