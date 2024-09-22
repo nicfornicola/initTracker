@@ -4,6 +4,7 @@ import {monsterList, imagesAvailable, proxyUrl, generateUniqueId} from '../const
 import axios from 'axios';
 import StatBlock from './StatBlock';
 import Open5eToDmBMapper from '../mappers/Open5eToDmBMapper'
+import { InfinitySpin } from 'react-loader-spinner'
 
 // Function to get the image URL based on the type
 const getImageUrl = (creature) => {
@@ -49,7 +50,7 @@ const SearchList = ({setCurrentEncounter}) => {
     const [filteredItems, setFilteredItems] = useState([]);
     const [displayedItems, setDisplayedItems] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function fetchData() {
@@ -84,15 +85,15 @@ const SearchList = ({setCurrentEncounter}) => {
 
             setFilteredItems(filtered);
             setDisplayedItems(displayItems);
+            setLoading(false)
+
         }
         fetchData();
 
     }, [searchTerm, itemsToShow]);
 
     const getCreatureImage = async (name) => {
-        // Replace this with your API call to fetch filtered creatures
         try {
-
             let test = false
             if(test) {
                 return {avatarUrl: "https://www.dndbeyond.com/avatars/0/10/636238825974097081.jpeg", largeAvatarUrl: "https://www.dndbeyond.com/avatars/thumbnails/30761/774/400/347/638061093283829548.png"}
@@ -169,13 +170,20 @@ const SearchList = ({setCurrentEncounter}) => {
                         value={searchTerm}
                         onChange={(e) => handleSetSearchTerm(e.target.value)}
                     />
-                    Results Loaded: {displayedItems.length}
+                    Results Load{loading ? 'ing...': 'ed: ' + displayedItems.length}
                     <div
                         className='monsterSearch'
                         onScroll={handleScroll}
                     >
                         <ul className='monsterSearchList'>
-                            {displayedItems.map((item, index) => (
+                            {loading ? 
+                            <InfinitySpin
+                                visible={true}
+                                width="200"
+                                ariaLabel="infinity-spin-loading"
+                            /> :
+                            
+                            displayedItems.map((item, index) => (
                                 <li
                                     // className='monsterSearchItem animated-label'
                                     className='listItem'

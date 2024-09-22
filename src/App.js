@@ -8,8 +8,8 @@ import { refreshMonsterProfiles } from './projects/dnd/dmView/refresh/refresh';
 import Blog from './projects/blog/components/Blog';
 import Pantheon from './projects/king/components/Pantheon';
 
-import {INIT_ENCOUNTER, LONG_REFRESH, SHORT_REFRESH, background13} from './projects/dnd/dmView/constants'
-import HowTo from './projects/dnd/dmView/components/HowToDMB';
+import {INIT_ENCOUNTER, SHORT_REFRESH} from './projects/dnd/dmView/constants'
+import HowTo from './projects/dnd/dmView/components/SideMenu/HowToDMB';
 import { ImportDndBeyondCharacters } from './projects/dnd/dmView/api/ImportDndBeyondCharacters'
 import defaultBackground from "./projects/dnd/playerView/pics/backgrounds/happyTavern.png"
 

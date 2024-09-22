@@ -1,8 +1,8 @@
-import '../style/App.css';
+import '../../dmView/style/App.css';
 import React from 'react';
-import deathSaveDefault from '../pics/icons/deathSaveDefault.png'
-import deathSaveFail from '../pics/icons/deathSaveFail.png'
-import deathSaveSuccess from '../pics/icons/deathSaveSuccess.png'
+import deathSaveDefault from '../../dmView/pics/icons/deathSaveDefault.png'
+import deathSaveFail from '../../dmView/pics/icons/deathSaveFail.png'
+import deathSaveSuccess from '../../dmView/pics/icons/deathSaveSuccess.png'
 const DeathSaves = ({deathSaves}) => {
 
     const saves = [];

@@ -1,4 +1,4 @@
-import { skill_codes, skills_long, skills_short } from '../constants';
+import { skill_codes, skills_long, skills_short } from '../../dmView/constants.js';
 
 
 function extractAc(jsonData) {

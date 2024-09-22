@@ -1,10 +1,10 @@
-import '../style/App.css';
+import '../../dmView/style/App.css';
 import React, { useState, useEffect } from 'react';
 import Icon from './Icon';
 import Effect from './Effect';
 import { v4 as uuidv4 } from 'uuid';
-import { effectObjs } from '../constants.js';
-import YouTubeEmbed from './YouTubeEmbed.js';
+import { effectObjs } from '../../dmView/constants.js';
+import YouTubeEmbed from '../../dmView/components/EncounterColumn/YouTubeEmbed.js';
 
 function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodToggle, hideDeadEnemies, cardContainerStyle}) {
     const [creatures, setCreatures] = useState(playerView?.currentEncounterCreatures || []);

@@ -1,4 +1,4 @@
-import '../style/App.css';
+import '../../dmView/style/App.css';
 import React from 'react';
 import { levelXPData } from '../constants';
 import SkillGrid from './SkillGrid';

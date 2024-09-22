@@ -1,5 +1,5 @@
 import React from 'react';
-import '../style/App.css'; // Import your CSS file
+import '../../dmView/style/App.css'; // Import your CSS file
 import { v4 as uuidv4 } from 'uuid';
 
 import skullpng from '../pics/imageOverlays/skulls/skull.png'; 
@@ -10,7 +10,6 @@ import bloodied4 from '../pics/imageOverlays/blood/blood4.png';
 import bloodied5 from '../pics/imageOverlays/blood/blood5.png'; 
 import bloodied6 from '../pics/imageOverlays/blood/blood6.png'; 
 import Exhaustion from './Exhaustion'; 
-import Tooltip from './Tooltip';
 import DeathSaves from './DeathSaves';
 
 // Grab the digits out of guid
@@ -25,7 +24,6 @@ function setBloodImg(creature) {
     return bloodiedArr[randomNumber]
 }
 
-// ProfileCard Component
 const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBloodToggle}) => {
     const isPlayer = creature.type === "player";
     const effectsFound = creature.effects.length > 0
@@ -139,7 +137,6 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
                                                 src={obj.img}
                                                 alt={obj.effect}
                                             />
-                                            <Tooltip message={obj.effect}/>
                                         </label>
                                     ))}
                                 </div>

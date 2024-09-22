@@ -1,8 +1,6 @@
 import React from 'react';
-import '../style/App.css';
-import Tooltip from './Tooltip';
+import '../../dmView/style/App.css';
 
-// ProfileCard Component
 const Effect = ({clickedCreature, effectObj, updateCreatureEffect}) => {
     const hasEffect = clickedCreature.effects.some(eObj => eObj.effect === effectObj.effect);
 
@@ -17,7 +15,6 @@ const Effect = ({clickedCreature, effectObj, updateCreatureEffect}) => {
                 }}
                 onClick={(event) => updateCreatureEffect(event, effectObj)}
             />
-            <Tooltip message={effectObj.effect}/>
         </div>
     );
 };

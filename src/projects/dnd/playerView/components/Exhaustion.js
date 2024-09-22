@@ -1,6 +1,6 @@
 import React from 'react';
-import '../style/App.css';
-import tiredGuy from '../pics/icons/exhausted.png'; 
+import '../../dmView/style/App.css';
+import tiredGuy from '../../dmView/pics/icons/exhausted.png'; 
 
 const Exhaustion = ({exhaustionLvl}) => {
   return (

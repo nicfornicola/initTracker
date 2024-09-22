@@ -1,14 +1,14 @@
 import React, { useEffect, useState  } from 'react';
-import '../style/App.css';
+import '../../dmView/style/App.css';
 import SearchList from './SearchList.js';
-import EncounterColumn from './EncounterColumn.js';
-import SideMenu from './SideMenu.js';
-import InputEncounterId from './InputEncounterId.js';
-import InputCharacterId from './InputCharacterId.js';
-import NewEncounterButton from './NewEncounterButton.js';
+import EncounterColumn from './EncounterColumn/EncounterColumn';
+import SideMenu from './SideMenu/SideMenu.js';
+import InputEncounterId from './SideMenu/InputEncounterId.js';
+import InputCharacterId from './SideMenu/InputCharacterId.js';
+import NewEncounterButton from './EncounterColumn/NewEncounterButton.js';
 import { generateUniqueId, INIT_ENCOUNTER} from '../constants';
-import DropdownMenu from './DropdownMenu.js';
-import YouTubeEmbed from './../../playerView/components/YouTubeEmbed.js';
+import DropdownMenu from './EncounterColumn/DropdownMenu.js';
+import YouTubeEmbed from './EncounterColumn/YouTubeEmbed.js';
 
 
 function getLocalStorageSize() {

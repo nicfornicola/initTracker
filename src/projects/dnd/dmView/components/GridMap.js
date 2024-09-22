@@ -1,4 +1,4 @@
-import '../style/App.css';
+import '../../dmView/style/App.css';
 import React from 'react';
 import { Grid } from '@mui/material';
 
