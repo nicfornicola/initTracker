@@ -26,10 +26,9 @@ function getLocalStorageSize() {
     console.log(`Approximate size: ${sizeInMB.toFixed(2)} MB`);
 }
 
-const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, setPlayerViewBackground, setCardContainerStyle, handleRefresh, hideDeadEnemies, setHideDeadEnemies, refreshCheck, autoRefresh, uploadLocalStorage, enemyBloodToggle, setEnemyBloodToggle, localSavedEncounters}) => {
+const DmView = ({currentEncounter, onFirstLoad, setCurrentEncounter, playerViewBackground, setPlayerViewBackground, setCardContainerStyle, handleRefresh, hideDeadEnemies, setHideDeadEnemies, refreshCheck, autoRefresh, uploadLocalStorage, enemyBloodToggle, setEnemyBloodToggle, localSavedEncounters}) => {
     getLocalStorageSize()
     const [showSearchList, setShowSearchList] = useState(true);
-    const [onFirstLoad, setOnFirstLoad] = useState(true);
     const [encounterGuid, setEncounterGuid] = useState(currentEncounter.guid);
     const [savedEncounters, setSavedEncounters] = useState(localSavedEncounters);
     const [hideEnemies, setHideEnemies] = useState(true);
@@ -40,13 +39,7 @@ const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, se
         let newGuid = generateUniqueId();
         setCurrentEncounter({...INIT_ENCOUNTER, guid: newGuid})
         setEncounterGuid(newGuid)
-    };
-
-    useEffect(() => {
-        if(onFirstLoad && currentEncounter.guid !== "")
-            setOnFirstLoad(false)
-        // eslint-disable-next-line
-    }, [currentEncounter]);    
+    };  
 
     useEffect(() => {
         setSavedEncounters(localSavedEncounters)
@@ -56,8 +49,8 @@ const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, se
     const handleLoadEncounter = (encounter) => {
         console.log("%cLoaded: " + encounter.encounterName, "background: #fdfd96;")
         setCurrentEncounter({...encounter})
-        localStorage.setItem('hideEnemies', JSON.stringify(true));
-        setHideEnemies(true)
+        // localStorage.setItem('hideEnemies', JSON.stringify(true));
+        // setHideEnemies(true)
 
     };  
 

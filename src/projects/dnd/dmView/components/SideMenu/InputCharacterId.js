@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import ChampionImage from '../../pics/icons/importDndBPlayer.png'
+import ChampionImage from '../../pics/icons/refreshPlayers.png'
 import { ImportDndBeyondCharacters } from '../../api/ImportDndBeyondCharacters'
 import { generateUniqueId } from '../../constants'
 

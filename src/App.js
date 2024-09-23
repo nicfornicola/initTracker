@@ -11,8 +11,15 @@ import Pantheon from './projects/king/components/Pantheon';
 import {INIT_ENCOUNTER, SHORT_REFRESH} from './projects/dnd/dmView/constants'
 import HowTo from './projects/dnd/dmView/components/SideMenu/HowToDMB';
 import { ImportDndBeyondCharacters } from './projects/dnd/dmView/api/ImportDndBeyondCharacters'
-import defaultBackground from "./projects/dnd/playerView/pics/backgrounds/happyTavern.png"
+import defaultBackground from "./projects/dnd/dmView/pics/backgrounds/happyTavern.png"
 
+console.log("HELLO")
+// When someone comes to dmbuddy for the first load, set these variables, or remeber what they have already
+if(!window.location.href.includes("/playerView")) {
+    localStorage.setItem('hideDeadEnemies', localStorage.getItem('hideDeadEnemies') === null ? false : JSON.parse(localStorage.getItem('hideDeadEnemies')));
+    localStorage.setItem('enemyBloodToggle', localStorage.getItem('enemyBloodToggle') === null ? 1 : JSON.parse(localStorage.getItem('enemyBloodToggle')));
+    localStorage.setItem('hideEnemies', true);
+}
 
 function App() {
     // Load all encounters from storage
@@ -25,19 +32,18 @@ function App() {
     const [autoRefresh, setAutoRefresh] = useState(false);
     const [encounterStarted, setEncounterStarted] = useState(false);
     const [refreshCheck, setRefreshCheck] = useState(false);
-    const [hideEnemies, setHideEnemies] = useState(localStorage.getItem('hideEnemies') || true);
-    const [enemyBloodToggle, setEnemyBloodToggle] = useState(localStorage.getItem('enemyBloodToggle') || 1);
-    const [hideDeadEnemies, setHideDeadEnemies] = useState(localStorage.getItem('hideDeadEnemies') || false);
+    const [hideEnemies, setHideEnemies] = useState(JSON.parse(localStorage.getItem('hideEnemies')));
+    const [enemyBloodToggle, setEnemyBloodToggle] = useState(JSON.parse(localStorage.getItem('enemyBloodToggle')));
+    const [hideDeadEnemies, setHideDeadEnemies] = useState(JSON.parse(localStorage.getItem('hideDeadEnemies')));
     const [cardContainerStyle, setCardContainerStyle] = useState({width: '80%'});
+    const [onFirstLoad, setOnFirstLoad] = useState(true);
 
-    console.log(localStorage.getItem('enemyBloodToggle'))
-    if(localStorage.getItem('enemyBloodToggle') === null) {
-        localStorage.setItem('enemyBloodToggle', 1);
-    }
-
-    if(localStorage.getItem('hideDeadEnemies') === null) {
-        localStorage.setItem('hideDeadEnemies', false);
-    }
+    useEffect(() => {
+        if(onFirstLoad && currentEncounter.guid !== "" && !window.location.href.includes("/playerView")) {
+            setOnFirstLoad(false)
+        }
+        // eslint-disable-next-line
+    }, [currentEncounter]);  
 
     useEffect(() => {
         if(refreshCheck) {
@@ -144,11 +150,9 @@ function App() {
         const getRefreshedLocalEncounter = (event) => {
             console.log("storageKey: ", event.key)
             if (event.key === 'playerViewEncounter') {
-                const updatedPlayerView = JSON.parse(localStorage.getItem('playerViewEncounter'));
-                setPlayerView({...updatedPlayerView});
+                setPlayerView({...JSON.parse(localStorage.getItem('playerViewEncounter'))});
             } else if (event.key === 'currentBackground') {
-                const updatedCurrentBackground = JSON.parse(localStorage.getItem('currentBackground'));
-                setPlayerViewBackground({...updatedCurrentBackground});
+                setPlayerViewBackground({...JSON.parse(localStorage.getItem('currentBackground'))});
             } else if (event.key === 'hideEnemies') {
                 setHideEnemies(JSON.parse(localStorage.getItem('hideEnemies')));
             } else if (event.key === 'enemyBloodToggle') {
@@ -181,7 +185,6 @@ function App() {
         // Cleanup interval on component unmount
         return () => clearInterval(intervalId);
     // eslint-disable-next-line
-    // maybe on handle load?
     }, [currentEncounter]);
 
     const uploadLocalStorage = (event) => {
@@ -214,7 +217,7 @@ function App() {
 
     return (
         <Routes>
-            <Route path="/" element={<DmView currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} cardContainerStyle={cardContainerStyle} setCardContainerStyle={setCardContainerStyle} playerViewBackground={playerViewBackground} setPlayerViewBackground={setPlayerViewBackground} handleRefresh={handleRefresh} refreshCheck={refreshCheck} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} autoRefresh={autoRefresh} uploadLocalStorage={uploadLocalStorage} localSavedEncounters={localSavedEncounters}/>}/>
+            <Route path="/" element={<DmView currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} onFirstLoad={onFirstLoad} cardContainerStyle={cardContainerStyle} setCardContainerStyle={setCardContainerStyle} playerViewBackground={playerViewBackground} setPlayerViewBackground={setPlayerViewBackground} handleRefresh={handleRefresh} refreshCheck={refreshCheck} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} autoRefresh={autoRefresh} uploadLocalStorage={uploadLocalStorage} localSavedEncounters={localSavedEncounters}/>}/>
             <Route path="/playerView" element={<PlayerPage playerView={playerView} playerViewBackground={playerViewBackground} hideEnemies={hideEnemies} cardContainerStyle={cardContainerStyle} enemyBloodToggle={enemyBloodToggle} hideDeadEnemies={hideDeadEnemies}/>} />
             <Route path="/help" element={<HowTo/>} />
             <Route path="/king/" element={<Pantheon />} />

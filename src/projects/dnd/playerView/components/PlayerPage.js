@@ -12,6 +12,12 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
     const [turnNum, setTurnNum] = useState(playerView.turnNum);
     const [roundNum, setRoundNum] = useState(playerView.RoundNum);
 
+
+    console.table({"hideEnemies": hideEnemies,
+                    "enemyBloodToggle": enemyBloodToggle,
+                    "hideDeadEnemies": hideDeadEnemies,
+                    "cardContainerStyle": cardContainerStyle})
+
     useEffect(() => {
         setCreatures([...playerView.currentEncounterCreatures])
         handleTurns(true, playerView.turnNum, playerView.roundNum)
@@ -49,7 +55,8 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
         updateCreature(clickedCreature)
 
     };
-
+    
+    console.log(creatures)
     return (
         <div className="dndBackground" onClick={() => setClickedCreature(null)} style={{backgroundImage: playerViewBackground.type === "image" && playerViewBackground.src ? `url(${playerViewBackground.src})` : 'none'}}>
             {roundNum !== 0 && 

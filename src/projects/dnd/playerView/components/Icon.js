@@ -31,6 +31,8 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
     const showIcon = creature.initiative >= 0
     const showInitiativeBox = creature.initiative !== null;
     const isExhausted = creature.exhaustionLvl > 0
+
+    console.log(creature.name)
     
     const handleImageClick = (event) => {
         event.stopPropagation(); // Prevent propagation to parent

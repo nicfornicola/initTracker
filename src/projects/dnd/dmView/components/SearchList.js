@@ -170,7 +170,7 @@ const SearchList = ({setCurrentEncounter}) => {
                         value={searchTerm}
                         onChange={(e) => handleSetSearchTerm(e.target.value)}
                     />
-                    Results Load{loading ? 'ing...': 'ed: ' + displayedItems.length}
+                    Results Load{loading ? 'ing...' : 'ed: ' + displayedItems.length}
                     <div
                         className='monsterSearch'
                         onScroll={handleScroll}

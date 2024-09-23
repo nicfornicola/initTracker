@@ -16,13 +16,22 @@ import ImagePopup from ".//ImagePopup"
 import Timer from './/Timer';
 import RefreshTimer from './RefreshTimer';
 import OptionButton from './OptionButton';
+import EnemyBloodiedMessage from './EnemyBloodiedMessage';
+
+function getBloodImage(type) {
+    let newImage = undefined
+    if(type === 0) { newImage = bloodIconMinus } 
+    else if(type === 1) { newImage = bloodIcon } 
+    else if(type === 2) { newImage = bloodIconSlash } 
+    return newImage
+}
 
 const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounter, setPlayerViewBackground, setCardContainerStyle, handleStartEncounter, hideEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, hideDeadEnemies, setHideDeadEnemies, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange}) => {
     const [encounterName, setEncounterName] = useState(currentEncounter.encounterName);
     const [arrowButton, setArrowButton] = useState(upArrow);
     const [arrowToggleType, setArrowToggleType] = useState(0);
     const [showRefreshButton, setAutoRefreshDMB] = useState(autoRefresh);
-    const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(bloodIconMinus);
+    const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(getBloodImage(enemyBloodToggle));
 
     useEffect(() => {
         setAutoRefreshDMB(autoRefresh)
@@ -51,18 +60,16 @@ const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounte
         setArrowToggleType(type === 2 ? -1 : type)
     } 
 
+
     const handleEnemyBlood = () => {
 
         let newToggle = parseInt(enemyBloodToggle) + 1
         let type = newToggle === 3 ? 0 : newToggle
+        let newImage = getBloodImage(type)
+
+        setEnemyBloodToggleImage(newImage) 
         setEnemyBloodToggle(type)
         localStorage.setItem('enemyBloodToggle', JSON.stringify(type));
-
-        let newImage = undefined
-        if(type === 0) { newImage = bloodIconSlash } 
-        else if(type === 1) { newImage = bloodIconMinus } 
-        else if(type === 2) { newImage = bloodIcon } 
-        setEnemyBloodToggleImage(newImage) 
     } 
 
     const handleHideEnemies = () => {
@@ -134,8 +141,8 @@ const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounte
                                     <button className='dmViewButton' onClick={(e) => handleTurnNums('next', e)}> {'>>'} </button>
                             </div>
                             <div className='dmLowOptions'>
-                                <OptionButton src={hideDeadEnemies ? skullButton : skullButtonNot} message={(hideDeadEnemies ? "Show" : "Hide") + " Dead Enemies"} onClickFunction={handleHideDeadEnemies}/>
-                                <OptionButton src={enemyBloodToggleImage} message={enemyBloodToggle === 0 ? "Show Enemy Blood" : (enemyBloodToggle === 1 ? "Show Enemy HP" : "Hide Enemy Blood & HP")} onClickFunction={handleEnemyBlood}/>
+                                <OptionButton src={hideDeadEnemies ? skullButtonNot : skullButton} message={"Dead Enemies: " + (hideDeadEnemies ? "Hidden" : "Visible")} onClickFunction={handleHideDeadEnemies}/>
+                                <OptionButton src={enemyBloodToggleImage} message={<EnemyBloodiedMessage enemyBloodToggle={enemyBloodToggle}/>} onClickFunction={handleEnemyBlood}/>
                                 <OptionButton src={hideEnemies ? eyeClosed : eyeOpen} message={"Enemies " + (hideEnemies ? "Hidden" : "Visible")} onClickFunction={handleHideEnemies}/>
                             </div>
                         </>
