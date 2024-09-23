@@ -19,6 +19,7 @@ if(!window.location.href.includes("/playerView")) {
     localStorage.setItem('hideDeadEnemies', localStorage.getItem('hideDeadEnemies') === null ? false : JSON.parse(localStorage.getItem('hideDeadEnemies')));
     localStorage.setItem('enemyBloodToggle', localStorage.getItem('enemyBloodToggle') === null ? 1 : JSON.parse(localStorage.getItem('enemyBloodToggle')));
     localStorage.setItem('hideEnemies', true);
+    localStorage.setItem('cardContainerStyle', JSON.stringify({width: '80%'}));
 }
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
     const [hideEnemies, setHideEnemies] = useState(JSON.parse(localStorage.getItem('hideEnemies')));
     const [enemyBloodToggle, setEnemyBloodToggle] = useState(JSON.parse(localStorage.getItem('enemyBloodToggle')));
     const [hideDeadEnemies, setHideDeadEnemies] = useState(JSON.parse(localStorage.getItem('hideDeadEnemies')));
-    const [cardContainerStyle, setCardContainerStyle] = useState({width: '80%'});
+    const [cardContainerStyle, setCardContainerStyle] = useState(JSON.parse(localStorage.getItem('cardContainerStyle')));
     const [onFirstLoad, setOnFirstLoad] = useState(true);
 
     useEffect(() => {

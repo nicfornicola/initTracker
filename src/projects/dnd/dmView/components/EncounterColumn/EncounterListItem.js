@@ -162,32 +162,28 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                 style={{border: isTurn ? '5px solid rgba(11, 204, 255)' : '', borderRadius: 0}}
             >   
                 <div className='encounterCreatureContainer animated-box'>
-                    <div className='initiativeInputContainer'>
-                        <input className='inputButton' onFocus={handleHighlight} onBlur={handleInitiativeCheck} type='text' value={creature.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
-                    </div>
-                    <div className="monsterEncounterIconContainer" onClick={() => handleUploadMonsterImage(creature)}>
-                        <img className="monsterEncounterIcon" src={creature.avatarUrl} alt={"list Icon"} />
-                        <div className='uploadIconContainer'>
-                            <img className="uploadIcon" src={uploadImage} alt={"list Icon"} />
+                    <div className='encounterCreatureLeftContainer'>
+                        <div className='initiativeInputContainer'>
+                            <input className='inputButton' onFocus={handleHighlight} onBlur={handleInitiativeCheck} type='text' value={creature.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                         </div>
-                    </div>
-
-                    
-                    <div className='listItemMiddleStats'>
-                        <div className='nameInputContainer'>
-                            <input className='nameInput' type='text' defaultValue={creature.name} onBlur={handleChangeName} onClick={(event) => event.stopPropagation()}/>
-                        </div>
-                        <div className='armorClassContainer'>
-                            <div>
-                                <label htmlFor='ac'>AC</label>
-                                <input id='ac' className='middleStatsInput' onFocus={handleHighlight} type='text' defaultValue={creature.armor_class} onChange={handleArmorClassChange} onClick={(event) => event.stopPropagation()}/>
-                            </div>
-                            <div>
-                                <label htmlFor='init'>Init Bonus</label>
-                                <input id='init'className='middleStatsInput' onFocus={handleHighlight} disabled={true}  type='text' defaultValue={creature.dexterity_save ? '+' + creature.dexterity_save : '+0'} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
+                        <div className="monsterEncounterIconContainer" onClick={() => handleUploadMonsterImage(creature)}>
+                            <img className="monsterEncounterIcon" src={creature.avatarUrl} alt={"list Icon"} />
+                            <div className='uploadIconContainer'>
+                                <img className="uploadIcon" src={uploadImage} alt={"list Icon"} />
                             </div>
                         </div>
-                        
+                        <div className='listItemMiddleStats'>
+                            <div className='nameInputContainer'>
+                                <input className='nameInput' type='text' defaultValue={creature.name} onBlur={handleChangeName} onClick={(event) => event.stopPropagation()}/>
+                            </div>
+                            <div className='middleStatsContainer'>
+                                    <label htmlFor='ac' className='middleStatsLabel'>AC</label>
+                                    <input id='ac' className='middleStatsInput' onFocus={handleHighlight} type='text' defaultValue={creature.armor_class} onChange={handleArmorClassChange} onClick={(event) => event.stopPropagation()}/>
+                                    <label htmlFor='init' className='middleStatsLabel'>Init Mod</label>
+                                    <input id='init'className='middleStatsInput' onFocus={handleHighlight} disabled={true}  type='text' defaultValue={creature.dexterity_save ? '+' + creature.dexterity_save : '+0'} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
+                            </div>
+                            
+                        </div>
                     </div>
 
                     <OptionButton src={hidden ? eyeClosed : eyeOpen}  message={(hidden ? "Show" : "Hide")} onClickFunction={handleHideEnemy} />

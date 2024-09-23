@@ -113,7 +113,6 @@ const StatBlock = ({creature, img, closeFunction }) => {
                     <div className="topCard">
                         <div className='topInfo shadowBox'>
                             <img className="img" src={img} alt={"Creature Img"}/>
-
                             <h1 className='creatureName titleFontFamily'>{creature.name}</h1>
                             <div className='creatureType'>
                                 <hr className="lineSeperator" />

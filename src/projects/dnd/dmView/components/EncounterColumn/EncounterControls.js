@@ -112,7 +112,7 @@ const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounte
     return (
         <div className='encounterControlsContainer'>
             <div>
-                <input style={{color: titleColor}} className='nameInput' type='text' value={encounterName} onChange={handleTitleChange} onBlur={handleEncounterNameChange} onClick={(event) => event.target.select()}/>
+                <input style={{color: titleColor}} className='titleInput nameInput' type='text' value={encounterName} onChange={handleTitleChange} onBlur={handleEncounterNameChange} onClick={(event) => event.target.select()}/>
                 <span className='encounterTitleEdit'>🖉</span>
             </div>
             <div className='encounterControls'> 
