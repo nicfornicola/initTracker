@@ -26,13 +26,13 @@ function getBloodImage(type) {
     return newImage
 }
 
-const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounter, setPlayerViewBackground, setCardContainerStyle, handleStartEncounter, hideEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, hideDeadEnemies, setHideDeadEnemies, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange}) => {
+const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, setCardContainerStyle, handleStartEncounter, hideEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, hideDeadEnemies, setHideDeadEnemies, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange}) => {
     const [encounterName, setEncounterName] = useState(currentEncounter.encounterName);
     const [arrowButton, setArrowButton] = useState(upArrow);
     const [arrowToggleType, setArrowToggleType] = useState(0);
     const [showRefreshButton, setAutoRefreshDMB] = useState(autoRefresh);
     const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(getBloodImage(enemyBloodToggle));
-
+    console.log(refreshLoading)
     useEffect(() => {
         setAutoRefreshDMB(autoRefresh)
     }, [autoRefresh]);  
@@ -125,7 +125,7 @@ const EncounterControls = ({handleTurnNums, currentEncounter, setCurrentEncounte
                         <OptionButton src={arrowButton} message={"Player View Icon Position"} onClickFunction={handleMovePortraits}/>
                         <ImagePopup setPlayerViewBackground={setPlayerViewBackground} />                    
                         {showRefreshButton &&
-                            <OptionButton src={refreshCheck ? greenCheck : refresh} message={<RefreshTimer refresh={refreshCheck}/>} onClickFunction={() => handleRefresh()} />
+                            <OptionButton src={refreshCheck ? greenCheck : refresh} message={<RefreshTimer refresh={refreshCheck}/>} onClickFunction={() => handleRefresh()} style={refreshLoading ? 'spinningImage' : ''} />
                         }         
                         <Timer />     
                     </div>

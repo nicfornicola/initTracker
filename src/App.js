@@ -38,6 +38,7 @@ function App() {
     const [hideDeadEnemies, setHideDeadEnemies] = useState(JSON.parse(localStorage.getItem('hideDeadEnemies')));
     const [cardContainerStyle, setCardContainerStyle] = useState(JSON.parse(localStorage.getItem('cardContainerStyle')));
     const [onFirstLoad, setOnFirstLoad] = useState(true);
+    const [refreshLoading, setRefreshLoading] = useState(false);
 
     useEffect(() => {
         if(onFirstLoad && currentEncounter.guid !== "" && !window.location.href.includes("/playerView")) {
@@ -48,15 +49,8 @@ function App() {
 
     useEffect(() => {
         if(refreshCheck) {
-            const timer = setTimeout(() => {
-                setRefreshCheck(false)
-            }, 15000); 
-            return () => clearInterval(timer);
-        }
-    }, [refreshCheck])
-
-    useEffect(() => {
-        if(refreshCheck) {
+            console.log("SETREFRESH FALSE")
+            setRefreshLoading(false)
             const timer = setTimeout(() => {
                 setRefreshCheck(false)
             }, 15000); 
@@ -109,6 +103,8 @@ function App() {
 
     const handleRefresh = () => {
         console.log("Refresh Player/Monsters", autoRefresh)
+        setRefreshLoading(true)
+
         if (autoRefreshDndbPlayers && autoRefreshDndbMonsters) {
             console.log("==============")
             console.log("Refreshing All")
@@ -218,7 +214,7 @@ function App() {
 
     return (
         <Routes>
-            <Route path="/" element={<DmView currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} onFirstLoad={onFirstLoad} cardContainerStyle={cardContainerStyle} setCardContainerStyle={setCardContainerStyle} playerViewBackground={playerViewBackground} setPlayerViewBackground={setPlayerViewBackground} handleRefresh={handleRefresh} refreshCheck={refreshCheck} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} autoRefresh={autoRefresh} uploadLocalStorage={uploadLocalStorage} localSavedEncounters={localSavedEncounters}/>}/>
+            <Route path="/" element={<DmView currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} onFirstLoad={onFirstLoad} refreshLoading={refreshLoading} cardContainerStyle={cardContainerStyle} setCardContainerStyle={setCardContainerStyle} playerViewBackground={playerViewBackground} setPlayerViewBackground={setPlayerViewBackground} handleRefresh={handleRefresh} refreshCheck={refreshCheck} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} autoRefresh={autoRefresh} uploadLocalStorage={uploadLocalStorage} localSavedEncounters={localSavedEncounters}/>}/>
             <Route path="/playerView" element={<PlayerPage playerView={playerView} playerViewBackground={playerViewBackground} hideEnemies={hideEnemies} cardContainerStyle={cardContainerStyle} enemyBloodToggle={enemyBloodToggle} hideDeadEnemies={hideDeadEnemies}/>} />
             <Route path="/help" element={<HowTo/>} />
             <Route path="/king/" element={<Pantheon />} />

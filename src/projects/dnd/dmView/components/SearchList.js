@@ -158,19 +158,25 @@ const SearchList = ({setCurrentEncounter}) => {
         else if(action === "select")
             setSearchSelectedCreature(newCreature);
     };
-
+    console.log(displayedItems)
     return (
         <>
             <div className='column columnBorder'>
                 <div className='infoContainer'>
-                    <input
-                        className='searchBar'
-                        type="text"
-                        placeholder="Search..."
-                        value={searchTerm}
-                        onChange={(e) => handleSetSearchTerm(e.target.value)}
-                    />
-                    Results Load{loading ? 'ing...' : 'ed: ' + displayedItems.length}
+                <h3 className='titleFontFamily' style={{borderBottom: '1px solid #822000'}}>Creature Search</h3>
+
+                    <div className='encounterControlsContainer'>
+                        <input
+                            className='searchBar'
+                            type="text"
+                            placeholder="Search..."
+                            value={searchTerm}
+                            onChange={(e) => handleSetSearchTerm(e.target.value)}
+                        />
+
+                        Results Load{loading ? 'ing...' : 'ed: ' + displayedItems.length}
+                    </div>
+                   
                     <div
                         className='monsterSearch'
                         onScroll={handleScroll}
@@ -191,10 +197,16 @@ const SearchList = ({setCurrentEncounter}) => {
                                     onClick={(e) => handleSearchSelectCreature(item, "select", e)}
                                 >
                                     <div className='searchListCreatureContainer animated-box'>
-                                        <span>
-                                            <img className="monsterSearchIcon" src={item.avatarUrl} alt={"list Icon"} />
-                                            {index} {item.name} - <span className='monsterSearchSource'>{item.filterDimensions.sourceShort}</span>
-                                        </span>
+                                        <img className="monsterSearchIcon" src={item.avatarUrl} alt={"list Icon"} />
+                                        <div className='searchListCreatureDetails'>
+                                            <strong>{item.name}</strong>
+                                            <div className='searchCreatureSmallDetails'>
+                                                <span className='monsterSearchDetailText'> CR: {item.filterDimensions.level}</span>
+                                                <span className='monsterSearchDetailText'> - {item.filterDimensions.sourceShort}</span>
+                                            </div>
+                                            
+                                        </div>
+                                        
                                         <button className='monsterSearchAdd' onClick={(e) => handleSearchSelectCreature(item, "add", e)}>
                                             ➕
                                         </button>

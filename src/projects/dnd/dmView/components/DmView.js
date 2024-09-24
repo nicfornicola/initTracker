@@ -26,7 +26,7 @@ function getLocalStorageSize() {
     console.log(`Approximate size: ${sizeInMB.toFixed(2)} MB`);
 }
 
-const DmView = ({currentEncounter, onFirstLoad, setCurrentEncounter, playerViewBackground, setPlayerViewBackground, setCardContainerStyle, handleRefresh, hideDeadEnemies, setHideDeadEnemies, refreshCheck, autoRefresh, uploadLocalStorage, enemyBloodToggle, setEnemyBloodToggle, localSavedEncounters}) => {
+const DmView = ({currentEncounter, onFirstLoad, refreshLoading, setCurrentEncounter, playerViewBackground, setPlayerViewBackground, setCardContainerStyle, handleRefresh, hideDeadEnemies, setHideDeadEnemies, refreshCheck, autoRefresh, uploadLocalStorage, enemyBloodToggle, setEnemyBloodToggle, localSavedEncounters}) => {
     getLocalStorageSize()
     const [showSearchList, setShowSearchList] = useState(true);
     const [encounterGuid, setEncounterGuid] = useState(currentEncounter.guid);
@@ -107,7 +107,7 @@ const DmView = ({currentEncounter, onFirstLoad, setCurrentEncounter, playerViewB
                     {showSearchList &&  
                         <SearchList setCurrentEncounter={setCurrentEncounter}/>
                     }
-                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} setCardContainerStyle={setCardContainerStyle} hideEnemies={hideEnemies} setPlayerViewBackground={setPlayerViewBackground} setHideEnemies={setHideEnemies} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} setSavedEncounters={setSavedEncounters} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} encounterGuid={encounterGuid} setEncounterGuid={setEncounterGuid} localSavedEncounters={localSavedEncounters} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter}/>
+                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} refreshLoading={refreshLoading} setCardContainerStyle={setCardContainerStyle} hideEnemies={hideEnemies} setPlayerViewBackground={setPlayerViewBackground} setHideEnemies={setHideEnemies} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} setSavedEncounters={setSavedEncounters} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} encounterGuid={encounterGuid} setEncounterGuid={setEncounterGuid} localSavedEncounters={localSavedEncounters} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter}/>
                 </>
             )}
              </div>

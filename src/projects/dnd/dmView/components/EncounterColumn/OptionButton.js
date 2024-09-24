@@ -2,10 +2,10 @@ import React from 'react';
 import Tooltip from "../Tooltip"
 import '../../style/App.css';
 
-const OptionButton = ({src, message, onClickFunction}) => {
+const OptionButton = ({src, message, onClickFunction, style=""}) => {
     return (
         <div className='optionWrapper'>
-            <img className="option" src={src} alt={message} onClick={onClickFunction} />
+            <img className={`option ${style}`} src={src} alt={message} onClick={onClickFunction} />
             <Tooltip message={message}/>
         </div>
 

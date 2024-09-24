@@ -31,7 +31,7 @@ function addToLocalSavedEncounter(jsonArray, newEncounter) {
 
     return jsonArray;
 }
-const EncounterColumn = ({currentEncounter, handleLoadEncounter, setCurrentEncounter, setPlayerViewBackground, hideEnemies, setCardContainerStyle, hideDeadEnemies, setHideDeadEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, savedEncounters, setSavedEncounters, handleRefresh,  refreshCheck, autoRefresh, showSearchList, handleNewEncounter, setEncounterGuid}) => {
+const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, hideEnemies, setCardContainerStyle, hideDeadEnemies, setHideDeadEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, savedEncounters, setSavedEncounters, handleRefresh,  refreshCheck, autoRefresh, showSearchList, handleNewEncounter, setEncounterGuid}) => {
     console.count("EncounterColumn")
 
     const [roundNum, setRoundNum] = useState(currentEncounter.roundNum);
@@ -205,7 +205,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, setCurrentEncou
             <div className={`column columnBorder ${showSearchList ? '' : 'expand'}`}>
                 <div className='infoContainer'>
                     <EncounterListTopInfo savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} encounterName={currentEncounter.encounterName} currentEncounter={currentEncounter} setSavedEncounters={setSavedEncounters} handleSaveEncounter={handleSaveEncounter} handleNewEncounter={handleNewEncounter} saveMessageColor={saveMessageColor} showSaveMessage={showSaveMessage} isSaveDisabled={isSaveDisabled}/>
-                    <EncounterControls setNameChange={setNameChange} setPlayerViewBackground={setPlayerViewBackground} setCardContainerStyle={setCardContainerStyle} handleTurnNums={handleTurnNums} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} hideEnemies={hideEnemies} setHideEnemies={setHideEnemies} handleRefresh={handleRefresh} refreshCheck={refreshCheck} autoRefresh={autoRefresh} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleStartEncounter={handleStartEncounter} handleAutoRollInitiative={handleAutoRollInitiative}/>
+                    <EncounterControls setNameChange={setNameChange} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} setCardContainerStyle={setCardContainerStyle} handleTurnNums={handleTurnNums} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} hideEnemies={hideEnemies} setHideEnemies={setHideEnemies} handleRefresh={handleRefresh} refreshCheck={refreshCheck} autoRefresh={autoRefresh} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleStartEncounter={handleStartEncounter} handleAutoRollInitiative={handleAutoRollInitiative}/>
                     {currentEncounter.currentEncounterCreatures.length ? (
                         <EncounterList currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleSaveEncounter={handleSaveEncounter} turnNum={turnNum} handleUploadMonsterImage={handleUploadMonsterImage} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} />
                     ) : (

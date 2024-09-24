@@ -568,11 +568,13 @@ hr {
 .monsterSearch {
     max-height: 85vh;
     overflow-y: scroll; 
-    border: 1px solid #ccc 
+    width: 101%;
+
 }
 
 .monsterSearchList {
    padding: 0px;
+   margin: 0;
 }
 
 .listItem:hover .searchListCreatureContainer {
@@ -593,12 +595,14 @@ hr {
 
 .monsterSearchAdd {
     position: relative;
-    width: 10%;
+    width: 15%;
     right: 0px;
     opacity: 0;
+    height: 100%;
 }
 
-.monsterSearchSource {
+.monsterSearchDetailText {
+    margin-right: 2px;
     font-size: 12px;
     font-style: italic;
 }
@@ -699,6 +703,19 @@ input {
     display: flex;
 }
 
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.spinningImage {
+    animation: spin 3s linear infinite; /* Spin for 3 seconds, infinite loops */
+}
+
 .encounterControlsContainer {
     display: flex;
     flex-direction: column;
@@ -706,7 +723,7 @@ input {
     width: 96.6%;
     margin-top: 2%;
     box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.3);
-    z-index: 99;
+    z-index: 1;
     background-color: #e0d8b2;
     border-radius: 10px 10px 0px 0px;
     padding: 10px 0px 0px 10px;
@@ -1026,7 +1043,7 @@ input {
     padding: 10px;
     list-style: none;
     margin: 0;
-    z-index: 1;
+    z-index: 2;
 }
 
 /* Dropdown menu items */
@@ -1067,10 +1084,9 @@ input {
 .listItem {
     width: 100%;
     margin-bottom: 1%;
-    border-radius: 20px;
     box-shadow: inset 0px 0px 6px 0px #434343;
     background-color: #cfc9a8;
-
+    box-sizing: border-box;
 }
 
 .encounterCreatureLeftContainer,
@@ -1082,7 +1098,17 @@ input {
 }
 
 .searchListCreatureContainer {
-    justify-content: space-between
+    align-items: center
+}
+
+.searchListCreatureDetails {
+    display: flex;
+    flex-direction: column;
+    width: 90%
+}
+
+.searchCreatureSmallDetails {
+    display: flex;
 }
 
 .searchListCreatureContainer:hover .monsterSearchAdd {
