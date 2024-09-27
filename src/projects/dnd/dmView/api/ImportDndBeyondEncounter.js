@@ -16,7 +16,7 @@ export const ImportDndBeyondEncounter = async (gameId) => {
     });
 
     console.log("DmView - Encounter-service in ImportDndBeyondEncounter - monsterHP, all initiatives")
-    let alertString = "====== Imported Successful ====== \n\nEncounter name: '" + response.data.data.name + "'\nCampaign: '" + response.data.data.campaign.name + "'"
+    let alertString = "====== Import Successful ====== \n\nEncounter name: '" + response.data.data.name + "'\nCampaign: '" + response.data.data.campaign.name + "'"
     alert(alertString)
     return response.data;
   } catch (error) {

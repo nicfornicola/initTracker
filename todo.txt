@@ -9,7 +9,7 @@ offline mod
 
     search list
     --
-        
+        add better search, by race, by cr
     statblock
     --
         make stat blocks spots show more then one, see redesign 
@@ -17,11 +17,9 @@ offline mod
         customize more stuff in stat block
         Slot-tracking with check marks of things like legendary actions, and anything else with limited use
         But even better would be being able to auto-reset things with turn limits and such, like legendary actions.
-        add (i) next to AC or name that is homebrewed
+        add (i) next to AC or name that is homebrewed to show default or something
         on hover of a spell it shows a tooltip of what the spell is from the spell_list that is found in open5e creature
         add hover (i) on statblock to see the creature desc
-        show (i) to show big image if available
-        add open5e img if its there
 
     saved encounter list 
     -- 
@@ -35,9 +33,11 @@ offline mod
 
 playerview
 ------
-    death saves for offline mode, put it in the hp box
-    add x button to remove uploadedLinks and images
     add button to resize images and add more options to move their positions
+    add x button to remove uploadedLinks and images
+    make currentplayerviewimage reference the data to save on space
+
+    death saves for offline mode, put it in the hp box
     different tiers of blood to match what is going on in game, light, med, heavy blood
     do a little loading wheel to show next refresh on dnd_b mode
 

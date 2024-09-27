@@ -158,7 +158,7 @@ const SearchList = ({setCurrentEncounter}) => {
         else if(action === "select")
             setSearchSelectedCreature(newCreature);
     };
-    console.log(displayedItems)
+
     return (
         <>
             <div className='column columnBorder'>

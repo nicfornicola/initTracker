@@ -204,6 +204,15 @@ hr {
     width: 20px; 
     cursor: pointer; 
     border-radius: 10px;
+    
+}
+
+.option-no-margin {
+    margin: 0px
+}
+
+.option-no-radius {
+    border-radius: 0px;
 }
 
 .option:hover {
@@ -347,7 +356,7 @@ hr {
     transform: translateX(-50%); 
     opacity: 1;
     transition: opacity 0.3s;
-    z-index: 1;
+    z-index: 99;
 }
 
 .roundNum {
@@ -569,12 +578,13 @@ hr {
     max-height: 85vh;
     overflow-y: scroll; 
     width: 101%;
-
 }
 
 .monsterSearchList {
    padding: 0px;
    margin: 0;
+   border: 2px solid #858585;
+
 }
 
 .listItem:hover .searchListCreatureContainer {
@@ -713,7 +723,7 @@ input {
 }
 
 .spinningImage {
-    animation: spin 3s linear infinite; /* Spin for 3 seconds, infinite loops */
+    animation: spin 1.5s linear infinite; /* Spin for 3 seconds, infinite loops */
 }
 
 .encounterControlsContainer {
@@ -1259,6 +1269,19 @@ input {
     padding: 5px;
 }
 
+.editTeamContainer {
+    position: fixed;
+    border-radius: 5px;
+    border: 1px solid #000000;
+    background-color: #e0d9b7;
+    box-shadow: 1px 1px 10px #000000;
+    width: 13%;
+
+    z-index: 9999;
+    padding: 5px;
+}
+
+
 .infoContainerFlag {
     position: absolute;
     transform: rotate(45deg);
@@ -1271,11 +1294,30 @@ input {
     border-left: inherit;
 }
 
+.teamContainerFlag {
+    position: absolute;
+    transform: rotate(45deg);
+    top: calc(0% - 6.5px);
+    right:  calc(50%);
+    background-color: inherit;
+    height: 8px;
+    width: 8px;
+    border-top: inherit;
+    border-left: inherit;
+}
+
 .hpChanges {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    align-items: baseline
+}
+
+.teamChoices {
+    width: 100%;
+    height: 100%;
+    display: flex;
     align-items: baseline
 }
 
@@ -1317,6 +1359,14 @@ input {
     color: white;
     border: 1px solid rgb(85, 85, 85);
     box-shadow: 1px 1px 5px black;
+}
+
+.editTeamColorButton {
+    height: 100%;
+    width: 30%;
+    padding: 0px;
+    font-family: 'Bitter', serif;
+    color: white;
 }
 
 .healButton {
@@ -1498,4 +1548,53 @@ input {
 
 .menuItem:hover {
     opacity: 0.8; /* Add a hover effect */
+}
+
+.flagpole-container {
+    position: relative;
+    left: 2%;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+
+}
+  
+.flagpole {
+    position: relative;
+    left: 10%;
+    top: 3px;
+    width: 1px; 
+    height: 15px;
+    background-color: rgb(241, 236, 79);
+    position: relative;
+    border: solid 2px rgb(92, 92, 92);
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+    perspective: 400px; /* Define a perspective to create depth */
+
+}
+  
+.flag {
+    position: relative;
+    width: 10px; 
+    height: 8px; 
+    left: 1px;
+    border: solid 1px rgb(92, 92, 92);
+}
+  
+.flag-stripes {
+    width: 100%;
+    height: 100%;
+}
+  
+@keyframes wave {
+    0% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+    50% {
+        transform: translate3d(1px, 2px, 30px) rotate(10deg); /* Smaller wave */
+    }
+    100% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+    }
 }

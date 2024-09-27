@@ -48,7 +48,6 @@ const FileUpload = ({uploadedFiles, setUploadedFiles, storageKey}) => {
 
                     const resizedImage = await resizeImage(img, maxWidth, maxHeight, quality);
 
-                    console.log("storageKey", storageKey)
                     setUploadedFiles((prevFiles) => [...prevFiles, resizedImage]);
                     localStorage.setItem(storageKey, JSON.stringify([...uploadedFiles, resizedImage]));
 

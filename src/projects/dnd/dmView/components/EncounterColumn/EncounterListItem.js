@@ -3,16 +3,31 @@ import uploadImage from '../../pics/uploadImage.png'
 import eyeClosed from '../../pics/icons/eyeClosed.png'; 
 import eyeOpen from '../../pics/icons/eyeOpen.png'; 
 import OptionButton from '../EncounterColumn/OptionButton';
+import TeamFlag from '../../pics/icons/team.png';
+import { SketchPicker } from 'react-color';
+import FlagPole from './FlagPole';
 
 const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCurrentEncounter, scrollPosition, handleUploadMonsterImage, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
-    const [openEditWidget, setOpenEditWidget] = useState(false);
-    const [hpChange, setHpChange] = useState(0);
     const [hidden, setHidden] = useState(creatureListItem.hidden);
     const [creature, setCreature] = useState(creatureListItem)
-    const [isInside, setIsInside] = useState(true)
-    const [widgetPosition, setWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0})
-    const buttonRef = useRef(null)
 
+    const [hpChange, setHpChange] = useState(0);
+    const [openHpWidget, setOpenHpWidget] = useState(false);
+    const [isHpWidgetInside, setIsHpWidgetInside] = useState(true);
+    const [hpWidgetPosition, setHpWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0})
+
+    const [openTeamWidget, setOpenTeamWidget] = useState(false);
+    const [isTeamWidgetInside, setIsTeamWidgetInside] = useState(true)
+    const [teamWidgetPosition, setTeamWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0})
+    const [teamColor, setTeamColor] = useState('rgb(255,0,0)')
+
+    const handleChangeComplete = (color) => {
+        const rgb = color.rgb
+        setTeamColor(`rgb(${rgb.r},${rgb.g},${rgb.b})`);
+    };
+    
+    const hpButtonRef = useRef(null)
+    const teamButtonRef = useRef(null)
 
     useEffect(() => {
         setCreature(creatureListItem)
@@ -38,17 +53,24 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }, [creature]);
 
     useEffect(() => {
-       if(openEditWidget && buttonRef.current) {
-            const rect = buttonRef.current.getBoundingClientRect();
-            setWidgetPosition(rect)
-            setIsInside(listSizeRect.top < rect.bottom - rect.height/2 && listSizeRect.bottom > rect.top + rect.height/2)
+        if(openHpWidget && hpButtonRef.current) {
+            const rect = hpButtonRef.current.getBoundingClientRect();
+            setHpWidgetPosition(rect)
+            setIsHpWidgetInside(listSizeRect.top < rect.bottom - rect.height/2 && listSizeRect.bottom > rect.top + rect.height/2)
+        }
 
-       }
-    }, [openEditWidget, scrollPosition, listSizeRect]);
+        if(openTeamWidget && teamButtonRef.current) {
+            const rect = teamButtonRef.current.getBoundingClientRect();
+            console.log(rect)
+            setTeamWidgetPosition(rect)
+            setIsTeamWidgetInside(listSizeRect.top < rect.bottom - rect.height/2 && listSizeRect.bottom > rect.top + rect.height/2)
+        }
+
+    }, [openHpWidget, openTeamWidget, scrollPosition, listSizeRect]);
 
     const openEditCreatureStats = (event) => {
         event.stopPropagation()
-        setOpenEditWidget(!openEditWidget)
+        setOpenHpWidget(!openHpWidget)
     }
 
     const handleChangeHpCreature = (type) => {
@@ -74,7 +96,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         if(creature.hit_points_current > creature.hit_points)
             creature.hit_points_current = creature.hit_points
 
-        setOpenEditWidget(!openEditWidget)
+        setOpenHpWidget(!openHpWidget)
         setCreature({...creature})
     }
 
@@ -132,6 +154,12 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         event.stopPropagation()
         setHidden(!hidden)
         setCreature({...creature, hidden: !hidden})
+    }  
+    
+    const handleTeamChangeWidget = (event) => {
+        console.log("team change")
+        event.stopPropagation();
+        setOpenTeamWidget(!openTeamWidget)
     }
 
     const handleArmorClassChange = (event) => {
@@ -154,7 +182,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }
     
     let hpStyle = {color: color, borderColor: color}
-
 
     return (
             <li className='listItem'
@@ -186,7 +213,12 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                         </div>
                     </div>
 
-                    <OptionButton src={hidden ? eyeClosed : eyeOpen}  message={(hidden ? "Show" : "Hide")} onClickFunction={handleHideEnemy} />
+                    <div>
+                        <OptionButton src={hidden ? eyeClosed : eyeOpen}  message={(hidden ? "Show" : "Hide")} onClickFunction={handleHideEnemy} imgClassName={'option-no-margin'} />
+                        {/* <OptionButton src={TeamFlag} message={"Team Color"} onClickFunction={handleTeamChangeWidget} imgClassName={'option-no-margin option-no-radius'} imgStyle={teamFlagColor} imgRef={teamButtonRef}/> */}
+                        <FlagPole flagColor={teamColor} handleTeamChangeWidget={handleTeamChangeWidget} ref={teamButtonRef} widgetOpen={openTeamWidget} />
+
+                    </div>
 
                     <div>
                         <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
@@ -198,7 +230,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                     {creature.hit_points !== null  ? 
                         <div className='encounterCreaturesHpContainer'>
                             
-                            <button className='encounterCreaturesHp' style={hpStyle} onClick={(event) => openEditCreatureStats(event)}  ref={buttonRef}>
+                            <button className='encounterCreaturesHp' style={hpStyle} onClick={(event) => openEditCreatureStats(event)}  ref={hpButtonRef}>
                                 {creature.hit_points_current}
                                 <span>/</span>
                                 {creature.hit_points}
@@ -212,8 +244,17 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                     }
                     
                 </div>
-                {openEditWidget && isInside && ( 
-                    <div className='editStatsContainer editHpGrow' onClick={(event) => event.stopPropagation()} style={{ top: widgetPosition.top - 10, left: widgetPosition.right + 20, height: widgetPosition.height*4}}>
+                {openTeamWidget && isTeamWidgetInside && ( 
+                    <div className='editTeamContainer editHpGrow' onClick={(event) => event.stopPropagation()} style={{ top: teamWidgetPosition.top + teamWidgetPosition.height*1.5, left: teamWidgetPosition.left - teamWidgetPosition.width*4.33}}>
+                        <div className="teamContainerFlag"/>
+                        <div className='teamChoices'>
+                            {/* https://casesandberg.github.io/react-color/ */}
+                            <SketchPicker color={teamColor} onChangeComplete={handleChangeComplete}/>
+                        </div>
+                    </div>
+                )}
+                {openHpWidget && isHpWidgetInside && ( 
+                    <div className='editStatsContainer editHpGrow' onClick={(event) => event.stopPropagation()} style={{ top: hpWidgetPosition.top - 10, left: hpWidgetPosition.right + 20, height: hpWidgetPosition.height*4}}>
                         <div className="infoContainerFlag"/>
                         <div className='hpChanges'>
                             <div className='editHpContainer'>

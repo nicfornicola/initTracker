@@ -32,7 +32,11 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
     const [arrowToggleType, setArrowToggleType] = useState(0);
     const [showRefreshButton, setAutoRefreshDMB] = useState(autoRefresh);
     const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(getBloodImage(enemyBloodToggle));
-    console.log(refreshLoading)
+
+    // useEffect(() => {
+    //     setRefreshSpin(refreshLoading)
+    // }, [refreshLoading]);    
+    
     useEffect(() => {
         setAutoRefreshDMB(autoRefresh)
     }, [autoRefresh]);  
@@ -125,7 +129,7 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
                         <OptionButton src={arrowButton} message={"Player View Icon Position"} onClickFunction={handleMovePortraits}/>
                         <ImagePopup setPlayerViewBackground={setPlayerViewBackground} />                    
                         {showRefreshButton &&
-                            <OptionButton src={refreshCheck ? greenCheck : refresh} message={<RefreshTimer refresh={refreshCheck}/>} onClickFunction={() => handleRefresh()} style={refreshLoading ? 'spinningImage' : ''} />
+                            <OptionButton src={refreshCheck ? greenCheck : refresh} message={<RefreshTimer refresh={refreshCheck}/>} onClickFunction={() => handleRefresh()} imgClassName={refreshLoading ? 'spinningImage' : ''} />
                         }         
                         <Timer />     
                     </div>

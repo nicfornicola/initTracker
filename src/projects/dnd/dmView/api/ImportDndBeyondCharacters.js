@@ -2,7 +2,8 @@ import axios from 'axios';
 import { getSkillDetails } from '../../playerView/api/getSkillDetails';
 import { proxyUrl } from '../constants';
 import DndBCharacterToDmBMapper from '../mappers/DndBCharacterToDmBMapper'
-export const ImportDndBeyondCharacters = async (playerIds) => {
+
+export const ImportDndBeyondCharacters = async (playerIds, encounterPlayerData=undefined) => {
     console.log("Import Character-service in ImportDndBeyondCharacters");
     let i = 1;
     const baseUrl = `${proxyUrl}https://character-service.dndbeyond.com/character/v5/character/`;
@@ -30,14 +31,48 @@ export const ImportDndBeyondCharacters = async (playerIds) => {
                 if (error.response.status === 404) {
                     alert(`Could not find ID: '${playerId}' \n\nDnd Beyond Error: ${error.response.status}`);
                 } else if (error.response.status === 403) {
-                    alert(`Not Authorized for ID: ${playerId}`);
+                    if(encounterPlayerData) {
+                        const encounterPlayerInfo = encounterPlayerData.find(player => player.id === playerId);
+                        return DndBCharacterToDmBMapper(encounterPlayerInfo);
+                    } else {
+                        alert(`Not Authorized for ID: ${playerId}\n\nSet privacy to public in DndBeyond to see player details`);
+                    }
                 }
             }
-            return null; // Return null for failed requests
+            return null
         }
     });
+   
 
     const allSettledResponses = await Promise.allSettled(promises);
+
+    // Filter for the players with a 403 status for the alert
+    const privatePlayers = allSettledResponses
+        .filter(player => player.status === 'fulfilled' && player.value.status === 403)
+        .map(player => player.value); // Extract the value from the fulfilled promises
+        
+    //Mock data
+    // let privatePlayers = [
+    //     {name:"aaldir", dnd_b_player_id:"1234132131"},
+    //     {name:"kraenic", dnd_b_player_id:"1236567"},
+    //     {name:"ezra", dnd_b_player_id:"67556776"}]
+
+    if (privatePlayers.length > 0) {
+        let resultString = '';
+        
+        privatePlayers.forEach(playerInfo => {
+            resultString += playerInfo.name + ' (' + playerInfo.dnd_b_player_id + ')  |  ';
+        });
+        
+        // Alert message with the result string
+        alert('❗❗ ACTION RECOMMENDED - SCROLL FOR FIX❗❗\n' +
+            'Dnd Beyond Privacy setting is set to Private for these characters...\n===========================\n' +
+            resultString +
+            '\n===========================\n' + 
+            'HOW TO FIX: [Dnd_Beyond] -> [Go To Character] -> [Edit] -> [⚙️Home tab] -> [Character Privacy] -> [Privacy: Public]\n\n' +
+            'You won’t be able to get HP, Avatar or other fun stuff until your players switch to Privacy: Public in their DnD Beyond settings\n\n');
+            
+    }
 
     // Filter out the null or failed results and only return the successful ones
     const successfulResponses = allSettledResponses

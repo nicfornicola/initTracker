@@ -56,7 +56,6 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
 
     };
     
-    console.log(creatures)
     return (
         <div className="dndBackground" onClick={() => setClickedCreature(null)} style={{backgroundImage: playerViewBackground.type === "image" && playerViewBackground.src ? `url(${playerViewBackground.src})` : 'none'}}>
             {roundNum !== 0 && 

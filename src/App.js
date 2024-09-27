@@ -13,7 +13,6 @@ import HowTo from './projects/dnd/dmView/components/SideMenu/HowToDMB';
 import { ImportDndBeyondCharacters } from './projects/dnd/dmView/api/ImportDndBeyondCharacters'
 import defaultBackground from "./projects/dnd/dmView/pics/backgrounds/happyTavern.png"
 
-console.log("HELLO")
 // When someone comes to dmbuddy for the first load, set these variables, or remeber what they have already
 if(!window.location.href.includes("/playerView")) {
     localStorage.setItem('hideDeadEnemies', localStorage.getItem('hideDeadEnemies') === null ? false : JSON.parse(localStorage.getItem('hideDeadEnemies')));
@@ -49,11 +48,9 @@ function App() {
 
     useEffect(() => {
         if(refreshCheck) {
-            console.log("SETREFRESH FALSE")
-            setRefreshLoading(false)
             const timer = setTimeout(() => {
                 setRefreshCheck(false)
-            }, 15000); 
+            }, 3500); 
             return () => clearInterval(timer);
         }
     }, [refreshCheck])
@@ -119,12 +116,16 @@ function App() {
         else {
             console.error("You should not be seeing that button if both are false...")
         }
-        setRefreshCheck(true);
+
+        // Set this for a minimum animation spin of 2 seconds
+        setTimeout(() => {
+            setRefreshLoading(false)
+            setRefreshCheck(true);
+        }, 1000); 
     };
 
     useEffect(() => {
         // Check current encounter to see if we need to auto refresh from DNB_B
-        console.log("currentEncounter App.js effect...")
         if(currentEncounter.currentEncounterCreatures) {
             let foundPlayer = false;
             let foundMonster = false;
@@ -137,7 +138,6 @@ function App() {
                 }
             });
             
-            console.log("Found Player:", foundPlayer)
             setAutoRefreshDndbPlayers(foundPlayer)
             setAutoRefreshDndbMonsters(foundMonster)
             setAutoRefresh(foundPlayer || foundMonster)
@@ -145,7 +145,6 @@ function App() {
             
 
         const getRefreshedLocalEncounter = (event) => {
-            console.log("storageKey: ", event.key)
             if (event.key === 'playerViewEncounter') {
                 setPlayerView({...JSON.parse(localStorage.getItem('playerViewEncounter'))});
             } else if (event.key === 'currentBackground') {

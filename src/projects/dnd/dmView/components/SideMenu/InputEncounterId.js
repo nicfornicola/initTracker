@@ -7,7 +7,7 @@ import { ImportDndBeyondEncounter } from '../../api/ImportDndBeyondEncounter'
 import { ImportDndBeyondMonsters } from '../../api/ImportDndBeyondMonsters'
 
 function InputEncounterId({setCurrentEncounter}) {
-    const [dndbEncounterId, setDndbEncounterId] = useState('aa3f3817-f44b-4116-b2e5-39e1eebc9f7d');
+    const [dndbEncounterId, setDndbEncounterId] = useState('ed9784fc-5aba-473a-9ae9-166fed396e8e');
     
     const handleDndBEncounterId = (event) => {
         let input = event.target.value;
@@ -25,7 +25,7 @@ function InputEncounterId({setCurrentEncounter}) {
                 
                 // Turn the players objects into an array of numbers to match user input
                 const playerIds = players.map(player => player.id);
-                const dmbPlayers = await ImportDndBeyondCharacters(playerIds);
+                const dmbPlayers = await ImportDndBeyondCharacters(playerIds, players);
 
                 // Send the whole monsters object since it comes with hp data
                 const dmbMonsters = await ImportDndBeyondMonsters(monsters);
