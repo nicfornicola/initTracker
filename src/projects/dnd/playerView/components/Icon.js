@@ -51,10 +51,10 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
 
     let cardBoxShadow;
     let shadowString = '0px 0px 5px 5px'
-    const monsterBoxShadow = {boxShadow: shadowString + ' rgba(203, 38, 19, 1)'};
-    const playerBoxShadow = {boxShadow: shadowString + ' rgba(0, 230, 64, 1)'};
-    if (isPlayer) {
+    const monsterBoxShadow = {boxShadow: shadowString + ' ' + creature.border};
+    const playerBoxShadow = {boxShadow: shadowString + ' ' + creature.border};
 
+    if (isPlayer) {
         let namesArr = creature.name.split(' ');
         name = namesArr[0];
         if (namesArr.length > 1) {

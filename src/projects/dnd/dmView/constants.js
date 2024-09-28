@@ -311,6 +311,8 @@ export const dummyDefault = {
     "hit_points_current": 20,
     "initiative": 0,
     "type": "default",
+    "alignment": "ally",
+    "border": "#68BC00",
     "desc": "**Commoners** include peasants, serfs, slaves, servants, pilgrims, merchants, artisans, and hermits.",
     "size": "Medium",
     "armor_class": 10,
@@ -346,6 +348,8 @@ export const dummyDefault = {
 export const envObject = {
     ...sharedItems,
     "type": "global",
+    "alignment": "neutral",
+    "border": "#FFFFFF",
     "name": "Env/Lair",
     "name_default": "Env/Lair",
     "desc": "A falling piller, exploding magma, the world is your oyster! And that oyster will blow up at the end of the round. Poor souls...",

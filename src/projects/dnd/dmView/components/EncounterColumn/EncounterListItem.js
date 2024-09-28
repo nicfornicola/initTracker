@@ -4,8 +4,8 @@ import eyeClosed from '../../pics/icons/eyeClosed.png';
 import eyeOpen from '../../pics/icons/eyeOpen.png'; 
 import OptionButton from '../EncounterColumn/OptionButton';
 import TeamFlag from '../../pics/icons/team.png';
-import { SketchPicker } from 'react-color';
 import FlagPole from './FlagPole';
+import Compact from '@uiw/react-color-compact';
 
 const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCurrentEncounter, scrollPosition, handleUploadMonsterImage, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
     const [hidden, setHidden] = useState(creatureListItem.hidden);
@@ -19,23 +19,20 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const [openTeamWidget, setOpenTeamWidget] = useState(false);
     const [isTeamWidgetInside, setIsTeamWidgetInside] = useState(true)
     const [teamWidgetPosition, setTeamWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0})
-    const [teamColor, setTeamColor] = useState('rgb(255,0,0)')
-
-    const handleChangeComplete = (color) => {
-        const rgb = color.rgb
-        setTeamColor(`rgb(${rgb.r},${rgb.g},${rgb.b})`);
-    };
+    const [teamColor, setTeamColor] = useState(creature.border)
     
     const hpButtonRef = useRef(null)
     const teamButtonRef = useRef(null)
 
     useEffect(() => {
+        console.log("1")
         setCreature(creatureListItem)
-
         // eslint-disable-next-line
     }, [creatureListItem]);
 
     useEffect(() => {
+        console.log("2")
+
         if(encounterSelectedCreature !== null && creature.guid === encounterSelectedCreature.guid)
             setEncounterSelectedCreature(creature)
 
@@ -53,6 +50,8 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }, [creature]);
 
     useEffect(() => {
+        console.log("3")
+
         if(openHpWidget && hpButtonRef.current) {
             const rect = hpButtonRef.current.getBoundingClientRect();
             setHpWidgetPosition(rect)
@@ -61,7 +60,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
 
         if(openTeamWidget && teamButtonRef.current) {
             const rect = teamButtonRef.current.getBoundingClientRect();
-            console.log(rect)
             setTeamWidgetPosition(rect)
             setIsTeamWidgetInside(listSizeRect.top < rect.bottom - rect.height/2 && listSizeRect.bottom > rect.top + rect.height/2)
         }
@@ -156,6 +154,21 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         setCreature({...creature, hidden: !hidden})
     }  
     
+    const handleAlignmentChange = (team) => {
+        console.log(team)
+        creature.alignment = team;
+        setCreature({...creature})
+    };
+
+    const handleTeamColorChange = (newTeamColor) => {
+        if(teamColor.hex !== teamColor) {
+            setTeamColor(newTeamColor.hex)
+            creature.border = newTeamColor.hex;
+            setCreature({...creature})
+        }
+        
+    };
+
     const handleTeamChangeWidget = (event) => {
         console.log("team change")
         event.stopPropagation();
@@ -182,6 +195,8 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }
     
     let hpStyle = {color: color, borderColor: color}
+
+    console.log(teamColor)
 
     return (
             <li className='listItem'
@@ -215,9 +230,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
 
                     <div>
                         <OptionButton src={hidden ? eyeClosed : eyeOpen}  message={(hidden ? "Show" : "Hide")} onClickFunction={handleHideEnemy} imgClassName={'option-no-margin'} />
-                        {/* <OptionButton src={TeamFlag} message={"Team Color"} onClickFunction={handleTeamChangeWidget} imgClassName={'option-no-margin option-no-radius'} imgStyle={teamFlagColor} imgRef={teamButtonRef}/> */}
-                        <FlagPole flagColor={teamColor} handleTeamChangeWidget={handleTeamChangeWidget} ref={teamButtonRef} widgetOpen={openTeamWidget} />
-
+                        <FlagPole flagColor={teamColor} handleTeamChangeWidget={handleTeamChangeWidget} ref={teamButtonRef} isWidgetOpen={openTeamWidget} />
                     </div>
 
                     <div>
@@ -245,11 +258,16 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                     
                 </div>
                 {openTeamWidget && isTeamWidgetInside && ( 
-                    <div className='editTeamContainer editHpGrow' onClick={(event) => event.stopPropagation()} style={{ top: teamWidgetPosition.top + teamWidgetPosition.height*1.5, left: teamWidgetPosition.left - teamWidgetPosition.width*4.33}}>
+                    <div className='editTeamContainer editHpGrow' onClick={(event) => event.stopPropagation()} style={{ top: teamWidgetPosition.top + teamWidgetPosition.height*1.5, left: teamWidgetPosition.left - teamWidgetPosition.width*6}}>
                         <div className="teamContainerFlag"/>
+                        <Compact
+                            color={teamColor}
+                            onChange={handleTeamColorChange}
+                        />
                         <div className='teamChoices'>
-                            {/* https://casesandberg.github.io/react-color/ */}
-                            <SketchPicker color={teamColor} onChangeComplete={handleChangeComplete}/>
+                            <button className="editTeamColorButton" style={{color: "green"}} onClick={() => handleAlignmentChange('ally')}> {creature.alignment === "ally" ? <strong>Ally</strong> : <small>Ally</small>} </button>
+                            <button className="editTeamColorButton" style={{color: "black"}} onClick={() => handleAlignmentChange('neutral')}> {creature.alignment === "neutral" ? <strong>Neutral</strong> : <small>Neutral</small>} </button>
+                            <button className="editTeamColorButton" style={{color: "red"}} onClick={() => handleAlignmentChange('enemy')}> {creature.alignment === "enemy" ? <strong>Enemy</strong> : <small>Enemy</small>} </button>
                         </div>
                     </div>
                 )}

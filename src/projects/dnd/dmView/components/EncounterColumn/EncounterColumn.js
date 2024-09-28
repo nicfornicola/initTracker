@@ -134,6 +134,8 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                 ...dummyDefault,
                 avatarUrl: type === "monster" ? beastImg : humanImg,
                 name: type === "monster" ? "Dummy Monster" : "Dummy Player",
+                alignment: type === "monster" ? "enemy" : "ally",
+                border: type === "monster" ? "#F44E3B" : "#68BC00",
                 type: type,
                 deathSaves: {
                     "failCount": 0,

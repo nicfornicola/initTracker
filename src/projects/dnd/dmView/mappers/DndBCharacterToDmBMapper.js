@@ -28,6 +28,8 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, skillDetails=undefi
             "exhaustionLvl": dndBeyondRes.conditions.find(obj => obj.id === 4) || 0,
             "path": "",
             "type": "player",
+            "alignment": "ally",
+            "border": "#68BC00",
             "effects": [],
             "creature_type": dndBeyondRes.race.fullName,
             "inspiration": dndBeyondRes.inspiration,

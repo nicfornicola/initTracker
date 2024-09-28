@@ -19,7 +19,9 @@ export const DndBMonsterToDmBMapper = async (monsterRes, encounterMonsterRes) =>
         "hit_points_modifier": 0, //dnd beyonds max hp modifier
         "initiative": encounterMonsterRes.initiative,
         "last_damage": null,
+        "alignment": "enemy",
         "type": "monster",
+        "border": "#F44E3B",
         "effects": [],
         "creature_type": "dnd beyond doesnt give me this",
         "inspiration": false,

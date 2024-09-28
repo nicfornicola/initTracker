@@ -26,7 +26,9 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         "initiative": open5eData.dexterity_save || 0,
         "last_damage": null,
         "effects": [],
+        "alignment": "enemy",
         "type": "monster",
+        "border": "#F44E3B",
         "creature_type": open5eData.type,
         "inspiration": false,
         "hidden": false
