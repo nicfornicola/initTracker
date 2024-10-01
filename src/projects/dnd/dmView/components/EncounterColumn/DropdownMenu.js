@@ -23,7 +23,7 @@ const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter
         return () => {
           document.removeEventListener('mousedown', handleClickOutside);
         };
-      }, []);
+    }, []);
 
     const handleOptionClick = (encounter) => {
         setIsOpen(false);

@@ -21,7 +21,6 @@ const resizeImage = (img, maxWidth, maxHeight, quality) => {
         canvas.height = height;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, width, height);
-        console.table("!!", width, height)
 
         // Convert the canvas to a base64 string with reduced quality
         const dataUrl = canvas.toDataURL('image/jpeg', quality);

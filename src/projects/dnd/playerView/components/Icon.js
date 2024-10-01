@@ -18,105 +18,56 @@ function stringToInt(str) {
     return numericStr ? parseInt(numericStr, 10) : 1;
 }
 
-function setBloodImg(creature) {
+function getBloodImg(creature) {
     const bloodiedArr = [bloodied1, bloodied2, bloodied3, bloodied4, bloodied5, bloodied6]
     const randomNumber = (stringToInt(creature.guid) % 6); // Generates numbers from 0 to 5
     return bloodiedArr[randomNumber]
 }
 
-const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBloodToggle}) => {
+const Icon = ({creature, isTurn, hideDeadEnemies, enemyBloodToggle}) => {
     const isPlayer = creature.type === "player";
+    const isAlly = creature.alignment === "ally" || creature.type === "player";
     const effectsFound = creature.effects.length > 0
-    const foundHp = creature.maxHp !== null;
-    const showIcon = creature.initiative >= 0
     const showInitiativeBox = creature.initiative !== null;
     const isExhausted = creature.exhaustionLvl > 0
+    const lowHpBoxColor =  {boxShadow: '1px 1px 8px 5px rgba(150, 40, 27, 1)'};
+    const mediumHpBoxColor = {boxShadow: '1px 1px 8px 5px rgba(242, 177, 35, 1)'};
+    const hpPercent = creature.hit_points_current / creature.hit_points;
 
-    
-    const handleImageClick = (event) => {
-        event.stopPropagation(); // Prevent propagation to parent
-        setClickedCreature(creature);
-    };
-
-    let showEnemyHp = false;
+    let isDead = (creature.hit_points_current <= 0 || creature.exhaustionLvl === 6) && creature.type !== "global"
+    let showHp = isAlly || (enemyBloodToggle === 2)
+    let showDeathSaves = isPlayer && (creature.deathSaves.successCount >= 0 && creature.deathSaves.failCount >= 0)
     let isBloodied = false;
-    let bloodImg;
     let name = isPlayer ? "" : creature.name
     let lastName = ""
+    let hpBoxColor;
 
-    let hpBoxShadow;
-    const playerLowHpBoxShadow =  {boxShadow: '1px 1px 8px 5px rgba(150, 40, 27, 1)'};
-    const playerMediumHpBoxShadow = {boxShadow: '1px 1px 8px 5px rgba(242, 177, 35, 1)'};
-    const globalHpBoxShadow = {boxShadow: '1px 1px 8px 5px rgba(255, 255, 255)'};
-
-    let cardBoxShadow;
-    let shadowString = '0px 0px 5px 5px'
-    const monsterBoxShadow = {boxShadow: shadowString + ' ' + creature.border};
-    const playerBoxShadow = {boxShadow: shadowString + ' ' + creature.border};
+    if (hpPercent < 0.55 && (isAlly || enemyBloodToggle > 0)) {
+        isBloodied = true;
+        hpBoxColor = hpPercent > 0.55 ? {} : (hpPercent < 0.20 ? lowHpBoxColor : mediumHpBoxColor);
+    }
 
     if (isPlayer) {
-        let namesArr = creature.name.split(' ');
-        name = namesArr[0];
-        if (namesArr.length > 1) {
-            lastName = creature.name.substring(creature.name.indexOf(' ') + 1);
-        }
-        
-        let hpPercent = creature.hit_points_current / creature.hit_points;
-        if (hpPercent < 0.20) {
-            isBloodied = true;
-            hpBoxShadow = playerLowHpBoxShadow;
-        } else if (hpPercent < 0.55) {
-            isBloodied = true;
-            hpBoxShadow = playerMediumHpBoxShadow;
-        }
-
-        if(isBloodied) {
-            bloodImg = setBloodImg(creature)
-        }
-
-        cardBoxShadow = playerBoxShadow
-
-    } else if(creature.type === "monster") { // it's a Monster
-        cardBoxShadow = monsterBoxShadow;
-
-        if (enemyBloodToggle === 2)
-            showEnemyHp = true;
-
-        let hpPercent = creature.hit_points_current / creature.hit_points;
-        if (hpPercent < 0.55 && enemyBloodToggle !== 0) {
-            isBloodied = true;
-            bloodImg = setBloodImg(creature)
-        }
-    } else { // Global
-        cardBoxShadow = globalHpBoxShadow;
+        [name, ...lastName] = creature.name.split(' ');
+        lastName = lastName.join(' ') || '';
     }
-
-    let isGlobal = creature.type === "global"
-    let isDead = (creature.hit_points_current <= 0 || creature.exhaustionLvl === 6) && !isGlobal
-    let showHp = (isPlayer && foundHp) || (!isPlayer && showEnemyHp)
-    let showDeathSaves = isPlayer && foundHp && (creature.deathSaves.successCount >= 0 && creature.deathSaves.failCount >= 0)
-
-    if(hideDeadEnemies && !isPlayer  && isDead ) {
-        return null
-    }
-    
 
     return (
         <>
-            { showIcon && (
+            {(hideDeadEnemies && !isAlly && isDead) ? (
+                null 
+            ) : (
                 <div
                     className="card"
-                    style={{...cardBoxShadow, 
+                    style={{boxShadow: '0px 0px 5px 5px ' + creature.border, 
                         background: isTurn ? 'linear-gradient(to top, rgba(11, 204, 255, 0.85), rgba(11, 204, 255, .5))' : '',
-                        opacity: isDead && !isPlayer ? .5 : 1
-                    }}
-                    onClick={(event) => handleImageClick(event)}
+                        opacity: isDead && !isPlayer ? .5 : 1}}
                 >
                     <div>
                         <div className='image-container'>
                             <img className="image" src={creature.avatarUrl} alt={name} />
                             <div className="imageSmoke"/>                            
-                            {isDead && !isGlobal && (
+                            {isDead ? (
                                 <>
                                     <img className="image overlay-skull" src={skullpng} alt="" />
                                     {showDeathSaves && (
@@ -124,11 +75,9 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
                                     )}
                                 </>
                                 
-                            )}
-
-                            {isBloodied && !isDead && (
-                                <img className="image overlay-blood" src={bloodImg} alt="" />
-                            )}
+                            ) : (
+                                <>{isBloodied && <img className="image overlay-blood" src={getBloodImg(creature)} alt="" />}</>
+                            )}                            
 
                             {effectsFound && (
                                 <div className='avatarEffectsBar'>    
@@ -148,7 +97,7 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
                         <div className='lastName'> {lastName}</div>
 
                         {showHp && ( 
-                            <div className="hp-box" style={hpBoxShadow}>
+                            <div className="hp-box" style={hpBoxColor}>
                                 <div className="hp">
                                     {creature.hit_points_current}/{creature.hit_points}
                                     
@@ -173,7 +122,7 @@ const Icon = ({creature, isTurn, setClickedCreature, hideDeadEnemies, enemyBlood
                 </div>
             )}
         </>
-    );
+        );
 };
 
 export default Icon;

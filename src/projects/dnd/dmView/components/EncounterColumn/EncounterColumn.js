@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import StatBlock from '../StatBlock';
-import { generateUniqueId, dummyDefault, envObject, setLocalPlayerViewEncounter, sortCreatureArray, INIT_ENCOUNTER_NAME } from '../../constants';
+import { generateUniqueId, dummyDefault, envObject, setLocalPlayerViewEncounter, sortCreatureArray, INIT_ENCOUNTER_NAME, COLOR_RED, COLOR_GREEN } from '../../constants';
 import EncounterListTopInfo from './EncounterListTopInfo'
 import DropdownMenu from './DropdownMenu';
 import EncounterControls from './EncounterControls'
@@ -17,7 +17,6 @@ function addToLocalSavedEncounter(jsonArray, newEncounter) {
     if (index !== -1) {
         // Overwrite the existing object if its found
         // const result = compareObjects(jsonArray[index], newEncounter);
-        // console.table(result);    
         jsonArray[index] = newEncounter;
     } else {
         // Add the new object to the array if nothing exists already
@@ -135,7 +134,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                 avatarUrl: type === "monster" ? beastImg : humanImg,
                 name: type === "monster" ? "Dummy Monster" : "Dummy Player",
                 alignment: type === "monster" ? "enemy" : "ally",
-                border: type === "monster" ? "#F44E3B" : "#68BC00",
+                border: type === "monster" ? COLOR_RED : COLOR_GREEN,
                 type: type,
                 deathSaves: {
                     "failCount": 0,

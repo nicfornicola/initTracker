@@ -1,3 +1,5 @@
+import { COLOR_RED } from "../constants";
+
 export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
     let isDefault = avatarUrl.includes("Content/Skins/WaterDeep")
     let image = avatarUrl;
@@ -28,7 +30,7 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         "effects": [],
         "alignment": "enemy",
         "type": "monster",
-        "border": "#F44E3B",
+        "border": COLOR_RED,
         "creature_type": open5eData.type,
         "inspiration": false,
         "hidden": false

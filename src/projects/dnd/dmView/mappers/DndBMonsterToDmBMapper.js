@@ -1,4 +1,4 @@
-import {generateUniqueId } from '../constants';
+import {COLOR_RED, generateUniqueId } from '../constants';
 
 export const DndBMonsterToDmBMapper = async (monsterRes, encounterMonsterRes) => {
 
@@ -21,7 +21,7 @@ export const DndBMonsterToDmBMapper = async (monsterRes, encounterMonsterRes) =>
         "last_damage": null,
         "alignment": "enemy",
         "type": "monster",
-        "border": "#F44E3B",
+        "border": COLOR_RED,
         "effects": [],
         "creature_type": "dnd beyond doesnt give me this",
         "inspiration": false,

@@ -11,6 +11,8 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const [hidden, setHidden] = useState(creatureListItem.hidden);
     const [creature, setCreature] = useState(creatureListItem)
 
+    const [isHovered, setIsHovered] = useState(false);
+
     const [hpChange, setHpChange] = useState(0);
     const [openHpWidget, setOpenHpWidget] = useState(false);
     const [isHpWidgetInside, setIsHpWidgetInside] = useState(true);
@@ -22,17 +24,39 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const [teamColor, setTeamColor] = useState(creature.border)
     
     const hpButtonRef = useRef(null)
+    const hpWidgetRef = useRef(null);
+
+    const teamWidgetRef = useRef(null);
     const teamButtonRef = useRef(null)
 
+
+    const handleClickOutside = (event) => {
+
+        if (hpWidgetRef.current && !hpWidgetRef.current.contains(event.target) &&
+            hpButtonRef.current && !hpButtonRef.current.contains(event.target)) {
+                setOpenHpWidget(false); // Close the widget if clicked outside
+        }
+        
+        if (teamWidgetRef.current && !teamWidgetRef.current.contains(event.target) &&
+            teamButtonRef.current && !teamButtonRef.current.contains(event.target)) {
+                setOpenTeamWidget(false); // Close the widget if clicked outside
+        }
+    };
+
     useEffect(() => {
-        console.log("1")
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+
+    useEffect(() => {
         setCreature(creatureListItem)
         // eslint-disable-next-line
     }, [creatureListItem]);
 
     useEffect(() => {
-        console.log("2")
-
         if(encounterSelectedCreature !== null && creature.guid === encounterSelectedCreature.guid)
             setEncounterSelectedCreature(creature)
 
@@ -50,8 +74,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }, [creature]);
 
     useEffect(() => {
-        console.log("3")
-
         if(openHpWidget && hpButtonRef.current) {
             const rect = hpButtonRef.current.getBoundingClientRect();
             setHpWidgetPosition(rect)
@@ -71,7 +93,8 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         setOpenHpWidget(!openHpWidget)
     }
 
-    const handleChangeHpCreature = (type) => {
+    const handleChangeHpCreature = (type, event) => {
+        event.stopPropagation()
         let hpNum = hpChange;
         if(type === 'damage') {
 
@@ -155,7 +178,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }  
     
     const handleAlignmentChange = (team) => {
-        console.log(team)
         creature.alignment = team;
         setCreature({...creature})
     };
@@ -170,7 +192,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     };
 
     const handleTeamChangeWidget = (event) => {
-        console.log("team change")
         event.stopPropagation();
         setOpenTeamWidget(!openTeamWidget)
     }
@@ -187,7 +208,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
 
     let isDead = creature.hit_points_current <= 0
     let isBloodied = creature.hit_points_current/creature.hit_points < .55
-    let color = ""
+    let color = "rgb(62, 172, 74)"
     if(isDead) {
         color = "red"
     } else if(isBloodied) {
@@ -196,14 +217,25 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     
     let hpStyle = {color: color, borderColor: color}
 
-    console.log(teamColor)
-
     return (
             <li className='listItem'
                 onClick={() => setEncounterSelectedCreature(creature)}
-                style={{border: isTurn ? '4px solid rgba(11, 204, 255)' : '', borderRadius: 0}}
+                style={{border: isTurn ? '4px solid rgba(11, 204, 255)' : '',
+                        // boxShadow: 'inset 0px 0px 6px 0px #434343'
+                }}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
             >   
-                <div className='encounterCreatureContainer animated-box'>
+                <div 
+                    className='encounterCreatureContainer animated-box'
+                    style={{
+                        backgroundImage: `linear-gradient(45deg, ${teamColor} 25%, ${isHovered ? `#bfbba6` : `#cfc9a8`} 50%)`,
+                        backgroundSize: '200% 200%',
+                        backgroundPosition: isHovered ? '20% 20%':'50% 50%',
+                        boxShadow: `${isHovered ? 'inset 0px 0px 0px 0px #434343' : 'inset 0px 0px 6px 0px #434343'}`,
+                        transition: 'background-position .5s, box-shadow 0.15s ease',
+                    }} 
+                >
                     <div className='encounterCreatureLeftContainer'>
                         <div className='initiativeInputContainer'>
                             <input className='inputButton' onFocus={handleHighlight} onBlur={handleInitiativeCheck} type='text' value={creature.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
@@ -221,16 +253,16 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                             <div className='middleStatsContainer'>
                                     <label htmlFor='ac' className='middleStatsLabel'>AC</label>
                                     <input id='ac' className='middleStatsInput' onFocus={handleHighlight} type='text' defaultValue={creature.armor_class} onChange={handleArmorClassChange} onClick={(event) => event.stopPropagation()}/>
-                                    <label htmlFor='init' className='middleStatsLabel'>Init Mod</label>
+                                    <label htmlFor='init' className='middleStatsLabel'>Init.</label>
                                     <input id='init'className='middleStatsInput' onFocus={handleHighlight} disabled={true}  type='text' defaultValue={creature.dexterity_save ? '+' + creature.dexterity_save : '+0'} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                             </div>
                             
                         </div>
                     </div>
 
-                    <div>
-                        <OptionButton src={hidden ? eyeClosed : eyeOpen}  message={(hidden ? "Show" : "Hide")} onClickFunction={handleHideEnemy} imgClassName={'option-no-margin'} />
-                        <FlagPole flagColor={teamColor} handleTeamChangeWidget={handleTeamChangeWidget} ref={teamButtonRef} isWidgetOpen={openTeamWidget} />
+                    <div className='listItemOptions'>
+                        <OptionButton src={hidden ? eyeClosed : eyeOpen}  message={(hidden ? "Hidden" : "Visible")} onClickFunction={handleHideEnemy} imgClassName={'option-no-margin'} />
+                        <FlagPole flagColor={teamColor} handleTeamChangeWidget={handleTeamChangeWidget} ref={teamButtonRef} alignment={creature.alignment} isWidgetOpen={openTeamWidget} />
                     </div>
 
                     <div>
@@ -241,9 +273,19 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                     
                    
                     {creature.hit_points !== null  ? 
-                        <div className='encounterCreaturesHpContainer'>
-                            
-                            <button className='encounterCreaturesHp' style={hpStyle} onClick={(event) => openEditCreatureStats(event)}  ref={hpButtonRef}>
+                        <div className='encounterCreaturesHpContainer' 
+                         >
+                            <button 
+                                className='encounterCreaturesHp'
+                                onClick={(event) => openEditCreatureStats(event)}  ref={hpButtonRef}
+                                style={{
+                                    backgroundImage: `linear-gradient(to top, ${hpStyle.color} 20%, white 50%)`,
+                                    backgroundSize: '200% 200%',
+                                    backgroundPosition: openHpWidget ? '70% 70%':'30% 30%',
+                                    transition: 'background-position .5s ease, color .5s ease',
+                                    ...hpStyle
+                                }}
+                            >
                                 {creature.hit_points_current}
                                 <span>/</span>
                                 {creature.hit_points}
@@ -258,27 +300,27 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                     
                 </div>
                 {openTeamWidget && isTeamWidgetInside && ( 
-                    <div className='editTeamContainer editHpGrow' onClick={(event) => event.stopPropagation()} style={{ top: teamWidgetPosition.top + teamWidgetPosition.height*1.5, left: teamWidgetPosition.left - teamWidgetPosition.width*6}}>
+                    <div className='editTeamContainer editHpGrow' ref={teamWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: teamWidgetPosition.top + teamWidgetPosition.height*1.5, left: teamWidgetPosition.left - teamWidgetPosition.width*5.8}}>
                         <div className="teamContainerFlag"/>
                         <Compact
                             color={teamColor}
                             onChange={handleTeamColorChange}
                         />
                         <div className='teamChoices'>
-                            <button className="editTeamColorButton" style={{color: "green"}} onClick={() => handleAlignmentChange('ally')}> {creature.alignment === "ally" ? <strong>Ally</strong> : <small>Ally</small>} </button>
-                            <button className="editTeamColorButton" style={{color: "black"}} onClick={() => handleAlignmentChange('neutral')}> {creature.alignment === "neutral" ? <strong>Neutral</strong> : <small>Neutral</small>} </button>
-                            <button className="editTeamColorButton" style={{color: "red"}} onClick={() => handleAlignmentChange('enemy')}> {creature.alignment === "enemy" ? <strong>Enemy</strong> : <small>Enemy</small>} </button>
+                            <button className="editTeamColorButton" style={{color: "green"}} onClick={() => handleAlignmentChange('ally')}> {creature.alignment === "ally" ? <strong><u>Ally</u></strong> : <small>Ally</small>} </button>
+                            <button className="editTeamColorButton" style={{color: "black"}} onClick={() => handleAlignmentChange('neutral')}> {creature.alignment === "neutral" ? <strong><u>Neutral</u></strong> : <small>Neutral</small>} </button>
+                            <button className="editTeamColorButton" style={{color: "red"}} onClick={() => handleAlignmentChange('enemy')}> {creature.alignment === "enemy" ? <strong><u>Enemy</u></strong> : <small>Enemy</small>} </button>
                         </div>
                     </div>
                 )}
                 {openHpWidget && isHpWidgetInside && ( 
-                    <div className='editStatsContainer editHpGrow' onClick={(event) => event.stopPropagation()} style={{ top: hpWidgetPosition.top - 10, left: hpWidgetPosition.right + 20, height: hpWidgetPosition.height*4}}>
+                    <div className='editStatsContainer editHpGrow' ref={hpWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: hpWidgetPosition.top - 10, left: hpWidgetPosition.right + 20, height: hpWidgetPosition.height*4}}>
                         <div className="infoContainerFlag"/>
                         <div className='hpChanges'>
                             <div className='editHpContainer'>
-                                <button className='editHpButton healButton' onClick={() => handleChangeHpCreature("heal")}>HEAL</button>
+                                <button className='editHpButton healButton' onClick={(event) => handleChangeHpCreature("heal", event)}>HEAL</button>
                                 <input className='editStatsInput' type='number' value={hpChange} onFocus={handleHighlight} onChange={(event) => setHpChange(parseInt(event.target.value))} autoFocus/>
-                                <button className='editHpButton damageButton' onClick={() => handleChangeHpCreature("damage")}>DAMAGE</button>
+                                <button className='editHpButton damageButton' onClick={(event) => handleChangeHpCreature("damage", event)}>DAMAGE</button>
                             </div>
                             <div className='extraHpContainer'>
                                 <div className='extraHpInputs' >

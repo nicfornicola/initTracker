@@ -1,4 +1,4 @@
-import {generateUniqueId } from '../constants';
+import {generateUniqueId, COLOR_GREEN } from '../constants';
 
 export const DndBCharacterToDmBMapper = async (dndBeyondRes, skillDetails=undefined) => {
 
@@ -29,7 +29,7 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, skillDetails=undefi
             "path": "",
             "type": "player",
             "alignment": "ally",
-            "border": "#68BC00",
+            "border": COLOR_GREEN,
             "effects": [],
             "creature_type": dndBeyondRes.race.fullName,
             "inspiration": dndBeyondRes.inspiration,

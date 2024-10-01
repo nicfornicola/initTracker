@@ -13,10 +13,10 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
     const [roundNum, setRoundNum] = useState(playerView.RoundNum);
 
 
-    console.table({"hideEnemies": hideEnemies,
-                    "enemyBloodToggle": enemyBloodToggle,
-                    "hideDeadEnemies": hideDeadEnemies,
-                    "cardContainerStyle": cardContainerStyle})
+    // console.table({"hideEnemies": hideEnemies,
+    //                 "enemyBloodToggle": enemyBloodToggle,
+    //                 "hideDeadEnemies": hideDeadEnemies,
+    //                 "cardContainerStyle": cardContainerStyle})
 
     useEffect(() => {
         setCreatures([...playerView.currentEncounterCreatures])
@@ -57,7 +57,7 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
     };
     
     return (
-        <div className="dndBackground" onClick={() => setClickedCreature(null)} style={{backgroundImage: playerViewBackground.type === "image" && playerViewBackground.src ? `url(${playerViewBackground.src})` : 'none'}}>
+        <div className="dndBackground" style={{backgroundImage: playerViewBackground.type === "image" && playerViewBackground.src ? `url(${playerViewBackground.src})` : 'none'}}>
             {roundNum !== 0 && 
                 <div className='roundNum'>
                     {roundNum}
@@ -75,10 +75,9 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
                     creatures.map((creature, index) => { 
                         return (((creature.type === 'monster' || creature.type === 'global') && hideEnemies) || creature.hidden) 
                         ? null
-                        : <Icon key={uuidv4()} isTurn={turnNum === index+1} creature={creature} setClickedCreature={setClickedCreature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggle={enemyBloodToggle} />;
+                        : <Icon key={creature.guid} isTurn={turnNum === index+1} creature={creature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggle={enemyBloodToggle} />;
                     })
                 )}
-
             </div>
 
             {clickedCreature && (

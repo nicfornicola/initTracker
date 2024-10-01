@@ -130,7 +130,7 @@ hr {
     position: absolute;
     justify-content: center; 
     align-items: center;  
-    /* setting width inline */
+    gap: 20px; /* Space between boxes */
 }
 
 .card {
@@ -144,7 +144,6 @@ hr {
     min-height: 240px;
     max-height: 290px;
     text-align: center;
-    margin: 7px;
     cursor: pointer;
     background-color: #949e9bac;
 }
@@ -648,17 +647,13 @@ hr {
     transition: opacity .2s ease-in-out;
 }
 
-.listItem:hover .encounterCreatureContainer {
-    background-color: rgb(186, 186, 186);
-}
-
-
 .encounterTitleEditInput {
     width: 90%;
     margin: 0px;
     padding: 0px;
     background-color: #00000000;
     color: #822000;
+    color: #bfbba6;
     font-weight: bold;
     font-family: 'Bitter', serif;
 
@@ -801,6 +796,7 @@ input {
 .textShadow {
     text-shadow: -.5px .5px 0px #000000;
 }
+
 
 .infoContainer {
     display: flex;
@@ -1094,9 +1090,9 @@ input {
 .listItem {
     width: 100%;
     margin-bottom: 1%;
-    box-shadow: inset 0px 0px 6px 0px #434343;
     background-color: #cfc9a8;
     box-sizing: border-box;
+    border-radius: 0;
 }
 
 .encounterCreatureLeftContainer,
@@ -1105,6 +1101,10 @@ input {
     height: 50px;
     display: flex;
     width: 100%;
+}
+
+.listItemOptions {
+    box-shadow: none;
 }
 
 .searchListCreatureContainer {
@@ -1167,11 +1167,13 @@ input {
     font-family: 'Bitter', serif;
     font-weight: bold;
     font-size: .8em;
-    background-color: inherit;
+    background-color: #bcbcbc8c;
     color: inherit;
     border: none;
-    margin: 0;
+    margin: 0 0 4px 0;
     border-bottom: 2px dotted #919191;
+    border-radius: 5px;
+
 }
 
 .titleInput {
@@ -1183,15 +1185,18 @@ input {
     min-width: 20px;
     max-width: 25px;
     text-align: center;
-    margin: 0px;
+    margin: 0 2px 0 0;
     padding: none;
     font-family: 'Bitter', serif;
     font-weight: bold;
     font-size: 1em;
-    background-color: inherit;
+    background-color: #bcbcbc8c;
     color: inherit;
     border: none;
-    border-bottom: 1px dotted #919191;
+    border-bottom: 1px solid #919191;
+    border-right: 1px solid #919191;
+    border-top: 1px solid #919191;
+    border-radius: 5px;
 }
 
 .initiativeInputContainer {
@@ -1213,7 +1218,13 @@ input {
 }
 
 .middleStatsLabel {
-   font-size: 10px;
+    font-size: 10px;
+    background-color: #bcbcbc8c;
+    border-bottom: solid 1px #919191;
+    border-left: solid 1px #919191;
+    border-top: solid 1px #919191;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
 }
 
 
@@ -1277,7 +1288,7 @@ input {
     border: 1px solid #000000;
     background-color: #e0d9b7;
     box-shadow: 1px 1px 10px #000000;
-    width: 20%;
+    width: fit-content;
     z-index: 9999;
     padding: 5px;
     align-items: center
@@ -1320,6 +1331,7 @@ input {
     width: 100%;
     height: 100%;
     display: flex;
+    padding-top: 5px;
     justify-content: space-evenly;
 }
 
@@ -1415,12 +1427,13 @@ input {
 }
 
 .monsterEncounterIconContainer {
+    box-sizing: border-box;
     position: relative;
     min-height: 50px;
     --v-width: 50px;
     min-width: var(--v-width); /* Set width */
-    background-color: #000000;
-    margin: 0px 5px 0px 5px;
+    background-color: #00000000;
+    margin: 0px 5px 0px 0px;
 }
 
 .monsterEncounterIconContainer:hover .uploadIconContainer,

@@ -257,9 +257,9 @@ const sharedItems = {
     "name": "Dummy",
     "name_default": "Dummy",
     "hit_dice": "1d8",
-    "hit_points": 0,
-    "hit_points_default":  0,
-    "hit_points_current": 0,
+    "hit_points": 1,
+    "hit_points_default":  1,
+    "hit_points_current": 1,
     "hit_points_temp": 0,
     "hit_points_override": 0,
     "hit_points_modifier": 0,
@@ -304,6 +304,9 @@ const sharedItems = {
     "hidden": false
 }
 
+export const COLOR_RED = "#F44E3B"
+export const COLOR_GREEN = "#68BC00"
+
 export const dummyDefault = {
     ...sharedItems,
     "hit_points": 20,
@@ -312,7 +315,7 @@ export const dummyDefault = {
     "initiative": 0,
     "type": "default",
     "alignment": "ally",
-    "border": "#68BC00",
+    "border": COLOR_GREEN,
     "desc": "**Commoners** include peasants, serfs, slaves, servants, pilgrims, merchants, artisans, and hermits.",
     "size": "Medium",
     "armor_class": 10,
