@@ -3,7 +3,7 @@ import uploadImage from '../../pics/uploadImage.png'
 import eyeClosed from '../../pics/icons/eyeClosed.png'; 
 import eyeOpen from '../../pics/icons/eyeOpen.png'; 
 import OptionButton from '../EncounterColumn/OptionButton';
-import TeamFlag from '../../pics/icons/team.png';
+import isPlayerImg from '../../pics/icons/isPlayerImg.png';
 import FlagPole from './FlagPole';
 import Compact from '@uiw/react-color-compact';
 
@@ -21,14 +21,16 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const [openTeamWidget, setOpenTeamWidget] = useState(false);
     const [isTeamWidgetInside, setIsTeamWidgetInside] = useState(true)
     const [teamWidgetPosition, setTeamWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0})
-    const [teamColor, setTeamColor] = useState(creature.border)
-    
+    const [isPlayer, setIsPlayer] = useState(creature.type === "player");
+    const [alignment, setAlignment] = useState(creatureListItem.alignment);
+
+    // Handler to toggle the checkbox state
+
     const hpButtonRef = useRef(null)
     const hpWidgetRef = useRef(null);
 
     const teamWidgetRef = useRef(null);
     const teamButtonRef = useRef(null)
-
 
     const handleClickOutside = (event) => {
 
@@ -65,7 +67,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                 ...prev,
                 currentEncounterCreatures: [
                     ...prev.currentEncounterCreatures.map(
-                        oldCreature => oldCreature.guid === creature.guid ? creature :oldCreature)
+                        oldCreature => oldCreature.guid === creature.guid ? creature : oldCreature)
                 ]
             })
         );
@@ -77,18 +79,19 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         if(openHpWidget && hpButtonRef.current) {
             const rect = hpButtonRef.current.getBoundingClientRect();
             setHpWidgetPosition(rect)
-            setIsHpWidgetInside(listSizeRect.top < rect.bottom - rect.height/2 && listSizeRect.bottom > rect.top + rect.height/2)
+            setIsHpWidgetInside(listSizeRect.top-30 < rect.top && listSizeRect.bottom+20 > rect.bottom)
         }
 
         if(openTeamWidget && teamButtonRef.current) {
             const rect = teamButtonRef.current.getBoundingClientRect();
             setTeamWidgetPosition(rect)
-            setIsTeamWidgetInside(listSizeRect.top < rect.bottom - rect.height/2 && listSizeRect.bottom > rect.top + rect.height/2)
+            const isInsideVertically = rect.top >= listSizeRect.top-30 && rect.bottom <= listSizeRect.bottom-30;
+            setIsTeamWidgetInside(isInsideVertically)
         }
 
     }, [openHpWidget, openTeamWidget, scrollPosition, listSizeRect]);
 
-    const openEditCreatureStats = (event) => {
+    const openEditHpWidget = (event) => {
         event.stopPropagation()
         setOpenHpWidget(!openHpWidget)
     }
@@ -178,13 +181,14 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }  
     
     const handleAlignmentChange = (team) => {
-        creature.alignment = team;
-        setCreature({...creature})
+        setAlignment(team);
+        setCreature({...creature, alignment: team})
+
     };
 
     const handleTeamColorChange = (newTeamColor) => {
-        if(teamColor.hex !== teamColor) {
-            setTeamColor(newTeamColor.hex)
+        if(newTeamColor.hex !== creature.border) {
+            // setTeamColor(newTeamColor.hex)
             creature.border = newTeamColor.hex;
             setCreature({...creature})
         }
@@ -199,8 +203,14 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const handleArmorClassChange = (event) => {
         let ac = parseInt(event.target.value)
         creature.armor_class = isNaN(ac) ? '0' : ac
-        setCreature({...creature})
+        setCreature({...creature});
     }
+
+    const handleCheckboxChange = () => {
+        creature.type = !isPlayer ? "player" : "monster"
+        setIsPlayer(!isPlayer);
+        setCreature({...creature});
+    };
 
     const handleHighlight = (e) => {
         e.target.select();
@@ -229,7 +239,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                 <div 
                     className='encounterCreatureContainer animated-box'
                     style={{
-                        backgroundImage: `linear-gradient(45deg, ${teamColor} 25%, ${isHovered ? `#bfbba6` : `#cfc9a8`} 50%)`,
+                        backgroundImage: `linear-gradient(45deg, ${creature.border} 25%, ${isHovered ? `#bfbba6` : `#cfc9a8`} 50%)`,
                         backgroundSize: '200% 200%',
                         backgroundPosition: isHovered ? '20% 20%':'50% 50%',
                         boxShadow: `${isHovered ? 'inset 0px 0px 0px 0px #434343' : 'inset 0px 0px 6px 0px #434343'}`,
@@ -262,7 +272,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
 
                     <div className='listItemOptions'>
                         <OptionButton src={hidden ? eyeClosed : eyeOpen}  message={(hidden ? "Hidden" : "Visible")} onClickFunction={handleHideEnemy} imgClassName={'option-no-margin'} />
-                        <FlagPole flagColor={teamColor} handleTeamChangeWidget={handleTeamChangeWidget} ref={teamButtonRef} alignment={creature.alignment} isWidgetOpen={openTeamWidget} />
+                        <FlagPole flagColor={creature.border} handleTeamChangeWidget={handleTeamChangeWidget} ref={teamButtonRef} alignment={alignment} isWidgetOpen={openTeamWidget} />
                     </div>
 
                     <div>
@@ -273,15 +283,14 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                     
                    
                     {creature.hit_points !== null  ? 
-                        <div className='encounterCreaturesHpContainer' 
-                         >
+                        <div className='encounterCreaturesHpContainer'>
                             <button 
                                 className='encounterCreaturesHp'
-                                onClick={(event) => openEditCreatureStats(event)}  ref={hpButtonRef}
+                                onClick={(event) => openEditHpWidget(event)}  ref={hpButtonRef}
                                 style={{
                                     backgroundImage: `linear-gradient(to top, ${hpStyle.color} 20%, white 50%)`,
                                     backgroundSize: '200% 200%',
-                                    backgroundPosition: openHpWidget ? '70% 70%':'30% 30%',
+                                    backgroundPosition: openHpWidget ? '50% 50%':'30% 30%',
                                     transition: 'background-position .5s ease, color .5s ease',
                                     ...hpStyle
                                 }}
@@ -293,6 +302,9 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                                     <span className='tempHp'> (+{creature.hit_points_temp}) </span>
                                 )}
                             </button>
+                            {creature.type === "player" && 
+                                <OptionButton src={isPlayerImg} message={'Player Token'} wrapperClassName={'hpButtonPlayerOverlay'} imgStyle={{margin: 0}} onClickFunction={(event) => openEditHpWidget(event)}/>
+                            }
                         </div>
                     :
                         <div className='encounterCreaturesHp'/>
@@ -303,13 +315,22 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                     <div className='editTeamContainer editHpGrow' ref={teamWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: teamWidgetPosition.top + teamWidgetPosition.height*1.5, left: teamWidgetPosition.left - teamWidgetPosition.width*5.8}}>
                         <div className="teamContainerFlag"/>
                         <Compact
-                            color={teamColor}
+                            color={creature.border}
                             onChange={handleTeamColorChange}
                         />
                         <div className='teamChoices'>
-                            <button className="editTeamColorButton" style={{color: "green"}} onClick={() => handleAlignmentChange('ally')}> {creature.alignment === "ally" ? <strong><u>Ally</u></strong> : <small>Ally</small>} </button>
-                            <button className="editTeamColorButton" style={{color: "black"}} onClick={() => handleAlignmentChange('neutral')}> {creature.alignment === "neutral" ? <strong><u>Neutral</u></strong> : <small>Neutral</small>} </button>
-                            <button className="editTeamColorButton" style={{color: "red"}} onClick={() => handleAlignmentChange('enemy')}> {creature.alignment === "enemy" ? <strong><u>Enemy</u></strong> : <small>Enemy</small>} </button>
+                            <button className="editTeamColorButton" style={{color: "green"}} onClick={() => handleAlignmentChange('ally')}> {alignment === "ally" ? <strong><u>Ally</u></strong> : <small>Ally</small>} </button>
+                            <button className="editTeamColorButton" style={{color: "black"}} onClick={() => handleAlignmentChange('neutral')}> {alignment === "neutral" ? <strong><u>Neutral</u></strong> : <small>Neutral</small>} </button>
+                            <button className="editTeamColorButton" style={{color: "red"}} onClick={() => handleAlignmentChange('enemy')}> {alignment === "enemy" ? <strong><u>Enemy</u></strong> : <small>Enemy</small>} </button>
+                            <div className='editIsPlayerButtonContainer'>
+                                <div className='editIsPlayerText'>{isPlayer ? "Player" : "Non-Player"}</div>
+                                <input
+                                    type="checkbox"
+                                    className='editIsPlayerButton'
+                                    checked={isPlayer}
+                                    onChange={handleCheckboxChange}
+                                />
+                            </div>
                         </div>
                     </div>
                 )}

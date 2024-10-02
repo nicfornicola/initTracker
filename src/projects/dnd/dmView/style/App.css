@@ -203,7 +203,6 @@ hr {
     width: 20px; 
     cursor: pointer; 
     border-radius: 10px;
-    
 }
 
 .option-no-margin {
@@ -383,7 +382,6 @@ hr {
 
 .optionWrapper {
     position: relative;
-    text-align: center;
 }
 
 .optionWrapper .tooltiptext,
@@ -1089,7 +1087,7 @@ input {
 
 .listItem {
     width: 100%;
-    margin-bottom: 1%;
+    margin-top: 1%;
     background-color: #cfc9a8;
     box-sizing: border-box;
     border-radius: 0;
@@ -1265,6 +1263,7 @@ input {
     list-style-type: none;
     margin-bottom: 8%; 
     overflow-y: scroll;
+    overflow-x: hidden;
     height: 100%;
     width: 100%;
 }
@@ -1377,10 +1376,36 @@ input {
 
 .editTeamColorButton {
     height: 100%;
-    width: 30%;
+    width: 20%;
     padding: 0px;
     font-family: 'Bitter', serif;
     color: white;
+}
+
+.editIsPlayerButton {
+    padding: 0px;
+    font-family: 'Bitter', serif;
+    color: white;
+    margin: 0;
+    align-items: center;
+
+}
+
+.editIsPlayerButtonContainer {
+    display: flex;
+    width: 25%;
+    font-size: 8px;
+    background-color: #bcbcbc8c;
+    border-bottom: solid 1px #919191;
+    border: solid 1px #919191;
+    border-radius: 2px;
+    align-items: center;
+    justify-content: space-between;
+} 
+
+.editIsPlayerText {
+    color: black;
+    padding-right: 5px;
 }
 
 .healButton {
@@ -1468,6 +1493,16 @@ input {
     min-width: 60px;
     max-width: 65px;
     text-align: center;
+}
+
+.hpButtonPlayerOverlay {
+    position: absolute;
+    bottom: 1%;
+    right: 0%;
+    z-index: 100;
+    height: 20px;
+    width: 19px;
+
 }
   
 .encounterCreaturesHp {

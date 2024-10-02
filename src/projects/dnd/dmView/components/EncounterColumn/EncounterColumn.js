@@ -31,8 +31,6 @@ function addToLocalSavedEncounter(jsonArray, newEncounter) {
     return jsonArray;
 }
 const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, hideEnemies, setCardContainerStyle, hideDeadEnemies, setHideDeadEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, savedEncounters, setSavedEncounters, handleRefresh,  refreshCheck, autoRefresh, showSearchList, handleNewEncounter, setEncounterGuid}) => {
-    console.count("EncounterColumn")
-
     const [roundNum, setRoundNum] = useState(currentEncounter.roundNum);
     const [turnNum, setTurnNum] = useState(currentEncounter.roundNum);
 

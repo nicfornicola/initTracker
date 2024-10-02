@@ -33,7 +33,12 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         "border": COLOR_RED,
         "creature_type": open5eData.type,
         "inspiration": false,
-        "hidden": false
+        "hidden": false,
+        "deathSaves": {
+            "failCount": 0,
+            "successCount": 0,
+            "isStabilized": true
+        },  
 
     }
 };

@@ -8,15 +8,15 @@ import YouTubeEmbed from '../../dmView/components/EncounterColumn/YouTubeEmbed.j
 
 function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodToggle, hideDeadEnemies, cardContainerStyle}) {
     const [creatures, setCreatures] = useState(playerView?.currentEncounterCreatures || []);
-    const [clickedCreature, setClickedCreature] = useState(null);
+    const clickedCreature = ""
     const [turnNum, setTurnNum] = useState(playerView.turnNum);
     const [roundNum, setRoundNum] = useState(playerView.RoundNum);
 
-
-    // console.table({"hideEnemies": hideEnemies,
-    //                 "enemyBloodToggle": enemyBloodToggle,
-    //                 "hideDeadEnemies": hideDeadEnemies,
-    //                 "cardContainerStyle": cardContainerStyle})
+    console.table({"hideEnemies": hideEnemies,
+                    "enemyBloodToggle": enemyBloodToggle,
+                    "hideDeadEnemies": hideDeadEnemies,
+                    "type": hideDeadEnemies,
+                    "cardContainerStyle": cardContainerStyle})
 
     useEffect(() => {
         setCreatures([...playerView.currentEncounterCreatures])
@@ -73,7 +73,7 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
                     <div className='loading'>No Creatures found...</div>
                 ) : (
                     creatures.map((creature, index) => { 
-                        return (((creature.type === 'monster' || creature.type === 'global') && hideEnemies) || creature.hidden) 
+                        return (((creature.type === 'monster' || creature.type === 'global') && creature.alignment !== "ally" && hideEnemies) || creature.hidden) 
                         ? null
                         : <Icon key={creature.guid} isTurn={turnNum === index+1} creature={creature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggle={enemyBloodToggle} />;
                     })

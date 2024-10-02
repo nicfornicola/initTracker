@@ -56,8 +56,12 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, skillDetails=undefi
             "hit_points_override": 0, 
             "hit_points_modifier": 0, 
             "initiative": dndBeyondRes.initiative,
-            "last_damage":null,
-            "deathSaves": {},
+            "last_damage": null,
+            "deathSaves": {
+                "failCount": 0,
+                "successCount": 0,
+                "isStabilized": true
+            },   
             "exhaustionLvl": 0,
             "path": "",
             "type": "player",

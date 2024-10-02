@@ -301,7 +301,9 @@ const sharedItems = {
     "document__title": "DmBuddy Dummy",
     "document__license_url": "",
     "document__url": "",
-    "hidden": false
+    "hidden": false,
+    "deathSaves": { successCount: 0, failureCount: 0 }
+
 }
 
 export const COLOR_RED = "#F44E3B"
@@ -344,7 +346,7 @@ export const dummyDefault = {
         "Arctic",
         "Desert",
         "Settlement"
-    ],
+    ]
 }
 
 
