@@ -5,12 +5,15 @@ import eyeOpen from '../../pics/icons/eyeOpen.png';
 import OptionButton from '../EncounterColumn/OptionButton';
 import isPlayerImg from '../../pics/icons/isPlayerImg.png';
 import FlagPole from './FlagPole';
+import EffectImg from '../../pics/icons/effectImg.png';
 import Compact from '@uiw/react-color-compact';
+import { effectObjs } from '../../constants.js';
+import Effect from './Effect.js';
+
 
 const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCurrentEncounter, scrollPosition, handleUploadMonsterImage, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
     const [hidden, setHidden] = useState(creatureListItem.hidden);
     const [creature, setCreature] = useState(creatureListItem)
-
     const [isHovered, setIsHovered] = useState(false);
 
     const [hpChange, setHpChange] = useState(0);
@@ -21,27 +24,41 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const [openTeamWidget, setOpenTeamWidget] = useState(false);
     const [isTeamWidgetInside, setIsTeamWidgetInside] = useState(true)
     const [teamWidgetPosition, setTeamWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0})
-    const [isPlayer, setIsPlayer] = useState(creature.type === "player");
-    const [alignment, setAlignment] = useState(creatureListItem.alignment);
 
+    const [openEffectWidget, setOpenEffectWidget] = useState(false);
+    const [isEffectWidgetInside, setIsEffectWidgetInside] = useState(true)
+    const [effectWidgetPosition, setEffectWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0})
+
+    const [isPlayer, setIsPlayer] = useState(creature.type === "player");
+    const [alignment, setAlignment] = useState(creature.alignment);
+    const [borderColor, setBorderColor] = useState(creature.border);
+    const [effects, setEffects] = useState(creature.effects);
     // Handler to toggle the checkbox state
 
     const hpButtonRef = useRef(null)
     const hpWidgetRef = useRef(null);
 
     const teamWidgetRef = useRef(null);
-    const teamButtonRef = useRef(null)
+    const teamButtonRef = useRef(null);
 
+    const effectWidgetRef = useRef(null);
+    const effectButtonRef = useRef(null);
+
+    // Close the widgets if clicked outside
     const handleClickOutside = (event) => {
-
         if (hpWidgetRef.current && !hpWidgetRef.current.contains(event.target) &&
             hpButtonRef.current && !hpButtonRef.current.contains(event.target)) {
-                setOpenHpWidget(false); // Close the widget if clicked outside
+                setOpenHpWidget(false); 
         }
         
         if (teamWidgetRef.current && !teamWidgetRef.current.contains(event.target) &&
             teamButtonRef.current && !teamButtonRef.current.contains(event.target)) {
-                setOpenTeamWidget(false); // Close the widget if clicked outside
+                setOpenTeamWidget(false); 
+        }
+
+        if (effectWidgetRef.current && !effectWidgetRef.current.contains(event.target) &&
+            effectButtonRef.current && !effectButtonRef.current.contains(event.target)) {
+                setOpenEffectWidget(false); 
         }
     };
 
@@ -67,7 +84,10 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                 ...prev,
                 currentEncounterCreatures: [
                     ...prev.currentEncounterCreatures.map(
-                        oldCreature => oldCreature.guid === creature.guid ? creature : oldCreature)
+                        (oldCreature) => {
+                            return oldCreature.guid === creature.guid ? creature : oldCreature;
+                        }
+                    )
                 ]
             })
         );
@@ -89,7 +109,27 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
             setIsTeamWidgetInside(isInsideVertically)
         }
 
-    }, [openHpWidget, openTeamWidget, scrollPosition, listSizeRect]);
+        if(openEffectWidget && effectButtonRef.current) {
+            const rect = effectButtonRef.current.getBoundingClientRect();
+            setEffectWidgetPosition(rect)
+            const isInsideVertically = rect.top >= listSizeRect.top-30 && rect.bottom <= listSizeRect.bottom-30;
+            setIsEffectWidgetInside(isInsideVertically)
+        }
+
+    }, [openHpWidget, openTeamWidget, openEffectWidget, scrollPosition, listSizeRect]);
+
+    useEffect(() => {
+        // Specifically check for these changes because they change how the playerview behaves
+        setCreature({
+                    ...creature, 
+                    alignment: alignment,
+                    type: isPlayer ? 'player' : 'monster',
+                    border: borderColor,
+                    hidden: hidden,
+                    effects: [...effects]
+        })
+    // eslint-disable-next-line
+    }, [alignment, isPlayer, borderColor, hidden, effects]);
 
     const openEditHpWidget = (event) => {
         event.stopPropagation()
@@ -177,22 +217,23 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const handleHideEnemy = (event) => {
         event.stopPropagation()
         setHidden(!hidden)
-        setCreature({...creature, hidden: !hidden})
     }  
     
     const handleAlignmentChange = (team) => {
-        setAlignment(team);
-        setCreature({...creature, alignment: team})
-
+        if(team !== alignment) {
+            setAlignment(team);
+        }
     };
 
     const handleTeamColorChange = (newTeamColor) => {
-        if(newTeamColor.hex !== creature.border) {
-            // setTeamColor(newTeamColor.hex)
-            creature.border = newTeamColor.hex;
-            setCreature({...creature})
+        if(newTeamColor.hex !== borderColor) {
+            setBorderColor(newTeamColor.hex)
         }
-        
+    };
+
+    const handleCheckboxChange = (event) => {
+        let checked = event.target.checked
+        setIsPlayer(checked);
     };
 
     const handleTeamChangeWidget = (event) => {
@@ -206,14 +247,23 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         setCreature({...creature});
     }
 
-    const handleCheckboxChange = () => {
-        creature.type = !isPlayer ? "player" : "monster"
-        setIsPlayer(!isPlayer);
-        setCreature({...creature});
-    };
+    const handleOpenEffectWidget = (event) => {
+        setOpenEffectWidget(!openEffectWidget)
+    }
 
     const handleHighlight = (e) => {
         e.target.select();
+    };
+
+    const updateCreatureEffects = (event, effectObj) => {
+        event.stopPropagation(); // Prevent propagation to parent
+        console.log(effectObj)
+        const alreadyExists = effects.some(eObj => eObj.effect === effectObj.effect);
+        if(alreadyExists) {
+            setEffects(effects.filter(eObj => eObj.effect !== effectObj.effect))
+        } else {
+            setEffects([...effects, effectObj])
+        }
     };
 
     let isDead = creature.hit_points_current <= 0
@@ -226,11 +276,12 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }
     
     let hpStyle = {color: color, borderColor: color}
+    let effectsCount = effects.length > 0 ? `x${effects.length}` : ''
 
     return (
             <li className='listItem'
                 onClick={() => setEncounterSelectedCreature(creature)}
-                style={{border: isTurn ? '4px solid rgba(11, 204, 255)' : '',
+                style={{border: isTurn ? '2px solid rgba(11, 204, 255)' : '',
                         // boxShadow: 'inset 0px 0px 6px 0px #434343'
                 }}
                 onMouseEnter={() => setIsHovered(true)}
@@ -239,7 +290,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                 <div 
                     className='encounterCreatureContainer animated-box'
                     style={{
-                        backgroundImage: `linear-gradient(45deg, ${creature.border} 25%, ${isHovered ? `#bfbba6` : `#cfc9a8`} 50%)`,
+                        backgroundImage: `linear-gradient(45deg, ${borderColor} 25%, ${isHovered ? `#bfbba6` : `#cfc9a8`} 50%)`,
                         backgroundSize: '200% 200%',
                         backgroundPosition: isHovered ? '20% 20%':'50% 50%',
                         boxShadow: `${isHovered ? 'inset 0px 0px 0px 0px #434343' : 'inset 0px 0px 6px 0px #434343'}`,
@@ -271,16 +322,25 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                     </div>
 
                     <div className='listItemOptions'>
-                        <OptionButton src={hidden ? eyeClosed : eyeOpen}  message={(hidden ? "Hidden" : "Visible")} onClickFunction={handleHideEnemy} imgClassName={'option-no-margin'} />
-                        <FlagPole flagColor={creature.border} handleTeamChangeWidget={handleTeamChangeWidget} ref={teamButtonRef} alignment={alignment} isWidgetOpen={openTeamWidget} />
-                    </div>
+                        <div>
+                            <OptionButton src={hidden ? eyeClosed : eyeOpen}  message={(hidden ? "Hidden" : "Visible")} onClickFunction={handleHideEnemy} imgClassName={'option-no-margin'} />
+                        </div>
+                        <div>
+                            <FlagPole flagColor={borderColor} handleTeamChangeWidget={handleTeamChangeWidget} ref={teamButtonRef} alignment={alignment} isWidgetOpen={openTeamWidget} />
+                        </div>
+                        <div ref={effectButtonRef} style={{position:"relative"}} onClick={(event) => handleOpenEffectWidget(event)}>
+                            <OptionButton src={EffectImg} message={`Effects ${effectsCount}`} imgStyle={{margin: 0,animation: effectsCount ? 'shadowPulse 4s ease-in-out infinite' : ''}}/>
+                            {effectsCount &&
+                                <div className='effectsCounter'>{effectsCount}</div>
+                            }
 
-                    <div>
-                        <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
-                            X
-                        </button>
+                        </div>
+                        <div>
+                            <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
+                                X
+                            </button>
+                        </div>
                     </div>
-                    
                    
                     {creature.hit_points !== null  ? 
                         <div className='encounterCreaturesHpContainer'>
@@ -315,7 +375,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                     <div className='editTeamContainer editHpGrow' ref={teamWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: teamWidgetPosition.top + teamWidgetPosition.height*1.5, left: teamWidgetPosition.left - teamWidgetPosition.width*5.8}}>
                         <div className="teamContainerFlag"/>
                         <Compact
-                            color={creature.border}
+                            color={borderColor}
                             onChange={handleTeamColorChange}
                         />
                         <div className='teamChoices'>
@@ -331,6 +391,20 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                                     onChange={handleCheckboxChange}
                                 />
                             </div>
+                        </div>
+                    </div>
+                )}
+                {openEffectWidget && isEffectWidgetInside && ( 
+                    <div className='effectsBarContainer editHpGrow' ref={effectWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: effectWidgetPosition.bottom + 10, left: effectWidgetPosition.left - effectWidgetPosition.width*17.8}}>
+                        {/* <img className='effectsBarPlayerAvatar'
+                            src={creature.avatarUrl}
+                            alt={"avatar"}
+                        /> */}
+                        <div className="effectContainerFlag"/>
+                        <div className="effectsBar" onClick={(event) => event.stopPropagation()} >
+                            {effectObjs.map((effectObj) => (
+                                <Effect key={creature.guid + effectObj.effect} currentEffects={effects} effectObj={effectObj} updateCreatureEffects={updateCreatureEffects} />
+                            ))}
                         </div>
                     </div>
                 )}

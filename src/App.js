@@ -25,7 +25,7 @@ function App() {
     // Load all encounters from storage
     const [localSavedEncounters, setLocalSavedEncounters] = useState(JSON.parse(localStorage.getItem('savedEncounters')) || []);
     const [currentEncounter, setCurrentEncounter] = useState(INIT_ENCOUNTER);
-    const [playerView, setPlayerView] = useState(JSON.parse(localStorage.getItem('playerViewEncounter')) || []);
+    const [playerView, setPlayerView] = useState(JSON.parse(localStorage.getItem('playerViewEncounter')) || {});
     const [playerViewBackground, setPlayerViewBackground] = useState(JSON.parse(localStorage.getItem('currentBackground')) || {type: "image", src: defaultBackground});
     const [autoRefreshDndbPlayers, setAutoRefreshDndbPlayers] = useState(false);
     const [autoRefreshDndbMonsters, setAutoRefreshDndbMonsters] = useState(false);
@@ -38,6 +38,27 @@ function App() {
     const [cardContainerStyle, setCardContainerStyle] = useState(JSON.parse(localStorage.getItem('cardContainerStyle')));
     const [onFirstLoad, setOnFirstLoad] = useState(true);
     const [refreshLoading, setRefreshLoading] = useState(false);
+
+    useEffect(() => {
+        const getRefreshedLocalEncounter = (event) => {
+
+            if (event.key === 'playerViewEncounter') {
+                setPlayerView({...JSON.parse(localStorage.getItem('playerViewEncounter'))});
+            } else if (event.key === 'currentBackground') {
+                setPlayerViewBackground({...JSON.parse(localStorage.getItem('currentBackground'))});
+            } else if (event.key === 'hideEnemies') {
+                setHideEnemies(JSON.parse(localStorage.getItem('hideEnemies')));
+            } else if (event.key === 'enemyBloodToggle') {
+                setEnemyBloodToggle(JSON.parse(localStorage.getItem('enemyBloodToggle')));
+            } else if (event.key === 'hideDeadEnemies') {
+                setHideDeadEnemies(JSON.parse(localStorage.getItem('hideDeadEnemies')));
+            } else if (event.key === 'cardContainerStyle') {
+                setCardContainerStyle(JSON.parse(localStorage.getItem('cardContainerStyle')));
+            }
+        }
+        window.addEventListener('storage', getRefreshedLocalEncounter);
+    }, [])
+    
 
     useEffect(() => {
         if(onFirstLoad && currentEncounter.guid !== "" && !window.location.href.includes("/playerView")) {
@@ -92,8 +113,6 @@ function App() {
             return updatedCreatures;
         } catch (error) {
             console.log(error)
-            // setErrorMessage(error)
-            // setError(true)
         }  
     };
 
@@ -142,25 +161,6 @@ function App() {
             setAutoRefreshDndbMonsters(foundMonster)
             setAutoRefresh(foundPlayer || foundMonster)
         }
-            
-
-        const getRefreshedLocalEncounter = (event) => {
-            if (event.key === 'playerViewEncounter') {
-                setPlayerView({...JSON.parse(localStorage.getItem('playerViewEncounter'))});
-            } else if (event.key === 'currentBackground') {
-                setPlayerViewBackground({...JSON.parse(localStorage.getItem('currentBackground'))});
-            } else if (event.key === 'hideEnemies') {
-                setHideEnemies(JSON.parse(localStorage.getItem('hideEnemies')));
-            } else if (event.key === 'enemyBloodToggle') {
-                setEnemyBloodToggle(JSON.parse(localStorage.getItem('enemyBloodToggle')));
-            } else if (event.key === 'hideDeadEnemies') {
-                setHideDeadEnemies(JSON.parse(localStorage.getItem('hideDeadEnemies')));
-            } else if (event.key === 'cardContainerStyle') {
-                setCardContainerStyle(JSON.parse(localStorage.getItem('cardContainerStyle')));
-            }
-        }
-        window.addEventListener('storage', getRefreshedLocalEncounter);
-
 
         let intervalId = 0
         // Refresh every 1 or 5 minutes

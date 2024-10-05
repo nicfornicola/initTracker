@@ -39,15 +39,16 @@ const Timer = () => {
 
     return (
         <>
-            <OptionButton src={timer} message={"Timer"} onClickFunction={() => setShowTimerOptions(!showTimerOptions)}/>
+            <OptionButton src={timer} message={"Timer"} onClickFunction={() => setShowTimerOptions(!showTimerOptions)} />
             {showTimerOptions && 
-                <>
-                    <OptionButton src={restart}  message={"Restart"}onClickFunction={() => setReset(true)} />
-                    <OptionButton src={pause ?  play : pauseButton}  message={pause ?  "Play" : "Pause"} onClickFunction={() => setPause(!pause)} />
-                    <div className='option timer'>
+                
+                <div className='timerControls editHpGrow'>
+                    <OptionButton src={restart} message={"Restart"}onClickFunction={() => setReset(true)} />
+                    <OptionButton src={pause ? play : pauseButton}  message={pause ?  "Play" : "Pause"} onClickFunction={() => setPause(!pause)} />
+                    <div className='timer'>
                         {secondsToMinutes(seconds)}
                     </div>
-                </>
+                </div>
             }
         </>
     );

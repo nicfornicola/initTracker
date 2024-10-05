@@ -112,8 +112,16 @@ const StatBlock = ({creature, img, closeFunction }) => {
                     <button className='statblockX' onClick={closeFunction}>❌</button>
                     <div className="topCard">
                         <div className='topInfo shadowBox'>
-                            <img className="img" src={img} alt={"Creature Img"}/>
                             <h1 className='creatureName titleFontFamily'>{creature.name}</h1>
+                            {creature.effects.length > 0 &&
+                                <div style={{backgroundColor: "black", width: 'fit-content', borderRadius: 5}}>
+                                    {creature.effects.map((effect) => (
+                                        <img className='effect' style={{opacity: 1}} src={effect.img}/>
+                                    ))}
+                                </div>
+                            }
+                            <img className="img" src={img} alt={"Creature Img"}/>
+
                             <div className='creatureType'>
                                 <hr className="lineSeperator" />
                                 <p className='source'>{creature.document__title}</p>
@@ -169,7 +177,6 @@ const StatBlock = ({creature, img, closeFunction }) => {
                         <p><strong>Senses</strong> {capsFirstLetter(creature.senses)}</p>
                         <p><strong>Languages</strong> {creature.languages}</p>
                         <p><strong>CR </strong>{creature.cr} <i>({levelXPData[creature.challenge_rating]} XP)</i></p>
-
 
                         <h1 className='infoTitle'>TRAITS</h1>
                         <hr className="lineSeperator" />

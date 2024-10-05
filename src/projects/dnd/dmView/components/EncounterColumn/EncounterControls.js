@@ -145,9 +145,9 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
                                     <button className='dmViewButton' onClick={(e) => handleTurnNums('next', e)}> {'>>'} </button>
                             </div>
                             <div className='dmLowOptions'>
+                                <OptionButton src={hideEnemies ? eyeClosed : eyeOpen} message={"Enemies " + (hideEnemies ? "Hidden" : "Visible")} onClickFunction={handleHideEnemies}/>
                                 <OptionButton src={hideDeadEnemies ? skullButtonNot : skullButton} message={"Dead Enemies: " + (hideDeadEnemies ? "Hidden" : "Visible")} onClickFunction={handleHideDeadEnemies}/>
                                 <OptionButton src={enemyBloodToggleImage} message={<EnemyBloodiedMessage enemyBloodToggle={enemyBloodToggle}/>} onClickFunction={handleEnemyBlood}/>
-                                <OptionButton src={hideEnemies ? eyeClosed : eyeOpen} message={"Enemies " + (hideEnemies ? "Hidden" : "Visible")} onClickFunction={handleHideEnemies}/>
                             </div>
                         </>
                     }

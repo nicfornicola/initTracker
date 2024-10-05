@@ -1,22 +1,13 @@
 import '../../dmView/style/App.css';
 import React, { useState, useEffect } from 'react';
 import Icon from './Icon';
-import Effect from './Effect';
-import { v4 as uuidv4 } from 'uuid';
-import { effectObjs } from '../../dmView/constants.js';
 import YouTubeEmbed from '../../dmView/components/EncounterColumn/YouTubeEmbed.js';
 
 function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodToggle, hideDeadEnemies, cardContainerStyle}) {
     const [creatures, setCreatures] = useState(playerView?.currentEncounterCreatures || []);
-    const clickedCreature = ""
     const [turnNum, setTurnNum] = useState(playerView.turnNum);
     const [roundNum, setRoundNum] = useState(playerView.RoundNum);
 
-    console.table({"hideEnemies": hideEnemies,
-                    "enemyBloodToggle": enemyBloodToggle,
-                    "hideDeadEnemies": hideDeadEnemies,
-                    "type": hideDeadEnemies,
-                    "cardContainerStyle": cardContainerStyle})
 
     useEffect(() => {
         setCreatures([...playerView.currentEncounterCreatures])
@@ -34,28 +25,6 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
         }
     }
 
-    // Update Creature in the creatures array with new effects
-    const updateCreature = (updatedCreature) => {
-        setCreatures((prevCreatures) => {
-            return prevCreatures.map(creature =>
-                creature.name === updatedCreature.name ? updatedCreature : creature
-            )
-        })
-    };   
-
-    const updateCreatureEffect = (event, effectObj) => {
-        event.stopPropagation(); // Prevent propagation to parent
-        const alreadyExists = clickedCreature.effects.some(eObj => eObj.effect === effectObj.effect);
-
-        if(!alreadyExists) {
-            clickedCreature.effects.push(effectObj)
-        } else {
-            clickedCreature.effects = clickedCreature.effects.filter(eObj => eObj.effect !== effectObj.effect)
-        }
-        updateCreature(clickedCreature)
-
-    };
-    
     return (
         <div className="dndBackground" style={{backgroundImage: playerViewBackground.type === "image" && playerViewBackground.src ? `url(${playerViewBackground.src})` : 'none'}}>
             {roundNum !== 0 && 
@@ -79,22 +48,6 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
                     })
                 )}
             </div>
-
-            {clickedCreature && (
-                <div className='effectsBarContainer'>
-                    <img className='effectsBarPlayerAvatar'
-                        key={uuidv4()}
-                        src={clickedCreature.avatarUrl}
-                        alt={"avatar"}
-
-                    />
-                    <div className="effectsBar" onClick={(event) => event.stopPropagation()} >
-                        {effectObjs.map((effectObj) => (
-                            <Effect key={uuidv4()} clickedCreature={clickedCreature} effectObj={effectObj} updateCreatureEffect={updateCreatureEffect} />
-                        ))}
-                    </div>
-                </div>
-            )}
         </div> 
     );
 }
