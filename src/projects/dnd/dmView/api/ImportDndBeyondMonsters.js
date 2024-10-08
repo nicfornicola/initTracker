@@ -22,10 +22,7 @@ export const ImportDndBeyondMonsters = async (encounterMonsters) => {
         monstersRes = response.data.data;
         encounterMonsters.forEach(encounterMonster => {
             const foundMonsterRes = monstersRes.find(monster => monster.id === encounterMonster.id);
-
-            if (foundMonsterRes) {
-                mappedMonsters.push(DndBCharacterToDmBMapper(foundMonsterRes, encounterMonster));
-            }
+            mappedMonsters.push(DndBCharacterToDmBMapper(foundMonsterRes, encounterMonster));
         });
 
 

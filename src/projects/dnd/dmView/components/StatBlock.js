@@ -1,6 +1,6 @@
 import '../../dmView/style/App.css';
 import React from 'react';
-import { levelXPData } from '../constants';
+import { levelData } from '../constants';
 import SkillGrid from './SkillGrid';
 
 function getSpells(spellString) {
@@ -106,6 +106,11 @@ function addSign(modNumber) {
 }
 
 const StatBlock = ({creature, img, closeFunction }) => {
+
+    if(creature.dnd_b_player_id) {
+        return null;
+    }
+    
     return (
             <div className='statBlock'>
                 <div className='infoContainer'>
@@ -116,7 +121,7 @@ const StatBlock = ({creature, img, closeFunction }) => {
                             {creature.effects.length > 0 &&
                                 <div style={{backgroundColor: "black", width: 'fit-content', borderRadius: 5}}>
                                     {creature.effects.map((effect) => (
-                                        <img className='effect' style={{opacity: 1}} src={effect.img}/>
+                                        <img alt='effect' className='effect' src={effect.img}/>
                                     ))}
                                 </div>
                             }
@@ -125,10 +130,13 @@ const StatBlock = ({creature, img, closeFunction }) => {
                             <div className='creatureType'>
                                 <hr className="lineSeperator" />
                                 <p className='source'>{creature.document__title}</p>
-                                <p><i>{creature.size} {creature.type},  {creature.subtype && <> ({creature.subtype}), </>} {creature.group && <> ({creature.group}), </>} {creature.alignment}</i></p>
+                                <p><i>{creature.size} {creature.creature_type},  {creature.subtype && <> ({creature.subtype}), </>} {creature.group && <> ({creature.group}), </>} {creature.creature_alignment}</i></p>
                             </div>
                             <div className='stickyStatGrid textShadow' >
-                                <p className="stickyStatItem"><strong>AC</strong>&nbsp;{creature.armor_class} {creature.armor_desc && <span className='extraInfo'>&nbsp;({creature.armor_desc}) </span>} </p>
+                                <p className="stickyStatItem"><strong>AC</strong>&nbsp;{creature.armor_class} 
+                                    {creature.armor_desc && 
+                                        <span className='extraInfo'> &nbsp; {creature.armor_desc} </span>} 
+                                </p>
                                 <p className="stickyStatItem"><strong>Initiative</strong>&nbsp;{addSign(creature.dexterity_save)} <span className='extraInfo'>&nbsp;({creature.dexterity_save+10})</span></p>
                                 <p className="stickyStatItem stickyStatExtraWide">
                                     <strong>HP</strong>&nbsp;{creature.hit_points_current}/{creature.hit_points} 
@@ -154,12 +162,10 @@ const StatBlock = ({creature, img, closeFunction }) => {
                     </div>
                         
                     <div className="statBlockScroll">
-                        {creature.skills && Object.keys(creature.skills).length !== 0 && (
+                        {creature.skills && (
                             <p>
                                 <strong>Skills </strong>
-                                {Object.entries(creature.skills).map(([key, value], index) => (
-                                    <span key={index+key}>{capsFirstLetter(key)} {addSign(value)}, </span>
-                                ))}
+                                <span >{creature.skills}</span>
                             </p>
                         )}
                         {creature.damage_vulnerabilities && (
@@ -174,34 +180,74 @@ const StatBlock = ({creature, img, closeFunction }) => {
                         {creature.condition_immunities && (
                             <p><strong>Condition Immunities</strong> {creature.condition_immunities}</p>
                         )}
-                        <p><strong>Senses</strong> {capsFirstLetter(creature.senses)}</p>
-                        <p><strong>Languages</strong> {creature.languages}</p>
-                        <p><strong>CR </strong>{creature.cr} <i>({levelXPData[creature.challenge_rating]} XP)</i></p>
+                        {creature.senses && (
+                            <p><strong>Senses</strong> {capsFirstLetter(creature.senses)}</p>                        
+                        )}
 
-                        <h1 className='infoTitle'>TRAITS</h1>
-                        <hr className="lineSeperator" />
-                        {creature.special_abilities?.map((ability, index) => (
-                            <div className='actionInfo' key={index+ability.name}>
-                                <strong>{ability.name}: </strong>
-                                {ability.name === "Spellcasting" ? (
+                        {creature.languages && (
+                            <p><strong>Languages</strong> {creature.languages}</p>
+                        )}
+                        
+                        <p>
+                            <strong>CR </strong>{creature.cr}
+                            <i>({levelData[creature.challenge_rating]['xp']} XP)</i> 
+                        </p>
+                        {creature.from === "dnd_b" && !creature.isReleased &&
+                            <div style={{border: '1px solid red', wordWrap: 'break-word'}}><strong>Alert!</strong> This creature comes from a paid source on DndB so only minimal data is available :( <a href={creature.link}>{creature.link}</a></div>
+                        }
+                        {creature.special_abilities && 
+                            <>
+                                <h1 className='infoTitle'>TRAITS</h1>
+                                <hr className="lineSeperator" />
+
+                                {creature.from === "dnd_b" ? (
                                     <>
-                                        {getSpells(getDesc(ability))}
+                                        
+                                        {creature.special_abilities &&
+                                            <div className='actionInfo' dangerouslySetInnerHTML={{ __html: creature.special_abilities }} />
+                                        }
                                     </>
                                 ) : (
-                                    <>
-                                        {getDesc(ability)}
-                                    </>
+                                    creature.special_abilities?.map((ability, index) => (
+                                        <div className='actionInfo' key={index+ability.name}>
+                                            <strong>{ability.name}: </strong>
+                                            {ability.name === "Spellcasting" ? (
+                                                <>
+                                                    {getSpells(getDesc(ability))}
+                                                </>
+                                            ) : (
+                                                <>
+                                                    {getDesc(ability)}
+                                                </>
+                                            )}
+                                        </div>
+                                    ))
                                 )}
-                            </div>
-                        ))}
+                            </>
+                        }
+                        
 
-                        <h1 className='infoTitle'>ACTIONS</h1>
-                        <hr className="lineSeperator" />
-                        {creature.actions?.map((action, index) => (
-                            <div className='actionInfo' key={index+action.name}>
-                                <strong>{action.name}:</strong> {getDesc(action)}
-                            </div>
-                        ))}
+                        {creature.actions && 
+                            <>
+                                <h1 className='infoTitle'>ACTIONS</h1>
+                                <hr className="lineSeperator" />
+
+                                {creature.from === "dnd_b" ? (
+                                    <>
+                                        {creature.actions &&
+                                            <div className='actionInfo' dangerouslySetInnerHTML={{ __html: creature.actions }} />
+                                        }
+                                    </>
+                                ) : (
+                                    creature.actions?.map((action, index) => (
+                                        <div className='actionInfo' key={index+action.name}>
+                                            <strong>{action.name}:</strong> {getDesc(action)}
+                                        </div>
+                                    ))
+                                )}
+                            </>
+                        }
+                        
 
                         {creature.bonus_actions && creature.bonus_actions.length !== 0 && (
                             <>
@@ -227,19 +273,32 @@ const StatBlock = ({creature, img, closeFunction }) => {
                             </>
                         )}
 
-                        {creature.legendary_actions && creature.legendary_actions.length !== 0 && (
+                        {creature.legendary_actions && 
                             <>
                                 <h1 className='infoTitle'>LEGENDARY ACTIONS</h1>
                                 <hr className="lineSeperator" />
-                                <div className='actionInfo'>{creature.legendary_desc}</div>
-                                {creature.legendary_actions.map((legAction, index) => (
-                                    <div className='actionInfo' key={index+legAction.name}>
-                                        <strong>{legAction.name}:</strong> {getDesc(legAction)}
-                                    </div>
-                                ))}
+                                {creature.from === "dnd_b" ? (
+                                    <>
+                                        {creature.actions &&
+                                            <div className='actionInfo' dangerouslySetInnerHTML={{ __html: creature.legendary_actions }} />
+                                        }
+                                    </>
+                                ) : (
+                                    creature.legendary_actions.length !== 0 && (
+                                        <>
+                                            
+                                            <div className='actionInfo'>{creature.legendary_desc}</div>
+                                            {creature.legendary_actions.map((legAction, index) => (
+                                                <div className='actionInfo' key={index+legAction.name}>
+                                                    <strong>{legAction.name}:</strong> {getDesc(legAction)}
+                                                </div>
+                                            ))}
+                                        </>
+                                    )
+                                )}
                             </>
-                        )}
-
+                        }
+                        
                         {creature.environments && creature.environments.length !== 0 && (
                             <div className='extraInfo'>
                                 <hr className="lineSeperator" />
@@ -251,7 +310,11 @@ const StatBlock = ({creature, img, closeFunction }) => {
                         )}
                     </div>
                     <hr className="lineSeperator" />
+                    {creature.from === 'dnd_b' && 
+                        <a href={creature.link}>DndB StatBlock</a>
+                    }
                 </div>
+                
             </div>
     );
 }

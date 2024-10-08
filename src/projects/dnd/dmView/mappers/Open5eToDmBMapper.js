@@ -1,5 +1,28 @@
 import { COLOR_RED } from "../constants";
 
+function capsFirstLetter(word) {
+    if (!word)
+        return ''; // Handle empty or undefined input
+    return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
+function addSign(modNumber) {
+    if (modNumber == null)
+        return '+0'
+
+    if (modNumber >= 0) {
+        return `+${modNumber}`;
+    }
+
+    return `${modNumber}`; // Negative number already has a minus sign
+}
+
+function mapSkills(skills) {
+    return Object.entries(skills).map(([key, value], index) => (
+        (index === 0 ? '' : ', ') + capsFirstLetter(key) + addSign(value)
+    ))
+}
+
 export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
     let isDefault = avatarUrl.includes("Content/Skins/WaterDeep")
     let image = avatarUrl;
@@ -28,6 +51,7 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         "initiative": open5eData.dexterity_save || 0,
         "last_damage": null,
         "effects": [],
+        "creature_alignment": open5eData.alignment,
         "alignment": "enemy",
         "type": "monster",
         "border": COLOR_RED,
@@ -38,7 +62,9 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
             "failCount": 0,
             "successCount": 0,
             "isStabilized": true
-        },  
+        },
+        "skills": mapSkills(open5eData.skills),
+        "armor_desc": "(" + open5eData.armor_desc + ")"
 
     }
 };

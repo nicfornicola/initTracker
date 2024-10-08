@@ -1,118 +1,169 @@
+[
+   
 {
     "collectionUserId": 0,
     "isReleased": true,
-    "url": "https://www.dndbeyond.com/monsters/16886-giant-hyena",
+    "url": "https://www.dndbeyond.com/monsters/17074-young-red-dragon",
     "conditionImmunitiesHtml": "",
-    "sensesHtml": "",
-    "skillsHtml": "<a class=\"tooltip-hover skill-tooltip\" href=\"/compendium/rules/basic-rules/using-ability-scores#Perception\" aria-haspopup=\"true\" data-tooltip-href=\"/skills/14-tooltip\" data-tooltip-json-href=\"/skills/14/tooltip-json\">Perception</a> <span data-dicenotation=\"1d20+3\" data-rolltype=\"check\" data-rollaction=\"Perception\">+3</span>",
+    "sensesHtml": "<a class=\"tooltip-hover sense-tooltip\" href=\"/sources/dnd/free-rules/rules-glossary#Blindsight\" aria-haspopup=\"true\" data-tooltip-href=\"/senses/1-tooltip\" data-tooltip-json-href=\"/senses/1/tooltip-json\">Blindsight</a> 30 ft., <a class=\"tooltip-hover sense-tooltip\" href=\"/sources/dnd/free-rules/rules-glossary#Darkvision\" aria-haspopup=\"true\" data-tooltip-href=\"/senses/2-tooltip\" data-tooltip-json-href=\"/senses/2/tooltip-json\">Darkvision</a> 120 ft.",
+    "skillsHtml": "<a class=\"tooltip-hover skill-tooltip\" href=\"/sources/dnd/free-rules/playing-the-game#Skills\" aria-haspopup=\"true\" data-tooltip-href=\"/skills/5-tooltip\" data-tooltip-json-href=\"/skills/5/tooltip-json\">Stealth</a> <span data-dicenotation=\"1d20+4\" data-rolltype=\"check\" data-rollaction=\"Stealth\">+4</span>, <a class=\"tooltip-hover skill-tooltip\" href=\"/sources/dnd/free-rules/playing-the-game#Skills\" aria-haspopup=\"true\" data-tooltip-href=\"/skills/14-tooltip\" data-tooltip-json-href=\"/skills/14/tooltip-json\">Perception</a> <span data-dicenotation=\"1d20+8\" data-rolltype=\"check\" data-rollaction=\"Perception\">+8</span>",
     "stats": [
         {
             "statId": 1,
             "name": null,
-            "value": 16
+            "value": 23
         },
         {
             "statId": 2,
             "name": null,
-            "value": 14
+            "value": 10
         },
         {
             "statId": 3,
             "name": null,
-            "value": 14
+            "value": 21
         },
         {
             "statId": 4,
             "name": null,
-            "value": 2
+            "value": 14
         },
         {
             "statId": 5,
             "name": null,
-            "value": 12
+            "value": 11
         },
         {
             "statId": 6,
             "name": null,
-            "value": 7
+            "value": 19
         }
     ],
-    "senses": [],
-    "savingThrows": [],
+    "senses": [
+        {
+            "senseId": 1,
+            "notes": "30 ft."
+        },
+        {
+            "senseId": 2,
+            "notes": "120 ft."
+        }
+    ],
+    "savingThrows": [
+        {
+            "statId": 2,
+            "bonusModifier": null
+        },
+        {
+            "statId": 3,
+            "bonusModifier": null
+        },
+        {
+            "statId": 5,
+            "bonusModifier": null
+        },
+        {
+            "statId": 6,
+            "bonusModifier": null
+        }
+    ],
     "skills": [
         {
+            "skillId": 5,
+            "value": 4,
+            "additionalBonus": null
+        },
+        {
             "skillId": 14,
-            "value": 3,
+            "value": 4,
             "additionalBonus": null
         }
     ],
-    "languages": [],
+    "languages": [
+        {
+            "languageId": 1,
+            "notes": ""
+        },
+        {
+            "languageId": 11,
+            "notes": ""
+        }
+    ],
     "hitPointDice": {
-        "diceCount": 6,
+        "diceCount": 17,
         "diceValue": 10,
         "diceMultiplier": 0,
-        "fixedValue": 12,
-        "diceString": "6d10 + 12"
+        "fixedValue": 85,
+        "diceString": "17d10 + 85"
     },
     "swarm": null,
     "movements": [
         {
             "movementId": 1,
-            "speed": 50,
+            "speed": 40,
+            "notes": null
+        },
+        {
+            "movementId": 3,
+            "speed": 40,
+            "notes": null
+        },
+        {
+            "movementId": 4,
+            "speed": 80,
             "notes": null
         }
     ],
     "homebrewStatus": 0,
-    "id": 16886,
+    "xp": 5900,
+    "id": 17074,
     "entityTypeId": 779871897,
-    "name": "Giant Hyena",
-    "alignmentId": 10,
+    "name": "Young Red Dragon",
+    "alignmentId": 9,
     "sizeId": 5,
-    "typeId": 2,
-    "armorClass": 12,
-    "armorClassDescription": "",
-    "averageHitPoints": 45,
-    "passivePerception": 13,
+    "typeId": 6,
+    "armorClass": 18,
+    "armorClassDescription": "(natural armor)  ",
+    "averageHitPoints": 178,
+    "passivePerception": 18,
     "isHomebrew": false,
-    "challengeRatingId": 5,
+    "challengeRatingId": 14,
     "sourceId": 1,
-    "sourcePageNumber": 133,
+    "sourcePageNumber": 288,
     "isLegendary": false,
     "isMythic": false,
     "hasLair": false,
-    "avatarUrl": "https://www.dndbeyond.com/avatars/4675/664/636747837303835953.jpeg",
-    "largeAvatarUrl": null,
-    "basicAvatarUrl": null,
+    "avatarUrl": "https://www.dndbeyond.com/avatars/0/398/636252784385633941.jpeg",
+    "largeAvatarUrl": "https://www.dndbeyond.com/avatars/thumbnails/30782/407/400/392/638061961315375227.png",
+    "basicAvatarUrl": "https://www.dndbeyond.com.com/avatars/30782/408/638061961317385169.png",
     "version": null,
     "subTypes": [],
     "environments": [
-        3,
-        4,
-        5,
-        6
+        6,
+        7
     ],
-    "tags": [
-        "Misc Creature"
-    ],
+    "tags": [],
     "sources": [
         {
             "sourceId": 1,
-            "pageNumber": 133,
+            "pageNumber": 288,
             "sourceType": 1
         }
     ],
-    "damageAdjustments": [],
+    "damageAdjustments": [
+        25
+    ],
     "conditionImmunities": [],
-    "specialTraitsDescription": "<p><em><strong>Rampage.</strong></em> When the hyena reduces a creature to 0 hit points with a melee attack on its turn, the hyena can take a bonus action to move up to half its speed and make a bite attack.</p>",
-    "actionsDescription": "<p><em><strong>Bite.</strong> Melee Weapon Attack:</em> <span data-dicenotation=\"1d20+5\" data-rolltype=\"to hit\" data-rollaction=\"Bite\">+5</span> to hit, reach 5 ft., one target. <em>Hit:</em> 10 <span data-dicenotation=\"2d6+3\" data-rolltype=\"damage\" data-rollaction=\"Bite\" data-rolldamagetype=\"piercing\">(2d6 + 3)</span> piercing damage.</p>",
+    "specialTraitsDescription": "",
+    "actionsDescription": "<p><em><strong>Multiattack.</strong></em> The dragon makes three attacks: one with its bite and two with its claws.</p>\n<p><em><strong>Bite.</strong> Melee Weapon Attack:</em> <span data-dicenotation=\"1d20+10\" data-rolltype=\"to hit\" data-rollaction=\"Bite\">+10</span> to hit, reach 10 ft., one target. <em>Hit:</em> 17 <span data-dicenotation=\"2d10+6\" data-rolltype=\"damage\" data-rollaction=\"Bite\" data-rolldamagetype=\"piercing\">(2d10 + 6)</span> piercing damage plus 3 <span data-dicenotation=\"1d6\" data-rolltype=\"damage\" data-rollaction=\"Bite\" data-rolldamagetype=\"fire\">(1d6)</span> fire damage.</p>\n<p><em><strong>Claw.</strong> Melee Weapon Attack:</em> <span data-dicenotation=\"1d20+10\" data-rolltype=\"to hit\" data-rollaction=\"Claw\">+10</span> to hit, reach 5 ft., one target. <em>Hit:</em> 13 <span data-dicenotation=\"2d6+6\" data-rolltype=\"damage\" data-rollaction=\"Claw\" data-rolldamagetype=\"slashing\">(2d6 + 6)</span> slashing damage.</p>\n<p><em><strong>Fire Breath <span data-dicenotation=\"1d6\" data-rolltype=\"recharge\" data-rollaction=\"Fire Breath\">(Recharge 5–6)</span>.</strong></em> The dragon exhales fire in a 30-foot cone. Each creature in that area must make a DC 17 Dexterity saving throw, taking 56 <span data-dicenotation=\"16d6\" data-rolltype=\"damage\" data-rollaction=\"Fire Breath\" data-rolldamagetype=\"fire\">(16d6)</span> fire damage on a failed save, or half as much damage on a successful one.</p>",
     "reactionsDescription": "",
     "legendaryActionsDescription": "",
     "mythicActionsDescription": "",
     "bonusActionsDescription": "",
-    "characteristicsDescription": "",
+    "characteristicsDescription": "<p>The odor of sulfur and pumice surrounds a red dragon, whose swept-back horns and spinal frill define its silhouette. Its beaked snout vents smoke at all times, and its eyes dance with flame when it is angry.</p>",
     "lairDescription": "",
-    "languageDescription": " --  ",
-    "languageNote": " --  ",
+    "languageDescription": " Common, Draconic  ",
+    "languageNote": "",
     "hideCr": false,
     "isLegacy": false
-}
+}]

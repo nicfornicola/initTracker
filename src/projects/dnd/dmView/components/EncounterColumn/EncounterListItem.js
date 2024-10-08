@@ -257,7 +257,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
 
     const updateCreatureEffects = (event, effectObj) => {
         event.stopPropagation(); // Prevent propagation to parent
-        console.log(effectObj)
         const alreadyExists = effects.some(eObj => eObj.effect === effectObj.effect);
         if(alreadyExists) {
             setEffects(effects.filter(eObj => eObj.effect !== effectObj.effect))

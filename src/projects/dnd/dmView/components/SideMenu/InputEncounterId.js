@@ -6,8 +6,10 @@ import { ImportDndBeyondCharacters } from '../../api/ImportDndBeyondCharacters'
 import { ImportDndBeyondEncounter } from '../../api/ImportDndBeyondEncounter'
 import { ImportDndBeyondMonsters } from '../../api/ImportDndBeyondMonsters'
 
-function InputEncounterId({setCurrentEncounter}) {
-    const [dndbEncounterId, setDndbEncounterId] = useState('ed9784fc-5aba-473a-9ae9-166fed396e8e');
+function InputEncounterId({setCurrentEncounter}) { 
+    //61523d85-da0d-47c8-a796-f9409be52c93
+    //ed9784fc-5aba-473a-9ae9-166fed396e8e - save the king final garden
+    const [dndbEncounterId, setDndbEncounterId] = useState('ece19692-6830-4ad3-9e28-ed612f3de79b');
     
     const handleDndBEncounterId = (event) => {
         let input = event.target.value;

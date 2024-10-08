@@ -88,8 +88,6 @@ export const getSkillDetails = (data) => {
         maxHp += data.bonusHitPoints
     }
 
-    console.log("skills", skills_json_array)
-
     // =================
     // let nakedArmorClass = 10 + skills_json_array[1].modifier;
     let armorClass = 0;
