@@ -85,12 +85,17 @@ export const backgroundImages = [
     background24
 ];
 
+export const isProd = window.location.href.includes("dmbuddy.com") 
 // export const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-export const proxyUrl = window.location.href.includes("dmbuddy.com") 
+
+// To test corsanywhere locally, switch the "" to "http://localhost:8080/" and run a regular chrome browser
+// If run with no-cors browser bad stuff happens
+export const proxyUrl = isProd
                         ? 'https://nics-cors-anywhere-99e39b544c5d.herokuapp.com/' 
                         : "";
                         
 proxyUrl === "" ? console.log("No Proxy") : console.log("Using Proxy")
+console.log(proxyUrl)
 
 export const skills_long = ["Strength Score", "Dexterity Score", "Constitution Score", "Intelligence Score", "Wisdom Score", "Charisma Score"];
 export const skill_codes = [3520, 3521, 3522, 3523, 3524, 3525];
@@ -333,7 +338,7 @@ const sharedItems = {
     "wisdom_save": null,
     "charisma_save": null,
     "perception": null,
-    "skills": {},
+    "skills": [],
     "spell_list": [],
     "bonus_actions": null,
     "reactions": null,

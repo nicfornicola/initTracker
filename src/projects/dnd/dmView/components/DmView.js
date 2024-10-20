@@ -55,7 +55,7 @@ const DmView = ({currentEncounter, onFirstLoad, refreshLoading, setCurrentEncoun
     };  
 
     return (
-        <div className="dmView" style={{backgroundImage: playerViewBackground.type === "image" && playerViewBackground.src ? `url(${playerViewBackground.src})` : 'none'}}>
+        <div className="background" style={{backgroundImage: playerViewBackground.type === "image" && playerViewBackground.src ? `url(${playerViewBackground.src})` : 'none'}}>
             { playerViewBackground.type === "youtube" && 
                 <YouTubeEmbed embedUrl={playerViewBackground.src}/>
             }

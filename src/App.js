@@ -1,8 +1,11 @@
 // App.js
 import {React, useState, useEffect} from 'react';
 
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import ReactGA from "react-ga4";
+
 import PlayerPage from './projects/dnd/playerView/components/PlayerPage';
+import WhoAreYou from './projects/dnd/playerView/components/PlayerUI/WhoAreYou';
 import DmView from './projects/dnd/dmView/components/DmView';
 import { refreshMonsterProfiles } from './projects/dnd/dmView/refresh/refresh';
 import Blog from './projects/blog/components/Blog';
@@ -38,6 +41,18 @@ function App() {
     const [cardContainerStyle, setCardContainerStyle] = useState(JSON.parse(localStorage.getItem('cardContainerStyle')));
     const [onFirstLoad, setOnFirstLoad] = useState(true);
     const [refreshLoading, setRefreshLoading] = useState(false);
+
+    const location = useLocation();
+    useEffect(() => {
+        // Initialize GA with your Measurement ID
+        console.log("init")
+        ReactGA.initialize("G-R3XHSS7071", { debug: false });
+
+    
+        // Trigger page view on route change
+        ReactGA.send({ hitType: "pageview", page: location.pathname });
+      }, [location]);
+
 
     useEffect(() => {
         const getRefreshedLocalEncounter = (event) => {
@@ -215,6 +230,7 @@ function App() {
         <Routes>
             <Route path="/" element={<DmView currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} onFirstLoad={onFirstLoad} refreshLoading={refreshLoading} cardContainerStyle={cardContainerStyle} setCardContainerStyle={setCardContainerStyle} playerViewBackground={playerViewBackground} setPlayerViewBackground={setPlayerViewBackground} handleRefresh={handleRefresh} refreshCheck={refreshCheck} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} autoRefresh={autoRefresh} uploadLocalStorage={uploadLocalStorage} localSavedEncounters={localSavedEncounters}/>}/>
             <Route path="/playerView" element={<PlayerPage playerView={playerView} playerViewBackground={playerViewBackground} hideEnemies={hideEnemies} cardContainerStyle={cardContainerStyle} enemyBloodToggle={enemyBloodToggle} hideDeadEnemies={hideDeadEnemies}/>} />
+            <Route path="/join/:encounterGuid" element={<WhoAreYou playerView={playerView} playerViewBackground={playerViewBackground} />} />
             <Route path="/help" element={<HowTo/>} />
             <Route path="/king/" element={<Pantheon />} />
             <Route path="/blog" element={<Blog/>}/>

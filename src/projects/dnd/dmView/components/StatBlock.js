@@ -143,7 +143,10 @@ const StatBlock = ({creature, img, closeFunction }) => {
                                     {creature.hit_points_temp !== 0 && (
                                         <span className='tempHp'>&nbsp;(+{creature.hit_points_temp}) </span>
                                     )}
-                                    <span className='extraInfo'>&nbsp;({creature.hit_dice})</span>
+                                    {creature.hit_dice && (
+                                        <span className='extraInfo'>&nbsp;({creature.hit_dice})</span>
+                                    )}
+                                   
                                 </p>
                                 <p className="stickyStatItem"></p>
                                 <p className="stickyStatItem stickyStatExtraWide">
@@ -162,7 +165,7 @@ const StatBlock = ({creature, img, closeFunction }) => {
                     </div>
                         
                     <div className="statBlockScroll">
-                        {creature.skills && (
+                        {creature.skills.length !== 0 && (
                             <p>
                                 <strong>Skills </strong>
                                 <span >{creature.skills}</span>

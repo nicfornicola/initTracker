@@ -26,17 +26,19 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
     }
 
     return (
-        <div className="dndBackground" style={{backgroundImage: playerViewBackground.type === "image" && playerViewBackground.src ? `url(${playerViewBackground.src})` : 'none'}}>
+        <div className="background playerViewAdds" style={{backgroundImage: playerViewBackground.type === "image" && playerViewBackground.src ? `url(${playerViewBackground.src})` : 'none'}}>
+            
+            {playerViewBackground.type === "youtube" && 
+                <YouTubeEmbed embedUrl={playerViewBackground.src}/>
+            }
+
+
             {roundNum !== 0 && 
                 <div className='roundNum'>
                     {roundNum}
                 </div>
             }
             
-            { playerViewBackground.type === "youtube" && 
-                <YouTubeEmbed embedUrl={playerViewBackground.src}/>
-            }
-
             <div className="cardContainer" style={cardContainerStyle}>
                 {creatures.length === 0 ? (
                     <div className='loading'>No Creatures found...</div>

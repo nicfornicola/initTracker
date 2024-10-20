@@ -28,7 +28,16 @@ offline mod
     encounter list changes 
     --
         when doing next turn on last member, auto scroll to top if off the screen
-        toggle ally/neutral/enemy in encounter list
+
+    player controller
+    --
+    add list of of other players below img of their own 
+    connect effects
+    death saves rolls
+    upload their own image
+    change name and AC and init bonus
+    auto roll init or enter manual 
+    
 
 playerview
 ------
@@ -50,6 +59,7 @@ dnd_b imports show their hp from time of import and then auto refresh to the cur
 DONE - offline mode
 ------
 add effects 
+toggle ally/neutral/enemy in encounter list
 add button instead of just clicking any where so you can click an read stats without adding to encounter
 track initative and make next button,
 current turn marker

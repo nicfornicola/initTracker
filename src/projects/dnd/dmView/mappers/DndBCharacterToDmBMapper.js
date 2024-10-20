@@ -65,6 +65,8 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, skillDetails=undefi
             "exhaustionLvl": 0,
             "path": "",
             "type": "player",
+            "alignment": "ally",
+            "border": COLOR_GREEN,
             "effects": [],
             "creature_type": dndBeyondRes.race,
             "inspiration": false,

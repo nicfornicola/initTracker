@@ -332,7 +332,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                             {effectsCount &&
                                 <div className='effectsCounter'>{effectsCount}</div>
                             }
-
                         </div>
                         <div>
                             <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>

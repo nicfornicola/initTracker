@@ -1,0 +1,71 @@
+.hpContainerFlag {
+    position: absolute;
+    transform: rotate(45deg);
+    top: -9px;
+    right:  calc(48.5%);
+    background-color: inherit;
+    height: 16px;
+    width: 16px;
+    border-top: inherit;
+    border-left: inherit;
+}
+
+.controllerStatsContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.editHpContainer {
+    position: relative;
+    margin-top: 20px;
+    background-color: burlywood;
+    height: 80px;
+}
+
+.hpOptionsContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.editHpButtonsContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.extraHpButtonsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly
+}
+
+.hpInputsContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.editHpButton {
+    position: relative;
+    width: 30%;
+    height: 100%;
+}
+
+.extraHpInputs {
+    width: 30%;
+}
+
+.editHpInput {
+    border: 0px solid #ae2626;
+    border-radius: 5px;
+    width: 100%;
+    height: 30%;
+    box-sizing: border-box;
+    font-size: large;
+    text-align: center;
+    text-decoration: underline; 
+    background-color: rgb(255, 255, 255);
+}
+
+.extraInputTitle {
+
+}

@@ -116,7 +116,6 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
     }, [showSaveMessage]);
 
     const handleAddExtra = (type) => {
-
         let newDummy = {}
         if(type === "global") {
             newDummy = {
@@ -195,6 +194,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
     }
  
     const handleUploadMonsterImage = (creature) => {
+        
         setUploadIconMenu(true)
         setUploadIconCreature(creature)
     }
@@ -234,7 +234,6 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                     <>No Encounter Creature Selected</>
                 )}
             </div>
-
             <UploadMonsterImage setCurrentEncounter={setCurrentEncounter} uploadIconMenu={uploadIconMenu} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} currentEncounterCreatures={currentEncounter.currentEncounterCreatures} />
         </>
   );
