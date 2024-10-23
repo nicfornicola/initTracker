@@ -9,7 +9,8 @@ import GridMap from '../../../playerView/components/GridMap.js';
 import backgroundButton from "../../pics/icons/backgroundButton.png"
 import OptionButton from './OptionButton';
 
-const ImagePopup = ({setPlayerViewBackground}) => {
+//TODO creature images array 
+const ImagePopup = ({setPlayerViewBackground, socket}) => {
     const [open, setOpen] = useState(false);
     const [uploadedFiles, setUploadedFiles] = useState(JSON.parse(localStorage.getItem('uploadedBackgrounds')) || []);
     const [uploadedLinks, setUploadedLinks] = useState(JSON.parse(localStorage.getItem('uploadedLinks')) || []);
@@ -26,14 +27,21 @@ const ImagePopup = ({setPlayerViewBackground}) => {
                 handleClose();
             }
         };
-        
-        open ? document.addEventListener('mousedown', handleClickOutside) : document.removeEventListener('mousedown', handleClickOutside);
+
+        if(open) {
+            socket.emit("getBackgroundImages")
+            document.addEventListener('mousedown', handleClickOutside)
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+       
         return () => { document.removeEventListener('mousedown', handleClickOutside); };
     }, [open]);
 
     const handleSetBackground = (type, src) => {
         localStorage.setItem("currentBackground", JSON.stringify({type: type, src: src}));
         setPlayerViewBackground({type: type, src: src})
+        socket.emit("setEncounterBackground", src)
     }
 
     const handleClick = (src, isYoutubeLink) => {
@@ -89,8 +97,8 @@ const ImagePopup = ({setPlayerViewBackground}) => {
                 )}
                 <GridMap imageArr={backgroundImages} handleClick={handleClick}/>
             </DialogContent>
-            <FileUpload uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles} storageKey={"uploadedBackgrounds"} />
-            <TextInput setUploadedLinks={setUploadedLinks} uploadedLinks={uploadedLinks}/>
+            <FileUpload uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles} storageKey={"uploadedBackgrounds"} socket={socket}/>
+            <TextInput setUploadedLinks={setUploadedLinks} uploadedLinks={uploadedLinks} socket={socket}/>
 
         </Dialog>
 

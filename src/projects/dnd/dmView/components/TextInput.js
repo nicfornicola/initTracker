@@ -15,7 +15,7 @@ function getYouTubeThumbnail(url) {
     }
 }
 
-const TextInput = ({setUploadedLinks, uploadedLinks}) => {
+const TextInput = ({setUploadedLinks, uploadedLinks, socket}) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleChange = (event) => {
@@ -28,6 +28,8 @@ const TextInput = ({setUploadedLinks, uploadedLinks}) => {
     if(thumbnailUrl) {
         setUploadedLinks((prevLinks) => [...prevLinks, thumbnailUrl]);
         localStorage.setItem('uploadedLinks', JSON.stringify([...uploadedLinks, thumbnailUrl]));
+        // use thumbnailUrl because thats what the image is, I turn this into the video link when clicked
+        socket.emit("uploadNewLink", thumbnailUrl)
     }
 
   };

@@ -76,7 +76,7 @@ function App() {
     
 
     useEffect(() => {
-        if(onFirstLoad && currentEncounter.guid !== "" && !window.location.href.includes("/playerView")) {
+        if(onFirstLoad && currentEncounter.encounterGuid !== "" && !window.location.href.includes("/playerView")) {
             setOnFirstLoad(false)
         }
         // eslint-disable-next-line
@@ -109,7 +109,7 @@ function App() {
                     creature = {
                         ...refreshedPlayer,
                         name: creature.name,
-                        guid: creature.guid,
+                        creatureGuid: creature.creatureGuid,
                         effects: creature.effects,
                         initiative: creature.initiative, // might remove this in the future for auto initiative in the dnd_b app
                         // avatarUrl: creature.avatarUrl

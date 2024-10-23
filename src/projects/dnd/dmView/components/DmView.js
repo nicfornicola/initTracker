@@ -1,4 +1,4 @@
-import React, { useEffect, useState  } from 'react';
+import React, { useEffect, useState, useRef  } from 'react';
 import '../../dmView/style/App.css';
 import SearchList from './SearchList.js';
 import EncounterColumn from './EncounterColumn/EncounterColumn';
@@ -9,6 +9,7 @@ import NewEncounterButton from './EncounterColumn/NewEncounterButton.js';
 import { generateUniqueId, INIT_ENCOUNTER} from '../constants';
 import DropdownMenu from './EncounterColumn/DropdownMenu.js';
 import YouTubeEmbed from './EncounterColumn/YouTubeEmbed.js';
+import io from 'socket.io-client';
 
 
 function getLocalStorageSize() {
@@ -29,15 +30,49 @@ function getLocalStorageSize() {
 const DmView = ({currentEncounter, onFirstLoad, refreshLoading, setCurrentEncounter, playerViewBackground, setPlayerViewBackground, setCardContainerStyle, handleRefresh, hideDeadEnemies, setHideDeadEnemies, refreshCheck, autoRefresh, uploadLocalStorage, enemyBloodToggle, setEnemyBloodToggle, localSavedEncounters}) => {
     getLocalStorageSize()
     const [showSearchList, setShowSearchList] = useState(true);
-    const [encounterGuid, setEncounterGuid] = useState(currentEncounter.guid);
+    const [encounterGuid, setEncounterGuid] = useState(currentEncounter.encounterGuid);
     const [savedEncounters, setSavedEncounters] = useState(localSavedEncounters);
     const [hideEnemies, setHideEnemies] = useState(true);
+    const socketRef = useRef(null)
+    const [socket, setSocket] = useState(null);
 
+    useEffect(() => {
+        if (!socketRef.current) {
+            socketRef.current = io('http://localhost:8081'); // Create socket connection
+            setSocket(socketRef.current)
+        }
+    }, [socketRef]);
+
+    useEffect(() => {
+        if(socket) {
+            // Emit room ID to the server after connection is established
+            socket.on('connect', () => {
+                console.log(`Connected to DmView`);
+                // Need to make logon UI - connect and get my saved encounters
+                socket.emit('connectDmView', "Username", "Password"); // Send the encounter ID to the server
+            });
+
+            // Recieve messages from backend
+            socket.on('sendSavedEncounters', (encountersResponse) => {
+                console.log("sendSavedEncounters", encountersResponse)
+                if(encountersResponse.length === 0) {
+                    console.log("nothing saved")
+                }
+                setSavedEncounters(encountersResponse)
+            });
+        }
+
+        // Clean up the socket connection on component unmount
+        return () => {
+            if(socket) socket.disconnect();
+        };
+    }, [socket]);
 
     const handleNewEncounter = () => {
-        console.log("%c=== New Encounter ===", "background: green;")
         let newGuid = generateUniqueId();
-        setCurrentEncounter({...INIT_ENCOUNTER, guid: newGuid})
+        console.log("%c=== New Encounter ===", "background: green;", newGuid)
+
+        setCurrentEncounter({...INIT_ENCOUNTER, encounterGuid: newGuid})
         setEncounterGuid(newGuid)
     };  
 
@@ -90,7 +125,6 @@ const DmView = ({currentEncounter, onFirstLoad, refreshLoading, setCurrentEncoun
                             )}
                         </div>
 
-                        
                         <div className='firstLoadOptionsImports'>
                             Import an encounter from Dnd Beyond
                             <InputEncounterId setCurrentEncounter={setCurrentEncounter}/>
@@ -105,9 +139,9 @@ const DmView = ({currentEncounter, onFirstLoad, refreshLoading, setCurrentEncoun
                 <>
                     <SideMenu uploadLocalStorage={uploadLocalStorage} setCurrentEncounter={setCurrentEncounter} showSearchList={showSearchList} setShowSearchList={setShowSearchList}/>
                     {showSearchList &&  
-                        <SearchList setCurrentEncounter={setCurrentEncounter}/>
+                        <SearchList setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket}/>
                     }
-                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} refreshLoading={refreshLoading} setCardContainerStyle={setCardContainerStyle} hideEnemies={hideEnemies} setPlayerViewBackground={setPlayerViewBackground} setHideEnemies={setHideEnemies} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} setSavedEncounters={setSavedEncounters} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} encounterGuid={encounterGuid} setEncounterGuid={setEncounterGuid} localSavedEncounters={localSavedEncounters} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter}/>
+                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} refreshLoading={refreshLoading} setCardContainerStyle={setCardContainerStyle} hideEnemies={hideEnemies} setPlayerViewBackground={setPlayerViewBackground} setHideEnemies={setHideEnemies} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} setSavedEncounters={setSavedEncounters} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} encounterGuid={encounterGuid} setEncounterGuid={setEncounterGuid} localSavedEncounters={localSavedEncounters} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter} socket={socket}/>
                 </>
             )}
              </div>

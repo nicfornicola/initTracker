@@ -44,7 +44,7 @@ const getImageUrl = (creature) => {
     }
 }
 
-const SearchList = ({setCurrentEncounter}) => {
+const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
     const [searchSelectedCreature, setSearchSelectedCreature] = useState(null);
     const [itemsToShow, setItemsToShow] = useState(15);
     const [filteredItems, setFilteredItems] = useState([]);
@@ -150,10 +150,26 @@ const SearchList = ({setCurrentEncounter}) => {
     };
 
     const handleAddCreatureToEncounter = (creature, action) => {
-        let newCreature = {...creature, guid: generateUniqueId()}
+        let newCreature = {...creature, creatureGuid: generateUniqueId(), encounterGuid: encounterGuid}
 
         if(action === "add") {
-            setCurrentEncounter(prev => ({...prev, currentEncounterCreatures: [...prev.currentEncounterCreatures, newCreature]}));
+            setCurrentEncounter(prev => {
+                // If there are now creatures in this list, then create the encounter in the database and add to it
+                if (prev.currentEncounterCreatures.length === 0) {
+                    socket.emit("newEncounter", encounterGuid);
+                }
+              
+                // Return the updated state with the new creature added
+                return {
+                  ...prev,
+                  currentEncounterCreatures: [...prev.currentEncounterCreatures, newCreature]
+                };
+              });           
+            
+              console.log("emit add")
+            console.log(newCreature)
+            
+            socket.emit("addCreatureToEncounter", newCreature)
         }
         else if(action === "select")
             setSearchSelectedCreature(newCreature);

@@ -12,7 +12,7 @@ import bloodied6 from '../pics/imageOverlays/blood/blood6.png';
 import Exhaustion from './Exhaustion'; 
 import DeathSaves from './DeathSaves';
 
-// Grab the digits out of guid
+// Grab the digits out of creatureGuid
 function stringToInt(str) {
     const numericStr = str.replace(/\D/g, '');  
     return numericStr ? parseInt(numericStr, 10) : 1;
@@ -20,7 +20,7 @@ function stringToInt(str) {
 
 function getBloodImg(creature) {
     const bloodiedArr = [bloodied1, bloodied2, bloodied3, bloodied4, bloodied5, bloodied6]
-    const randomNumber = (stringToInt(creature.guid) % 6); // Generates numbers from 0 to 5
+    const randomNumber = (stringToInt(creature.creatureGuid) % 6); // Generates numbers from 0 to 5
     return bloodiedArr[randomNumber]
 }
 

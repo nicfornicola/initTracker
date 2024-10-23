@@ -37,6 +37,12 @@ offline mod
     upload their own image
     change name and AC and init bonus
     auto roll init or enter manual 
+
+    dmView socket
+    ---
+    I fucked up the hp change menu for dmview it looks bad
+    onBlur is not working for temp and override
+    make a socket for name change for creatures
     
 
 playerview

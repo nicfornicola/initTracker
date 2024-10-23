@@ -19,7 +19,11 @@ function InputCharacterId({setCurrentEncounter}) {
     const handleDndCharacterImport = async () => {
         const playerData = await ImportDndBeyondCharacters(playerNumbers);
         
-        setCurrentEncounter(prev => ({...prev, guid: generateUniqueId(), currentEncounterCreatures: [...prev.currentEncounterCreatures, ...playerData]}))
+        setCurrentEncounter(prev => ({
+            ...prev,
+            encounterGuid: prev.encounterGuid || generateUniqueId(),
+            currentEncounterCreatures: [...prev.currentEncounterCreatures, ...playerData]
+          }));        
         setPlayerNumbers([])
         setPlayerNumberInputValue('')
     }

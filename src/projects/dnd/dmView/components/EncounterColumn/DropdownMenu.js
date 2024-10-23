@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { INIT_ENCOUNTER_NAME } from '../../constants';
 
-const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter, currentEncounter}) => {
+const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter, currentEncounter, socket}) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
     function clickEncounterDropdownMenuX(event, encounter) {
         event.stopPropagation();
-        let updatedEncounterList = savedEncounters.filter(e => e.guid !== encounter.guid)
+        let updatedEncounterList = savedEncounters.filter(e => e.encounterGuid !== encounter.encounterGuid)
         setSavedEncounters(updatedEncounterList);
         localStorage.setItem('savedEncounters', JSON.stringify(updatedEncounterList));
+        socket.emit("deleteEncounter", encounter.encounterGuid)
     }
     
     const handleClickOutside = (event) => {
@@ -25,7 +26,7 @@ const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter
         };
     }, []);
 
-    const handleOptionClick = (encounter) => {
+    const handleDropDownOptionClicked = (encounter) => {
         setIsOpen(false);
         handleLoadEncounter(encounter);
     };
@@ -45,7 +46,7 @@ const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter
             {savedEncounters.map((encounter, index) => (
                         <li
                             key={encounter.encounterName + index}
-                            onClick={() => handleOptionClick(encounter)}
+                            onClick={() => handleDropDownOptionClicked(encounter)}
                             className="dropdown-item"
                         >
                             {encounter.encounterName}

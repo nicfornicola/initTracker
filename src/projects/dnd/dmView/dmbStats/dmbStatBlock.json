@@ -1,13 +1,13 @@
 {
     "encounterName": "testing",
-    "guid": "N09C0X7O14",
+    "encounterGuid": "N09C0X7O14",
     "roundNum": 1,
     "turnNum": 0,
     "currentEncounterCreatures": [
         {
             "id":"open5e-a-mi-kuk",
             "from": "open5e",
-            "guid":"E62EHQ2OGD",
+            "creatureGuid":"E62EHQ2OGD",
             "name":"A-mi-kuk",
             "path":"",
             "link":"https://api.open5e.com/monsters/a-mi-kuk",

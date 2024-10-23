@@ -187,7 +187,7 @@ export const INIT_ENCOUNTER_NAME = 'Name Your Encounter';
 
 export const INIT_ENCOUNTER = {
     encounterName: INIT_ENCOUNTER_NAME,
-    guid: "",
+    encounterGuid: "",
     roundNum: 1,
     turnNum: 0,
     currentEncounterCreatures: []
@@ -318,7 +318,7 @@ const sharedItems = {
     "initiative": 0,
     "last_damage": null,
     "effects": [],
-    "guid": null,
+    "creatureGuid": null,
     "senses": "passive Perception 10",
     "armor_class": 0,
     "damage_vulnerabilities": "",
@@ -355,7 +355,6 @@ const sharedItems = {
     "document__url": "",
     "hidden": false,
     "deathSaves": { successCount: 0, failureCount: 0 }
-
 }
 
 export const COLOR_RED = "#F44E3B"

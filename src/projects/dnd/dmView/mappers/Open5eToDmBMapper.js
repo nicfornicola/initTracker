@@ -37,7 +37,7 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         "name": open5eData.name,
         "name_default": open5eData.name,
         "from": "open5e",
-        "guid": null,
+        "creatureGuid": null,
         "link": open5eData.link,
         "searchHint": open5eData.searchHint,
         "filterDimensions":{ ...open5eData.filterDimensions},
@@ -65,7 +65,6 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         },
         "skills": mapSkills(open5eData.skills),
         "armor_desc": "(" + open5eData.armor_desc + ")"
-
     }
 };
 

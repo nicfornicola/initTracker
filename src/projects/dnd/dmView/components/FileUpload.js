@@ -29,7 +29,7 @@ const resizeImage = (img, maxWidth, maxHeight, quality) => {
 };
 
 // FileUpload component
-const FileUpload = ({uploadedFiles, setUploadedFiles, storageKey}) => {
+const FileUpload = ({uploadedFiles, setUploadedFiles, storageKey, socket}) => {
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -49,7 +49,7 @@ const FileUpload = ({uploadedFiles, setUploadedFiles, storageKey}) => {
 
                     setUploadedFiles((prevFiles) => [...prevFiles, resizedImage]);
                     localStorage.setItem(storageKey, JSON.stringify([...uploadedFiles, resizedImage]));
-
+                    socket.emit("uploadNewImg", resizedImage)
                 };
 
                 

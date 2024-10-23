@@ -46,7 +46,7 @@ function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodTo
                     creatures.map((creature, index) => { 
                         return (((creature.type === 'monster' || creature.type === 'global') && creature.alignment !== "ally" && hideEnemies) || creature.hidden) 
                         ? null
-                        : <Icon key={creature.guid} isTurn={turnNum === index+1} creature={creature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggle={enemyBloodToggle} />;
+                        : <Icon key={creature.creatureGuid} isTurn={turnNum === index+1} creature={creature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggle={enemyBloodToggle} />;
                     })
                 )}
             </div>

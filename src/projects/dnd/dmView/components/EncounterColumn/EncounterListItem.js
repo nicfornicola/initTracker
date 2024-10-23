@@ -11,7 +11,7 @@ import { effectObjs } from '../../constants.js';
 import Effect from './Effect.js';
 
 
-const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCurrentEncounter, scrollPosition, handleUploadMonsterImage, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort}) => {
+const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCurrentEncounter, scrollPosition, handleUploadMonsterImage, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort, socket}) => {
     const [hidden, setHidden] = useState(creatureListItem.hidden);
     const [creature, setCreature] = useState(creatureListItem)
     const [isHovered, setIsHovered] = useState(false);
@@ -76,7 +76,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }, [creatureListItem]);
 
     useEffect(() => {
-        if(encounterSelectedCreature !== null && creature.guid === encounterSelectedCreature.guid)
+        if(encounterSelectedCreature !== null && creature.creatureGuid === encounterSelectedCreature.creatureGuid)
             setEncounterSelectedCreature(creature)
 
         // If creature change then update it in the list to cause a rerender
@@ -85,7 +85,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                 currentEncounterCreatures: [
                     ...prev.currentEncounterCreatures.map(
                         (oldCreature) => {
-                            return oldCreature.guid === creature.guid ? creature : oldCreature;
+                            return oldCreature.creatureGuid === creature.creatureGuid ? creature : oldCreature;
                         }
                     )
                 ]
@@ -160,6 +160,9 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         if(creature.hit_points_current > creature.hit_points)
             creature.hit_points_current = creature.hit_points
 
+        //hit_points | hit_points_current | hit_points_temp | hit_points_override
+        socket.emit('playerHpChange', {hit_points_current: creature.hit_points_current, hit_points_temp: creature.hit_points_temp}, creature.creatureGuid, "dm");
+
         setOpenHpWidget(!openHpWidget)
         setCreature({...creature})
     }
@@ -175,6 +178,16 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         creature.hit_points_current = creature.hit_points - dif
         
         setCreature({...creature})
+    }
+
+    const submitOverRideHpChange = () => {
+        console.log('submitOverRideHpChange', creature.hit_points, creature.hit_points_current, creature.hit_points_override)
+        //hit_points | hit_points_current | hit_points_temp | hit_points_override
+        socket.emit('playerHpChange', {
+            hit_points: creature.hit_points,
+            hit_points_current: creature.hit_points_current,
+            hit_points_override: creature.hit_points_override,
+        }, creature.creatureGuid, "dm");
 
     }
 
@@ -190,6 +203,13 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         let tempHp = parseInt(event.target.value)
         creature.hit_points_temp = isNaN(tempHp) ? 0 : tempHp
         setCreature({...creature})
+    }
+
+    // on blur is not wokring
+    const submitTempHpChange = () => {
+        console.log('submitOverRideHpChange', creature.hit_points_temp)
+        //hit_points | hit_points_current | hit_points_temp | hit_points_override
+        socket.emit('playerHpChange', {hit_points_temp: creature.hit_points_temp}, creature.creatureGuid, "dm");
     }
 
     const handleInitiativeChange = (event) => {
@@ -211,29 +231,37 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
             creature.initiative = 0
             setCreature({...creature})
         }
+        socket.emit('creatureInitiativeChange', creature.initiative, creature.creatureGuid, "dm");
         resort()
     }    
     
     const handleHideEnemy = (event) => {
         event.stopPropagation()
+        socket.emit('creatureHiddenToggle', !hidden, creature.creatureGuid, "dm");
         setHidden(!hidden)
+
     }  
     
     const handleAlignmentChange = (team) => {
         if(team !== alignment) {
             setAlignment(team);
+            socket.emit('creatureAlignmentChange', team, creature.creatureGuid, "dm");
         }
     };
 
-    const handleTeamColorChange = (newTeamColor) => {
-        if(newTeamColor.hex !== borderColor) {
-            setBorderColor(newTeamColor.hex)
+    const handleTeamColorChange = (newBorderColor) => {
+        if(newBorderColor.hex !== borderColor) {
+            setBorderColor(newBorderColor.hex)
+            // I dont think this is in the database
+            socket.emit('creatureBorderColorChange', newBorderColor.hex, creature.creatureGuid, "dm");
+
         }
     };
 
     const handleCheckboxChange = (event) => {
         let checked = event.target.checked
         setIsPlayer(checked);
+        socket.emit('creatureIsPlayerChange', checked, creature.creatureGuid, "dm");
     };
 
     const handleTeamChangeWidget = (event) => {
@@ -247,6 +275,11 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         setCreature({...creature});
     }
 
+    const handleArmorClassChangeSubmit = (event) => {
+        if(!isNaN(creature.armor_class))
+            socket.emit('armorClassChange', creature.armor_class, creature.creatureGuid, "dm");
+    }
+
     const handleOpenEffectWidget = (event) => {
         setOpenEffectWidget(!openEffectWidget)
     }
@@ -258,11 +291,16 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const updateCreatureEffects = (event, effectObj) => {
         event.stopPropagation(); // Prevent propagation to parent
         const alreadyExists = effects.some(eObj => eObj.effect === effectObj.effect);
+        let type = "add"
         if(alreadyExists) {
             setEffects(effects.filter(eObj => eObj.effect !== effectObj.effect))
+            type = "remove"
         } else {
             setEffects([...effects, effectObj])
+
         }
+        socket.emit('changeCreatureEffect', effectObj, type, creature.creatureGuid, "dm");
+
     };
 
     let isDead = creature.hit_points_current <= 0
@@ -312,7 +350,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                             </div>
                             <div className='middleStatsContainer'>
                                     <label htmlFor='ac' className='middleStatsLabel'>AC</label>
-                                    <input id='ac' className='middleStatsInput' onFocus={handleHighlight} type='text' defaultValue={creature.armor_class} onChange={handleArmorClassChange} onClick={(event) => event.stopPropagation()}/>
+                                    <input id='ac' className='middleStatsInput' onFocus={handleHighlight} type='text' defaultValue={creature.armor_class} onChange={handleArmorClassChange} onBlur={handleArmorClassChangeSubmit} onClick={(event) => event.stopPropagation()}/>
                                     <label htmlFor='init' className='middleStatsLabel'>Init.</label>
                                     <input id='init'className='middleStatsInput' onFocus={handleHighlight} disabled={true}  type='text' defaultValue={creature.dexterity_save ? '+' + creature.dexterity_save : '+0'} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                             </div>
@@ -334,7 +372,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                             }
                         </div>
                         <div>
-                            <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature.name, index)}>
+                            <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature, index)}>
                                 X
                             </button>
                         </div>
@@ -401,7 +439,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                         <div className="effectContainerFlag"/>
                         <div className="effectsBar" onClick={(event) => event.stopPropagation()} >
                             {effectObjs.map((effectObj) => (
-                                <Effect key={creature.guid + effectObj.effect} currentEffects={effects} effectObj={effectObj} updateCreatureEffects={updateCreatureEffects} />
+                                <Effect key={creature.creatureGuid + effectObj.effect} currentEffects={effects} effectObj={effectObj} updateCreatureEffects={updateCreatureEffects} />
                             ))}
                         </div>
                     </div>
@@ -418,11 +456,11 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                             <div className='extraHpContainer'>
                                 <div className='extraHpInputs' >
                                     <label className='hpTitle tempHp' style={{color: creature.hit_points_temp === 0 ? 'grey' : ''}} htmlFor='temphp'><strong>Temp HP</strong></label>
-                                    <input id='temphp' type='number' className='editStatsInputExtra tempHp' value={creature.hit_points_temp} style={{color: creature.hit_points_temp === 0 ? 'grey' : ''}} onFocus={handleHighlight} onChange={handleTempHp}/>
+                                    <input id='temphp' type='number' className='editStatsInputExtra tempHp' value={creature.hit_points_temp} style={{color: creature.hit_points_temp === 0 ? 'grey' : ''}} onFocus={handleHighlight} onChange={handleTempHp} onBlur={submitTempHpChange}/>
                                 </div>
                                 <div className='extraHpInputs'>
                                     <label className='hpTitle' htmlFor='override' style={{color: creature.hit_points_override === 0 ? 'grey' : ''}}><strong>Override HP</strong></label>
-                                    <input id='override' type='number' className='editStatsInputExtra' value={creature.hit_points_override} style={{color: creature.hit_points_override === 0 ? 'grey' : ''}} onFocus={handleHighlight} onChange={handleOverrideHp}/>
+                                    <input id='override' type='number' className='editStatsInputExtra' value={creature.hit_points_override} style={{color: creature.hit_points_override === 0 ? 'grey' : ''}} onFocus={handleHighlight} onChange={handleOverrideHp} onBlur={submitOverRideHpChange}/>
                                 </div>
                             </div>
                         </div>

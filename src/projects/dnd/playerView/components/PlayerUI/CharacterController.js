@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useRef, useState} from 'react';
 import '../../../dmView/style/App.css';
 import './App.css';
 import OptionButton from '../../../dmView/components/EncounterColumn/OptionButton.js';
@@ -15,11 +15,11 @@ const CharacterController = ({creature, isTurn, socket}) => {
     const [openHpWidget, setOpenHpWidget] = useState(false);
     const [effects, setEffects] = useState(creature.effects);
 
-    const [isHpWidgetInside, setIsHpWidgetInside] = useState(true);
+    // const [isHpWidgetInside, setIsHpWidgetInside] = useState(true);
     const [hpWidgetPosition, setHpWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0})
 
     const [openEffectWidget, setOpenEffectWidget] = useState(false);
-    const [isEffectWidgetInside, setIsEffectWidgetInside] = useState(true)
+    // const [isEffectWidgetInside, setIsEffectWidgetInside] = useState(true)
     const [effectWidgetPosition, setEffectWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0})
 
     const effectWidgetRef = useRef(null);
@@ -49,9 +49,9 @@ const CharacterController = ({creature, isTurn, socket}) => {
         if(creature.hit_points_current > creature.hit_points)
             creature.hit_points_current = creature.hit_points
 
-        console.log('handleChangeHpCreature', null, creature.hit_points_current, creature.hit_points_temp, null)
+        console.log('handleChangeHpCreature', creature.hit_points_current, creature.hit_points_temp)
         //hit_points | hit_points_current | hit_points_temp | hit_points_override
-        socket.emit('playerHpChange', {hit_points_current: creature.hit_points_current, hit_points_temp: creature.hit_points_temp});
+        socket.emit('playerHpChange', {hit_points_current: creature.hit_points_current, hit_points_temp: creature.hit_points_temp, from: "player"});
 
         setOpenHpWidget(!openHpWidget)
     }
@@ -63,11 +63,10 @@ const CharacterController = ({creature, isTurn, socket}) => {
     }
 
     const submitTempHpChange = () => {
-        console.log('submitOverRideHpChange', null, null, creature.hit_points_temp, null)
+        console.log('submitOverRideHpChange', creature.hit_points_temp)
 
         //hit_points | hit_points_current | hit_points_temp | hit_points_override
-        socket.emit('playerHpChange', {hit_points_temp: creature.hit_points_temp});
-
+        socket.emit('playerHpChange', {hit_points_temp: creature.hit_points_temp, from: "player"});
     }
 
     const handleOverrideHp = (event) => {
@@ -88,7 +87,8 @@ const CharacterController = ({creature, isTurn, socket}) => {
         socket.emit('playerHpChange', {
             hit_points: creature.hit_points,
             hit_points_current: creature.hit_points_current,
-            hit_points_override: creature.hit_points_override
+            hit_points_override: creature.hit_points_override,
+            from: "dm"
         });
 
     }
@@ -218,7 +218,7 @@ const CharacterController = ({creature, isTurn, socket}) => {
                     <div className="effectContainerFlag"/>
                     <div className="effectsBar" onClick={(event) => event.stopPropagation()} >
                         {effectObjs.map((effectObj) => (
-                            <Effect key={creature.guid + effectObj.effect} currentEffects={effects} effectObj={effectObj} updateCreatureEffects={updateCreatureEffects} />
+                            <Effect key={creature.creatureGuid + effectObj.effect} currentEffects={effects} effectObj={effectObj} updateCreatureEffects={updateCreatureEffects} />
                         ))}
                     </div>
                 </div>

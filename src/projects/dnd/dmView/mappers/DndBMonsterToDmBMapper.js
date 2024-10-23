@@ -86,7 +86,7 @@ export const DndBMonsterToDmBMapper = async (monsterRes, encounterMonsterRes) =>
         "name": encounterMonsterRes.name,
         "name_default": encounterMonsterRes.name,
         "from": "dnd_b",
-        "guid": generateUniqueId(),
+        "creatureGuid": generateUniqueId(),
         "status": monsterRes.isReleased ? 200 : 500,
         "dnd_b_monster_id": monsterRes.id,
         "link": monsterRes.url,

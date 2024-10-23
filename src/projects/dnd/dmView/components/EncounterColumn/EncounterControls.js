@@ -26,7 +26,7 @@ function getBloodImage(type) {
     return newImage
 }
 
-const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, setCardContainerStyle, handleStartEncounter, hideEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, hideDeadEnemies, setHideDeadEnemies, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange}) => {
+const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, setCardContainerStyle, handleStartEncounter, hideEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, hideDeadEnemies, setHideDeadEnemies, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange, socket}) => {
     const [encounterName, setEncounterName] = useState(currentEncounter.encounterName);
     const [arrowButton, setArrowButton] = useState(upArrow);
     const [arrowToggleType, setArrowToggleType] = useState(0);
@@ -106,10 +106,17 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
     };
 
     const handleEncounterNameChange = (e) => {
+        console.log("onBlur new name", e.target.value, currentEncounter.encounterGuid)
         if (currentEncounter.encounterName !== e.target.value) {
             setEncounterName(e.target.value);
             setCurrentEncounter(prev => ({...prev, encounterName: e.target.value}))
             setNameChange(true)
+
+            if(currentEncounter.currentEncounterCreatures.length === 0 && encounterName !== INIT_ENCOUNTER_NAME) {
+                socket.emit("newEncounter", currentEncounter.encounterGuid)
+            }
+
+            socket.emit("encounterNameChange", e.target.value, currentEncounter.encounterGuid)
         }
     };
 
@@ -127,7 +134,7 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
                     </div>
                     <div className='dmLowOptions'>
                         <OptionButton src={arrowButton} message={"Player View Icon Position"} onClickFunction={handleMovePortraits}/>
-                        <ImagePopup setPlayerViewBackground={setPlayerViewBackground} />                    
+                        <ImagePopup setPlayerViewBackground={setPlayerViewBackground} socket={socket}/>                    
                         {showRefreshButton &&
                             <OptionButton src={refreshCheck ? greenCheck : refresh} message={<RefreshTimer refresh={refreshCheck}/>} onClickFunction={() => handleRefresh()} imgClassName={refreshLoading ? 'spinningImage' : ''} />
                         }         
@@ -151,11 +158,8 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
                             </div>
                         </>
                     }
-                    
-                    
                 </div>
             </div>
-            
         </div>
     );
 }

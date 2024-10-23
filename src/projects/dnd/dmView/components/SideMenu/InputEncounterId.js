@@ -32,7 +32,7 @@ function InputEncounterId({setCurrentEncounter}) {
                 // Send the whole monsters object since it comes with hp data
                 const dmbMonsters = await ImportDndBeyondMonsters(monsters);
 
-                setCurrentEncounter(prev => ({...prev, guid: generateUniqueId(),
+                setCurrentEncounter(prev => ({...prev, encounterGuid: generateUniqueId(),
                     currentEncounterCreatures: [...prev.currentEncounterCreatures, 
                                                 ...dmbPlayers, 
                                                 ...dmbMonsters]

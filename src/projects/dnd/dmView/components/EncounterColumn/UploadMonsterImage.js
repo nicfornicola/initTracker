@@ -23,7 +23,7 @@ const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, currentEnc
 
     const handleClick = (src) => {
         currentEncounterCreatures.forEach(creature => {
-            if(uploadIconCreature.guid === creature.guid) {
+            if(uploadIconCreature.creatureGuid === creature.creatureGuid) {
                 creature.defaultImageUrl = creature.avatarUrl
                 creature.avatarUrl = src
             }
