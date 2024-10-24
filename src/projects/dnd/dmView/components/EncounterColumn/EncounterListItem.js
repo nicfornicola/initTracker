@@ -34,7 +34,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const [effects, setEffects] = useState(creature.effects);
 
     // Handler to toggle the checkbox state
-
     const hpButtonRef = useRef(null)
     const hpWidgetRef = useRef(null);
 
@@ -70,14 +69,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
           document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
-
-    useEffect(() => {
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-          document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
-
 
     useEffect(() => {
         setCreature(creatureListItem)
@@ -217,9 +208,9 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
 
     // on blur is not wokring
     const submitTempHpChange = () => {
-            console.log('submitOverRideHpChange', creature.hit_points_temp)
-            //hit_points | hit_points_current | hit_points_temp | hit_points_override
-            socket.emit('playerHpChange', {hit_points_temp: creature.hit_points_temp}, creature.creatureGuid, "dm");
+        console.log('submitOverRideHpChange', creature.hit_points_temp)
+        //hit_points | hit_points_current | hit_points_temp | hit_points_override
+        socket.emit('playerHpChange', {hit_points_temp: creature.hit_points_temp}, creature.creatureGuid, "dm");
     }
 
     const handleInitiativeChange = (event) => {
