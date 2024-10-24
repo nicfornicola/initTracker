@@ -1481,10 +1481,12 @@ input {
 }
 
 .healButton {
+    color: white;
     background-color: rgb(102, 174, 102);
 }
 
 .damageButton {
+    color: white;
     background-color: rgb(174, 102, 102);
 }
 

@@ -10,7 +10,6 @@ import Compact from '@uiw/react-color-compact';
 import { effectObjs } from '../../constants.js';
 import Effect from './Effect.js';
 
-
 const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCurrentEncounter, scrollPosition, handleUploadMonsterImage, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort, socket}) => {
     const [hidden, setHidden] = useState(creatureListItem.hidden);
     const [creature, setCreature] = useState(creatureListItem)
@@ -33,6 +32,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const [alignment, setAlignment] = useState(creature.alignment);
     const [borderColor, setBorderColor] = useState(creature.border);
     const [effects, setEffects] = useState(creature.effects);
+
     // Handler to toggle the checkbox state
 
     const hpButtonRef = useRef(null)
@@ -48,7 +48,9 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const handleClickOutside = (event) => {
         if (hpWidgetRef.current && !hpWidgetRef.current.contains(event.target) &&
             hpButtonRef.current && !hpButtonRef.current.contains(event.target)) {
-                setOpenHpWidget(false); 
+                setTimeout(() => { // set timeout to give onBlur to trigger
+                    setOpenHpWidget(false); 
+                }, 0);
         }
         
         if (teamWidgetRef.current && !teamWidgetRef.current.contains(event.target) &&
@@ -61,6 +63,13 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                 setOpenEffectWidget(false); 
         }
     };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
@@ -196,6 +205,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         if(creature.name !== newName) {
             creature.name = event.target.value
             setCreature({...creature})
+            socket.emit("creatureNameChange", newName, creature.creatureGuid, "dm")
         }
     }
 
@@ -207,9 +217,9 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
 
     // on blur is not wokring
     const submitTempHpChange = () => {
-        console.log('submitOverRideHpChange', creature.hit_points_temp)
-        //hit_points | hit_points_current | hit_points_temp | hit_points_override
-        socket.emit('playerHpChange', {hit_points_temp: creature.hit_points_temp}, creature.creatureGuid, "dm");
+            console.log('submitOverRideHpChange', creature.hit_points_temp)
+            //hit_points | hit_points_current | hit_points_temp | hit_points_override
+            socket.emit('playerHpChange', {hit_points_temp: creature.hit_points_temp}, creature.creatureGuid, "dm");
     }
 
     const handleInitiativeChange = (event) => {
@@ -277,7 +287,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
 
     const handleArmorClassChangeSubmit = (event) => {
         if(!isNaN(creature.armor_class))
-            socket.emit('armorClassChange', creature.armor_class, creature.creatureGuid, "dm");
+            socket.emit('creatureArmorClassChange', creature.armor_class, creature.creatureGuid, "dm");
     }
 
     const handleOpenEffectWidget = (event) => {

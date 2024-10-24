@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import '../../../dmView/style/App.css';
-import './App.css';
+import './PlayerUI.css';
 import OptionButton from '../../../dmView/components/EncounterColumn/OptionButton.js';
 import EffectImg from '../../../dmView/pics/icons/effectImg.png';
 import Effect from '../../../dmView/components/EncounterColumn/Effect.js';
@@ -88,7 +88,6 @@ const CharacterController = ({creature, isTurn, socket}) => {
             hit_points: creature.hit_points,
             hit_points_current: creature.hit_points_current,
             hit_points_override: creature.hit_points_override,
-            from: "dm"
         });
 
     }
@@ -157,7 +156,7 @@ const CharacterController = ({creature, isTurn, socket}) => {
                     </div>
                 </div>
             </div>
-            <div className='controllerStatsContainer'>
+            <div className='statsContainerController'>
                 <div className='chosenHpContainer'>
                     <button 
                         className='chosenHp'
@@ -180,34 +179,29 @@ const CharacterController = ({creature, isTurn, socket}) => {
                 </div>
 
                 {/* {openHpWidget && (  */}
-                    <div className='editHpContainer editHpGrow' ref={hpWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: hpWidgetPosition.top - 10}}>
-                        <div className="hpContainerFlag"/>
-                        <div className='hpOptionsContainer'>
-                            <div className='editHpButtonsContainer'>
-                                <button className='editHpButton healButton' onClick={(event) => handleChangeHpCreature("heal", event)}>HEAL</button>
-                                <div className='hpInputsContainer'>
-
-                                    <input className='editHpInput' type='number' value={hpChange} onFocus={handleHighlight} onChange={(event) => setHpChange(parseInt(event.target.value))} autoFocus/>
-                                    <div className='extraHpButtonsContainer'>
-                                        <div className='extraHpInputs' >
-                                            <label className='extraInputTitle tempHp' style={{color: creature.hit_points_temp === 0 ? 'grey' : ''}} htmlFor='temphp'><strong>Temp HP</strong></label>
+                    <div className='editHpContainerController editHpGrow' ref={hpWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: hpWidgetPosition.top - 10}}>
+                        <button className='editHpButtonController healButton' onClick={(event) => handleChangeHpCreature("heal", event)}>HEAL</button>
+                        <div className="hpContainerFlagController"/>
+                        <div className='hpOptionsContainerController'>
+                            <div className='editHpButtonsContainerController'>
+                                <div className='hpInputsContainerController'>
+                                    <input className='editHpInputController' type='number' value={hpChange} onFocus={handleHighlight} onChange={(event) => setHpChange(parseInt(event.target.value))} autoFocus/>
+                                    <div className='extraHpButtonsContainerController'>
+                                        <div className='extraHpInputsController' >
+                                            <label className='extraInputTitleController tempHp' style={{color: creature.hit_points_temp === 0 ? 'grey' : ''}} htmlFor='temphp'><strong>Temp HP</strong></label>
                                             <input id='temphp' type='number' className='editStatsInputExtra tempHp' value={creature.hit_points_temp} style={{color: creature.hit_points_temp === 0 ? 'grey' : ''}} onFocus={handleHighlight} onChange={handleTempHp} onBlur={submitTempHpChange}/>
                                         </div>
-                                        <div className='extraHpInputs'>
-                                            <label className='extraInputTitle' htmlFor='override' style={{color: creature.hit_points_override === 0 ? 'grey' : ''}}><strong>Override HP</strong></label>
+                                        <div className='extraHpInputsController'>
+                                            <label className='extraInputTitleController' htmlFor='override' style={{color: creature.hit_points_override === 0 ? 'grey' : ''}}><strong>Override HP</strong></label>
                                             <input id='override' type='number' className='editStatsInputExtra' value={creature.hit_points_override} style={{color: creature.hit_points_override === 0 ? 'grey' : ''}} onFocus={handleHighlight} onChange={handleOverrideHp} onBlur={submitOverRideHpChange}/>
                                         </div>
                                     </div>
 
-                                </div>
-
-                                
-                                
-                                <button className='editHpButton damageButton' onClick={(event) => handleChangeHpCreature("damage", event)}>DAMAGE</button>
+                                </div>                               
                             </div>
                             
                         </div>
-
+                        <button className='editHpButtonController damageButton' onClick={(event) => handleChangeHpCreature("damage", event)}>DAMAGE</button>
                     </div>
                 {/* )} */}
             </div>

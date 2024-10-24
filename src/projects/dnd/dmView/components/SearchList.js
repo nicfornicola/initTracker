@@ -154,22 +154,16 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
 
         if(action === "add") {
             setCurrentEncounter(prev => {
-                // If there are now creatures in this list, then create the encounter in the database and add to it
-                if (prev.currentEncounterCreatures.length === 0) {
-                    socket.emit("newEncounter", encounterGuid);
-                }
+                // If there are no creatures in this list, then create the encounter in the database and add to it
+                socket.emit("addCreatureToEncounter", newCreature)
               
                 // Return the updated state with the new creature added
                 return {
                   ...prev,
                   currentEncounterCreatures: [...prev.currentEncounterCreatures, newCreature]
                 };
-              });           
+            });           
             
-              console.log("emit add")
-            console.log(newCreature)
-            
-            socket.emit("addCreatureToEncounter", newCreature)
         }
         else if(action === "select")
             setSearchSelectedCreature(newCreature);

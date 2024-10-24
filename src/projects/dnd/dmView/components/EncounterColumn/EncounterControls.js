@@ -112,7 +112,7 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
             setCurrentEncounter(prev => ({...prev, encounterName: e.target.value}))
             setNameChange(true)
 
-            if(currentEncounter.currentEncounterCreatures.length === 0 && encounterName !== INIT_ENCOUNTER_NAME) {
+            if(currentEncounter.currentEncounterCreatures.length === 0 && encounterName === INIT_ENCOUNTER_NAME) {
                 socket.emit("newEncounter", currentEncounter.encounterGuid)
             }
 
