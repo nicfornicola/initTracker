@@ -190,7 +190,7 @@ export const INIT_ENCOUNTER = {
     encounterGuid: "",
     roundNum: 1,
     turnNum: 0,
-    currentEncounterCreatures: []
+    creatures: []
 }
 
 export const setLocalPlayerViewEncounter = (encounter) => {

@@ -4,13 +4,13 @@ import Icon from './Icon';
 import YouTubeEmbed from '../../dmView/components/EncounterColumn/YouTubeEmbed.js';
 
 function PlayerPage({playerView, playerViewBackground, hideEnemies, enemyBloodToggle, hideDeadEnemies, cardContainerStyle}) {
-    const [creatures, setCreatures] = useState(playerView?.currentEncounterCreatures || []);
+    const [creatures, setCreatures] = useState(playerView?.creatures || []);
     const [turnNum, setTurnNum] = useState(playerView.turnNum);
     const [roundNum, setRoundNum] = useState(playerView.RoundNum);
 
 
     useEffect(() => {
-        setCreatures([...playerView.currentEncounterCreatures])
+        setCreatures([...playerView.creatures])
         handleTurns(true, playerView.turnNum, playerView.roundNum)
     }, [playerView])
 

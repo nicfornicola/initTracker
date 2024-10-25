@@ -37,7 +37,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
     const [encounterSelectedCreature, setEncounterSelectedCreature] = useState(null);
     const [showSaveMessage, setShowSaveMessage] = useState(false);
     const [saveMessageColor, setSaveMessageColor] = useState("");
-    const [isSaveDisabled, setIsSaveDisabled] = useState(currentEncounter.currentEncounterCreatures.length === 0);
+    const [isSaveDisabled, setIsSaveDisabled] = useState(currentEncounter.creatures.length === 0);
     const [uploadIconMenu, setUploadIconMenu] = useState(false);
     const [uploadIconCreature, setUploadIconCreature] = useState(null);
 
@@ -62,14 +62,14 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
     }, [turnNum]);
 
     useEffect(() => {
-        setIsSaveDisabled(currentEncounter.currentEncounterCreatures?.length === 0)
-    }, [currentEncounter.currentEncounterCreatures]);
+        setIsSaveDisabled(currentEncounter.creatures?.length === 0)
+    }, [currentEncounter.creatures]);
 
     const clickEncounterCreatureX = (event, xCreature, index) => {
         event.stopPropagation(); 
 
-        let newArray = currentEncounter.currentEncounterCreatures.filter((_, i) => i !== index)
-        setCurrentEncounter(prev => ({...prev, currentEncounterCreatures: [...newArray]}));
+        let newArray = currentEncounter.creatures.filter((_, i) => i !== index)
+        setCurrentEncounter(prev => ({...prev, creatures: [...newArray]}));
 
         if(encounterSelectedCreature && xCreature.creatureGuid === encounterSelectedCreature.creatureGuid) {
             setEncounterSelectedCreature(null)
@@ -87,7 +87,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                     encounterGuid: currentEncounter.encounterGuid || generateUniqueId(),
                     roundNum: roundNum,
                     turnNum: turnNum,
-                    currentEncounterCreatures: currentEncounter.currentEncounterCreatures
+                    creatures: currentEncounter.creatures
                 }
             
 
@@ -152,24 +152,24 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         
         socket.emit("addCreatureToEncounter", newDummy)
 
-        setCurrentEncounter(prev => ({...prev, currentEncounterCreatures: [...prev.currentEncounterCreatures, newDummy]}));
+        setCurrentEncounter(prev => ({...prev, creatures: [...prev.creatures, newDummy]}));
     };
 
     const handleAutoRollInitiative = (event) => {
         event.stopPropagation()
         let initatives = []
-        currentEncounter.currentEncounterCreatures.forEach(creature => {
+        currentEncounter.creatures.forEach(creature => {
             let initBonus = creature.dexterity_save ? creature.dexterity_save : 0
             creature.initiative = Math.floor(Math.random() * 20) + 1 + initBonus
             initatives.push({creatureGuid: creature.creatureGuid, initiative: creature.initative})
         });      
 
         // socket.emit("autoRolledInitiative", initatives);
-        setCurrentEncounter(prev => ({...prev, currentEncounterCreatures: [...sortCreatureArray(currentEncounter.currentEncounterCreatures)]}));
+        setCurrentEncounter(prev => ({...prev, creatures: [...sortCreatureArray(currentEncounter.creatures)]}));
     }   
     
     const handleTurnNums = (action = null, e = null) => {
-        let encounterLength = currentEncounter.currentEncounterCreatures.length
+        let encounterLength = currentEncounter.creatures.length
         if(e) e.stopPropagation();
         if(action === "next") {
             setTurnNum(prevTurn => {
@@ -218,7 +218,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                 <div className='infoContainer'>
                     <EncounterListTopInfo savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} encounterName={currentEncounter.encounterName} currentEncounter={currentEncounter} setSavedEncounters={setSavedEncounters} handleSaveEncounter={handleSaveEncounter} handleNewEncounter={handleNewEncounter} saveMessageColor={saveMessageColor} showSaveMessage={showSaveMessage} isSaveDisabled={isSaveDisabled} socket={socket}/>
                     <EncounterControls setNameChange={setNameChange} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} setCardContainerStyle={setCardContainerStyle} handleTurnNums={handleTurnNums} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} hideEnemies={hideEnemies} setHideEnemies={setHideEnemies} handleRefresh={handleRefresh} refreshCheck={refreshCheck} autoRefresh={autoRefresh} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleStartEncounter={handleStartEncounter} handleAutoRollInitiative={handleAutoRollInitiative} socket={socket}/>
-                    {currentEncounter.currentEncounterCreatures.length ? (
+                    {currentEncounter.creatures.length ? (
                         <EncounterList currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleSaveEncounter={handleSaveEncounter} turnNum={turnNum} handleUploadMonsterImage={handleUploadMonsterImage} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} socket={socket}/>
                     ) : (
                         <div className='encounterCreaturesNoItemsContainer'> 
@@ -247,7 +247,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                     <>No Encounter Creature Selected</>
                 )}
             </div>
-            <UploadMonsterImage setCurrentEncounter={setCurrentEncounter} uploadIconMenu={uploadIconMenu} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} currentEncounterCreatures={currentEncounter.currentEncounterCreatures} />
+            <UploadMonsterImage setCurrentEncounter={setCurrentEncounter} uploadIconMenu={uploadIconMenu} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} creatures={currentEncounter.creatures} />
         </>
   );
 }

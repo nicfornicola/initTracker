@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import data from '../monsterJsons/5eCoreRules.json'; // Adjust the import path as necessary
-import {monsterList, imagesAvailable, proxyUrl, generateUniqueId} from '../constants'
+import {monsterList, imagesAvailable, proxyUrl, generateUniqueId, INIT_ENCOUNTER_NAME} from '../constants'
 import axios from 'axios';
 import StatBlock from './StatBlock';
 import Open5eToDmBMapper from '../mappers/Open5eToDmBMapper'
@@ -154,16 +154,20 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
 
         if(action === "add") {
             setCurrentEncounter(prev => {
+              
+                if(prev.creatures.length === 0 && prev.encounterName === INIT_ENCOUNTER_NAME) {
+                    socket.emit("newEncounter", encounterGuid)
+                }
+              
                 // If there are no creatures in this list, then create the encounter in the database and add to it
                 socket.emit("addCreatureToEncounter", newCreature)
               
                 // Return the updated state with the new creature added
                 return {
                   ...prev,
-                  currentEncounterCreatures: [...prev.currentEncounterCreatures, newCreature]
+                  creatures: [...prev.creatures, newCreature]
                 };
             });           
-            
         }
         else if(action === "select")
             setSearchSelectedCreature(newCreature);

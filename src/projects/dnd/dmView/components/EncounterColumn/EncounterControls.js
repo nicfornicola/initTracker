@@ -112,7 +112,7 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
             setCurrentEncounter(prev => ({...prev, encounterName: e.target.value}))
             setNameChange(true)
 
-            if(currentEncounter.currentEncounterCreatures.length === 0 && encounterName === INIT_ENCOUNTER_NAME) {
+            if(currentEncounter.creatures.length === 0 && encounterName === INIT_ENCOUNTER_NAME) {
                 socket.emit("newEncounter", currentEncounter.encounterGuid)
             }
 
@@ -142,7 +142,7 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
                     </div>
                 </div>
                 <div className='encounterCountrolsRight'>
-                    {currentEncounter.currentEncounterCreatures.length > 0 && 
+                    {currentEncounter.creatures.length > 0 && 
                         <>
                             <div className='encounterTitleButtonGroup' onClick={(e) => e.stopPropagation()}>
                                     <button className='dmViewButton' onClick={(e) => handleTurnNums('prev', e)}> {'<<'} </button>

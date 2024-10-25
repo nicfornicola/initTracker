@@ -7,7 +7,7 @@ import io from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 
 function WhoAreYou({playerView, playerViewBackground}) {
-    console.log("creatures", playerView?.currentEncounterCreatures)
+    console.log("creatures", playerView?.creatures)
 
     const [players, setPlayers] = useState([]);
     const [turnNum, setTurnNum] = useState(playerView.turnNum);
@@ -67,7 +67,7 @@ function WhoAreYou({playerView, playerViewBackground}) {
     }
 
     // useEffect(() => {
-    //     setCreatures([...playerView.currentEncounterCreatures])
+    //     setCreatures([...playerView.creatures])
     //     handleTurns(true, playerView.turnNum)
     // }, [playerView])
 

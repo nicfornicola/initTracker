@@ -4,7 +4,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import FileUpload from '../FileUpload';
 import GridMap from '../GridMap';
 
-const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, currentEncounterCreatures, setUploadIconMenu, uploadIconMenu}) => {
+const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, creatures, setUploadIconMenu, uploadIconMenu}) => {
     const [uploadedAvatars, setUploadedAvatars] = useState(JSON.parse(localStorage.getItem('uploadedAvatars')) || []);
     const dialogRef = useRef(null);
 
@@ -22,13 +22,13 @@ const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, currentEnc
 
 
     const handleClick = (src) => {
-        currentEncounterCreatures.forEach(creature => {
+        creatures.forEach(creature => {
             if(uploadIconCreature.creatureGuid === creature.creatureGuid) {
                 creature.defaultImageUrl = creature.avatarUrl
                 creature.avatarUrl = src
             }
         });
-        setCurrentEncounter(prev => ({...prev, currentEncounterCreatures: [...prev.currentEncounterCreatures]}))
+        setCurrentEncounter(prev => ({...prev, creatures: [...prev.creatures]}))
     };
 
   return (

@@ -82,8 +82,8 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         // If creature change then update it in the list to cause a rerender
         setCurrentEncounter(prev => ({
                 ...prev,
-                currentEncounterCreatures: [
-                    ...prev.currentEncounterCreatures.map(
+                creatures: [
+                    ...prev.creatures.map(
                         (oldCreature) => {
                             return oldCreature.creatureGuid === creature.creatureGuid ? creature : oldCreature;
                         }

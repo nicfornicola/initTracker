@@ -3,7 +3,7 @@
     "encounterGuid": "N09C0X7O14",
     "roundNum": 1,
     "turnNum": 0,
-    "currentEncounterCreatures": [
+    "creatures": [
         {
             "id":"open5e-a-mi-kuk",
             "from": "open5e",

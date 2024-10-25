@@ -33,7 +33,7 @@ function InputEncounterId({setCurrentEncounter}) {
                 const dmbMonsters = await ImportDndBeyondMonsters(monsters);
 
                 setCurrentEncounter(prev => ({...prev, encounterGuid: generateUniqueId(),
-                    currentEncounterCreatures: [...prev.currentEncounterCreatures, 
+                    creatures: [...prev.creatures, 
                                                 ...dmbPlayers, 
                                                 ...dmbMonsters]
                 }))

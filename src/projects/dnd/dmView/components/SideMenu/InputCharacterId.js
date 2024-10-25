@@ -22,7 +22,7 @@ function InputCharacterId({setCurrentEncounter}) {
         setCurrentEncounter(prev => ({
             ...prev,
             encounterGuid: prev.encounterGuid || generateUniqueId(),
-            currentEncounterCreatures: [...prev.currentEncounterCreatures, ...playerData]
+            creatures: [...prev.creatures, ...playerData]
           }));        
         setPlayerNumbers([])
         setPlayerNumberInputValue('')

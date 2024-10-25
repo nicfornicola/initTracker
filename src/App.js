@@ -96,12 +96,12 @@ function App() {
             console.log("Refreshing Player Health")
             console.log("----------------")
             //Get player stats for HP
-            const filteredPlayers = currentEncounter.currentEncounterCreatures.filter(creature => creature.type === 'player' && creature.from === 'dnd_b');
+            const filteredPlayers = currentEncounter.creatures.filter(creature => creature.type === 'player' && creature.from === 'dnd_b');
             const playerIds = filteredPlayers.map(player => player.dnd_b_player_id.toString()); // Map to get the ids as strings
             const refreshedData = await ImportDndBeyondCharacters(playerIds);
 
             // Iterate over the first array using a for loop
-            const updatedCreatures = currentEncounter.currentEncounterCreatures.map(creature => {
+            const updatedCreatures = currentEncounter.creatures.map(creature => {
                 const refreshedPlayer = refreshedData.find(data => data.dnd_b_player_id === creature.dnd_b_player_id);
 
                 // If the current creature is found in the refreshedData list then refresh data but keep a few of the old stuff
@@ -123,7 +123,7 @@ function App() {
                 return creature
             });
 
-            setCurrentEncounter(prev => ({...prev, currentEncounterCreatures: [...updatedCreatures]}));
+            setCurrentEncounter(prev => ({...prev, creatures: [...updatedCreatures]}));
             console.log("Players Refreshed!")
             return updatedCreatures;
         } catch (error) {
@@ -160,11 +160,11 @@ function App() {
 
     useEffect(() => {
         // Check current encounter to see if we need to auto refresh from DNB_B
-        if(currentEncounter.currentEncounterCreatures) {
+        if(currentEncounter.creatures) {
             let foundPlayer = false;
             let foundMonster = false;
 
-            currentEncounter.currentEncounterCreatures.forEach(creature => {
+            currentEncounter.creatures.forEach(creature => {
                 if(creature.from === "dnd_b") {
                     foundPlayer = true;
                 } else if(creature.from === "dnd_b_monster") {
