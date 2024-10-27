@@ -7,7 +7,7 @@ import isPlayerImg from '../../pics/icons/isPlayerImg.png';
 import FlagPole from './FlagPole';
 import EffectImg from '../../pics/icons/effectImg.png';
 import Compact from '@uiw/react-color-compact';
-import { effectObjs } from '../../constants.js';
+import { effectImgMap } from '../../constants.js';
 import Effect from './Effect.js';
 
 const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCurrentEncounter, scrollPosition, handleUploadMonsterImage, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort, socket}) => {
@@ -282,6 +282,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }
 
     const handleOpenEffectWidget = (event) => {
+        event.stopPropagation();
         setOpenEffectWidget(!openEffectWidget)
     }
 
@@ -289,19 +290,16 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         e.target.select();
     };
 
-    const updateCreatureEffects = (event, effectObj) => {
-        event.stopPropagation(); // Prevent propagation to parent
-        const alreadyExists = effects.some(eObj => eObj.effect === effectObj.effect);
-        let type = "add"
+    const updateCreatureEffects = (event, effect) => {
+        event.stopPropagation(); 
+        const alreadyExists = effects.some(e => e === effect);
         if(alreadyExists) {
-            setEffects(effects.filter(eObj => eObj.effect !== effectObj.effect))
-            type = "remove"
+            setEffects(effects.filter(e => e !== effect))
         } else {
-            setEffects([...effects, effectObj])
+            setEffects([...effects, effect])
 
         }
-        socket.emit('changeCreatureEffect', effectObj, type, creature.creatureGuid, "dm");
-
+        socket.emit('changeCreatureEffect', effect, alreadyExists ? "remove" : "add", creature.creatureGuid, "dm");
     };
 
     let isDead = creature.hit_points_current <= 0
@@ -315,7 +313,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     
     let hpStyle = {color: color, borderColor: color}
     let effectsCount = effects.length > 0 ? `x${effects.length}` : ''
-
+    console.log(effects)
     return (
             <li className='listItem'
                 onClick={() => setEncounterSelectedCreature(creature)}
@@ -367,7 +365,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                             <FlagPole flagColor={borderColor} handleTeamChangeWidget={handleTeamChangeWidget} ref={teamButtonRef} alignment={alignment} isWidgetOpen={openTeamWidget} />
                         </div>
                         <div ref={effectButtonRef} style={{position:"relative"}} onClick={(event) => handleOpenEffectWidget(event)}>
-                            <OptionButton src={EffectImg} message={`Effects ${effectsCount}`} imgStyle={{margin: 0,animation: effectsCount ? 'shadowPulse 4s ease-in-out infinite' : ''}}/>
+                            <OptionButton src={EffectImg} message={`Effects ${effectsCount}`} imgStyle={{margin: 0, animation: effectsCount ? 'shadowPulse 4s ease-in-out infinite' : ''}}/>
                             {effectsCount &&
                                 <div className='effectsCounter'>{effectsCount}</div>
                             }
@@ -433,15 +431,17 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                 )}
                 {openEffectWidget && isEffectWidgetInside && ( 
                     <div className='effectsBarContainer editHpGrow' ref={effectWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: effectWidgetPosition.bottom + 10, left: effectWidgetPosition.left - effectWidgetPosition.width*17.8}}>
-                        {/* <img className='effectsBarPlayerAvatar'
-                            src={creature.avatarUrl}
-                            alt={"avatar"}
-                        /> */}
                         <div className="effectContainerFlag"/>
                         <div className="effectsBar" onClick={(event) => event.stopPropagation()} >
-                            {effectObjs.map((effectObj) => (
-                                <Effect key={creature.creatureGuid + effectObj.effect} currentEffects={effects} effectObj={effectObj} updateCreatureEffects={updateCreatureEffects} />
-                            ))}
+                        {Object.entries(effectImgMap).map(([effect, image]) => (
+                            <Effect 
+                                key={creature.creatureGuid + effect} 
+                                currentEffects={effects} 
+                                updateCreatureEffects={updateCreatureEffects} 
+                                effect={effect} // Create an object to maintain effect structure
+                                image={image} // Use the corresponding image
+                            />
+                        ))}
                         </div>
                     </div>
                 )}

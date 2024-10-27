@@ -148,7 +148,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         }
 
         newDummy.creatureGuid = generateUniqueId()
-        newDummy.encounterGuid = generateUniqueId()
+        newDummy.encounterGuid = currentEncounter.encounterGuid;
         
         socket.emit("addCreatureToEncounter", newDummy)
 

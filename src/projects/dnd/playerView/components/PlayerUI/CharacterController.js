@@ -4,7 +4,7 @@ import './PlayerUI.css';
 import OptionButton from '../../../dmView/components/EncounterColumn/OptionButton.js';
 import EffectImg from '../../../dmView/pics/icons/effectImg.png';
 import Effect from '../../../dmView/components/EncounterColumn/Effect.js';
-import { effectObjs } from '../../../dmView/constants.js';
+import { effectImgMap } from '../../../dmView/constants.js';
 
 
 const CharacterController = ({creature, isTurn, socket}) => {
@@ -96,14 +96,16 @@ const CharacterController = ({creature, isTurn, socket}) => {
         setOpenEffectWidget(!openEffectWidget)
     }
 
-    const updateCreatureEffects = (event, effectObj) => {
-        event.stopPropagation(); // Prevent propagation to parent
-        const alreadyExists = effects.some(eObj => eObj.effect === effectObj.effect);
+    const updateCreatureEffects = (event, effect) => {
+        event.stopPropagation(); 
+        const alreadyExists = effects.some(e => e === effect);
         if(alreadyExists) {
-            setEffects(effects.filter(eObj => eObj.effect !== effectObj.effect))
+            setEffects(effects.filter(e => e !== effect))
         } else {
-            setEffects([...effects, effectObj])
+            setEffects([...effects, effect])
+
         }
+        socket.emit('changeCreatureEffect', effect, alreadyExists ? "remove" : "add", creature.creatureGuid, "player");
     };
 
     const handleHighlight = (e) => {
@@ -211,8 +213,14 @@ const CharacterController = ({creature, isTurn, socket}) => {
                 <div className='effectsBarContainer editHpGrow' ref={effectWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: effectWidgetPosition.bottom + 10, left: effectWidgetPosition.left - effectWidgetPosition.width*17.8}}>
                     <div className="effectContainerFlag"/>
                     <div className="effectsBar" onClick={(event) => event.stopPropagation()} >
-                        {effectObjs.map((effectObj) => (
-                            <Effect key={creature.creatureGuid + effectObj.effect} currentEffects={effects} effectObj={effectObj} updateCreatureEffects={updateCreatureEffects} />
+                        {Object.entries(effectImgMap).map(([effect, image]) => (
+                            <Effect 
+                                key={creature.creatureGuid + effect} 
+                                currentEffects={effects} 
+                                updateCreatureEffects={updateCreatureEffects} 
+                                effect={effect} // Create an object to maintain effect structure
+                                image={image} // Use the corresponding image
+                            />
                         ))}
                     </div>
                 </div>

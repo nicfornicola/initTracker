@@ -1,6 +1,6 @@
 import '../../dmView/style/App.css';
 import React from 'react';
-import { levelData } from '../constants';
+import { levelData, effectImgMap } from '../constants';
 import SkillGrid from './SkillGrid';
 
 function getSpells(spellString) {
@@ -121,7 +121,7 @@ const StatBlock = ({creature, img, closeFunction }) => {
                             {creature.effects.length > 0 &&
                                 <div style={{backgroundColor: "black", width: 'fit-content', borderRadius: 5}}>
                                     {creature.effects.map((effect) => (
-                                        <img alt='effect' className='effect' src={effect.img}/>
+                                        <img alt='effect' className='effect' src={effectImgMap[effect]}/>
                                     ))}
                                 </div>
                             }
@@ -211,20 +211,21 @@ const StatBlock = ({creature, img, closeFunction }) => {
                                         }
                                     </>
                                 ) : (
-                                    creature.special_abilities?.map((ability, index) => (
-                                        <div className='actionInfo' key={index+ability.name}>
-                                            <strong>{ability.name}: </strong>
-                                            {ability.name === "Spellcasting" ? (
-                                                <>
-                                                    {getSpells(getDesc(ability))}
-                                                </>
-                                            ) : (
-                                                <>
-                                                    {getDesc(ability)}
-                                                </>
-                                            )}
-                                        </div>
-                                    ))
+                                    <>special abilities</>
+                                    // creature.special_abilities?.map((ability, index) => (
+                                    //     <div className='actionInfo' key={index+ability.name}>
+                                    //         <strong>{ability.name}: </strong>
+                                    //         {ability.name === "Spellcasting" ? (
+                                    //             <>
+                                    //                 {getSpells(getDesc(ability))}
+                                    //             </>
+                                    //         ) : (
+                                    //             <>
+                                    //                 {getDesc(ability)}
+                                    //             </>
+                                    //         )}
+                                    //     </div>
+                                    // ))
                                 )}
                             </>
                         }
@@ -306,9 +307,9 @@ const StatBlock = ({creature, img, closeFunction }) => {
                             <div className='extraInfo'>
                                 <hr className="lineSeperator" />
                                 <strong>Environments: </strong>
-                                {creature.environments.map((value) => (
+                                {/* {creature.environments.map((value) => (
                                     <span key={value}>{value}, </span>
-                                ))}
+                                ))} */}
                             </div>
                         )}
                     </div>

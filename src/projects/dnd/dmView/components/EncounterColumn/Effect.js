@@ -1,18 +1,18 @@
 import React from 'react';
 
-const Effect = ({currentEffects, effectObj, updateCreatureEffects}) => {
-    const hasEffect = currentEffects.some(eObj => eObj.effect === effectObj.effect);
+const Effect = ({currentEffects, updateCreatureEffects, effect, image}) => {
+    const hasEffect = currentEffects.some(e => e === effect);
 
     return (
         <div className='effectWrapper'>
             <img className='effect'
-                src={effectObj.img}
-                alt={effectObj.effect}
+                src={image}
+                alt={effect}
                 style={{ 
                     opacity: hasEffect ? 0.3 : 1, 
                     border: hasEffect ? '1px solid #ffffff' : ''
                 }}
-                onClick={(event) => updateCreatureEffects(event, effectObj)}
+                onClick={(event) => updateCreatureEffects(event, effect)}
             />
         </div>
     );

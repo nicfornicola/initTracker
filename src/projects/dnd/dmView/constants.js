@@ -149,6 +149,33 @@ export const effectObjs = [
     {img: webbed, effect: "Enwebbed"}, 
 ];
 
+export const effectImgMap = {
+    "Aided": aid,
+    "Baned": bane, 
+    "Blade Ward": bladeWard, 
+    "Blessed": bless, 
+    "Blinded": blinded, 
+    "Bone Chilled": boneChilled, 
+    "Bark Skin": barkSkin, 
+    "Command": command, 
+    "Confused": confused, 
+    "Disguised": disguised, 
+    "Ensnared": ensnared, 
+    "Faerie Fire": faerieFire, 
+    "Guidance": guidance, 
+    "Guiding Bolt": guidingBolt, 
+    "Hexed": hex, 
+    "Hold Person": holdPerson, 
+    "Hunters Mark": huntersMark, 
+    "Invisible": invis, 
+    "Poisened": poisened, 
+    "Slowed": rayOfFrost, 
+    "Sheild Of Faith": sheildOfFaith, 
+    "Silenced": silence, 
+    "Slept": slept, 
+    "Enwebbed": webbed, 
+};
+
 export const LONG_REFRESH = 10
 export const SHORT_REFRESH = 1
 
@@ -415,7 +442,7 @@ export const envObject = {
         "walk": 0
     },
     "languages": "Terren",
-    "challenge_rating": "--",
+    "challenge_rating": null,
     "cr": "--",
     "actions": [
         {
