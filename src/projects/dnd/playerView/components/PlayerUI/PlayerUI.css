@@ -1,0 +1,78 @@
+.hpContainerFlagController {
+    position: absolute;
+    transform: rotate(45deg);
+    top: -9px;
+    right:  calc(48.5%);
+    background-color: inherit;
+    height: 16px;
+    width: 16px;
+    border-top: inherit;
+    border-left: inherit;
+}
+
+.statsContainerController {
+    display: flex;
+    flex-direction: column;
+}
+
+.editHpContainerController {
+    display: flex;
+    position: relative;
+    margin-top: 20px;
+    background-color: burlywood;
+    height: 80px;
+    border-radius: 10px;
+}
+
+.hpOptionsContainerController {
+    display: flex;
+    flex-direction: column;
+}
+
+.editHpButtonsContainerController {
+    display: flex;
+    flex-direction: row;
+}
+
+.extraHpButtonsContainerController {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly
+}
+
+.hpInputsContainerController {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.editHpButtonController {
+    position: relative;
+    width: 30%;
+    padding: 0px;
+    border-radius: 5px;
+    font-family: 'Bitter', serif;
+    color: white;
+    border: 1px solid rgb(85, 85, 85);
+    box-shadow: 1px 1px 5px black;
+}
+
+.extraHpInputsController {
+    width: 30%;
+}
+
+.editHpInputController {
+    border: 0px solid #ae2626;
+    border-radius: 5px;
+    width: 100%;
+    height: 30%;
+    box-sizing: border-box;
+    font-size: large;
+    text-align: center;
+    text-decoration: underline; 
+    background-color: rgb(255, 255, 255);
+}
+
+.extraInputTitleController {
+
+}

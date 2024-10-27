@@ -49,7 +49,6 @@ const CharacterController = ({creature, isTurn, socket}) => {
         if(creature.hit_points_current > creature.hit_points)
             creature.hit_points_current = creature.hit_points
 
-        console.log('handleChangeHpCreature', creature.hit_points_current, creature.hit_points_temp)
         //hit_points | hit_points_current | hit_points_temp | hit_points_override
         socket.emit('playerHpChange', {hit_points_current: creature.hit_points_current, hit_points_temp: creature.hit_points_temp, from: "player"});
 
@@ -63,8 +62,6 @@ const CharacterController = ({creature, isTurn, socket}) => {
     }
 
     const submitTempHpChange = () => {
-        console.log('submitOverRideHpChange', creature.hit_points_temp)
-
         //hit_points | hit_points_current | hit_points_temp | hit_points_override
         socket.emit('playerHpChange', {hit_points_temp: creature.hit_points_temp, from: "player"});
     }
@@ -82,7 +79,6 @@ const CharacterController = ({creature, isTurn, socket}) => {
     }
 
     const submitOverRideHpChange = () => {
-        console.log('submitOverRideHpChange', creature.hit_points, creature.hit_points_current, null, creature.hit_points_override)
         //hit_points | hit_points_current | hit_points_temp | hit_points_override
         socket.emit('playerHpChange', {
             hit_points: creature.hit_points,

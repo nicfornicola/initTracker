@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import ChampionImage from '../../pics/icons/refreshPlayers.png'
 import { ImportDndBeyondCharacters } from '../../api/ImportDndBeyondCharacters'
-import { generateUniqueId } from '../../constants'
+import { generateUniqueId, INIT_ENCOUNTER_NAME} from '../../constants'
 
-function InputCharacterId({setCurrentEncounter}) {
+function InputCharacterId({setCurrentEncounter, encounterGuid, socket}) {
     const [playerNumbers, setPlayerNumbers] = useState([]);
     const [playerNumberInputValue, setPlayerNumberInputValue] = useState('');
 
@@ -17,13 +17,23 @@ function InputCharacterId({setCurrentEncounter}) {
 
     //124519382, 124686426, 124687100, 125381766, 125717017, 125809224]
     const handleDndCharacterImport = async () => {
-        const playerData = await ImportDndBeyondCharacters(playerNumbers);
+        const playerData = await ImportDndBeyondCharacters(playerNumbers, encounterGuid);
         
-        setCurrentEncounter(prev => ({
+        setCurrentEncounter(prev => {
+            const eGuid = prev.encounterGuid || generateUniqueId();
+
+            if(prev.creatures.length === 0 && prev.encounterName === INIT_ENCOUNTER_NAME) {
+                socket.emit("newEncounter", eGuid)
+            }
+
+            socket.emit("importedDndBCreatures", playerData);
+
+            return {
             ...prev,
-            encounterGuid: prev.encounterGuid || generateUniqueId(),
+            encounterGuid: eGuid,
             creatures: [...prev.creatures, ...playerData]
-          }));        
+          }
+        });        
         setPlayerNumbers([])
         setPlayerNumberInputValue('')
     }

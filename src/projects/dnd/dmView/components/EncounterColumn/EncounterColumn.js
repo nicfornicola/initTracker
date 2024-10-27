@@ -75,7 +75,6 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
             setEncounterSelectedCreature(null)
         }
 
-        console.log(xCreature)
         socket.emit("removeCreatureFromEncounter", xCreature.creatureGuid)
     };  
 

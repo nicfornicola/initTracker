@@ -45,10 +45,8 @@ function App() {
     const location = useLocation();
     useEffect(() => {
         // Initialize GA with your Measurement ID
-        console.log("init")
         ReactGA.initialize("G-R3XHSS7071", { debug: false });
 
-    
         // Trigger page view on route change
         ReactGA.send({ hitType: "pageview", page: location.pathname });
       }, [location]);
@@ -98,7 +96,7 @@ function App() {
             //Get player stats for HP
             const filteredPlayers = currentEncounter.creatures.filter(creature => creature.type === 'player' && creature.from === 'dnd_b');
             const playerIds = filteredPlayers.map(player => player.dnd_b_player_id.toString()); // Map to get the ids as strings
-            const refreshedData = await ImportDndBeyondCharacters(playerIds);
+            const refreshedData = await ImportDndBeyondCharacters(playerIds.encounterGuid);
 
             // Iterate over the first array using a for loop
             const updatedCreatures = currentEncounter.creatures.map(creature => {

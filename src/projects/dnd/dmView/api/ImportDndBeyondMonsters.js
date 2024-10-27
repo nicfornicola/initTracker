@@ -2,7 +2,7 @@ import axios from 'axios';
 import { proxyUrl } from '../constants';
 import DndBCharacterToDmBMapper from '../mappers/DndBMonsterToDmBMapper';
 
-export const ImportDndBeyondMonsters = async (encounterMonsters) => {
+export const ImportDndBeyondMonsters = async (encounterMonsters, encounterGuid) => {
 
     // Filter objects where type === 'monster'    
     const urlIds = [...new Set(encounterMonsters.map(monster => `ids=${monster.id}&`))].join('');
@@ -22,7 +22,7 @@ export const ImportDndBeyondMonsters = async (encounterMonsters) => {
         monstersRes = response.data.data;
         encounterMonsters.forEach(encounterMonster => {
             const foundMonsterRes = monstersRes.find(monster => monster.id === encounterMonster.id);
-            mappedMonsters.push(DndBCharacterToDmBMapper(foundMonsterRes, encounterMonster));
+            mappedMonsters.push(DndBCharacterToDmBMapper(foundMonsterRes, encounterMonster, encounterGuid));
         });
 
 

@@ -3,7 +3,7 @@ import { getSkillDetails } from '../../playerView/api/getSkillDetails';
 import { proxyUrl } from '../constants';
 import DndBCharacterToDmBMapper from '../mappers/DndBCharacterToDmBMapper'
 
-export const ImportDndBeyondCharacters = async (playerIds, encounterPlayerData=undefined) => {
+export const ImportDndBeyondCharacters = async (playerIds, encounterGuid, encounterPlayerData=undefined) => {
     console.log("Import Character-service in ImportDndBeyondCharacters");
     let i = 1;
     const baseUrl = `${proxyUrl}https://character-service.dndbeyond.com/character/v5/character/`;
@@ -23,7 +23,7 @@ export const ImportDndBeyondCharacters = async (playerIds, encounterPlayerData=u
             console.log(i.toString() + "/" + playerIds.length + " " + resData.name + " retrieved! (" + playerId +")");
             i++;
             let skillDetails = getSkillDetails(resData)
-            return DndBCharacterToDmBMapper(resData, skillDetails)
+            return DndBCharacterToDmBMapper(resData, encounterGuid, skillDetails)
         } catch (error) {
             console.log(i.toString() + "/" + playerIds.length + " failed! (" + playerId +")");
             i++;

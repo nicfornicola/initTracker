@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-import { generateUniqueId } from '../../constants';
+import { generateUniqueId, INIT_ENCOUNTER_NAME } from '../../constants';
 import EncounterImage from '../../pics/icons/importDndBEncounter.png'
 import { ImportDndBeyondCharacters } from '../../api/ImportDndBeyondCharacters'
 import { ImportDndBeyondEncounter } from '../../api/ImportDndBeyondEncounter'
 import { ImportDndBeyondMonsters } from '../../api/ImportDndBeyondMonsters'
 
-function InputEncounterId({setCurrentEncounter}) { 
+function InputEncounterId({setCurrentEncounter, encounterGuid, socket}) { 
     //61523d85-da0d-47c8-a796-f9409be52c93
     //ed9784fc-5aba-473a-9ae9-166fed396e8e - save the king final garden
     const [dndbEncounterId, setDndbEncounterId] = useState('ece19692-6830-4ad3-9e28-ed612f3de79b');
@@ -27,16 +27,27 @@ function InputEncounterId({setCurrentEncounter}) {
                 
                 // Turn the players objects into an array of numbers to match user input
                 const playerIds = players.map(player => player.id);
-                const dmbPlayers = await ImportDndBeyondCharacters(playerIds, players);
+                const dmbPlayers = await ImportDndBeyondCharacters(playerIds, encounterGuid, players);
 
                 // Send the whole monsters object since it comes with hp data
-                const dmbMonsters = await ImportDndBeyondMonsters(monsters);
+                const dmbMonsters = await ImportDndBeyondMonsters(monsters, encounterGuid);
+                socket.emit("addEncounter")
+                setCurrentEncounter(prev => {
+                    const eGuid = prev.encounterGuid || generateUniqueId();
 
-                setCurrentEncounter(prev => ({...prev, encounterGuid: generateUniqueId(),
-                    creatures: [...prev.creatures, 
-                                                ...dmbPlayers, 
-                                                ...dmbMonsters]
-                }))
+                    if(prev.creatures.length === 0 && prev.encounterName === INIT_ENCOUNTER_NAME) {
+                        socket.emit("newEncounter", eGuid)
+                    }
+
+                    const newCreatures = [...dmbPlayers, ...dmbMonsters];
+                    socket.emit("importedDndBCreatures", newCreatures);
+
+                    return {
+                      ...prev,
+                      encounterGuid: eGuid,
+                      creatures: [...prev.creatures, ...newCreatures]
+                    };
+                });
                 console.log("Creatures Imported!")
             }
         } catch (error) {

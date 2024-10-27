@@ -42,7 +42,6 @@ function WhoAreYou({playerView, playerViewBackground}) {
             
             // Recieve messages from backend
             socket.on('setGivenName', (playerName) => {
-                console.log(playerName)
                 setGivenName(playerName); 
             });
 
@@ -61,7 +60,6 @@ function WhoAreYou({playerView, playerViewBackground}) {
 
 
     const handleSetSelectedCharacter = (creature) => {
-        console.log(creature)
         setSelectedCharacter(creature)
         socket.emit('characterSelected', creature.creatureGuid, creature.name);
     }
@@ -80,7 +78,6 @@ function WhoAreYou({playerView, playerViewBackground}) {
         setSelectedCharacter(null)
     }
 
-    console.log(givenName)
     return (
         <div className="background playerViewAdds" style={{backgroundImage: playerViewBackground.type === "image" && playerViewBackground.src ? `url(${playerViewBackground.src})` : 'none'}}>
             {messages && 

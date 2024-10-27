@@ -106,7 +106,6 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
     };
 
     const handleEncounterNameChange = (e) => {
-        console.log("onBlur new name", e.target.value, currentEncounter.encounterGuid)
         if (currentEncounter.encounterName !== e.target.value) {
             setEncounterName(e.target.value);
             setCurrentEncounter(prev => ({...prev, encounterName: e.target.value}))

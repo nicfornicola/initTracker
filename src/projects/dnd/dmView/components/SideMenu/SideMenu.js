@@ -33,7 +33,7 @@ function downloadLocalStorage() {
     document.body.removeChild(a);
 }
 
-function SideMenu({uploadLocalStorage, setCurrentEncounter, showSearchList, setShowSearchList}) {
+function SideMenu({uploadLocalStorage, setCurrentEncounter, showSearchList, setShowSearchList, encounterGuid, socket}) {
     const [isOpen, setIsOpen] = useState(false);
 
     // Toggle the menu state
@@ -68,10 +68,10 @@ function SideMenu({uploadLocalStorage, setCurrentEncounter, showSearchList, setS
                     />
                 </li>
                 <li className='menuItem' onClick={() => setIsOpen(true)}>
-                    <InputCharacterId setCurrentEncounter={setCurrentEncounter}/>
+                    <InputCharacterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket}/>
                 </li>
                 <li className='menuItem' onClick={() => setIsOpen(true)}>
-                    <InputEncounterId setCurrentEncounter={setCurrentEncounter} />
+                    <InputEncounterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket}/>
                 </li>
                 <li className='menuItemLow'>
                     <a className='menuHelpLink' href='/help'> <img src={questionMark} alt="Click to Upload" className="menuIcon" /> Help  Page</a>

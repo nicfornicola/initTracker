@@ -128,17 +128,17 @@ const DmView = ({currentEncounter, onFirstLoad, refreshLoading, setCurrentEncoun
 
                         <div className='firstLoadOptionsImports'>
                             Import an encounter from Dnd Beyond
-                            <InputEncounterId setCurrentEncounter={setCurrentEncounter}/>
+                            <InputEncounterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket}/>
                             or
                             <span>Import Dnd Beyond Character</span>
-                            <InputCharacterId setCurrentEncounter={setCurrentEncounter}/>
+                            <InputCharacterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket}/>
                         </div>
                     </div>
                 </div>
 
             ) : ( 
                 <>
-                    <SideMenu uploadLocalStorage={uploadLocalStorage} setCurrentEncounter={setCurrentEncounter} showSearchList={showSearchList} setShowSearchList={setShowSearchList}/>
+                    <SideMenu uploadLocalStorage={uploadLocalStorage} setCurrentEncounter={setCurrentEncounter} showSearchList={showSearchList} setShowSearchList={setShowSearchList} encounterGuid={encounterGuid} socket={socket}/>
                     {showSearchList &&  
                         <SearchList setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} encounterName={currentEncounter.encounterName} socket={socket}/>
                     }

@@ -29,7 +29,6 @@ const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter
     const handleDropDownOptionClicked = (encounter) => {
         setIsOpen(false);
         handleLoadEncounter(encounter);
-        console.log(encounter)
     };
 
     let buttonString = "No Saved Encounters"

@@ -181,7 +181,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }
 
     const submitOverRideHpChange = () => {
-        console.log('submitOverRideHpChange', creature.hit_points, creature.hit_points_current, creature.hit_points_override)
         //hit_points | hit_points_current | hit_points_temp | hit_points_override
         socket.emit('playerHpChange', {
             hit_points: creature.hit_points,
@@ -208,7 +207,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
 
     // on blur is not wokring
     const submitTempHpChange = () => {
-        console.log('submitOverRideHpChange', creature.hit_points_temp)
         //hit_points | hit_points_current | hit_points_temp | hit_points_override
         socket.emit('playerHpChange', {hit_points_temp: creature.hit_points_temp}, creature.creatureGuid, "dm");
     }
@@ -313,7 +311,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     
     let hpStyle = {color: color, borderColor: color}
     let effectsCount = effects.length > 0 ? `x${effects.length}` : ''
-    console.log(effects)
     return (
             <li className='listItem'
                 onClick={() => setEncounterSelectedCreature(creature)}

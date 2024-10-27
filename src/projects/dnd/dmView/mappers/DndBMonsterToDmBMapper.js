@@ -74,7 +74,7 @@ const getSpeed = (movements) => {
 
 
 //doesnt work on things you dont own
-export const DndBMonsterToDmBMapper = async (monsterRes, encounterMonsterRes) => {
+export const DndBMonsterToDmBMapper = async (monsterRes, encounterMonsterRes, encounterGuid) => {
 
     const lvlObjsArray = Object.entries(levelData);
     const lvlKeys = Object.keys(levelData);
@@ -87,6 +87,7 @@ export const DndBMonsterToDmBMapper = async (monsterRes, encounterMonsterRes) =>
         "name_default": encounterMonsterRes.name,
         "from": "dnd_b",
         "creatureGuid": generateUniqueId(),
+        "encounterGuid": encounterGuid,
         "status": monsterRes.isReleased ? 200 : 500,
         "dnd_b_monster_id": monsterRes.id,
         "link": monsterRes.url,
@@ -105,11 +106,12 @@ export const DndBMonsterToDmBMapper = async (monsterRes, encounterMonsterRes) =>
         "effects": [],
         "creature_type": creatureTypes[monsterRes.typeId],
         "inspiration": false,
-        "armor_class": monsterRes.armorClass,
+        "armor_class": monsterRes.armorClass || 0,
         "armor_desc": removeHTMLTags(monsterRes.armorClassDescription), 
         "inventory": [],
         "speed": getSpeed(monsterRes.movements),
-        "skills": removeHTMLTags(monsterRes.skillsHtml),
+        "skills": [removeHTMLTags(monsterRes.skillsHtml)],
+        "spell_list": [],
         "hidden": false,
         ...stats,
         "hit_dice": monsterRes.hitPointDice.diceString || '',
@@ -123,7 +125,13 @@ export const DndBMonsterToDmBMapper = async (monsterRes, encounterMonsterRes) =>
         "legendary_actions": monsterRes.legendaryActionsDescription,
         "size": creatureSizes[monsterRes.sizeId],
         "isReleased": monsterRes.isReleased,
-        // "damage_resistances": "Dnd_Beyond doesn't provide this info :("
+        "damage_resistances": ["Dnd_Beyond doesn't provide this info :("],
+        "environments": [],
+        "deathSaves": {
+            "failCount": 0,
+            "successCount": 0,
+            "isStabilized": true
+        }
     }
     return returnObj
 };

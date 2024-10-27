@@ -95,7 +95,6 @@ export const proxyUrl = isProd
                         : "";
                         
 proxyUrl === "" ? console.log("No Proxy") : console.log("Using Proxy")
-console.log(proxyUrl)
 
 export const skills_long = ["Strength Score", "Dexterity Score", "Constitution Score", "Intelligence Score", "Wisdom Score", "Charisma Score"];
 export const skill_codes = [3520, 3521, 3522, 3523, 3524, 3525];

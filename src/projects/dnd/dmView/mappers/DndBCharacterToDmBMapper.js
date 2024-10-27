@@ -1,6 +1,6 @@
 import {generateUniqueId, COLOR_GREEN } from '../constants';
 
-export const DndBCharacterToDmBMapper = async (dndBeyondRes, skillDetails=undefined) => {
+export const DndBCharacterToDmBMapper = async (dndBeyondRes, encounterGuid, skillDetails=undefined) => {
 
     // Full info is available from dndB
     if(skillDetails) {
@@ -12,16 +12,17 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, skillDetails=undefi
             "name_default": dndBeyondRes.name,
             "from": "dnd_b",
             "creatureGuid": generateUniqueId(),
+            "encounterGuid": encounterGuid,
             "status": dndBeyondRes.status,
             "dnd_b_player_id": dndBeyondRes.id,
             "link": dndBeyondRes.link,
             "avatarUrl": dndBeyondRes.decorations.avatarUrl || 'https://www.dndbeyond.com/Content/Skins/Waterdeep/images/icons/monsters/humanoid.jpg',
             "hit_points": calculatedHp,
             "hit_points_default": calculatedHp,
-            "hit_points_current": calculatedHp - dndBeyondRes.removedHitPoints,
-            "hit_points_temp": dndBeyondRes.temporaryHitPoints,
-            "hit_points_override": dndBeyondRes.overrideHitPoints, //dnd beyonds override max hp
-            "hit_points_modifier": dndBeyondRes.bonusHitPoints, //dnd beyonds max hp modifier
+            "hit_points_current": calculatedHp - dndBeyondRes.removedHitPoints || 0,
+            "hit_points_temp": dndBeyondRes.temporaryHitPoints || 0,
+            "hit_points_override": dndBeyondRes.overrideHitPoints || 0, //dnd beyonds override max hp
+            "hit_points_modifier": dndBeyondRes.bonusHitPoints || 0, //dnd beyonds max hp modifier
             "initiative": 0,
             "last_damage":null,
             "deathSaves": dndBeyondRes.deathSaves,
@@ -33,10 +34,12 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, skillDetails=undefi
             "effects": [],
             "creature_type": dndBeyondRes.race.fullName,
             "inspiration": dndBeyondRes.inspiration,
-            "armor_class": armorClass,
+            "armor_class": armorClass || 0,
             "inventory": inventory,
-            "skills": skills_json_array,
-            "hidden": false
+            "skills": skills_json_array || [],
+            "spell_list": [],
+            "hidden": false,
+            "environments": []
         }
     } else {
         return {
@@ -45,6 +48,7 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, skillDetails=undefi
             "level": dndBeyondRes.level,
             "from": "dnd_b",
             "creatureGuid": generateUniqueId(),
+            "encounterGuid": encounterGuid,
             "status": 403,
             "dnd_b_player_id": dndBeyondRes.id,
             "link": "",
@@ -72,8 +76,11 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, skillDetails=undefi
             "inspiration": false,
             "armor_class": null,
             "inventory": null,
-            "skills": null,
-            "hidden": false
+            "skills":  [],
+            "spell_list": [],   
+            "hidden": false,
+            "environments": []
+
         }
     }
 };
