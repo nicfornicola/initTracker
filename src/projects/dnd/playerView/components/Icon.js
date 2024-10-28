@@ -36,7 +36,7 @@ const Icon = ({creature, isTurn, hideDeadEnemies, enemyBloodToggle}) => {
 
     let isDead = (creature.hit_points_current <= 0 || creature.exhaustionLvl === 6) && creature.type !== "global"
     let showHp = isAlly || (enemyBloodToggle === 2)
-    let showDeathSaves = isPlayer && (creature.deathSaves.successCount >= 0 && creature.deathSaves.failCount >= 0)
+    let showDeathSaves = isPlayer && (creature.death_saves_success_count >= 0 && creature.death_saves_failure_count >= 0)
     let isBloodied = false;
     let name = isPlayer ? "" : creature.name
     let lastName = ""
@@ -71,7 +71,7 @@ const Icon = ({creature, isTurn, hideDeadEnemies, enemyBloodToggle}) => {
                                 <>
                                     <img className="image overlay-skull" src={skullpng} alt="" />
                                     {showDeathSaves && (
-                                        <DeathSaves deathSaves={creature.deathSaves} />
+                                        <DeathSaves pass={creature.death_saves_success_count} fail={creature.death_saves_failure_count} />
                                     )}
                                 </>
                                 

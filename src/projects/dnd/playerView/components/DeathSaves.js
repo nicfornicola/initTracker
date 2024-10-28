@@ -3,13 +3,13 @@ import React from 'react';
 import deathSaveDefault from '../../dmView/pics/icons/deathSaveDefault.png'
 import deathSaveFail from '../../dmView/pics/icons/deathSaveFail.png'
 import deathSaveSuccess from '../../dmView/pics/icons/deathSaveSuccess.png'
-const DeathSaves = ({deathSaves}) => {
+const DeathSaves = ({pass, fail}) => {
 
     const saves = [];
     const fails = [];
 
-    let saveCount = deathSaves.successCount;
-    let failCount = deathSaves.failCount;
+    let saveCount = pass;
+    let failCount = fail;
 
     for (let i = 0; i < 3; i++) {
         saves.push(<img key={i} alt="deathSaves" className="circle" src={saveCount > 0 ? deathSaveSuccess : deathSaveDefault} />);

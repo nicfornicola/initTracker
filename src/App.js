@@ -227,7 +227,7 @@ function App() {
     return (
         <Routes>
             <Route path="/" element={<DmView currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} onFirstLoad={onFirstLoad} refreshLoading={refreshLoading} cardContainerStyle={cardContainerStyle} setCardContainerStyle={setCardContainerStyle} playerViewBackground={playerViewBackground} setPlayerViewBackground={setPlayerViewBackground} handleRefresh={handleRefresh} refreshCheck={refreshCheck} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} autoRefresh={autoRefresh} uploadLocalStorage={uploadLocalStorage} localSavedEncounters={localSavedEncounters}/>}/>
-            <Route path="/playerView" element={<PlayerPage playerView={playerView} playerViewBackground={playerViewBackground} hideEnemies={hideEnemies} cardContainerStyle={cardContainerStyle} enemyBloodToggle={enemyBloodToggle} hideDeadEnemies={hideDeadEnemies}/>} />
+            <Route path="/playerView/:encounterGuid" element={<PlayerPage playerView={playerView} playerViewBackground={playerViewBackground} hideEnemies={hideEnemies} cardContainerStyle={cardContainerStyle} enemyBloodToggle={enemyBloodToggle} hideDeadEnemies={hideDeadEnemies}/>} />
             <Route path="/join/:encounterGuid" element={<WhoAreYou playerView={playerView} playerViewBackground={playerViewBackground} />} />
             <Route path="/help" element={<HowTo/>} />
             <Route path="/king/" element={<Pantheon />} />
