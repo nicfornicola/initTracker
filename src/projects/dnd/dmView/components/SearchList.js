@@ -99,7 +99,9 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
                 return {avatarUrl: "https://www.dndbeyond.com/avatars/0/10/636238825974097081.jpeg", largeAvatarUrl: "https://www.dndbeyond.com/avatars/thumbnails/30761/774/400/347/638061093283829548.png"}
             } else {
                 const urlName = name.replace(/ /g, '-');
-                const url = `${proxyUrl}https://monster-service.dndbeyond.com/v1/Monster?search=${urlName}&take=1`
+                // const url = `${proxyUrl}https://monster-service.dndbeyond.com/v1/Monster?search=${urlName}&take=1`
+                const url = `http://localhost:8081/dndb_get_monster_image/${urlName}`;
+
                 const response = await axios.get(url).then(res => {
                     let data = res.data.data
                     if(data.length > 0) {
@@ -137,19 +139,21 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
     const handleSearchSelectCreature = async (creature, action, event) => {
         event.stopPropagation();
 
-        try {
-            let selectedCreature = await axios.get(creature.link).then(res => {
-                return Open5eToDmBMapper(res.data, creature.avatarUrl)
-            })
-
-            handleAddCreatureToEncounter(selectedCreature, action)
-
-        } catch (error) {
-            console.warn(error)
-        }  
+        axios.get('http://localhost:8081/open5e_monster_import/', {
+            params: { link: creature.link } // Include the link in query parameters
+        })
+        .then(response => {
+            return Open5eToDmBMapper(response.data, creature.avatarUrl); 
+        })
+        .then(mappedCreature => {
+            handleLoadCreatureToEncounter(mappedCreature, action);
+        })
+        .catch(error => {
+            console.warn(`Error loading creature: ${creature.id}`, error);
+        });
     };
 
-    const handleAddCreatureToEncounter = (creature, action) => {
+    const handleLoadCreatureToEncounter = (creature, action) => {
         let newCreature = {...creature, creatureGuid: generateUniqueId(), encounterGuid: encounterGuid}
 
         if(action === "add") {

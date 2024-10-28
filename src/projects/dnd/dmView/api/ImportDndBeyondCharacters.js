@@ -6,18 +6,22 @@ import DndBCharacterToDmBMapper from '../mappers/DndBCharacterToDmBMapper'
 export const ImportDndBeyondCharacters = async (playerIds, encounterGuid, encounterPlayerData=undefined) => {
     console.log("Import Character-service in ImportDndBeyondCharacters");
     let i = 1;
-    const baseUrl = `${proxyUrl}https://character-service.dndbeyond.com/character/v5/character/`;
+    // const baseUrl = `${proxyUrl}https://character-service.dndbeyond.com/character/v5/character/`;
+    const baseUrl = `http://localhost:8081/dndb_character_import/`;
     
     const promises = playerIds.map(async (playerId) => {
         try {
             const url = `${baseUrl}${playerId}`;
+            console.log(url)
+
             const response = await axios.get(url, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                },
-                withCredentials: false,
+                // headers: {
+                //     'Content-Type': 'application/json',
+                //     'Access-Control-Allow-Origin': '*',
+                // },
+                // withCredentials: false,
             });
+            console.log(response)
 
             const resData = response.data.data;
             console.log(i.toString() + "/" + playerIds.length + " " + resData.name + " retrieved! (" + playerId +")");
@@ -27,6 +31,7 @@ export const ImportDndBeyondCharacters = async (playerIds, encounterGuid, encoun
         } catch (error) {
             console.log(i.toString() + "/" + playerIds.length + " failed! (" + playerId +")");
             i++;
+            console.log(error)
             if (error.response) {
                 if (error.response.status === 404) {
                     alert(`Could not find ID: '${playerId}' \n\nDnd Beyond Error: ${error.response.status}`);

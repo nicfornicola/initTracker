@@ -93,7 +93,7 @@ function PlayerPage({playerView, playerViewBackground}) {
             
             <div className="cardContainer" style={cardContainerStyle}>
                 {creatures.length === 0 ? (
-                    <div className='loading'>No Creatures found...</div>
+                    <div className='loading'>Encounter does not exist or it has no Creatures found...</div>
                 ) : (
                     creatures.map((creature, index) => { 
                         return (((creature.type === 'monster' || creature.type === 'global') && creature.alignment !== "ally" && hideEnemies) || creature.hidden) 
