@@ -5,7 +5,7 @@ import YouTubeEmbed from '../../dmView/components/EncounterColumn/YouTubeEmbed.j
 import io from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 
-function PlayerPage({playerView, playerViewBackground}) {
+function PlayerPage({playerViewBackground}) {
     const [creatures, setCreatures] = useState([]);
     const [turnNum, setTurnNum] = useState(0);
     const [roundNum, setRoundNum] = useState(0);

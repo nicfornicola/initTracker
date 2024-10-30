@@ -9,7 +9,6 @@ const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter
         event.stopPropagation();
         let updatedEncounterList = savedEncounters.filter(e => e.encounterGuid !== encounter.encounterGuid)
         setSavedEncounters(updatedEncounterList);
-        localStorage.setItem('savedEncounters', JSON.stringify(updatedEncounterList));
         socket.emit("deleteEncounter", encounter.encounterGuid)
     }
     

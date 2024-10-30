@@ -14,7 +14,7 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, encounterGuid, skil
             "creatureGuid": generateUniqueId(),
             "encounterGuid": encounterGuid,
             "status": dndBeyondRes.status,
-            "dnd_b_player_id": dndBeyondRes.id,
+            "dnd_b_player_id": dndBeyondRes.id.toString(),
             "link": dndBeyondRes.link,
             "avatarUrl": dndBeyondRes.decorations.avatarUrl || 'https://www.dndbeyond.com/Content/Skins/Waterdeep/images/icons/monsters/humanoid.jpg',
             "hit_points": calculatedHp,

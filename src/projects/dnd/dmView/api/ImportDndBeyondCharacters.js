@@ -12,7 +12,6 @@ export const ImportDndBeyondCharacters = async (playerIds, encounterGuid, encoun
     const promises = playerIds.map(async (playerId) => {
         try {
             const url = `${baseUrl}${playerId}`;
-            console.log(url)
 
             const response = await axios.get(url, {
                 // headers: {
@@ -21,8 +20,6 @@ export const ImportDndBeyondCharacters = async (playerIds, encounterGuid, encoun
                 // },
                 // withCredentials: false,
             });
-            console.log(response)
-
             const resData = response.data.data;
             console.log(i.toString() + "/" + playerIds.length + " " + resData.name + " retrieved! (" + playerId +")");
             i++;

@@ -6,10 +6,14 @@ import SideMenu from './SideMenu/SideMenu.js';
 import InputEncounterId from './SideMenu/InputEncounterId.js';
 import InputCharacterId from './SideMenu/InputCharacterId.js';
 import NewEncounterButton from './EncounterColumn/NewEncounterButton.js';
-import { generateUniqueId, INIT_ENCOUNTER} from '../constants';
+import { generateUniqueId, INIT_ENCOUNTER, SHORT_REFRESH} from '../constants';
 import DropdownMenu from './EncounterColumn/DropdownMenu.js';
 import YouTubeEmbed from './EncounterColumn/YouTubeEmbed.js';
 import io from 'socket.io-client';
+import { refreshMonsterProfiles } from '../refresh/refresh';
+import { ImportDndBeyondCharacters } from '../api/ImportDndBeyondCharacters'
+import ReactGA from "react-ga4";
+import { useLocation } from 'react-router-dom';
 
 
 function getLocalStorageSize() {
@@ -27,12 +31,45 @@ function getLocalStorageSize() {
     console.log(`Approximate size: ${sizeInMB.toFixed(2)} MB`);
 }
 
-const DmView = ({currentEncounter, onFirstLoad, refreshLoading, setCurrentEncounter, playerViewBackground, setPlayerViewBackground, setCardContainerStyle, handleRefresh, hideDeadEnemies, setHideDeadEnemies, refreshCheck, autoRefresh, uploadLocalStorage, enemyBloodToggle, setEnemyBloodToggle, localSavedEncounters}) => {
+function findDifferences(obj1, obj2) {
+    const differences = {};
+  
+    for (const key in obj1) {
+      if (typeof obj1[key] === "object" && obj1[key] !== null && typeof obj2[key] === "object" && obj2[key] !== null) {
+        // Recursively find differences for nested objects
+        const nestedDifferences = findDifferences(obj1[key], obj2[key]);
+        if (Object.keys(nestedDifferences).length > 0) {
+          differences[key] = nestedDifferences;
+        }
+      } else if (obj1[key] !== obj2[key]) {
+        // If values are different (and not objects), record the difference
+        differences[key] = {
+          obj1: obj1[key],
+          obj2: obj2[key]
+        };
+      }
+    }
+  
+    return differences;
+  }
+
+const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, setPlayerViewBackground}) => {
     getLocalStorageSize()
+    const [onFirstLoad, setOnFirstLoad] = useState(true);
+    const [refreshLoading, setRefreshLoading] = useState(false);
+    const [autoRefreshDndbPlayers, setAutoRefreshDndbPlayers] = useState(false);
+    const [autoRefreshDndbMonsters, setAutoRefreshDndbMonsters] = useState(false);
+    const [autoRefresh, setAutoRefresh] = useState(false);
+    const [refreshCheck, setRefreshCheck] = useState(false);
     const [showSearchList, setShowSearchList] = useState(true);
     const [encounterGuid, setEncounterGuid] = useState(currentEncounter.encounterGuid);
-    const [savedEncounters, setSavedEncounters] = useState(localSavedEncounters);
+    const [savedEncounters, setSavedEncounters] = useState([]);
+
     const [hideEnemies, setHideEnemies] = useState(true);
+    const [enemyBloodToggle, setEnemyBloodToggle] = useState(1);
+    const [hideDeadEnemies, setHideDeadEnemies] = useState(false);
+    const [cardContainerStyle, setCardContainerStyle] = useState({width: '80%'});
+
     const socketRef = useRef(null)
     const [socket, setSocket] = useState(null);
 
@@ -54,12 +91,12 @@ const DmView = ({currentEncounter, onFirstLoad, refreshLoading, setCurrentEncoun
 
             // Recieve messages from backend
             socket.on('sendSavedEncounters', (encountersResponse) => {
-                console.log("sendSavedEncounters", encountersResponse)
                 if(encountersResponse.length === 0) {
                     console.log("nothing saved")
                 }
                 setSavedEncounters(encountersResponse)
             });
+
         }
 
         // Clean up the socket connection on component unmount
@@ -67,6 +104,201 @@ const DmView = ({currentEncounter, onFirstLoad, refreshLoading, setCurrentEncoun
             if(socket) socket.disconnect();
         };
     }, [socket]);
+
+    const location = useLocation();
+    useEffect(() => {
+        // Initialize GA with your Measurement ID
+        ReactGA.initialize("G-R3XHSS7071", { debug: false });
+
+        // Trigger page view on route change
+        ReactGA.send({ hitType: "pageview", page: location.pathname });
+      }, [location]);
+
+
+    useEffect(() => {
+        const getRefreshedLocalEncounter = (event) => {
+            if (event.key === 'currentBackground') {
+                setPlayerViewBackground({...JSON.parse(localStorage.getItem('currentBackground'))});
+            } else if (event.key === 'hideEnemies') {
+                setHideEnemies(JSON.parse(localStorage.getItem('hideEnemies')));
+            } else if (event.key === 'enemyBloodToggle') {
+                setEnemyBloodToggle(JSON.parse(localStorage.getItem('enemyBloodToggle')));
+            } else if (event.key === 'hideDeadEnemies') {
+                setHideDeadEnemies(JSON.parse(localStorage.getItem('hideDeadEnemies')));
+            }
+        }
+        window.addEventListener('storage', getRefreshedLocalEncounter);
+    }, [])
+
+    useEffect(() => {
+        if(onFirstLoad && currentEncounter.encounterGuid !== "" && !window.location.href.includes("/playerView")) {
+            setOnFirstLoad(false)
+        }
+        // eslint-disable-next-line
+    }, [currentEncounter]);  
+
+    useEffect(() => {
+        if(refreshCheck) {
+            const timer = setTimeout(() => {
+                setRefreshCheck(false)
+            }, 3500); 
+            return () => clearInterval(timer);
+        }
+    }, [refreshCheck])
+
+    const refreshPlayerProfiles = async () => {
+        try {
+            console.log("Refreshing Players")
+            console.log("----------------")
+            //Get player stats for HP for players from dnd beyond
+            // Keep isPlayer check so dms can import character without auto refresh
+            const filteredPlayers = currentEncounter.creatures.filter(creature => creature.dnd_b_player_id && creature.type === 'player');
+            const playerIds = filteredPlayers.map(player => player.dnd_b_player_id.toString()); // Map to get the ids as strings
+            const refreshedData = await ImportDndBeyondCharacters(playerIds, currentEncounter.encounterGuid);
+
+            // Iterate over the first array using a for loop
+            let updatedDifCreatures = [] 
+            const updatedCreatures = currentEncounter.creatures.map(creature => {
+
+                const refreshedPlayer = refreshedData.find(data => { 
+                    return data.dnd_b_player_id === creature.dnd_b_player_id
+                });
+                // If the current creature is found in the refreshedData list then refresh data but keep a few of the old stuff
+                if (refreshedPlayer) {
+
+                    let differences = findDifferences(creature, refreshedPlayer)
+                    creature = {
+                        ...refreshedPlayer,
+                        name: creature.name,
+                        creatureGuid: creature.creatureGuid, // original guid
+                        effects: creature.effects,
+                        initiative: creature.initiative, // might remove this in the future for auto initiative in the dnd_b app
+                        // avatarUrl: creature.avatarUrl
+
+                    }
+
+                    for (const key of 
+                        ["hit_points", "hit_points_current", "hit_points_default", "hit_points_modifier",
+                        "hit_points_override", "hit_points_temp", "initiative", "avatarUrl", "deathSaves", "exhaustionLvl"]) {
+                            if (key in differences) {
+                                console.log(key)
+                                updatedDifCreatures.push(creature)
+                                break;
+                            }
+                        }
+
+                    console.log("REFRESHED:", creature.name)
+                }
+                return creature
+            });
+
+            if(updatedDifCreatures.length > 0) { console.log("updateFound", updatedDifCreatures); socket.emit("updateDndBPlayers", updatedDifCreatures) }
+            else { console.log("No updates to send...") }
+
+            setCurrentEncounter(prev => ({...prev, creatures: [...updatedCreatures]}));
+            console.log("Players Refreshed!")
+            console.log("----------------")
+
+            return updatedCreatures;
+        } catch (error) {
+            console.log(error)
+        }  
+    };
+
+
+    const handleRefresh = () => {
+        console.log("Refresh Player/Monsters", autoRefresh)
+        setRefreshLoading(true)
+
+        if (autoRefreshDndbPlayers && autoRefreshDndbMonsters) {
+            console.log("==============")
+            console.log("Refreshing All")
+            console.log("==============")
+            refreshPlayerProfiles().then(passedCreatures => refreshMonsterProfiles(passedCreatures))
+        } else if (autoRefreshDndbPlayers) {
+            refreshPlayerProfiles();
+        }
+        else if (autoRefreshDndbMonsters) {
+            refreshMonsterProfiles();
+        }
+        else {
+            console.error("You should not be seeing that button if both are false...")
+        }
+
+        // Set this for a minimum animation spin of 2 seconds
+        setTimeout(() => {
+            setRefreshLoading(false)
+            setRefreshCheck(true);
+        }, 1000); 
+    };
+
+    useEffect(() => {
+        // Check current encounter to see if we need to auto refresh from DNB_B
+        if(currentEncounter.creatures) {
+            let foundPlayer = false;
+            let foundMonster = false;
+
+            currentEncounter.creatures.forEach(creature => {
+                if(creature.from === "dnd_b") {
+                    foundPlayer = true;
+                } else if(creature.from === "dnd_b_monster") { // current wil never trigger, not sure, not sure if i want it to or not
+                    foundMonster = true;
+                }
+            });
+            
+            setAutoRefreshDndbPlayers(foundPlayer)
+            setAutoRefreshDndbMonsters(foundMonster)
+            setAutoRefresh(foundPlayer || foundMonster)
+            console.log(foundPlayer || foundMonster)
+        }
+
+        let intervalId = 0
+        // Refresh every 1 or 5 minutes
+        if (autoRefreshDndbPlayers || autoRefreshDndbMonsters) {
+            let refreshTimer = SHORT_REFRESH;
+            console.log("Auto Refresh in Minutes", refreshTimer)
+
+            intervalId = setInterval(() => {
+                if(autoRefreshDndbPlayers || autoRefreshDndbMonsters) {
+                    handleRefresh();
+                    console.log("🔄AUTO-REFRESH DND_B PLAYERS🔄")
+                }
+
+            // X minutes in milliseconds
+            }, refreshTimer * 60000.0); 
+        }
+
+        // Cleanup interval on component unmount
+        return () => clearInterval(intervalId);
+    // eslint-disable-next-line
+    }, [currentEncounter]);
+
+    const uploadLocalStorage = (event) => {
+        const file = event.target.files[0];
+
+        const reader = new FileReader();
+        // Read the file content as text
+        reader.onload = function(event) {
+            try {
+                // Parse the JSON data
+                const localStorageData = JSON.parse(event.target.result);
+
+                // Set each key-value pair in local storage
+                for (const key in localStorageData) {
+                    if (localStorageData.hasOwnProperty(key)) {
+                        localStorage.setItem(key, localStorageData[key]);
+                    }
+                }
+
+                console.log("Local storage data has been successfully set.");
+            } catch (error) {
+                console.error("Error parsing JSON file:", error);
+            }
+        };
+
+        // Read the file
+        reader.readAsText(file);
+    }
 
     const handleNewEncounter = () => {
         let newGuid = generateUniqueId();
@@ -83,11 +315,13 @@ const DmView = ({currentEncounter, onFirstLoad, refreshLoading, setCurrentEncoun
 
     const handleLoadEncounter = (encounter) => {
         console.log("%cLoaded: " + encounter.encounterName, "background: #fdfd96;")
+        console.log(encounter)
         setCurrentEncounter({...encounter})
         setEncounterGuid(encounter.encounterGuid)
-        // localStorage.setItem('hideEnemies', JSON.stringify(true));
-        // setHideEnemies(true)
-
+        setEnemyBloodToggle(encounter.enemyBloodToggle)
+        setHideDeadEnemies(encounter.hideDeadEnemies)
+        setHideEnemies(encounter.hideEnemies)
+        setCardContainerStyle(encounter.cardContainerStyle)
     };  
 
     return (
@@ -120,7 +354,7 @@ const DmView = ({currentEncounter, onFirstLoad, refreshLoading, setCurrentEncoun
                             {savedEncounters.length !== 0 && (
                                 <>
                                     Select from your
-                                    <DropdownMenu setSavedEncounters={setSavedEncounters} savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter}/> 
+                                    <DropdownMenu setSavedEncounters={setSavedEncounters} savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} socket={socket}/> 
                                 </>
                             
                             )}

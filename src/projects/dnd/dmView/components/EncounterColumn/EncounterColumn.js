@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import StatBlock from '../StatBlock';
-import { generateUniqueId, dummyDefault, envObject, setLocalPlayerViewEncounter, sortCreatureArray, INIT_ENCOUNTER_NAME, COLOR_RED, COLOR_GREEN } from '../../constants';
+import { generateUniqueId, dummyDefault, envObject, sortCreatureArray, INIT_ENCOUNTER_NAME, COLOR_RED, COLOR_GREEN } from '../../constants';
 import EncounterListTopInfo from './EncounterListTopInfo'
 import DropdownMenu from './DropdownMenu';
 import EncounterControls from './EncounterControls'
@@ -23,7 +23,6 @@ function addToLocalSavedEncounter(jsonArray, newEncounter) {
         saveType = "Saved New Encounter - "
         jsonArray.push(newEncounter);
     }
-    localStorage.setItem('savedEncounters', JSON.stringify(jsonArray));
 
     console.log("%c" + saveType + newEncounter.encounterName + " (" + newEncounter.encounterGuid + ")", "background: #fdfd96;")
 
@@ -32,7 +31,7 @@ function addToLocalSavedEncounter(jsonArray, newEncounter) {
 }
 const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, hideEnemies, setCardContainerStyle, hideDeadEnemies, setHideDeadEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, savedEncounters, setSavedEncounters, handleRefresh,  refreshCheck, autoRefresh, showSearchList, handleNewEncounter, setEncounterGuid, socket}) => {
     const [roundNum, setRoundNum] = useState(currentEncounter.roundNum);
-    const [turnNum, setTurnNum] = useState(currentEncounter.roundNum);
+    const [turnNum, setTurnNum] = useState(currentEncounter.turnNum);
 
     const [encounterSelectedCreature, setEncounterSelectedCreature] = useState(null);
     const [showSaveMessage, setShowSaveMessage] = useState(false);
@@ -53,13 +52,12 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
 
     useEffect(() => {
         handleSaveEncounter()
-        socket.emit("roundNumChange", roundNum, currentEncounter.encounterGuid)
-    }, [roundNum]);
+        if(roundNum != currentEncounter.roundNum)
+            socket.emit("roundNumChange", roundNum, currentEncounter.encounterGuid)
+        if(turnNum != currentEncounter.turnNum)
+            socket.emit("turnNumChange", turnNum, currentEncounter.encounterGuid)
 
-    useEffect(() => {
-        handleSaveEncounter()
-        socket.emit("turnNumChange", turnNum, currentEncounter.encounterGuid)
-    }, [turnNum]);
+    }, [turnNum, roundNum]);
 
     useEffect(() => {
         setIsSaveDisabled(currentEncounter.creatures?.length === 0)
@@ -80,7 +78,6 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
 
     const handleSaveEncounter = () => {
         if(currentEncounter.encounterName !== INIT_ENCOUNTER_NAME) {
-            const savedEncountersList = JSON.parse(localStorage.getItem('savedEncounters')) || [];
             let newEncounter = {
                     encounterName: currentEncounter.encounterName,
                     encounterGuid: currentEncounter.encounterGuid || generateUniqueId(),
@@ -95,11 +92,10 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
             }
             
             // Overwrites if exists, appends if new
-            const updatedSavedEncountersList = addToLocalSavedEncounter(savedEncountersList, newEncounter);
+            // const updatedSavedEncountersList = addToLocalSavedEncounter(savedEncountersList, newEncounter);
             // Setting this list to update the encounter list
-            setSavedEncounters(updatedSavedEncountersList)
+            // setSavedEncounters(updatedSavedEncountersList)
             setShowSaveMessage(true);
-            setLocalPlayerViewEncounter(newEncounter)
             setTimeout(() => {
                 setShowSaveMessage(false);
             }, 800); // Hide the message after 5 seconds
@@ -108,12 +104,11 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
     };
 
     const handleStartEncounter = (event) => {
-        setLocalPlayerViewEncounter(currentEncounter)
         // socket.emit("startEncounter")
         let url = window.location.href;
         // Add '/' if needed
         url += url.endsWith("/") ? "" : "/";
-        window.open(`${url}playerView`, '_blank');
+        window.open(`${url}playerView/${currentEncounter.encounterGuid}`, '_blank');
         event.stopPropagation(); 
     };
 

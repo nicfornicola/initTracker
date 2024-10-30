@@ -219,10 +219,6 @@ export const INIT_ENCOUNTER = {
     creatures: []
 }
 
-export const setLocalPlayerViewEncounter = (encounter) => {
-    localStorage.setItem('playerViewEncounter', JSON.stringify(encounter));
-}
-
 let combinedArray = [...CoreRules,
                      ...CreatureCodex,
                      ...CriticalRole,

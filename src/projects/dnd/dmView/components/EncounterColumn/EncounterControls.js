@@ -19,7 +19,7 @@ import OptionButton from './OptionButton';
 import EnemyBloodiedMessage from './EnemyBloodiedMessage';
 
 function getBloodImage(type) {
-    let newImage = undefined
+    let newImage;
     if(type === 0) { newImage = bloodIconMinus } 
     else if(type === 1) { newImage = bloodIcon } 
     else if(type === 2) { newImage = bloodIconSlash } 
@@ -31,7 +31,7 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
     const [arrowButton, setArrowButton] = useState(upArrow);
     const [arrowToggleType, setArrowToggleType] = useState(0);
     const [showRefreshButton, setShowRefreshButton] = useState(autoRefresh);
-    const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(getBloodImage(enemyBloodToggle));
+    const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(getBloodImage(1));
 
     // useEffect(() => {
     //     setRefreshSpin(refreshLoading)
@@ -59,7 +59,6 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
             newStyle.bottom ='0%';
         }
 
-        // localStorage.setItem('cardContainerStyle', JSON.stringify(newStyle));
         setCardContainerStyle(newStyle)
         setArrowToggleType(type === 2 ? -1 : type)
         socket.emit("controlCardPosition", newStyle, currentEncounter.encounterGuid)
@@ -74,7 +73,6 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
 
         setEnemyBloodToggleImage(newImage) 
         setEnemyBloodToggle(type)
-        // localStorage.setItem('enemyBloodToggle', JSON.stringify(type));
         socket.emit("controlBloodToggle", type, currentEncounter.encounterGuid)
 
     } 
@@ -83,14 +81,12 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
         if(autoRefresh && hideEnemies) // If hideEnemies is true, then refresh before revealing enemies
             handleRefresh()
         setHideEnemies(!hideEnemies)
-        // localStorage.setItem('hideEnemies', !hideEnemies);
         socket.emit("controlHiddenToggle", !hideEnemies, currentEncounter.encounterGuid)
 
     } 
 
     const handleHideDeadEnemies = () => {
         setHideDeadEnemies(!hideDeadEnemies)
-        // localStorage.setItem('hideDeadEnemies', !hideDeadEnemies);
         socket.emit("controlHideDeadToggle", !hideDeadEnemies, currentEncounter.encounterGuid)
     } 
 
