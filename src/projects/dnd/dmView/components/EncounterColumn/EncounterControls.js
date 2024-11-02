@@ -26,17 +26,48 @@ function getBloodImage(type) {
     return newImage
 }
 
-const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, setCardContainerStyle, handleStartEncounter, hideEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, hideDeadEnemies, setHideDeadEnemies, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange, socket}) => {
-    const [encounterName, setEncounterName] = useState(currentEncounter.encounterName);
+const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, handleStartEncounter, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange, socket}) => {
     const [arrowButton, setArrowButton] = useState(upArrow);
     const [arrowToggleType, setArrowToggleType] = useState(0);
     const [showRefreshButton, setShowRefreshButton] = useState(autoRefresh);
     const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(getBloodImage(1));
 
+    const [encounterName, setEncounterName] = useState(currentEncounter.encounterName);
+    const [hideEnemies, setHideEnemies] = useState(currentEncounter.hideEnemies);
+    const [enemyBloodToggle, setEnemyBloodToggle] = useState(currentEncounter.enemyBloodToggle);
+    const [hideDeadEnemies, setHideDeadEnemies] = useState(currentEncounter.hideDeadEnemies);
+
     // useEffect(() => {
     //     setRefreshSpin(refreshLoading)
     // }, [refreshLoading]);    
     
+    useEffect(() => {
+        console.log(currentEncounter)
+        if(encounterName !== currentEncounter.encounterName) {
+            setEncounterName(currentEncounter.encounterName)
+        }
+        if(hideEnemies !== currentEncounter.hideEnemies) {
+            setHideEnemies(currentEncounter.hideEnemies)
+        }
+        if(enemyBloodToggle !== currentEncounter.enemyBloodToggle) {
+            setEnemyBloodToggle(currentEncounter.enemyBloodToggle)
+        }
+        if(hideDeadEnemies !== currentEncounter.hideDeadEnemies) {
+            setHideDeadEnemies(currentEncounter.hideDeadEnemies)
+        }
+        // eslint-disable-next-line
+    }, [currentEncounter]);
+
+    useEffect(() => {
+        console.log(currentEncounter)
+        setCurrentEncounter(
+            { ...currentEncounter,
+                hideEnemies: hideEnemies, 
+                enemyBloodToggle: enemyBloodToggle, 
+                hideDeadEnemies: hideDeadEnemies });
+        // eslint-disable-next-line
+    }, [hideEnemies, enemyBloodToggle, hideDeadEnemies]);
+
     useEffect(() => {
         setShowRefreshButton(autoRefresh)
     }, [autoRefresh]);  
@@ -59,7 +90,6 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
             newStyle.bottom ='0%';
         }
 
-        setCardContainerStyle(newStyle)
         setArrowToggleType(type === 2 ? -1 : type)
         socket.emit("controlCardPosition", newStyle, currentEncounter.encounterGuid)
     } 
@@ -80,6 +110,7 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
     const handleHideEnemies = () => {
         if(autoRefresh && hideEnemies) // If hideEnemies is true, then refresh before revealing enemies
             handleRefresh()
+
         setHideEnemies(!hideEnemies)
         socket.emit("controlHiddenToggle", !hideEnemies, currentEncounter.encounterGuid)
 
@@ -89,14 +120,6 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
         setHideDeadEnemies(!hideDeadEnemies)
         socket.emit("controlHideDeadToggle", !hideDeadEnemies, currentEncounter.encounterGuid)
     } 
-
-    useEffect(() => {
-        if(encounterName !== currentEncounter.encounterName) {
-            setEncounterName(currentEncounter.encounterName)
-        }
-        // eslint-disable-next-line
-    }, [currentEncounter.encounterName]);
-
 
     let titleColor = encounterName === INIT_ENCOUNTER_NAME ? 'grey' : ''
     let {roundNum, turnNum} = handleTurnNums()

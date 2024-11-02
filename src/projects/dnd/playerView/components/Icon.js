@@ -11,6 +11,7 @@ import bloodied5 from '../pics/imageOverlays/blood/blood5.png';
 import bloodied6 from '../pics/imageOverlays/blood/blood6.png'; 
 import Exhaustion from './Exhaustion'; 
 import DeathSaves from './DeathSaves';
+import { effectImgMap } from '../../dmView/constants'
 
 // Grab the digits out of creatureGuid
 function stringToInt(str) {
@@ -52,6 +53,10 @@ const Icon = ({creature, isTurn, hideDeadEnemies, enemyBloodToggle}) => {
         lastName = lastName.join(' ') || '';
     }
 
+    console.log(creature)
+    if(effectsFound) {
+        console.log(creature.effects)
+    }
     return (
         <>
             {(hideDeadEnemies && !isAlly && isDead) ? (
@@ -81,13 +86,11 @@ const Icon = ({creature, isTurn, hideDeadEnemies, enemyBloodToggle}) => {
 
                             {effectsFound && (
                                 <div className='avatarEffectsBar'>    
-                                    {creature.effects.map((obj) => (
-                                        <label key={uuidv4()}>
+                                    {creature.effects.map((effectName) => (
                                             <img className='effect'
-                                                src={obj.img}
-                                                alt={obj.effect}
+                                                src={effectImgMap[effectName]}
+                                                alt={effectName}
                                             />
-                                        </label>
                                     ))}
                                 </div>
                             )}

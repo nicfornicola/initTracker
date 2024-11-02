@@ -40,10 +40,6 @@ offline mod
 
     dmView socket
     ---
-    I fucked up the hp change menu for dmview it looks bad
-    onBlur is not working for temp and override
-    make a socket for name change for creatures
-    cant choose from ecnounters list, (not suprised)
     make images go
 
     database

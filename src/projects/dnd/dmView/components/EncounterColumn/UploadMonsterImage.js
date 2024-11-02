@@ -4,7 +4,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import FileUpload from '../FileUpload';
 import GridMap from '../GridMap';
 
-const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, creatures, setUploadIconMenu, uploadIconMenu}) => {
+const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, creatures, setUploadIconMenu, uploadIconMenu, socket}) => {
     const [uploadedAvatars, setUploadedAvatars] = useState(JSON.parse(localStorage.getItem('uploadedAvatars')) || []);
     const dialogRef = useRef(null);
 
@@ -14,12 +14,33 @@ const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, creatures,
                 setUploadIconMenu(false)
             }
         };
+
+
+        if(uploadIconMenu) {
+            if(uploadedAvatars.length === 0) {
+                socket.emit("getImages", "avatar", "Username");
+                socket.on('sendImages', (images) => {
+                    if(images.length === 0) {
+                        console.log("No images")
+                    } else {
+                        let avatars = [];
+                        images.forEach(image => {
+                            console.log(image.imageGuid)
+                            avatars.push(image.image)
+                        })
+                        setUploadedAvatars(avatars)
+                    }
+                });
+            }
+
+            document.addEventListener('mousedown', handleClickOutside)
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
         
-        uploadIconMenu ? document.addEventListener('mousedown', handleClickOutside) : document.removeEventListener('mousedown', handleClickOutside);
         return () => { document.removeEventListener('mousedown', handleClickOutside); };
     // eslint-disable-next-line
     }, [uploadIconMenu]);
-
 
     const handleClick = (src) => {
         creatures.forEach(creature => {
@@ -45,7 +66,7 @@ const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, creatures,
                 )}
 
             </DialogContent>
-            <FileUpload uploadedFiles={uploadedAvatars} setUploadedFiles={setUploadedAvatars} storageKey={"uploadedAvatars"}/>
+            <FileUpload uploadedFiles={uploadedAvatars} setUploadedFiles={setUploadedAvatars} storageKey={"avatar"} socket={socket}/>
         </Dialog>
   );
 };

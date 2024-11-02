@@ -9,7 +9,6 @@ import GridMap from '../../../playerView/components/GridMap.js';
 import backgroundButton from "../../pics/icons/backgroundButton.png"
 import OptionButton from './OptionButton';
 
-//TODO creature images array 
 const ImagePopup = ({setPlayerViewBackground, socket}) => {
     const [open, setOpen] = useState(false);
     const [uploadedFiles, setUploadedFiles] = useState(JSON.parse(localStorage.getItem('uploadedBackgrounds')) || []);
@@ -28,8 +27,31 @@ const ImagePopup = ({setPlayerViewBackground, socket}) => {
             }
         };
 
+
+
         if(open) {
-            socket.emit("getBackgroundImages")
+            if(uploadedFiles.length === 0 && uploadedLinks.length === 0) {
+                socket.emit("getImages", "background", "Username");
+                socket.on('sendImages', (backgrounds) => {
+                    if(backgrounds.length === 0) {
+                        console.log("No images")
+                    } else {
+                        let images = [];
+                        let links = [];
+                        backgrounds.forEach(background => {
+                            console.log(background.imageGuid)
+                            if(background.type === "link") {
+                                // this is actually a youtube thumbs nail url
+                                links.push(background.image) 
+                            } else if (background.type === "background") {
+                                images.push(background.image)
+                            }
+                        })
+                        setUploadedLinks(links)
+                        setUploadedFiles(images)
+                    }
+                });
+            }
             document.addEventListener('mousedown', handleClickOutside)
         } else {
             document.removeEventListener('mousedown', handleClickOutside);
@@ -39,7 +61,6 @@ const ImagePopup = ({setPlayerViewBackground, socket}) => {
     }, [open]);
 
     const handleSetBackground = (type, src) => {
-        localStorage.setItem("currentBackground", JSON.stringify({type: type, src: src}));
         setPlayerViewBackground({type: type, src: src})
         socket.emit("setEncounterBackground", src)
     }
@@ -97,8 +118,8 @@ const ImagePopup = ({setPlayerViewBackground, socket}) => {
                 )}
                 <GridMap imageArr={backgroundImages} handleClick={handleClick}/>
             </DialogContent>
-            <FileUpload uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles} storageKey={"uploadedBackgrounds"} socket={socket}/>
-            <TextInput setUploadedLinks={setUploadedLinks} uploadedLinks={uploadedLinks} socket={socket}/>
+            <FileUpload uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles} storageKey={"background"} socket={socket}/>
+            <TextInput setUploadedLinks={setUploadedLinks} socket={socket}/>
 
         </Dialog>
 

@@ -11,8 +11,6 @@ const FileUpload = ({uploadedFiles, setUploadedFiles}) => {
                 reader.onload = () => {
                     const newFile = reader.result;
                     setUploadedFiles((prevFiles) => [...prevFiles, newFile]);
-
-                    localStorage.setItem('uploadedBackgrounds', JSON.stringify([...uploadedFiles, newFile]));
                 };
             reader.readAsDataURL(file);
         } else {

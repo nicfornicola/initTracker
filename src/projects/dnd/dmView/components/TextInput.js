@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { generateUniqueId } from '../constants';
 
 function getYouTubeThumbnail(url) {
     // Extract video ID from URL
@@ -15,36 +16,37 @@ function getYouTubeThumbnail(url) {
     }
 }
 
-const TextInput = ({setUploadedLinks, uploadedLinks, socket}) => {
-  const [inputValue, setInputValue] = useState('');
+const TextInput = ({setUploadedLinks, socket}) => {
+    const [link, setLink] = useState('');
 
-  const handleChange = (event) => {
-    setInputValue(event.target.value);
-  };
+    const handleChange = (event) => {
+        setLink(event.target.value);
+    };
 
-  const handleSubmit = (event) => {
-    event.preventDefault(); 
-    let thumbnailUrl = getYouTubeThumbnail(inputValue)
-    if(thumbnailUrl) {
-        setUploadedLinks((prevLinks) => [...prevLinks, thumbnailUrl]);
-        localStorage.setItem('uploadedLinks', JSON.stringify([...uploadedLinks, thumbnailUrl]));
-        // use thumbnailUrl because thats what the image is, I turn this into the video link when clicked
-        socket.emit("uploadNewLink", thumbnailUrl)
-    }
+    const handleSubmit = (event) => {
+        event.preventDefault(); 
+        let validUrl = link.match(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/);
+        if(validUrl) {
+            let thumbNailUrl = getYouTubeThumbnail(link)
+            setUploadedLinks((prevLinks) => [...prevLinks, thumbNailUrl]);
+            socket.emit("uploadNewImage", thumbNailUrl, "link", generateUniqueId(), "Username")
+        } else {
+            alert("Invalid Youtube Link 🤷")
+        }
+        
+    };
 
-  };
-
-  return (
-    <form className="uploadContainer" onSubmit={handleSubmit}>
-      <input 
-        type="text" 
-        value={inputValue} 
-        onChange={handleChange} 
-        placeholder="Enter youtube link"
-      />
-      <button type="submit">Upload Background</button>
-    </form>
-  );
+    return (
+        <form className="uploadContainer" onSubmit={handleSubmit}>
+            <input 
+                type="text" 
+                value={link} 
+                onChange={handleChange} 
+                placeholder="Enter youtube link"
+            />
+            <button type="submit">Upload Background</button>
+        </form>
+    );
 };
 
 export default TextInput;

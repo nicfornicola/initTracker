@@ -54,7 +54,6 @@ function findDifferences(obj1, obj2) {
   }
 
 const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, setPlayerViewBackground}) => {
-    getLocalStorageSize()
     const [onFirstLoad, setOnFirstLoad] = useState(true);
     const [refreshLoading, setRefreshLoading] = useState(false);
     const [autoRefreshDndbPlayers, setAutoRefreshDndbPlayers] = useState(false);
@@ -64,11 +63,6 @@ const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, se
     const [showSearchList, setShowSearchList] = useState(true);
     const [encounterGuid, setEncounterGuid] = useState(currentEncounter.encounterGuid);
     const [savedEncounters, setSavedEncounters] = useState([]);
-
-    const [hideEnemies, setHideEnemies] = useState(true);
-    const [enemyBloodToggle, setEnemyBloodToggle] = useState(1);
-    const [hideDeadEnemies, setHideDeadEnemies] = useState(false);
-    const [cardContainerStyle, setCardContainerStyle] = useState({width: '80%'});
 
     const socketRef = useRef(null)
     const [socket, setSocket] = useState(null);
@@ -119,12 +113,6 @@ const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, se
         const getRefreshedLocalEncounter = (event) => {
             if (event.key === 'currentBackground') {
                 setPlayerViewBackground({...JSON.parse(localStorage.getItem('currentBackground'))});
-            } else if (event.key === 'hideEnemies') {
-                setHideEnemies(JSON.parse(localStorage.getItem('hideEnemies')));
-            } else if (event.key === 'enemyBloodToggle') {
-                setEnemyBloodToggle(JSON.parse(localStorage.getItem('enemyBloodToggle')));
-            } else if (event.key === 'hideDeadEnemies') {
-                setHideDeadEnemies(JSON.parse(localStorage.getItem('hideDeadEnemies')));
             }
         }
         window.addEventListener('storage', getRefreshedLocalEncounter);
@@ -233,6 +221,13 @@ const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, se
     };
 
     useEffect(() => {
+        setSavedEncounters((prevEncounters) =>
+            prevEncounters.map((encounter) =>
+              encounter.encounterGuid === currentEncounter.encounterGuid
+                ? { ...encounter, ...currentEncounter } // Update matching encounter
+                : encounter // Leave others unchanged
+            )
+        );
         // Check current encounter to see if we need to auto refresh from DNB_B
         if(currentEncounter.creatures) {
             let foundPlayer = false;
@@ -282,14 +277,6 @@ const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, se
             try {
                 // Parse the JSON data
                 const localStorageData = JSON.parse(event.target.result);
-
-                // Set each key-value pair in local storage
-                for (const key in localStorageData) {
-                    if (localStorageData.hasOwnProperty(key)) {
-                        localStorage.setItem(key, localStorageData[key]);
-                    }
-                }
-
                 console.log("Local storage data has been successfully set.");
             } catch (error) {
                 console.error("Error parsing JSON file:", error);
@@ -308,20 +295,10 @@ const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, se
         setEncounterGuid(newGuid)
     };  
 
-    // useEffect(() => {
-    //     setSavedEncounters(localSavedEncounters)
-    //     // eslint-disable-next-line
-    // }, [localSavedEncounters]); 
-
     const handleLoadEncounter = (encounter) => {
         console.log("%cLoaded: " + encounter.encounterName, "background: #fdfd96;")
-        console.log(encounter)
         setCurrentEncounter({...encounter})
         setEncounterGuid(encounter.encounterGuid)
-        setEnemyBloodToggle(encounter.enemyBloodToggle)
-        setHideDeadEnemies(encounter.hideDeadEnemies)
-        setHideEnemies(encounter.hideEnemies)
-        setCardContainerStyle(encounter.cardContainerStyle)
     };  
 
     return (
@@ -376,10 +353,10 @@ const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, se
                     {showSearchList &&  
                         <SearchList setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} encounterName={currentEncounter.encounterName} socket={socket}/>
                     }
-                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} refreshLoading={refreshLoading} setCardContainerStyle={setCardContainerStyle} hideEnemies={hideEnemies} setPlayerViewBackground={setPlayerViewBackground} setHideEnemies={setHideEnemies} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} setSavedEncounters={setSavedEncounters} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh}  setEncounterGuid={setEncounterGuid} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter} socket={socket}/>
+                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} setSavedEncounters={setSavedEncounters} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} setEncounterGuid={setEncounterGuid} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter} socket={socket}/>
                 </>
             )}
-             </div>
+            </div>
     );
 };
 

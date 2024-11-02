@@ -61,22 +61,6 @@ function PlayerPage({playerViewBackground}) {
         };
     }, [socket]);
 
-    // useEffect(() => {
-    //     setCreatures([...playerView.creatures])
-    //     handleTurns(true, playerView.turnNum, playerView.roundNum)
-    // }, [playerView])
-
-    // const handleTurns = (inProgress, tNum, rNum) => {
-    //     if(inProgress) {
-    //         setTurnNum(tNum)
-    //         setRoundNum(rNum)
-    //     }
-    //     else {
-    //         setTurnNum(0)
-    //         setRoundNum(0)
-    //     }
-    // }
-
     return (
         <div className="background playerViewAdds" style={{backgroundImage: playerViewBackground.type === "image" && playerViewBackground.src ? `url(${playerViewBackground.src})` : 'none'}}>
             

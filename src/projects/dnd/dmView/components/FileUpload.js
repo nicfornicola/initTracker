@@ -1,4 +1,5 @@
 import React from 'react';
+import { generateUniqueId } from '../constants';
 
 const resizeImage = (img, maxWidth, maxHeight, quality) => {
     return new Promise((resolve) => {
@@ -41,15 +42,14 @@ const FileUpload = ({uploadedFiles, setUploadedFiles, storageKey, socket}) => {
                 img.src = e.target.result;
 
                 img.onload = async () => {
-                    const maxWidth = storageKey === "uploadedBackgrounds" ? 1280 : 300; // Maximum width
-                    const maxHeight = storageKey === "uploadedBackgrounds" ? 720 : 300; // Maximum height
-                    const quality = storageKey === "uploadedBackgrounds" ? .9 : 0.7; // Image quality (0.1 to 1)
+                    const maxWidth = storageKey === "background" ? 1280 : 300; // Maximum width
+                    const maxHeight = storageKey === "background" ? 720 : 300; // Maximum height
+                    const quality = storageKey === "background" ? .9 : 0.7; // Image quality (0.1 to 1)
 
                     const resizedImage = await resizeImage(img, maxWidth, maxHeight, quality);
 
-                    setUploadedFiles((prevFiles) => [...prevFiles, resizedImage]);
-                    localStorage.setItem(storageKey, JSON.stringify([...uploadedFiles, resizedImage]));
-                    socket.emit("uploadNewImg", resizedImage)
+                    setUploadedFiles(prevFiles => [...prevFiles, resizedImage]);
+                    socket.emit("uploadNewImage", resizedImage, storageKey, generateUniqueId(), "Username")
                 };
 
                 

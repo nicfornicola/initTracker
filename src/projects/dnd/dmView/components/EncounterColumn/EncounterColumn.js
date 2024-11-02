@@ -50,14 +50,12 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         // eslint-disable-next-line
     }, [nameChange]);
 
-    useEffect(() => {
-        handleSaveEncounter()
-        if(roundNum != currentEncounter.roundNum)
-            socket.emit("roundNumChange", roundNum, currentEncounter.encounterGuid)
-        if(turnNum != currentEncounter.turnNum)
-            socket.emit("turnNumChange", turnNum, currentEncounter.encounterGuid)
+    // useEffect(() => {
+    //     handleSaveEncounter()
+    //     socket.emit("roundNumChange", roundNum, currentEncounter.encounterGuid)
+    //     socket.emit("turnNumChange", turnNum, currentEncounter.encounterGuid)
 
-    }, [turnNum, roundNum]);
+    // }, [turnNum, roundNum]);
 
     useEffect(() => {
         setIsSaveDisabled(currentEncounter.creatures?.length === 0)
@@ -165,43 +163,56 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
     const handleTurnNums = (action = null, e = null) => {
         let encounterLength = currentEncounter.creatures.length
         if(e) e.stopPropagation();
+        let newTurn = null;
+        let newRound = null;
+
         if(action === "next") {
-            setTurnNum(prevTurn => {
-                if(roundNum === 0) {
-                    setRoundNum(1)
-                }
+            if(roundNum === 0) {
+                newRound = 1
+            }
 
-                if(prevTurn === encounterLength) {
-                    setRoundNum(prevRound => prevRound+1)
-                    return 1;
-                }
+            if(turnNum === encounterLength) {
+                newRound = roundNum + 1
+                newTurn = 1
+            } else {
+                newTurn = turnNum + 1
+            }
 
-                return prevTurn+1
-            })
         } else if(action === "prev") {
             let minTurn = 1
             if (roundNum >= 1 || turnNum > minTurn) {
-                setTurnNum(() => {
-                    if(roundNum === 1 && turnNum === 1) {
-                        setRoundNum(prevRound => prevRound-1)
-                        return turnNum-1
-                    }
-
-                    if(turnNum === minTurn) {
-                        setRoundNum(prevRound => prevRound-1)
-                        return encounterLength;
-                    }
-
-                    return turnNum-1
-
-                })
+                if(roundNum === 1 && turnNum === 1) {
+                    newTurn = 0
+                    newRound = 0
+                    
+                } else if(turnNum === 1) {
+                    newRound = roundNum-1
+                    newTurn = encounterLength
+                    
+                } else {
+                    newTurn = turnNum - 1
+                }
             }
-            
         }
+
+        if(action !== null) {
+            if(newRound !== null && newRound !== roundNum) {
+                setRoundNum(newRound)
+                socket.emit("roundNumChange", newRound, currentEncounter.encounterGuid)
+            }
+
+            if(newTurn !== null && newTurn !== turnNum) {
+                setTurnNum(newTurn)
+                socket.emit("turnNumChange", newTurn, currentEncounter.encounterGuid)       
+            }
+
+        }
+
         return {"roundNum": roundNum, "turnNum": turnNum}
     }
  
-    const handleUploadMonsterImage = (creature) => {
+    const handleUploadMonsterImage = (event, creature) => {
+        event.stopPropagation()
         setUploadIconMenu(true)
         setUploadIconCreature(creature)
     }
@@ -241,7 +252,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                     <>No Encounter Creature Selected</>
                 )}
             </div>
-            <UploadMonsterImage setCurrentEncounter={setCurrentEncounter} uploadIconMenu={uploadIconMenu} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} creatures={currentEncounter.creatures} />
+            <UploadMonsterImage setCurrentEncounter={setCurrentEncounter} uploadIconMenu={uploadIconMenu} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} creatures={currentEncounter.creatures} socket={socket}/>
         </>
   );
 }

@@ -6,8 +6,8 @@ const GridMap = ({ imageArr, handleClick, isYoutubeLink = false }) => {
 
     return (
         <Grid container spacing={0.5}>
-            {imageArr.map(src => (
-                <Grid key={src} item xs={4}>
+            {imageArr.map((src, index) => (
+                <Grid key={src + index.toString()} item xs={4}>
                     <img className="backgroundThumbnail" src={src} alt={"background"} onClick={() => handleClick(src, isYoutubeLink)} />
                 </Grid>
             ))}

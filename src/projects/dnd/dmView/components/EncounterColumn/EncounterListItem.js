@@ -314,8 +314,9 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     return (
             <li className='listItem'
                 onClick={() => setEncounterSelectedCreature(creature)}
-                style={{border: isTurn ? '2px solid rgba(11, 204, 255)' : '',
-                        // boxShadow: 'inset 0px 0px 6px 0px #434343'
+                style={{
+                        border: isTurn ? '2px solid rgba(0, 122, 130)' : '',
+                        animation: isTurn ? 'shadowPulseTurn 2s ease-in-out infinite' : ''
                 }}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
@@ -334,7 +335,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                         <div className='initiativeInputContainer'>
                             <input className='inputButton' onFocus={handleHighlight} onBlur={handleInitiativeCheck} type='text' value={creature.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                         </div>
-                        <div className="monsterEncounterIconContainer" onClick={() => handleUploadMonsterImage(creature)}>
+                        <div className="monsterEncounterIconContainer" onClick={(event) => handleUploadMonsterImage(event, creature)}>
                             <img className="monsterEncounterIcon" src={creature.avatarUrl} alt={"list Icon"} />
                             <div className='uploadIconContainer'>
                                 <img className="uploadIcon" src={uploadImage} alt={"list Icon"} />

@@ -15,12 +15,12 @@ import HowTo from './projects/dnd/dmView/components/SideMenu/HowToDMB';
 import defaultBackground from "./projects/dnd/dmView/pics/backgrounds/happyTavern.png"
 
 // When someone comes to dmbuddy for the first load, set these variables, or remember what they have already
-if(!window.location.href.includes("/playerView")) {
-    localStorage.setItem('hideDeadEnemies', localStorage.getItem('hideDeadEnemies') === null ? false : JSON.parse(localStorage.getItem('hideDeadEnemies')));
-    localStorage.setItem('enemyBloodToggle', localStorage.getItem('enemyBloodToggle') === null ? 1 : JSON.parse(localStorage.getItem('enemyBloodToggle')));
-    localStorage.setItem('hideEnemies', true);
-    localStorage.setItem('cardContainerStyle', JSON.stringify({width: '80%'}));
-}
+// if(!window.location.href.includes("/playerView")) {
+//     localStorage.setItem('hideDeadEnemies', localStorage.getItem('hideDeadEnemies') === null ? false : JSON.parse(localStorage.getItem('hideDeadEnemies')));
+//     localStorage.setItem('enemyBloodToggle', localStorage.getItem('enemyBloodToggle') === null ? 1 : JSON.parse(localStorage.getItem('enemyBloodToggle')));
+//     localStorage.setItem('hideEnemies', true);
+//     localStorage.setItem('cardContainerStyle', JSON.stringify({width: '80%'}));
+// }
 
 function App() {
     // Load all encounters from storage
@@ -36,7 +36,6 @@ function App() {
             <Route path="/help" element={<HowTo/>} />
             <Route path="/king/" element={<Pantheon />} />
             <Route path="/blog" element={<Blog/>}/>
-            <Route path="/max/" element={<div style={{fontSize: '50px'}}>129114069,125681347,129132878,129107853,125382402</div>} />
         </Routes>
     );
 }

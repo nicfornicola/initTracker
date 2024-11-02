@@ -196,10 +196,19 @@ hr {
 
 @keyframes shadowPulse {
     0%, 100% {
-      box-shadow: 0 0 5px 2px rgbargb(142, 242, 255, .5);
+      box-shadow: 0 0 5px 2px rgba(142, 242, 255, .5);
     }
     50% {
       box-shadow: 0 0 8px 3px rgb(142, 242, 255);
+    }
+}
+
+@keyframes shadowPulseTurn {
+    0%, 100% {
+      box-shadow: 0 0 3px 0px rgb(0, 174, 197);
+    }
+    50% {
+      box-shadow: 0 0 10px 3px rgb(0, 122, 138);
     }
 }
 
