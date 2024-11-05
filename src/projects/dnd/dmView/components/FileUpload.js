@@ -30,7 +30,7 @@ const resizeImage = (img, maxWidth, maxHeight, quality) => {
 };
 
 // FileUpload component
-const FileUpload = ({uploadedFiles, setUploadedFiles, storageKey, socket}) => {
+const FileUpload = ({setUploadedFiles, storageKey, socket}) => {
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -48,8 +48,10 @@ const FileUpload = ({uploadedFiles, setUploadedFiles, storageKey, socket}) => {
 
                     const resizedImage = await resizeImage(img, maxWidth, maxHeight, quality);
 
-                    setUploadedFiles(prevFiles => [...prevFiles, resizedImage]);
-                    socket.emit("uploadNewImage", resizedImage, storageKey, generateUniqueId(), "Username")
+                    let guid = generateUniqueId();
+                    let userGuid = "Username"
+                    setUploadedFiles(prevFiles => [...prevFiles, {type: storageKey, imageGuid: guid, image: resizedImage, userGuid: userGuid}]);
+                    socket.emit("uploadNewImage", resizedImage, storageKey, guid, userGuid)
                 };
 
                 

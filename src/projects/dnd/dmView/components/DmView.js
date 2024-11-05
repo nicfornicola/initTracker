@@ -14,7 +14,7 @@ import { refreshMonsterProfiles } from '../refresh/refresh';
 import { ImportDndBeyondCharacters } from '../api/ImportDndBeyondCharacters'
 import ReactGA from "react-ga4";
 import { useLocation } from 'react-router-dom';
-
+import defaultBackground from '../pics/backgrounds/happyTavern.png'
 
 function getLocalStorageSize() {
     let totalSize = 0;
@@ -29,6 +29,31 @@ function getLocalStorageSize() {
     
     console.log(`Total items in localStorage: ${localStorage.length}`);
     console.log(`Approximate size: ${sizeInMB.toFixed(2)} MB`);
+}
+
+function getVideoLink(thumbnailLink) {
+    const videoId = thumbnailLink.split("vi/")[1].split('/max')[0];
+    if (videoId) {
+        let embedUrl = "https://www.youtube.com/embed/" + videoId
+
+        const params = {
+            controls: 0,
+            mute: 1,
+            rel: 0,
+            autoplay: 1,
+            loop: 1,
+            playlist: videoId
+        }
+
+        // Mute by default and turn off controls so they dont show everytime on hover
+        const queryParams = new URLSearchParams(params).toString();
+        embedUrl += `?${queryParams}`;
+        return {type: 'youtube', src: embedUrl}
+
+    } else {
+        console.error('Invalid YouTube URL');
+        return {type: 'image', src: defaultBackground};
+    }
 }
 
 function findDifferences(obj1, obj2) {
@@ -53,7 +78,9 @@ function findDifferences(obj1, obj2) {
     return differences;
   }
 
-const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, setPlayerViewBackground}) => {
+const DmView = () => {
+    const [playerViewBackground, setPlayerViewBackground] = useState({type: "image", src: defaultBackground});
+    const [currentEncounter, setCurrentEncounter] = useState(INIT_ENCOUNTER);
     const [onFirstLoad, setOnFirstLoad] = useState(true);
     const [refreshLoading, setRefreshLoading] = useState(false);
     const [autoRefreshDndbPlayers, setAutoRefreshDndbPlayers] = useState(false);
@@ -86,8 +113,9 @@ const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, se
             // Recieve messages from backend
             socket.on('sendSavedEncounters', (encountersResponse) => {
                 if(encountersResponse.length === 0) {
-                    console.log("nothing saved")
+                    console.log("Nothing saved...")
                 }
+
                 setSavedEncounters(encountersResponse)
             });
 
@@ -106,24 +134,7 @@ const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, se
 
         // Trigger page view on route change
         ReactGA.send({ hitType: "pageview", page: location.pathname });
-      }, [location]);
-
-
-    useEffect(() => {
-        const getRefreshedLocalEncounter = (event) => {
-            if (event.key === 'currentBackground') {
-                setPlayerViewBackground({...JSON.parse(localStorage.getItem('currentBackground'))});
-            }
-        }
-        window.addEventListener('storage', getRefreshedLocalEncounter);
-    }, [])
-
-    useEffect(() => {
-        if(onFirstLoad && currentEncounter.encounterGuid !== "" && !window.location.href.includes("/playerView")) {
-            setOnFirstLoad(false)
-        }
-        // eslint-disable-next-line
-    }, [currentEncounter]);  
+    }, [location]);
 
     useEffect(() => {
         if(refreshCheck) {
@@ -221,13 +232,18 @@ const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, se
     };
 
     useEffect(() => {
+        if(onFirstLoad && currentEncounter.encounterGuid !== "" && !window.location.href.includes("/playerView")) {
+            setOnFirstLoad(false)
+        }
+
         setSavedEncounters((prevEncounters) =>
             prevEncounters.map((encounter) =>
               encounter.encounterGuid === currentEncounter.encounterGuid
-                ? { ...encounter, ...currentEncounter } // Update matching encounter
-                : encounter // Leave others unchanged
+                ? { ...encounter, ...currentEncounter } 
+                : encounter 
             )
         );
+
         // Check current encounter to see if we need to auto refresh from DNB_B
         if(currentEncounter.creatures) {
             let foundPlayer = false;
@@ -244,7 +260,6 @@ const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, se
             setAutoRefreshDndbPlayers(foundPlayer)
             setAutoRefreshDndbMonsters(foundMonster)
             setAutoRefresh(foundPlayer || foundMonster)
-            console.log(foundPlayer || foundMonster)
         }
 
         let intervalId = 0
@@ -267,6 +282,11 @@ const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, se
         return () => clearInterval(intervalId);
     // eslint-disable-next-line
     }, [currentEncounter]);
+
+    //
+    useEffect(() => {
+        setCurrentEncounter({...currentEncounter, backgroundGuid: playerViewBackground.src})
+    }, [playerViewBackground]);
 
     const uploadLocalStorage = (event) => {
         const file = event.target.files[0];
@@ -293,12 +313,24 @@ const DmView = ({currentEncounter, setCurrentEncounter, playerViewBackground, se
 
         setCurrentEncounter({...INIT_ENCOUNTER, encounterGuid: newGuid})
         setEncounterGuid(newGuid)
+        setPlayerViewBackground({type: 'image', src: defaultBackground})
     };  
 
     const handleLoadEncounter = (encounter) => {
-        console.log("%cLoaded: " + encounter.encounterName, "background: #fdfd96;")
+        console.log("%cLoaded: " + encounter.encounterName + ' ' + encounter.encounterGuid, "background: #fdfd96;")
+
         setCurrentEncounter({...encounter})
         setEncounterGuid(encounter.encounterGuid)
+
+        if(encounter.backgroundGuid === 'default') {
+            setPlayerViewBackground({type: "image", src: defaultBackground})
+        } else {
+            setPlayerViewBackground(
+                encounter.backgroundGuid.includes('youtube.com')
+                ? getVideoLink(encounter.backgroundGuid)
+                : {type: 'image', src: encounter.backgroundGuid}
+            )
+        }
     };  
 
     return (

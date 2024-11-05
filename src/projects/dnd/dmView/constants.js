@@ -59,30 +59,30 @@ import background23 from "./pics/backgrounds/adventureTime.gif"
 import background24 from "./pics/backgrounds/fire.gif"
 
 export const backgroundImages = [
-    background1,
-    background2,
-    background3,
-    background4,
-    background5,
-    background6,
-    background7,
-    background8,
-    background9,
-    background10,
-    background11,
-    background12,
-    background13,
-    background14,
-    background15,
-    background16,
-    background17,
-    background18,
-    background19,
-    background20,
-    background21,
-    background22,
-    background23,
-    background24
+    { imageGuid: "constant", image: background1 },
+    { imageGuid: "constant", image: background2 },
+    { imageGuid: "constant", image: background3 },
+    { imageGuid: "constant", image: background4 },
+    { imageGuid: "constant", image: background5 },
+    { imageGuid: "constant", image: background6 },
+    { imageGuid: "constant", image: background7 },
+    { imageGuid: "constant", image: background8 },
+    { imageGuid: "constant", image: background9 },
+    { imageGuid: "constant", image: background10 },
+    { imageGuid: "constant", image: background11 },
+    { imageGuid: "constant", image: background12 },
+    { imageGuid: "constant", image: background13 },
+    { imageGuid: "constant", image: background14 },
+    { imageGuid: "constant", image: background15 },
+    { imageGuid: "constant", image: background16 },
+    { imageGuid: "constant", image: background17 },
+    { imageGuid: "constant", image: background18 },
+    { imageGuid: "constant", image: background19 },
+    { imageGuid: "constant", image: background20 },
+    { imageGuid: "constant", image: background21 },
+    { imageGuid: "constant", image: background22 },
+    { imageGuid: "constant", image: background23 },
+    { imageGuid: "constant", image: background24 }
 ];
 
 export const isProd = window.location.href.includes("dmbuddy.com") 
@@ -113,10 +113,16 @@ export const sortCreaturesByInitiative = (creatures) => {
                 return initiativeComparison;
             } else {
                 // Initiatives are the same, compare by creature.name alphabetically
-                return a.name.localeCompare(b.name);
+                const nameComparison = a.name.localeCompare(b.name);
+                if (nameComparison !== 0) {
+                    return nameComparison;
+                } else {
+                    // Name is also the same, compare by guid
+                    return a.creatureGuid.localeCompare(b.creatureGuid);
+                }
             }
         } else {
-            return 0; // Both are null, maintain the current order
+            return 0; // Both initiatives are null, maintain the current order
         }
     });
 };
@@ -214,9 +220,13 @@ export const INIT_ENCOUNTER_NAME = 'Name Your Encounter';
 export const INIT_ENCOUNTER = {
     encounterName: INIT_ENCOUNTER_NAME,
     encounterGuid: "",
-    roundNum: 1,
+    roundNum: 0,
     turnNum: 0,
-    creatures: []
+    creatures: [],
+    backgroundGuid: 'default',
+    enemyBloodToggle : 0, 
+    hideDeadEnemies: true, 
+    hideEnemies: true
 }
 
 let combinedArray = [...CoreRules,

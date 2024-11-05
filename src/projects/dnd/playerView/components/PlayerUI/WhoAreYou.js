@@ -5,9 +5,15 @@ import CharacterController from './CharacterController.js';
 import YouTubeEmbed from '../../../dmView/components/EncounterColumn/YouTubeEmbed.js';
 import io from 'socket.io-client';
 import { useParams } from 'react-router-dom';
+import defaultBackground from "../../../dmView/pics/backgrounds/happyTavern.png"
 
-function WhoAreYou({playerView, playerViewBackground}) {
-    console.log("creatures", playerView?.creatures)
+function WhoAreYou() {
+
+    const playerView = {
+        turnNum: 0
+    }
+
+    const [playerViewBackground, setPlayerViewBackground] = useState({type: "image", src: defaultBackground});
 
     const [players, setPlayers] = useState([]);
     const [turnNum, setTurnNum] = useState(playerView.turnNum);

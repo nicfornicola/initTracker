@@ -41,20 +41,20 @@ const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter
                 {buttonString}
             </button>
         {isOpen && savedEncounters.length !== 0 && (
-          <ul className="dropdownMenu">
-            {savedEncounters.map((encounter, index) => (
-                        <li
-                            key={encounter.encounterName + index}
-                            onClick={() => handleDropDownOptionClicked(encounter)}
-                            className="dropdown-item"
-                        >
-                            {encounter.encounterName}
-                            <button className='encounterDropdownX' onClick={(event) => clickEncounterDropdownMenuX(event, encounter)}>
-                                X
-                            </button>
-                        </li>
-                    ))}
-          </ul>
+            <ul className="dropdownMenu">
+                {savedEncounters.map((encounter, index) => (
+                    <li
+                        key={encounter.encounterName + index}
+                        onClick={() => handleDropDownOptionClicked(encounter)}
+                        className="dropdown-item"
+                    >
+                        {encounter.encounterName}
+                        <button className='encounterDropdownX' onClick={(event) => clickEncounterDropdownMenuX(event, encounter)}>
+                            X
+                        </button>
+                    </li>
+                ))}
+            </ul>
         )}
       </div>
     );

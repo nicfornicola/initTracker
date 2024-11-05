@@ -28,8 +28,9 @@ const TextInput = ({setUploadedLinks, socket}) => {
         let validUrl = link.match(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/);
         if(validUrl) {
             let thumbNailUrl = getYouTubeThumbnail(link)
-            setUploadedLinks((prevLinks) => [...prevLinks, thumbNailUrl]);
-            socket.emit("uploadNewImage", thumbNailUrl, "link", generateUniqueId(), "Username")
+            let guid = generateUniqueId()
+            setUploadedLinks((prevLinks) => [...prevLinks, {imageGuid: guid, image: thumbNailUrl}]);
+            socket.emit("uploadNewImage", thumbNailUrl, "link", guid, "Username")
         } else {
             alert("Invalid Youtube Link 🤷")
         }

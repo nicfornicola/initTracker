@@ -297,7 +297,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
             setEffects([...effects, effect])
 
         }
-        socket.emit('changeCreatureEffect', effect, alreadyExists ? "remove" : "add", creature.creatureGuid, "dm");
+        socket.emit('creatureEffectChange', effect, alreadyExists ? "remove" : "add", creature.creatureGuid, "dm");
     };
 
     let isDead = creature.hit_points_current <= 0

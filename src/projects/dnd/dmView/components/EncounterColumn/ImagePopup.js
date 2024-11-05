@@ -4,15 +4,17 @@ import { Dialog, DialogContent } from '@mui/material';
 import { backgroundImages } from '../../constants.js';
 import FileUpload from '../FileUpload.js';
 import TextInput from '../TextInput.js';
-import GridMap from '../../../playerView/components/GridMap.js';
+import GridMap from '../GridMap.js';
+import { InfinitySpin } from 'react-loader-spinner';
 
 import backgroundButton from "../../pics/icons/backgroundButton.png"
 import OptionButton from './OptionButton';
 
-const ImagePopup = ({setPlayerViewBackground, socket}) => {
+const ImagePopup = ({setPlayerViewBackground, encounterGuid, socket}) => {
     const [open, setOpen] = useState(false);
-    const [uploadedFiles, setUploadedFiles] = useState(JSON.parse(localStorage.getItem('uploadedBackgrounds')) || []);
-    const [uploadedLinks, setUploadedLinks] = useState(JSON.parse(localStorage.getItem('uploadedLinks')) || []);
+    const [uploadedFiles, setUploadedFiles] = useState([]);
+    const [uploadedLinks, setUploadedLinks] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const dialogRef = useRef(null);
 
@@ -27,28 +29,28 @@ const ImagePopup = ({setPlayerViewBackground, socket}) => {
             }
         };
 
-
-
-        if(open) {
+        if(open) {  
             if(uploadedFiles.length === 0 && uploadedLinks.length === 0) {
                 socket.emit("getImages", "background", "Username");
-                socket.on('sendImages', (backgrounds) => {
+                socket.on('sendImagesBackground', (backgrounds) => {
                     if(backgrounds.length === 0) {
                         console.log("No images")
                     } else {
                         let images = [];
                         let links = [];
                         backgrounds.forEach(background => {
-                            console.log(background.imageGuid)
                             if(background.type === "link") {
                                 // this is actually a youtube thumbs nail url
-                                links.push(background.image) 
+                                links.push(background) 
                             } else if (background.type === "background") {
-                                images.push(background.image)
+                                images.push(background)
                             }
                         })
                         setUploadedLinks(links)
                         setUploadedFiles(images)
+                        setTimeout(()=> {
+                            setLoading(false)
+                        }, 500)
                     }
                 });
             }
@@ -62,12 +64,14 @@ const ImagePopup = ({setPlayerViewBackground, socket}) => {
 
     const handleSetBackground = (type, src) => {
         setPlayerViewBackground({type: type, src: src})
-        socket.emit("setEncounterBackground", src)
     }
 
-    const handleClick = (src, isYoutubeLink) => {
+    const handleClick = (imageObj, isYoutubeLink) => {
+        
+        socket.emit("encounterBackgroundChange", imageObj, encounterGuid)
+
         if (isYoutubeLink) { // https://www.youtube.com/watch?v=H-bd0eyF-HA&ab_channel=AnimatedBattleMaps
-            const videoId = src.split("vi/")[1].split('/max')[0];
+            const videoId = imageObj.image.split("vi/")[1].split('/max')[0];
             if (videoId) {
                 let embedUrl = "https://www.youtube.com/embed/" + videoId
 
@@ -90,7 +94,7 @@ const ImagePopup = ({setPlayerViewBackground, socket}) => {
                 return;
             }
         } else {
-            handleSetBackground("image", src)
+            handleSetBackground("image", imageObj.image)
         }
 
     };
@@ -99,26 +103,33 @@ const ImagePopup = ({setPlayerViewBackground, socket}) => {
     <>
         <OptionButton src={backgroundButton} message={"Set Background"} onClickFunction={() => setOpen(true)}/>
         <Dialog open={open} onClose={handleClose} ref={dialogRef} >
-            <DialogContent >
-                {uploadedLinks.length > 0 && (
-                    <>     
-                        <label htmlFor="grid" className='uploadedTitle'>Uploaded Youtube Links</label>
-                        <hr/>
-                        <GridMap imageArr={uploadedLinks} handleClick={handleClick} isYoutubeLink={true} />
-                        <hr/>
-                    </>
-                )}
-                {uploadedFiles.length > 0 && (
-                    <>     
-                        <label htmlFor="grid" className='uploadedTitle'>Uploaded Images</label>
-                        <hr/>
-                        <GridMap imageArr={uploadedFiles} handleClick={handleClick}/>
-                        <hr/>
-                    </>
-                )}
-                <GridMap imageArr={backgroundImages} handleClick={handleClick}/>
-            </DialogContent>
-            <FileUpload uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles} storageKey={"background"} socket={socket}/>
+            {loading ? 
+                <InfinitySpin
+                    visible={true}
+                    width="200"
+                    ariaLabel="infinity-spin-loading"
+            /> :
+                <DialogContent >
+                    {uploadedLinks.length > 0 && (
+                        <>     
+                            <label htmlFor="grid" className='uploadedTitle'>Uploaded Youtube Links</label>
+                            <hr/>
+                            <GridMap imageArr={uploadedLinks} handleClick={handleClick} isYoutubeLink={true} />
+                            <hr/>
+                        </>
+                    )}
+                    {uploadedFiles.length > 0 && (
+                        <>     
+                            <label htmlFor="grid" className='uploadedTitle'>Uploaded Images</label>
+                            <hr/>
+                            <GridMap imageArr={uploadedFiles} handleClick={handleClick}/>
+                            <hr/>
+                        </>
+                    )}
+                    <GridMap imageArr={backgroundImages} handleClick={handleClick}/>
+                </DialogContent>
+            }
+            <FileUpload setUploadedFiles={setUploadedFiles} storageKey={"background"} socket={socket}/>
             <TextInput setUploadedLinks={setUploadedLinks} socket={socket}/>
 
         </Dialog>

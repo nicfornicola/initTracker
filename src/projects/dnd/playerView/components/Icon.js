@@ -1,6 +1,5 @@
 import React from 'react';
 import '../../dmView/style/App.css'; // Import your CSS file
-import { v4 as uuidv4 } from 'uuid';
 
 import skullpng from '../pics/imageOverlays/skulls/skull.png'; 
 import bloodied1 from '../pics/imageOverlays/blood/blood1.png'; 
@@ -53,79 +52,84 @@ const Icon = ({creature, isTurn, hideDeadEnemies, enemyBloodToggle}) => {
         lastName = lastName.join(' ') || '';
     }
 
-    console.log(creature)
-    if(effectsFound) {
-        console.log(creature.effects)
-    }
     return (
         <>
             {(hideDeadEnemies && !isAlly && isDead) ? (
                 null 
             ) : (
-                <div
-                    className="card"
-                    style={{boxShadow: '0px 0px 5px 5px ' + creature.border, 
-                        background: isTurn ? 'linear-gradient(to top, rgba(11, 204, 255, 0.85), rgba(11, 204, 255, .5))' : '',
-                        opacity: isDead && !isPlayer ? .5 : 1}}
-                >
-                    <div>
-                        <div className='image-container'>
-                            <img className="image" src={creature.avatarUrl} alt={name} />
-                            <div className="imageSmoke"/>                            
-                            {isDead ? (
-                                <>
-                                    <img className="image overlay-skull" src={skullpng} alt="" />
-                                    {showDeathSaves && (
-                                        <DeathSaves pass={creature.death_saves_success_count} fail={creature.death_saves_failure_count} />
-                                    )}
-                                </>
-                                
-                            ) : (
-                                <>{isBloodied && <img className="image overlay-blood" src={getBloodImg(creature)} alt="" />}</>
-                            )}                            
+                <div className='iconImageDrop'>
+                    <div className="card"
+                        style={{
+                            animation: isTurn ? 'playerViewIconShadowPulse 3s ease-in-out infinite' : '',
+                            opacity: isDead && !isPlayer ? .5 : 1,
+                        }}
+                    >
+                        <div className='cardTurnHighlight'
+                            style={{
+                                boxShadow: `0px 0px 5px 5px ${creature.border}`, // Static shadow
+                                border: isTurn ? '2px solid #00ffff' : '2px solid #ffffff'
+                            }}
+                        >
+                            <div className='image-container'>
+                                <img className="image" src={creature.avatarUrl} alt={name} />
+                                <div className="imageSmoke"/>                            
+                                {isDead ? (
+                                    <>
+                                        <img className="image overlay-skull" src={skullpng} alt="" />
+                                        {showDeathSaves && (
+                                            <DeathSaves pass={creature.death_saves_success_count} fail={creature.death_saves_failure_count} />
+                                        )}
+                                    </>
+                                    
+                                ) : (
+                                    <>{isBloodied && <img className="image overlay-blood" src={getBloodImg(creature)} alt="" />}</>
+                                )}                            
 
-                            {effectsFound && (
-                                <div className='avatarEffectsBar'>    
-                                    {creature.effects.map((effectName) => (
-                                            <img className='effect'
-                                                src={effectImgMap[effectName]}
-                                                alt={effectName}
-                                            />
-                                    ))}
+                                {effectsFound && (
+                                    <div className='avatarEffectsBar'>    
+                                        {creature.effects.map((effectName) => (
+                                                <img className='effect'
+                                                    key={effectName}
+                                                    src={effectImgMap[effectName]}
+                                                    alt={effectName}
+                                                />
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="name" style={{opacity: 1}}>{name}</div> 
+                            <div className='lastName'> {lastName}</div>
+
+                            {showHp && ( 
+                                <div className="hp-box" style={hpBoxColor}>
+                                    <div className="hp">
+                                        {creature.hit_points_current}/{creature.hit_points}
+                                        
+                                        {creature.hit_points_temp > 0 && ( 
+                                            <span className='tempHp'>(+{creature.hit_points_temp})</span>
+                                        )}
+                                    </div>
                                 </div>
                             )}
-                        </div>
 
-                        <div className="name" style={{opacity: 1}}>{name}</div> 
-                        <div className='lastName'> {lastName}</div>
+                            {isExhausted && ( 
+                                <Exhaustion exhaustionLvl={creature.exhaustionLvl}/>
+                            )}
 
-                        {showHp && ( 
-                            <div className="hp-box" style={hpBoxColor}>
-                                <div className="hp">
-                                    {creature.hit_points_current}/{creature.hit_points}
-                                    
-                                    {creature.hit_points_temp > 0 && ( 
-                                        <span className='tempHp'>(+{creature.hit_points_temp})</span>
-                                    )}
+                            {showInitiativeBox && 
+                                <div className="initiative-box">
+                                    <div className='initiative'>{creature.initiative}</div>
                                 </div>
-                            </div>
-                        )}
+                            }
 
-                        {isExhausted && ( 
-                            <Exhaustion exhaustionLvl={creature.exhaustionLvl}/>
-                        )}
-
-                        {showInitiativeBox && 
-                            <div className="initiative-box">
-                                <div className='initiative'>{creature.initiative}</div>
-                            </div>
-                        }
-
+                        </div>
                     </div>
                 </div>
+
             )}
         </>
-        );
+    );
 };
 
 export default Icon;

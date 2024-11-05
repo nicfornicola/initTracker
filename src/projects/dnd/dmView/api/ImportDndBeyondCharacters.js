@@ -27,8 +27,8 @@ export const ImportDndBeyondCharacters = async (playerIds, encounterGuid, encoun
             return DndBCharacterToDmBMapper(resData, encounterGuid, skillDetails)
         } catch (error) {
             console.log(i.toString() + "/" + playerIds.length + " failed! (" + playerId +")");
-            i++;
             console.log(error)
+            i++;
             if (error.response) {
                 if (error.response.status === 404) {
                     alert(`Could not find ID: '${playerId}' \n\nDnd Beyond Error: ${error.response.status}`);

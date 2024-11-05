@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import StatBlock from '../StatBlock';
-import { generateUniqueId, dummyDefault, envObject, sortCreatureArray, INIT_ENCOUNTER_NAME, COLOR_RED, COLOR_GREEN } from '../../constants';
+import { generateUniqueId, dummyDefault, envObject, sortCreatureArray, INIT_ENCOUNTER_NAME, COLOR_RED, COLOR_GREEN, INIT_ENCOUNTER } from '../../constants';
 import EncounterListTopInfo from './EncounterListTopInfo'
 import DropdownMenu from './DropdownMenu';
 import EncounterControls from './EncounterControls'
 import EncounterList from './EncounterList'
 import UploadMonsterImage from './UploadMonsterImage'
 
-function addToLocalSavedEncounter(jsonArray, newEncounter) {
+function updateSavedEncounters(jsonArray, newEncounter) {
     if(jsonArray === null) jsonArray = []
     
     // Find the index of the existing object with the same encounterGuid
@@ -15,24 +15,20 @@ function addToLocalSavedEncounter(jsonArray, newEncounter) {
 
     let saveType = "Saved Changes to Existing - "
     if (index !== -1) {
-        // Overwrite the existing object if its found
-        // const result = compareObjects(jsonArray[index], newEncounter);
         jsonArray[index] = newEncounter;
     } else {
-        // Add the new object to the array if nothing exists already
         saveType = "Saved New Encounter - "
         jsonArray.push(newEncounter);
     }
 
     console.log("%c" + saveType + newEncounter.encounterName + " (" + newEncounter.encounterGuid + ")", "background: #fdfd96;")
 
-
     return jsonArray;
 }
-const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, hideEnemies, setCardContainerStyle, hideDeadEnemies, setHideDeadEnemies, enemyBloodToggle, setEnemyBloodToggle, setHideEnemies, savedEncounters, setSavedEncounters, handleRefresh,  refreshCheck, autoRefresh, showSearchList, handleNewEncounter, setEncounterGuid, socket}) => {
+
+const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, savedEncounters, setSavedEncounters, handleRefresh,  refreshCheck, autoRefresh, showSearchList, handleNewEncounter, setEncounterGuid, socket}) => {
     const [roundNum, setRoundNum] = useState(currentEncounter.roundNum);
     const [turnNum, setTurnNum] = useState(currentEncounter.turnNum);
-
     const [encounterSelectedCreature, setEncounterSelectedCreature] = useState(null);
     const [showSaveMessage, setShowSaveMessage] = useState(false);
     const [saveMessageColor, setSaveMessageColor] = useState("");
@@ -50,16 +46,15 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         // eslint-disable-next-line
     }, [nameChange]);
 
-    // useEffect(() => {
-    //     handleSaveEncounter()
-    //     socket.emit("roundNumChange", roundNum, currentEncounter.encounterGuid)
-    //     socket.emit("turnNumChange", turnNum, currentEncounter.encounterGuid)
-
-    // }, [turnNum, roundNum]);
-
     useEffect(() => {
         setIsSaveDisabled(currentEncounter.creatures?.length === 0)
     }, [currentEncounter.creatures]);
+
+    // When changing encounters watch the turnNum and roundNum to rerender the turn controller
+    useEffect(() => {
+        setRoundNum(currentEncounter.roundNum)
+        setTurnNum(currentEncounter.turnNum)
+    }, [currentEncounter.roundNum, currentEncounter.turnNum]);
 
     const clickEncounterCreatureX = (event, xCreature, index) => {
         event.stopPropagation(); 
@@ -74,25 +69,30 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         socket.emit("removeCreatureFromEncounter", xCreature.creatureGuid)
     };  
 
+    //This is mostly for handling ui, not saving to the database
+    // Since database changes happen on a lower level to avoid bloat
     const handleSaveEncounter = () => {
         if(currentEncounter.encounterName !== INIT_ENCOUNTER_NAME) {
             let newEncounter = {
-                    encounterName: currentEncounter.encounterName,
-                    encounterGuid: currentEncounter.encounterGuid || generateUniqueId(),
-                    roundNum: roundNum,
-                    turnNum: turnNum,
-                    creatures: currentEncounter.creatures
-                }
-            
+                encounterName: currentEncounter.encounterName,
+                encounterGuid: currentEncounter.encounterGuid || generateUniqueId(),
+                roundNum: roundNum,
+                turnNum: turnNum,
+                creatures: currentEncounter.creatures,
+                backgroundGuid: currentEncounter.backgroundGuid,
+                enemyBloodToggle: currentEncounter.enemyBloodToggle,
+                hideDeadEnemies: currentEncounter.hideDeadEnemies,
+                hideEnemies: currentEncounter.hideEnemies
+            }
 
             if(newEncounter.encounterGuid !== currentEncounter.encounterGuid) {
                 setEncounterGuid(newEncounter.encounterGuid) 
             }
-            
+
             // Overwrites if exists, appends if new
-            // const updatedSavedEncountersList = addToLocalSavedEncounter(savedEncountersList, newEncounter);
+            const updatedSavedEncountersList = updateSavedEncounters(savedEncounters, newEncounter);
             // Setting this list to update the encounter list
-            // setSavedEncounters(updatedSavedEncountersList)
+            setSavedEncounters(updatedSavedEncountersList)
             setShowSaveMessage(true);
             setTimeout(() => {
                 setShowSaveMessage(false);
@@ -149,11 +149,11 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
 
     const handleAutoRollInitiative = (event) => {
         event.stopPropagation()
-        let initatives = []
+        // let initatives = []
         currentEncounter.creatures.forEach(creature => {
             let initBonus = creature.dexterity_save ? creature.dexterity_save : 0
             creature.initiative = Math.floor(Math.random() * 20) + 1 + initBonus
-            initatives.push({creatureGuid: creature.creatureGuid, initiative: creature.initative})
+            // initatives.push({creatureGuid: creature.creatureGuid, initiative: creature.initative})
         });      
 
         // socket.emit("autoRolledInitiative", initatives);
@@ -197,11 +197,13 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
 
         if(action !== null) {
             if(newRound !== null && newRound !== roundNum) {
+                currentEncounter.roundNum = newRound
                 setRoundNum(newRound)
                 socket.emit("roundNumChange", newRound, currentEncounter.encounterGuid)
             }
 
             if(newTurn !== null && newTurn !== turnNum) {
+                currentEncounter.turnNum = newTurn
                 setTurnNum(newTurn)
                 socket.emit("turnNumChange", newTurn, currentEncounter.encounterGuid)       
             }
@@ -222,7 +224,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
             <div className={`column columnBorder ${showSearchList ? '' : 'expand'}`}>
                 <div className='infoContainer'>
                     <EncounterListTopInfo savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} encounterName={currentEncounter.encounterName} currentEncounter={currentEncounter} setSavedEncounters={setSavedEncounters} handleSaveEncounter={handleSaveEncounter} handleNewEncounter={handleNewEncounter} saveMessageColor={saveMessageColor} showSaveMessage={showSaveMessage} isSaveDisabled={isSaveDisabled} socket={socket}/>
-                    <EncounterControls setNameChange={setNameChange} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} setCardContainerStyle={setCardContainerStyle} handleTurnNums={handleTurnNums} hideDeadEnemies={hideDeadEnemies} setHideDeadEnemies={setHideDeadEnemies} enemyBloodToggle={enemyBloodToggle} setEnemyBloodToggle={setEnemyBloodToggle} hideEnemies={hideEnemies} setHideEnemies={setHideEnemies} handleRefresh={handleRefresh} refreshCheck={refreshCheck} autoRefresh={autoRefresh} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleStartEncounter={handleStartEncounter} handleAutoRollInitiative={handleAutoRollInitiative} socket={socket}/>
+                    <EncounterControls setNameChange={setNameChange} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} handleTurnNums={handleTurnNums} handleRefresh={handleRefresh} refreshCheck={refreshCheck} autoRefresh={autoRefresh} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleStartEncounter={handleStartEncounter} handleAutoRollInitiative={handleAutoRollInitiative} socket={socket}/>
                     {currentEncounter.creatures.length ? (
                         <EncounterList currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleSaveEncounter={handleSaveEncounter} turnNum={turnNum} handleUploadMonsterImage={handleUploadMonsterImage} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} socket={socket}/>
                     ) : (
@@ -252,7 +254,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                     <>No Encounter Creature Selected</>
                 )}
             </div>
-            <UploadMonsterImage setCurrentEncounter={setCurrentEncounter} uploadIconMenu={uploadIconMenu} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} creatures={currentEncounter.creatures} socket={socket}/>
+            <UploadMonsterImage setCurrentEncounter={setCurrentEncounter} uploadIconMenu={uploadIconMenu} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} socket={socket}/>
         </>
   );
 }

@@ -31,6 +31,7 @@ offline mod
 
     player controller
     --
+    connect to DM instead of connecting to encounter, that way when the dm changes encounter the playerview would "follow" by changing backgrounds... not sure how this would work tho
     add list of of other players below img of their own 
     connect effects
     death saves rolls

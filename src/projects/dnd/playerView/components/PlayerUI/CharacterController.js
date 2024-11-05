@@ -101,7 +101,7 @@ const CharacterController = ({creature, isTurn, socket}) => {
             setEffects([...effects, effect])
 
         }
-        socket.emit('changeCreatureEffect', effect, alreadyExists ? "remove" : "add", creature.creatureGuid, "player");
+        socket.emit('creatureEffectChange', effect, alreadyExists ? "remove" : "add", creature.creatureGuid, "player");
     };
 
     const handleHighlight = (e) => {

@@ -30,7 +30,7 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
     const [arrowButton, setArrowButton] = useState(upArrow);
     const [arrowToggleType, setArrowToggleType] = useState(0);
     const [showRefreshButton, setShowRefreshButton] = useState(autoRefresh);
-    const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(getBloodImage(1));
+    const [enemyBloodToggleImage, setEnemyBloodToggleImage] = useState(getBloodImage(currentEncounter.enemyBloodToggle));
 
     const [encounterName, setEncounterName] = useState(currentEncounter.encounterName);
     const [hideEnemies, setHideEnemies] = useState(currentEncounter.hideEnemies);
@@ -42,24 +42,15 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
     // }, [refreshLoading]);    
     
     useEffect(() => {
-        console.log(currentEncounter)
-        if(encounterName !== currentEncounter.encounterName) {
-            setEncounterName(currentEncounter.encounterName)
-        }
-        if(hideEnemies !== currentEncounter.hideEnemies) {
-            setHideEnemies(currentEncounter.hideEnemies)
-        }
-        if(enemyBloodToggle !== currentEncounter.enemyBloodToggle) {
-            setEnemyBloodToggle(currentEncounter.enemyBloodToggle)
-        }
-        if(hideDeadEnemies !== currentEncounter.hideDeadEnemies) {
-            setHideDeadEnemies(currentEncounter.hideDeadEnemies)
-        }
+        setEncounterName(currentEncounter.encounterName)
+        setHideEnemies(currentEncounter.hideEnemies)
+        setEnemyBloodToggle(currentEncounter.enemyBloodToggle)
+        setEnemyBloodToggleImage(getBloodImage(currentEncounter.enemyBloodToggle))
+        setHideDeadEnemies(currentEncounter.hideDeadEnemies)
         // eslint-disable-next-line
     }, [currentEncounter]);
 
     useEffect(() => {
-        console.log(currentEncounter)
         setCurrentEncounter(
             { ...currentEncounter,
                 hideEnemies: hideEnemies, 
@@ -158,7 +149,7 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
                     </div>
                     <div className='dmLowOptions'>
                         <OptionButton src={arrowButton} message={"Player View Icon Position"} onClickFunction={handleMovePortraits}/>
-                        <ImagePopup setPlayerViewBackground={setPlayerViewBackground} socket={socket}/>                    
+                        <ImagePopup setPlayerViewBackground={setPlayerViewBackground} encounterGuid={currentEncounter.encounterGuid} socket={socket}/>                    
                         {showRefreshButton &&
                             <OptionButton src={refreshCheck ? greenCheck : refresh} message={<RefreshTimer refresh={refreshCheck}/>} onClickFunction={() => handleRefresh()} imgClassName={refreshLoading ? 'spinningImage' : ''} />
                         }         
