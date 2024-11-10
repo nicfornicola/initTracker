@@ -4,10 +4,12 @@ import { Dialog, DialogContent } from '@mui/material';
 import FileUpload from '../FileUpload';
 import GridMap from '../GridMap';
 import { InfinitySpin } from 'react-loader-spinner';
+import { useUser } from '../../../../../providers/UserProvider';
 
 const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, setUploadIconMenu, uploadIconMenu, socket}) => {
     const [uploadedAvatars, setUploadedAvatars] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { username } = useUser();
 
     const ref = useRef(null);
 
@@ -24,22 +26,18 @@ const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, setUploadI
 
         if(uploadIconMenu) {
             if(uploadedAvatars.length === 0) {
-                socket.emit("getImages", "avatar", "Username");
+                socket.emit("getImages", "avatar", username);
                 socket.on('sendImagesAvatar', (images) => {
-                    if(images.length === 0) {
-                        console.log("No images")
-                    } else {
-                        let avatars = [];
-                        images.forEach(image => {
-                            console.log(image)
-                            avatars.push({imageGuid: image.imageGuid, image: image.image})
-                        })
-                        
-                        setUploadedAvatars(avatars)
-                        setTimeout(() => {
-                            setLoading(false);
-                        }, 500);              
-                    }
+                    let avatars = [];
+                    images.forEach(image => {
+                        console.log(image)
+                        avatars.push({imageGuid: image.imageGuid, image: image.image})
+                    })
+                    
+                    setUploadedAvatars(avatars)
+                    setTimeout(() => {
+                        setLoading(false);
+                    }, 500);              
                 });
             }
 
@@ -82,7 +80,7 @@ const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, setUploadI
                                 <GridMap imageArr={uploadedAvatars} handleClick={handleClick}/>
                             </>
                         ) : (
-                            <div>Uploaded Images will apear here...</div>
+                            <div>Uploaded Avatars will apear here...</div>
                         )}
 
                     </DialogContent> 

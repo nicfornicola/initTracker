@@ -5,6 +5,7 @@ import YouTubeEmbed from '../../dmView/components/EncounterColumn/YouTubeEmbed.j
 import io from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 import defaultBackground from '../../dmView/pics/backgrounds/happyTavern.png';
+import { backendUrl } from '../../dmView/constants.js';
 
 function getVideoLink(thumbnailLink) {
     const videoId = thumbnailLink.split("vi/")[1].split('/max')[0];
@@ -48,7 +49,7 @@ function PlayerPage() {
 
     useEffect(() => {
         if (!socketRef.current) {
-            socketRef.current = io('http://localhost:8081'); // Create socket connection
+            socketRef.current = io(backendUrl); // Create socket connection
             setSocket(socketRef.current)
         }
     }, [socketRef]);

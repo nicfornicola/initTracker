@@ -86,15 +86,11 @@ export const backgroundImages = [
 ];
 
 export const isProd = window.location.href.includes("dmbuddy.com") 
-// export const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+export const backendUrl = isProd
+                    ? `https://dm-buddy-svc-359507bf4ad4.herokuapp.com` 
+                    : "http://localhost:8081";
 
-// To test corsanywhere locally, switch the "" to "http://localhost:8080/" and run a regular chrome browser
-// If run with no-cors browser bad stuff happens
-export const proxyUrl = isProd
-                        ? 'https://nics-cors-anywhere-99e39b544c5d.herokuapp.com/' 
-                        : "";
-                        
-proxyUrl === "" ? console.log("No Proxy") : console.log("Using Proxy")
+backendUrl === "http://localhost:8081" ? console.log("Using dev") : console.log("Using prod")
 
 export const skills_long = ["Strength Score", "Dexterity Score", "Constitution Score", "Intelligence Score", "Wisdom Score", "Charisma Score"];
 export const skill_codes = [3520, 3521, 3522, 3523, 3524, 3525];

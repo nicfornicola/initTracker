@@ -1,13 +1,12 @@
 import axios from 'axios';
-import { proxyUrl } from '../constants';
+import { backendUrl } from '../constants';
 import DndBCharacterToDmBMapper from '../mappers/DndBMonsterToDmBMapper';
 
 export const ImportDndBeyondMonsters = async (encounterMonsters, encounterGuid) => {
 
     // Filter objects where type === 'monster'    
     const urlIds = [...new Set(encounterMonsters.map(monster => `ids=${monster.id}&`))].join('');
-    // const url = `${proxyUrl}https://monster-service.dndbeyond.com/v1/Monster?${urlIds}`; 
-    const url = `http://localhost:8081/dndb_monster_import/${urlIds}`;
+    const url = `${backendUrl}/dndb_monster_import/${urlIds}`;
 
     let monstersRes = {}
     let mappedMonsters = []

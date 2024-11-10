@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef  } from 'react';
 import '../../dmView/style/App.css';
 import SearchList from './SearchList.js';
+import Home from './Home.js';
 import EncounterColumn from './EncounterColumn/EncounterColumn';
 import SideMenu from './SideMenu/SideMenu.js';
 import InputEncounterId from './SideMenu/InputEncounterId.js';
 import InputCharacterId from './SideMenu/InputCharacterId.js';
 import NewEncounterButton from './EncounterColumn/NewEncounterButton.js';
-import { generateUniqueId, INIT_ENCOUNTER, SHORT_REFRESH} from '../constants';
+import { backendUrl, generateUniqueId, INIT_ENCOUNTER, SHORT_REFRESH} from '../constants';
 import DropdownMenu from './EncounterColumn/DropdownMenu.js';
 import YouTubeEmbed from './EncounterColumn/YouTubeEmbed.js';
 import io from 'socket.io-client';
@@ -15,6 +16,7 @@ import { ImportDndBeyondCharacters } from '../api/ImportDndBeyondCharacters'
 import ReactGA from "react-ga4";
 import { useLocation } from 'react-router-dom';
 import defaultBackground from '../pics/backgrounds/happyTavern.png'
+import { useUser } from '../../../../providers/UserProvider.js';
 
 function getLocalStorageSize() {
     let totalSize = 0;
@@ -90,13 +92,14 @@ const DmView = () => {
     const [showSearchList, setShowSearchList] = useState(true);
     const [encounterGuid, setEncounterGuid] = useState(currentEncounter.encounterGuid);
     const [savedEncounters, setSavedEncounters] = useState([]);
+    const { username } = useUser();
 
     const socketRef = useRef(null)
     const [socket, setSocket] = useState(null);
 
     useEffect(() => {
         if (!socketRef.current) {
-            socketRef.current = io('http://localhost:8081'); // Create socket connection
+            socketRef.current = io(backendUrl); // Create socket connection
             setSocket(socketRef.current)
         }
     }, [socketRef]);
@@ -107,7 +110,7 @@ const DmView = () => {
             socket.on('connect', () => {
                 console.log(`Connected to DmView`);
                 // Need to make logon UI - connect and get my saved encounters
-                socket.emit('connectDmView', "Username", "Password"); // Send the encounter ID to the server
+                socket.emit('connectDmView', username); // Send the encounter ID to the server
             });
 
             // Recieve messages from backend
@@ -340,45 +343,7 @@ const DmView = () => {
             }
 
             { onFirstLoad ? ( 
-                <div className='firstLoadMenuContainer'>
-                    <div className='firstLoadMenu'>
-                        <a className='helpLink' href='/help'>DmBuddy.com/help</a>
-                        <div className='firstLoadOptions'>
-                            <h1>DmBuddy.com</h1>
-                            <span>
-                                Home Brew Focused Encounter Building and Player View
-                            </span>
-                            <span className='firstLoadExtra'>
-                                (with Dnd Beyond Importing)
-                            </span>
-                            
-                        </div>
-
-                        <div className='firstLoadOptions'>
-                            Create a
-                            <NewEncounterButton handleNewEncounter={handleNewEncounter} />  
-                        </div>
-
-                        <div className='firstLoadOptions'>
-                            {savedEncounters.length !== 0 && (
-                                <>
-                                    Select from your
-                                    <DropdownMenu setSavedEncounters={setSavedEncounters} savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} socket={socket}/> 
-                                </>
-                            
-                            )}
-                        </div>
-
-                        <div className='firstLoadOptionsImports'>
-                            Import an encounter from Dnd Beyond
-                            <InputEncounterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket}/>
-                            or
-                            <span>Import Dnd Beyond Character</span>
-                            <InputCharacterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket}/>
-                        </div>
-                    </div>
-                </div>
-
+                <Home savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters}  currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} handleNewEncounter={handleNewEncounter} handleLoadEncounter={handleLoadEncounter} socket={socket}/>
             ) : ( 
                 <>
                     <SideMenu uploadLocalStorage={uploadLocalStorage} setCurrentEncounter={setCurrentEncounter} showSearchList={showSearchList} setShowSearchList={setShowSearchList} encounterGuid={encounterGuid} socket={socket}/>

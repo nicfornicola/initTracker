@@ -21,8 +21,6 @@ import HowTo from './projects/dnd/dmView/components/SideMenu/HowToDMB';
 // }
 
 function App() {
-    // Load all encounters from storage
-    // const [localSavedEncounters, setLocalSavedEncounters] = useState(JSON.parse(localStorage.getItem('savedEncounters')) || []);
 
     return (
         <Routes>

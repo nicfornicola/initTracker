@@ -32,12 +32,12 @@ const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter
 
     let buttonString = "No Saved Encounters"
     if(savedEncounters?.length !== 0) {
-        buttonString = currentEncounter.encounterName === INIT_ENCOUNTER_NAME ? "Encounters..." : "Encounter: " + currentEncounter.encounterName 
+        buttonString = currentEncounter.encounterName === INIT_ENCOUNTER_NAME ? "Saved Encounters..." : "Encounter: " + currentEncounter.encounterName 
     }
 
     return (
         <div className="dropdown" ref={dropdownRef}>
-            <button className="dmViewButton" onClick={() => setIsOpen(!isOpen)}>
+            <button className="dmViewButton" onClick={() => setIsOpen(!isOpen)} disabled={savedEncounters.length === 0}>
                 {buttonString}
             </button>
         {isOpen && savedEncounters.length !== 0 && (

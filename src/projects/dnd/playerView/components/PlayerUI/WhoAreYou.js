@@ -6,6 +6,7 @@ import YouTubeEmbed from '../../../dmView/components/EncounterColumn/YouTubeEmbe
 import io from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 import defaultBackground from "../../../dmView/pics/backgrounds/happyTavern.png"
+import { backendUrl } from '../../../dmView/constants.js';
 
 function WhoAreYou() {
 
@@ -28,7 +29,7 @@ function WhoAreYou() {
 
     useEffect(() => {
         if (!socketRef.current) {
-            socketRef.current = io('http://localhost:8081'); // Create socket connection
+            socketRef.current = io(backendUrl); // Create socket connection
             setSocket(socketRef.current)
         }
     }, [socketRef]);

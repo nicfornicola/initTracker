@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { generateUniqueId } from '../constants';
+import { useUser } from '../../../../providers/UserProvider';
 
 function getYouTubeThumbnail(url) {
     // Extract video ID from URL
@@ -18,6 +19,7 @@ function getYouTubeThumbnail(url) {
 
 const TextInput = ({setUploadedLinks, socket}) => {
     const [link, setLink] = useState('');
+    const { username } = useUser();
 
     const handleChange = (event) => {
         setLink(event.target.value);
@@ -30,7 +32,7 @@ const TextInput = ({setUploadedLinks, socket}) => {
             let thumbNailUrl = getYouTubeThumbnail(link)
             let guid = generateUniqueId()
             setUploadedLinks((prevLinks) => [...prevLinks, {imageGuid: guid, image: thumbNailUrl}]);
-            socket.emit("uploadNewImage", thumbNailUrl, "link", guid, "Username")
+            socket.emit("uploadNewImage", thumbNailUrl, "link", guid, username)
         } else {
             alert("Invalid Youtube Link 🤷")
         }

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 // import data from '../monsterJsons/5eCoreRules.json'; // Adjust the import path as necessary
-import {monsterList, imagesAvailable, proxyUrl, generateUniqueId, INIT_ENCOUNTER_NAME} from '../constants'
+import {monsterList, imagesAvailable, proxyUrl, generateUniqueId, INIT_ENCOUNTER_NAME, backendUrl} from '../constants'
 import axios from 'axios';
 import StatBlock from './StatBlock';
 import Open5eToDmBMapper from '../mappers/Open5eToDmBMapper'
 import { InfinitySpin } from 'react-loader-spinner'
+import { useUser } from '../../../../providers/UserProvider';
 
 // Function to get the image URL based on the type
 const getImageUrl = (creature) => {
@@ -51,6 +52,7 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
     const [displayedItems, setDisplayedItems] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);
+    const { username } = useUser();
 
     useEffect(() => {
         async function fetchData() {
@@ -100,7 +102,7 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
             } else {
                 const urlName = name.replace(/ /g, '-');
                 // const url = `${proxyUrl}https://monster-service.dndbeyond.com/v1/Monster?search=${urlName}&take=1`
-                const url = `http://localhost:8081/dndb_get_monster_image/${urlName}`;
+                const url = `${backendUrl}/dndb_get_monster_image/${urlName}`;
 
                 const response = await axios.get(url).then(res => {
                     let data = res.data.data
@@ -139,16 +141,13 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
     const handleSearchSelectCreature = async (creature, action, event) => {
         event.stopPropagation();
 
-        axios.get('http://localhost:8081/open5e_monster_import/', {
+        axios.get(`${backendUrl}/open5e_monster_import/`, {
             params: { link: creature.link } // Include the link in query parameters
-        })
-        .then(response => {
+        }).then(response => {
             return Open5eToDmBMapper(response.data, creature.avatarUrl); 
-        })
-        .then(mappedCreature => {
+        }).then(mappedCreature => {
             handleLoadCreatureToEncounter(mappedCreature, action);
-        })
-        .catch(error => {
+        }).catch(error => {
             console.warn(`Error loading creature: ${creature.id}`, error);
         });
     };
@@ -181,7 +180,7 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
         <>
             <div className='column columnBorder'>
                 <div className='infoContainer'>
-                <h3 className='titleFontFamily' style={{borderBottom: '1px solid #822000'}}>Creature Search</h3>
+                <h3 className='titleFontFamily' style={{borderBottom: '1px solid #822000'}}>Creature Search - <span className='monsterSearchDetailText'>Signed in as: {username}</span></h3>
 
                     <div className='encounterControlsContainer'>
                         <input

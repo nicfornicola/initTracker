@@ -54,7 +54,7 @@ function SideMenu({uploadLocalStorage, setCurrentEncounter, showSearchList, setS
                 <li className='menuItem' onClick={() => setShowSearchList(!showSearchList)}>
                     <img className='menuIcon' alt='monsterSearch' src={Search}/> {showSearchList ? 'Hide' : 'Show'} Search
                 </li>
-                <li className='menuItem'>
+                {/* <li className='menuItem'>
                     <img className='menuIcon' alt='jsonDownload' src={Download} onClick={downloadLocalStorage} /> Download Saves
                 </li>
                 <li className='menuItem' onClick={handleImageClick}>
@@ -66,7 +66,8 @@ function SideMenu({uploadLocalStorage, setCurrentEncounter, showSearchList, setS
                         style={{ display: 'none' }}
                         onChange={uploadLocalStorage}
                     />
-                </li>
+                </li> */}
+                <hr/>
                 <li className='menuItem' onClick={() => setIsOpen(true)}>
                     <InputCharacterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket}/>
                 </li>

@@ -584,14 +584,127 @@ hr {
     display: flex;
     flex-direction: column;
     top: 20%;
-    width: 40%;
-    height: 50%;
-    justify-content: space-around;
-    align-items: center;
+    height: 55%;
+    width: 50%;
     background-color: #1f1f1fc2;
     color: #ffffff;
     border-radius: 30px;
 }
+
+.homePageGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Three columns */
+    grid-template-rows: 1fr 1fr;        /* Two rows */
+    grid-template-areas:
+        "loginArea cell1 cell2"
+        "loginArea cell3 cell4";
+    padding: 20px;
+    height: 100%; /* Adjust as needed */
+}
+
+.gridCell {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-wrap: nowrap;
+}
+
+/* Define grid area for each cell */
+.largeCell {
+    grid-area: loginArea;
+    display: flex;
+    width: 200px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    border-right: 1px solid grey;
+    padding-top: 28%;
+}
+
+.gridCell:nth-child(2) { grid-area: cell1; }
+.gridCell:nth-child(3) { grid-area: cell2; }
+.gridCell:nth-child(4) { grid-area: cell3; }
+.gridCell:nth-child(5) { grid-area: cell4; }
+
+/* Styling for the login inputs */
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    width: 80%; /* Adjust to desired width */
+}
+
+.homePageButton {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.loginButtons {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.newAccountButton {
+    font-size: x-small;
+}
+
+.info {
+    font-size: small;
+    text-align: left;
+    text-wrap: wrap;
+    border: 2px dotted rgb(123, 0, 0);
+    padding: 2px;
+    width: 108%;
+    background-color: #323232;
+}
+
+.submitCreate,
+.cancelCreate {
+    text-decoration-thickness: 3px;
+    cursor: pointer;
+}
+
+.cancelCreate {
+    text-decoration: underline #dc3700;
+}
+
+.submitCreate {
+    text-decoration: underline #2c9100;
+}
+
+.cancelCreate:hover,
+.submitCreate:hover {
+   font-size: larger;
+}
+
+.createAccountFlex {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    cursor: pointer;
+    width: 105%;
+}
+
+.loginInput {
+    margin: 0;
+    width: 100%;
+    padding: 8px;
+    outline: none
+}
+
+.loginMatch {
+    margin: 0;
+    width: 100%;
+    padding: 8px;
+}
+
+.loginError {
+    border-bottom: 1px solid rgb(107, 0, 0);
+    margin: 4px;
+}
+
 
 .helpLink {
     position: absolute;
@@ -602,9 +715,25 @@ hr {
     font-weight: normal;
 }
 
-.firstLoadOptions {
+.homepageTopContent {
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.optionColumn {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center
+}
+
+.homePageButtonFlex {
+    display: flex;
+    flex-direction: row;
     justify-content: space-around;
     align-items: center;
     width: 100%;
@@ -1132,7 +1261,7 @@ input {
 }
 
 .dmViewButton {
-    padding: 1% 1.5%;
+    padding: 5px;
     cursor: pointer;
     border: 1px solid #ccc;
     background-color: #f9f9f9;
@@ -1257,7 +1386,6 @@ input {
 
 .dndBImportContainer {
     display: flex;
-    padding-top: 10px;
 }
 
 .dndBImportButtons {
@@ -1269,6 +1397,8 @@ input {
 .dndbInput {
     width: 80%;
     margin: 0;
+    padding: 5px;
+
 }
 
 .dndBInputContainer {

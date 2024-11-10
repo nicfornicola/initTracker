@@ -1,5 +1,6 @@
 import React from 'react';
 import { generateUniqueId } from '../constants';
+import { useUser } from '../../../../providers/UserProvider';
 
 const resizeImage = (img, maxWidth, maxHeight, quality) => {
     return new Promise((resolve) => {
@@ -31,6 +32,7 @@ const resizeImage = (img, maxWidth, maxHeight, quality) => {
 
 // FileUpload component
 const FileUpload = ({setUploadedFiles, storageKey, socket}) => {
+    const { username } = useUser();
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -49,9 +51,8 @@ const FileUpload = ({setUploadedFiles, storageKey, socket}) => {
                     const resizedImage = await resizeImage(img, maxWidth, maxHeight, quality);
 
                     let guid = generateUniqueId();
-                    let userGuid = "Username"
-                    setUploadedFiles(prevFiles => [...prevFiles, {type: storageKey, imageGuid: guid, image: resizedImage, userGuid: userGuid}]);
-                    socket.emit("uploadNewImage", resizedImage, storageKey, guid, userGuid)
+                    setUploadedFiles(prevFiles => [...prevFiles, {type: storageKey, imageGuid: guid, image: resizedImage, username: username}]);
+                    socket.emit("uploadNewImage", resizedImage, storageKey, guid, username)
                 };
 
                 
@@ -64,8 +65,6 @@ const FileUpload = ({setUploadedFiles, storageKey, socket}) => {
 
     return (
         <div className="uploadContainer">
-            <label htmlFor="file-upload">Upload pngs, jpgs, gifs</label>         
-            <br/>
             <input id="file-upload" type="file" accept=".png, .jpg, .jpeg, .gif" onChange={handleFileChange} />
         </div>
     );
