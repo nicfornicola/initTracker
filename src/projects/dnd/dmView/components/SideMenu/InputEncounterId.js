@@ -25,7 +25,6 @@ function InputEncounterId({setCurrentEncounter, encounterGuid, socket}) {
             if(data) {
                 // const {monsters, players, turnNum, roundNum, inProgress} = data.data;
                 const {monsters, players} = data.data;
-                console.log(data.data)
                 // Turn the players objects into an array of numbers to match user input
                 const playerIds = players.map(player => player.id);
                 const dmbPlayers = await ImportDndBeyondCharacters(playerIds, eGuid, players);
@@ -40,7 +39,6 @@ function InputEncounterId({setCurrentEncounter, encounterGuid, socket}) {
                     }
 
                     const newCreatures = [...dmbPlayers, ...dmbMonsters];
-                    console.log(newCreatures)
                     socket.emit("importedDndBCreatures", newCreatures);
                     return {
                       ...prev,

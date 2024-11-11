@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import StatBlock from '../StatBlock';
-import { generateUniqueId, dummyDefault, envObject, sortCreatureArray, INIT_ENCOUNTER_NAME, COLOR_RED, COLOR_GREEN, INIT_ENCOUNTER } from '../../constants';
+import { generateUniqueId, dummyDefault, envObject, sortCreatureArray, INIT_ENCOUNTER_NAME, COLOR_RED, COLOR_GREEN } from '../../constants';
 import EncounterListTopInfo from './EncounterListTopInfo'
 import DropdownMenu from './DropdownMenu';
 import EncounterControls from './EncounterControls'
@@ -99,15 +99,6 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
             }, 800); // Hide the message after 5 seconds
         }
         
-    };
-
-    const handleStartEncounter = (event) => {
-        // socket.emit("startEncounter")
-        let url = window.location.href;
-        // Add '/' if needed
-        url += url.endsWith("/") ? "" : "/";
-        window.open(`${url}playerView/${currentEncounter.encounterGuid}`, '_blank');
-        event.stopPropagation(); 
     };
 
     useEffect(() => {
@@ -223,8 +214,8 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         <>
             <div className={`column columnBorder ${showSearchList ? '' : 'expand'}`}>
                 <div className='infoContainer'>
-                    <EncounterListTopInfo savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} encounterName={currentEncounter.encounterName} currentEncounter={currentEncounter} setSavedEncounters={setSavedEncounters} handleSaveEncounter={handleSaveEncounter} handleNewEncounter={handleNewEncounter} saveMessageColor={saveMessageColor} showSaveMessage={showSaveMessage} isSaveDisabled={isSaveDisabled} socket={socket}/>
-                    <EncounterControls setNameChange={setNameChange} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} handleTurnNums={handleTurnNums} handleRefresh={handleRefresh} refreshCheck={refreshCheck} autoRefresh={autoRefresh} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleStartEncounter={handleStartEncounter} handleAutoRollInitiative={handleAutoRollInitiative} socket={socket}/>
+                    <EncounterListTopInfo savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} setSavedEncounters={setSavedEncounters} handleSaveEncounter={handleSaveEncounter} handleNewEncounter={handleNewEncounter} saveMessageColor={saveMessageColor} showSaveMessage={showSaveMessage} isSaveDisabled={isSaveDisabled} socket={socket}/>
+                    <EncounterControls setNameChange={setNameChange} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} handleTurnNums={handleTurnNums} handleRefresh={handleRefresh} refreshCheck={refreshCheck} autoRefresh={autoRefresh} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleAutoRollInitiative={handleAutoRollInitiative} socket={socket}/>
                     {currentEncounter.creatures.length ? (
                         <EncounterList currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleSaveEncounter={handleSaveEncounter} turnNum={turnNum} handleUploadMonsterImage={handleUploadMonsterImage} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} socket={socket}/>
                     ) : (
@@ -233,7 +224,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                                 {savedEncounters?.length ? (
                                     <>
                                         Add a creature or select one of your
-                                        <DropdownMenu savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} encounterName={currentEncounter.encounterName} currentEncounter={currentEncounter}/> 
+                                        <DropdownMenu savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} socket={socket}/> 
                                     </>
                                 ) : ( <>Add a creature to create an encounter!</>)}
                             </div>

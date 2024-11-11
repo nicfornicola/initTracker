@@ -12,7 +12,7 @@ const handleOpenSession = (sessionID) => {
 };
 
 const DropDownSessionMenu = ({savedEncounters, socket}) => {
-    const [currentEncounter, setCurrentEncounter] = useState(null)
+    const [streamingEncounter, setStreamingEncounter] = useState({encounterName: null, encounterGuid: null})
     const [sessionID, setSessionID] = useState(null)
     const [isOpen, setIsOpen] = useState(false);
     const { username } = useUser();
@@ -28,7 +28,13 @@ const DropDownSessionMenu = ({savedEncounters, socket}) => {
     useEffect(() => {
         //session will hold sessionid and encounter for this user
         if(sessionID === null && username !== 'Username') {
-            socket.emit("getCurrentSession", username);
+            socket.emit("getCurrentSession");
+        }
+
+        if(username === 'Username') {
+            setStreamingEncounter({encounterName: null, encounterGuid: null})
+            setSessionID(null)
+            setIsOpen(false)
         }
 
         document.addEventListener('mousedown', handleClickOutside);
@@ -38,8 +44,17 @@ const DropDownSessionMenu = ({savedEncounters, socket}) => {
     }, [username]);
 
     useEffect(() => {
-        if(savedEncounters.length === 0)
-            setCurrentEncounter(null)
+        
+        if(savedEncounters.length === 0) { setStreamingEncounter({encounterName: null, encounterGuid: null}) }
+        else if(sessionID && streamingEncounter.encounterName === '') {
+            savedEncounters.forEach(e => {
+                if(e.encounterGuid === streamingEncounter.encounterGuid) {
+                    setStreamingEncounter({encounterGuid: e.encounterGuid, encounterName: e.encounterName})
+                    console.log(`Found stream: ${e.encounterName} - (${e.encounterGuid})`)
+                }
+            });
+
+        }
     }, [savedEncounters]);
 
     useEffect(() => {
@@ -47,40 +62,56 @@ const DropDownSessionMenu = ({savedEncounters, socket}) => {
             // Recieve messages from backend
             socket.on('sendSession', (sessionInfo) => {
                 setSessionID(sessionInfo.sessionID)
-                // streamingEncounterGuid can be empty if nothing is found in the backend
-                setCurrentEncounter(savedEncounters.find(encounter => encounter.encounterGuid === sessionInfo.streamingEncounterGuid))
+                if(sessionInfo.streamingEncounterGuid !== '' && savedEncounters.length === 0) {
+                    console.log("No saved encounters yet since no savedEncounters ")
+                    setStreamingEncounter({encounterGuid: sessionInfo.streamingEncounterGuid, encounterName: ''})
+                } else {
+                    // streamingEncounterGuid can be empty if nothing is found in the backend
+                    let log = "No Stream found..."
+                    savedEncounters.forEach(e => {
+                        if(e.encounterGuid === sessionInfo.streamingEncounterGuid) {
+                            setStreamingEncounter({encounterGuid: e.encounterGuid, encounterName: e.encounterName})
+                            log = `Found stream: ${e.encounterName} - (${e.encounterGuid})`
+                        }
+                    });
+                    console.log(log)
+                }
+                
             });
         }
     }, [socket]);
 
-    const handleDropDownOptionClicked = (event, encounter, openSessionTab=false) => {
-        console.log(encounter?.encounterGuid)
-        console.log(currentEncounter?.encounterGuid)
-        console.log("====")
-        if(!encounter) {
+    const handleDropDownOptionClicked = (event, e, openSessionTab=false) => {
+        if(e === null) {
             socket.emit("stopStreaming", sessionID)
-        } else if(encounter && encounter.encounterGuid !== currentEncounter?.encounterGuid) {
-            socket.emit("startStreaming", encounter.encounterGuid, sessionID)
+            setStreamingEncounter({encounterName: null, encounterGuid: null})
+        } else if(e.encounterGuid !== streamingEncounter.encounterGuid) {
+            socket.emit("startStreaming", e.encounterGuid, sessionID)
+            setStreamingEncounter({encounterName: e.encounterName, encounterGuid: e.encounterGuid})
         } 
 
         if(openSessionTab)
             handleOpenSession(sessionID)
 
         //Set to null when stop was clicked
-        setCurrentEncounter(encounter);
         event.stopPropagation(); 
 
     };
 
-    let buttonString = currentEncounter ? `Streaming: ${currentEncounter.encounterName}` : "Not Streaming..."
+    let buttonString = streamingEncounter.encounterGuid === null ? `Not Streaming...` : "Streaming: "
     if(username === 'Username') {
         buttonString = "Sign in to stream"
     }
 
     return (
         <div className="dropdown" ref={dropdownRef}>
-            <button className="dmViewButton" onClick={() => setIsOpen(!isOpen)}>
+            <button className="dmViewButton" disabled={username === 'Username'} onClick={() => setIsOpen(!isOpen)}>
                 {buttonString}
+                {streamingEncounter.encounterName !== null && 
+                    <p style={{margin: 0, textWrap: 'nowrap'}}>
+                        {streamingEncounter.encounterName} 🔴
+                    </p>
+                }
             </button>
             {isOpen && savedEncounters.length !== 0 && (
                 <ul className="dropdownMenu">
@@ -92,10 +123,10 @@ const DropDownSessionMenu = ({savedEncounters, socket}) => {
                                     onClick={(event) => handleDropDownOptionClicked(event, encounter)}
                                     className="dropdown-item"
                                 >
-                                    {encounter.encounterName} 
+                                    {encounter.encounterName} {encounter.encounterGuid === streamingEncounter.encounterGuid && <>🔴</>}
                                 </li>
                             ))}
-                            { currentEncounter &&
+                            {streamingEncounter.encounterGuid !== null &&
                                 <> 
                                 
                                     {sessionID &&

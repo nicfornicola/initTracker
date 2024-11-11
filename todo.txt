@@ -5,7 +5,7 @@ offline mod
     menu
     --
         upload all chars from a campaign - I can get campaign players info from the character api at the bottom
-
+        when importing characters, save their IDS in a tab for easy import later
 
     search list
     --
@@ -27,25 +27,22 @@ offline mod
 
     encounter list changes 
     --
+        when add creature - add the row with spinny wheel while loading
         when doing next turn on last member, auto scroll to top if off the screen
 
     player controller
     --
-    connect to DM instead of connecting to encounter, that way when the dm changes encounter the playerview would "follow" by changing backgrounds... not sure how this would work tho
-    add list of of other players below img of their own 
-    connect effects
-    death saves rolls
-    upload their own image
-    change name and AC and init bonus
-    auto roll init or enter manual 
+        add list of of other players below img of their own 
+        connect effects
+        death saves rolls
+        upload their own image
+        change name and AC and init bonus
+        auto roll init or enter manual 
 
-    dmView socket
-    ---
-    make images go
+
 
     database
     -- 
-    make table for images
     
 
 playerview
@@ -67,6 +64,9 @@ dnd_b imports show their hp from time of import and then auto refresh to the cur
 
 DONE - offline mode
 ------
+    make table for images
+    connect to DM instead of connecting to encounter, that way when the dm changes encounter the playerview would "follow" by changing backgrounds... not sure how this would work tho
+
 add effects 
 toggle ally/neutral/enemy in encounter list
 add button instead of just clicking any where so you can click an read stats without adding to encounter

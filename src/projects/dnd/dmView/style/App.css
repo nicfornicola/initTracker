@@ -980,6 +980,12 @@ input {
     padding: 10px 0px 0px 10px;
 }
 
+.saveDisclaimer {
+    color: #ff4000;
+    font-style: oblique;
+    font-weight: bolder;
+}
+
 .encounterControls {
  display: flex;
 }
@@ -1246,6 +1252,7 @@ input {
 .dmStartButtons {
     display: flex;
     width: 100%;
+    align-items: center
 }
 
 .turnButtons {
@@ -1265,6 +1272,7 @@ input {
     cursor: pointer;
     border: 1px solid #ccc;
     background-color: #f9f9f9;
+    text-wrap: nowrap;
 }
 
 .animatedMenu {

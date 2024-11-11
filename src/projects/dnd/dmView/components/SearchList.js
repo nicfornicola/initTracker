@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 // import data from '../monsterJsons/5eCoreRules.json'; // Adjust the import path as necessary
-import {monsterList, imagesAvailable, proxyUrl, generateUniqueId, INIT_ENCOUNTER_NAME, backendUrl} from '../constants'
+import {monsterList, imagesAvailable, generateUniqueId, INIT_ENCOUNTER_NAME, backendUrl} from '../constants'
 import axios from 'axios';
 import StatBlock from './StatBlock';
 import Open5eToDmBMapper from '../mappers/Open5eToDmBMapper'
 import { InfinitySpin } from 'react-loader-spinner'
-import { useUser } from '../../../../providers/UserProvider';
 
 // Function to get the image URL based on the type
 const getImageUrl = (creature) => {
@@ -52,7 +51,6 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
     const [displayedItems, setDisplayedItems] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);
-    const { username } = useUser();
 
     useEffect(() => {
         async function fetchData() {
@@ -180,7 +178,7 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
         <>
             <div className='column columnBorder'>
                 <div className='infoContainer'>
-                <h3 className='titleFontFamily' style={{borderBottom: '1px solid #822000'}}>Creature Search - <span className='monsterSearchDetailText'>Signed in as: {username}</span></h3>
+                <h3 className='titleFontFamily' style={{borderBottom: '1px solid #822000'}}>Creature Search</h3>
 
                     <div className='encounterControlsContainer'>
                         <input

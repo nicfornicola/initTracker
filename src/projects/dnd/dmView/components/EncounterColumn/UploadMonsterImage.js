@@ -30,7 +30,6 @@ const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, setUploadI
                 socket.on('sendImagesAvatar', (images) => {
                     let avatars = [];
                     images.forEach(image => {
-                        console.log(image)
                         avatars.push({imageGuid: image.imageGuid, image: image.image})
                     })
                     

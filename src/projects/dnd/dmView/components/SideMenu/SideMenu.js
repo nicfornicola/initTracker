@@ -5,6 +5,7 @@ import JsonImg from '../../pics/json.png'
 import questionMark from '../../pics/icons/questionMark.png'
 import InputCharacterId from './InputCharacterId';
 import InputEncounterId from './InputEncounterId';
+import SignIn from '../SignIn';
 
 function downloadLocalStorage() {
     // Create an object to store all local storage data
@@ -67,6 +68,8 @@ function SideMenu({uploadLocalStorage, setCurrentEncounter, showSearchList, setS
                         onChange={uploadLocalStorage}
                     />
                 </li> */}
+                <hr/>
+                    <SignIn socket={socket}/>
                 <hr/>
                 <li className='menuItem' onClick={() => setIsOpen(true)}>
                     <InputCharacterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket}/>

@@ -26,7 +26,7 @@ function getBloodImage(type) {
     return newImage
 }
 
-const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, handleStartEncounter, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange, socket}) => {
+const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange, socket}) => {
     const [arrowButton, setArrowButton] = useState(upArrow);
     const [arrowToggleType, setArrowToggleType] = useState(0);
     const [showRefreshButton, setShowRefreshButton] = useState(autoRefresh);
@@ -145,7 +145,11 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
                 <div className='encounterControlsLeft'>
                     <div className='dmStartButtons'>
                         <button className='dmViewButton' onClick={handleAutoRollInitiative}>Roll Init.</button>
-                        <button className='dmViewButton' onClick={handleStartEncounter}>Player View</button>
+                        {currentEncounter.encounterGuid !== '' && 
+                            <span style={{fontSize: '12px', paddingLeft: '5px', fontStyle: 'oblique'}}> 
+                                ({currentEncounter.encounterGuid})
+                            </span>
+                        }
                     </div>
                     <div className='dmLowOptions'>
                         <OptionButton src={arrowButton} message={"Player View Icon Position"} onClickFunction={handleMovePortraits}/>

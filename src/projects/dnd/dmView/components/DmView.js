@@ -4,11 +4,7 @@ import SearchList from './SearchList.js';
 import Home from './Home.js';
 import EncounterColumn from './EncounterColumn/EncounterColumn';
 import SideMenu from './SideMenu/SideMenu.js';
-import InputEncounterId from './SideMenu/InputEncounterId.js';
-import InputCharacterId from './SideMenu/InputCharacterId.js';
-import NewEncounterButton from './EncounterColumn/NewEncounterButton.js';
 import { backendUrl, generateUniqueId, INIT_ENCOUNTER, SHORT_REFRESH} from '../constants';
-import DropdownMenu from './EncounterColumn/DropdownMenu.js';
 import YouTubeEmbed from './EncounterColumn/YouTubeEmbed.js';
 import io from 'socket.io-client';
 import { refreshMonsterProfiles } from '../refresh/refresh';
@@ -90,12 +86,26 @@ const DmView = () => {
     const [autoRefresh, setAutoRefresh] = useState(false);
     const [refreshCheck, setRefreshCheck] = useState(false);
     const [showSearchList, setShowSearchList] = useState(true);
-    const [encounterGuid, setEncounterGuid] = useState(currentEncounter.encounterGuid);
+    const [encounterGuid, setEncounterGuid] = useState(INIT_ENCOUNTER.encounterGuid);
     const [savedEncounters, setSavedEncounters] = useState([]);
     const { username } = useUser();
 
     const socketRef = useRef(null)
     const [socket, setSocket] = useState(null);
+
+    useEffect(() => {
+        if(username === 'Username') {
+            setPlayerViewBackground({type: "image", src: defaultBackground})
+            setSavedEncounters([])
+            setCurrentEncounter(INIT_ENCOUNTER)
+            setOnFirstLoad(true)
+            setAutoRefreshDndbPlayers(false)
+            setAutoRefreshDndbMonsters(false)
+            setAutoRefresh(false)
+            setRefreshCheck(false)
+            setEncounterGuid('')
+        }
+    }, [username]);
 
     useEffect(() => {
         if (!socketRef.current) {
@@ -348,7 +358,7 @@ const DmView = () => {
                 <>
                     <SideMenu uploadLocalStorage={uploadLocalStorage} setCurrentEncounter={setCurrentEncounter} showSearchList={showSearchList} setShowSearchList={setShowSearchList} encounterGuid={encounterGuid} socket={socket}/>
                     {showSearchList &&  
-                        <SearchList setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} encounterName={currentEncounter.encounterName} socket={socket}/>
+                        <SearchList setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket}/>
                     }
                     <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} setSavedEncounters={setSavedEncounters} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} setEncounterGuid={setEncounterGuid} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter} socket={socket}/>
                 </>

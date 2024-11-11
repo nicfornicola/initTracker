@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { INIT_ENCOUNTER_NAME } from '../../constants';
+import { INIT_ENCOUNTER_NAME, INIT_ENCOUNTER } from '../../constants';
 
-const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter, currentEncounter, socket}) => {
+const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter, currentEncounter, setCurrentEncounter, socket}) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -9,6 +9,9 @@ const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter
         event.stopPropagation();
         let updatedEncounterList = savedEncounters.filter(e => e.encounterGuid !== encounter.encounterGuid)
         setSavedEncounters(updatedEncounterList);
+        
+        if(currentEncounter.encounterGuid === encounter.encounterGuid)
+            setCurrentEncounter(INIT_ENCOUNTER)
         socket.emit("deleteEncounter", encounter.encounterGuid)
     }
     
@@ -30,15 +33,20 @@ const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter
         handleLoadEncounter(encounter);
     };
 
-    let buttonString = "No Saved Encounters"
+    let buttonString = "No Encounters"
     if(savedEncounters?.length !== 0) {
-        buttonString = currentEncounter.encounterName === INIT_ENCOUNTER_NAME ? "Saved Encounters..." : "Encounter: " + currentEncounter.encounterName 
+        buttonString = currentEncounter.encounterName === INIT_ENCOUNTER_NAME ? "Encounters..." : "Encounter: "
     }
 
     return (
         <div className="dropdown" ref={dropdownRef}>
             <button className="dmViewButton" onClick={() => setIsOpen(!isOpen)} disabled={savedEncounters.length === 0}>
                 {buttonString}
+                {currentEncounter && currentEncounter.encounterName !== INIT_ENCOUNTER_NAME &&
+                    <p style={{margin: 0, textWrap: 'nowrap'}}>
+                        {currentEncounter.encounterName}
+                    </p>
+                }
             </button>
         {isOpen && savedEncounters.length !== 0 && (
             <ul className="dropdownMenu">
