@@ -4,7 +4,7 @@ import ChampionImage from '../../pics/icons/refreshPlayers.png'
 import { ImportDndBeyondCharacters } from '../../api/ImportDndBeyondCharacters'
 import { generateUniqueId, INIT_ENCOUNTER_NAME} from '../../constants'
 
-function InputCharacterId({setCurrentEncounter, encounterGuid, socket}) {
+function InputCharacterId({setCurrentEncounter, encounterGuid, socket, onClick=() => {}}) {
     const [playerNumbers, setPlayerNumbers] = useState([]);
     const [playerNumberInputValue, setPlayerNumberInputValue] = useState('');
     const eGuid = encounterGuid || generateUniqueId();
@@ -40,7 +40,7 @@ function InputCharacterId({setCurrentEncounter, encounterGuid, socket}) {
 
     return (
         <div className='dndBImportContainer'>
-            <img src={ChampionImage} alt="Click to Upload" className="menuIcon" />
+            <img src={ChampionImage} alt="Click to Upload" className="menuIcon" onClick={onClick}/>
             <div className='dndBImportButtons'>
                 <input
                     className='dndbInput'

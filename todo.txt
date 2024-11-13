@@ -58,6 +58,8 @@ playerview
 
 BROKEN 
 ----
+actions and stuff is not loading from database correctly
+card container style crashes backend
 i think refresh timer is weird
 enironment stat card is SO fucked
 dnd_b imports show their hp from time of import and then auto refresh to the current amount - fix is hit a refresh on page load to make sure its up to date 

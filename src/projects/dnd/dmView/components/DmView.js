@@ -213,7 +213,7 @@ const DmView = () => {
 
             return updatedCreatures;
         } catch (error) {
-            console.log(error)
+            console.warn(error)
         }  
     };
 

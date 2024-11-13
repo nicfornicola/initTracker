@@ -6,7 +6,7 @@ import { ImportDndBeyondCharacters } from '../../api/ImportDndBeyondCharacters'
 import { ImportDndBeyondEncounter } from '../../api/ImportDndBeyondEncounter'
 import { ImportDndBeyondMonsters } from '../../api/ImportDndBeyondMonsters'
 
-function InputEncounterId({setCurrentEncounter, encounterGuid, socket}) { 
+function InputEncounterId({setCurrentEncounter, encounterGuid, socket, onClick=() => {}}) { 
     //61523d85-da0d-47c8-a796-f9409be52c93
     //ed9784fc-5aba-473a-9ae9-166fed396e8e - save the king final garden
     const [dndbEncounterId, setDndbEncounterId] = useState('ece19692-6830-4ad3-9e28-ed612f3de79b');
@@ -56,7 +56,7 @@ function InputEncounterId({setCurrentEncounter, encounterGuid, socket}) {
 
     return (
         <div className='dndBImportContainer'>
-            <img src={EncounterImage} alt="Click to Upload" className="menuIcon" />
+            <img src={EncounterImage} alt="Click to Upload" className="menuIcon" onClick={onClick}/>
             <div className='dndBImportButtons'>
                 <input
                     className='dndbInput'

@@ -1263,8 +1263,8 @@ input {
 
 .turnText {
     display: flex;
-    flex-direction: column;
     font-size: small;
+    align-items: center
 }
 
 .dmViewButton {
@@ -1822,7 +1822,7 @@ input {
 
 /* Width when the menu is open */
 .side-menu.open {
-    width: 250px;
+    width: 255px;
 }
 
 /* Style for the toggle button */
@@ -1854,6 +1854,11 @@ input {
     
 }
 
+.loginImageFlex {
+    display: flex;
+    width: 90%;
+}
+
 .menuItem {
     color: white;
     cursor: pointer;
@@ -1862,6 +1867,7 @@ input {
 
 .menuIcon {
     width: 35px;
+    height: 35px;
 }
 
 .menuItemLow {

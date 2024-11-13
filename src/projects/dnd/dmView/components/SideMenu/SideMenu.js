@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Search from '../../pics/search.png'
-import Download from '../../pics/download.png'
-import JsonImg from '../../pics/json.png'
+import LoginImage from '../../pics/icons/login.png'
 import questionMark from '../../pics/icons/questionMark.png'
 import InputCharacterId from './InputCharacterId';
 import InputEncounterId from './InputEncounterId';
@@ -42,10 +41,6 @@ function SideMenu({uploadLocalStorage, setCurrentEncounter, showSearchList, setS
         setIsOpen(!isOpen);
     };
 
-    const handleImageClick = () => {
-        document.getElementById('fileInput').click();
-    };
-
     return (
         <div className={`side-menu ${isOpen ? 'open' : ''}`}>
             <button className="toggle-button" onClick={toggleMenu}>
@@ -68,14 +63,23 @@ function SideMenu({uploadLocalStorage, setCurrentEncounter, showSearchList, setS
                         onChange={uploadLocalStorage}
                     />
                 </li> */}
+
                 <hr/>
-                    <SignIn socket={socket}/>
-                <hr/>
-                <li className='menuItem' onClick={() => setIsOpen(true)}>
-                    <InputCharacterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket}/>
+                <li className='menuItem' >
+                    <InputCharacterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket} onClick={() => setIsOpen(!isOpen)}/>
                 </li>
-                <li className='menuItem' onClick={() => setIsOpen(true)}>
-                    <InputEncounterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket}/>
+                <li className='menuItem' >
+                    <InputEncounterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket} onClick={() => setIsOpen(!isOpen)}/>
+                </li>
+                <hr/>
+                <li className='menuItem' >
+                    <div className='loginImageFlex'>
+                        <img src={LoginImage} alt="Login" className="menuIcon" onClick={() => setIsOpen(!isOpen)} />
+                        {isOpen && 
+                            <SignIn socket={socket}/>
+                        }
+                    </div>
+                    
                 </li>
                 <li className='menuItemLow'>
                     <a className='menuHelpLink' href='/help'> <img src={questionMark} alt="Click to Upload" className="menuIcon" /> Help  Page</a>

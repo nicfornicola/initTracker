@@ -73,7 +73,7 @@ const SignIn = ({socket}) => {
                     <button className='loginButtons' onClick={signOut}>Sign out</button>
                 </>
             ) : (
-                <div className="loginContainer">
+                <div className="loginContainer growImage">
                     <input
                         className='loginInput'
                         style={usernameStyle}

@@ -140,14 +140,18 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
 
     const handleAutoRollInitiative = (event) => {
         event.stopPropagation()
-        // let initatives = []
+        let initatives = []
         currentEncounter.creatures.forEach(creature => {
-            let initBonus = creature.dexterity_save ? creature.dexterity_save : 0
-            creature.initiative = Math.floor(Math.random() * 20) + 1 + initBonus
-            // initatives.push({creatureGuid: creature.creatureGuid, initiative: creature.initative})
+            if(creature.type !== "player") {
+                let initBonus = creature.dexterity_save ? creature.dexterity_save : 0
+                let newInit = Math.floor(Math.random() * 20) + 1 + initBonus
+                creature.initiative = newInit
+                initatives.push({creatureGuid: creature.creatureGuid, initiative: newInit})
+            }
+        
         });      
 
-        // socket.emit("autoRolledInitiative", initatives);
+        socket.emit("autoRolledInitiative", initatives);
         setCurrentEncounter(prev => ({...prev, creatures: [...sortCreatureArray(currentEncounter.creatures)]}));
     }   
     

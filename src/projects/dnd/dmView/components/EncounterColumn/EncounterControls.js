@@ -145,14 +145,9 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
                 <div className='encounterControlsLeft'>
                     <div className='dmStartButtons'>
                         <button className='dmViewButton' onClick={handleAutoRollInitiative}>Roll Init.</button>
-                        {currentEncounter.encounterGuid !== '' && 
-                            <span style={{fontSize: '12px', paddingLeft: '5px', fontStyle: 'oblique'}}> 
-                                ({currentEncounter.encounterGuid})
-                            </span>
-                        }
                     </div>
                     <div className='dmLowOptions'>
-                        <OptionButton src={arrowButton} message={"Player View Icon Position"} onClickFunction={handleMovePortraits}/>
+                        {/* <OptionButton src={arrowButton} message={"Player View Icon Position"} onClickFunction={handleMovePortraits}/> */}
                         <ImagePopup setPlayerViewBackground={setPlayerViewBackground} encounterGuid={currentEncounter.encounterGuid} socket={socket}/>                    
                         {showRefreshButton &&
                             <OptionButton src={refreshCheck ? greenCheck : refresh} message={<RefreshTimer refresh={refreshCheck}/>} onClickFunction={() => handleRefresh()} imgClassName={refreshLoading ? 'spinningImage' : ''} />
