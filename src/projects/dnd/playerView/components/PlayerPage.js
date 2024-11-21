@@ -41,6 +41,7 @@ function PlayerPage() {
     const [enemyBloodToggle, setEnemyBloodToggle] = useState(1);
     const [hideDeadEnemies, setHideDeadEnemies] = useState(false);
     const [cardContainerStyle, setCardContainerStyle] = useState({width: '80%'});
+    const [iconSize, setIconSize] = useState({width: 200, height: 240});
 
     const { sessionID } = useParams();
 
@@ -80,6 +81,10 @@ function PlayerPage() {
                 setEnemyBloodToggle(encounterRes.enemyBloodToggle)
                 setHideDeadEnemies(encounterRes.hideDeadEnemies)
                 setCardContainerStyle(encounterRes.cardContainerStyle)
+                let w = 200 + (20 * encounterRes.iconsize)
+                let h = 240 + (24 * encounterRes.iconsize)
+                console.log(w,h)
+                setIconSize({width: w, height: h})
 
                 if(encounterRes.backgroundGuid === 'default') {
                     setPlayerViewBackground({type: "image", src: defaultBackground})
@@ -133,7 +138,7 @@ function PlayerPage() {
                     creatures.map((creature, index) => { 
                         return (((creature.type === 'monster' || creature.type === 'global') && creature.alignment !== "ally" && hideEnemies) || creature.hidden) 
                         ? null
-                        : <Icon key={creature.creatureGuid} isTurn={turnNum === index+1} creature={creature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggle={enemyBloodToggle} />;
+                        : <Icon key={creature.creatureGuid} isTurn={turnNum === index+1} creature={creature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggle={enemyBloodToggle} iconSize={iconSize}/>;
                     })
                 )}
             </div>

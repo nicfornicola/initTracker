@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useUser } from '../../../../providers/UserProvider.js';
 import '../../dmView/style/App.css';
+import { ThreeDots } from 'react-loader-spinner'
 
 const SignIn = ({socket}) => {
     const { username, setUsername } = useUser();
@@ -9,11 +10,13 @@ const SignIn = ({socket}) => {
     const [password2, setPassword2] = useState('')
     const [openCreateAccount, setOpenCreateAccount] = useState(false)
     const [loggedIn, setLoggedIn] = useState(false)
+    const [loading, setLoading] = useState(null)
     const [error, setError] = useState('')
 
     useEffect(() => {
         if(socket) {
             socket.on('badLogin', (errorCode) => {
+                setLoading(false)
                 if(errorCode === "userNotFound") {
                     setOpenCreateAccount(true)
                     setError("User not found: Create an account or continue as guest")
@@ -26,6 +29,7 @@ const SignIn = ({socket}) => {
     
             //get this when login or successful account creation
             socket.on('goodLogin', (emitUsername) => {
+                setLoading(false)
                 setUsername(emitUsername);
                 setLoggedIn(true)
                 setError('')
@@ -47,11 +51,13 @@ const SignIn = ({socket}) => {
 
 
     const submitLogin = () => {
+        setLoading(true)
         if(loginEnabled)
             socket.emit("login", loginUsername, password)
     }
 
     const submitNewAccount = () => {
+        setLoading(true)
         if(createAccountEnabled)
             socket.emit("newAccount", loginUsername, password)
     }
@@ -100,9 +106,22 @@ const SignIn = ({socket}) => {
                                 value={password2}
                                 onChange={(e) => setPassword2(e.target.value)}
                             />
-                            <div className='createAccountFlex'>
-                                <button className='loginButtons' onClick={() => setOpenCreateAccount(false)} >Cancel</button>
-                                <button className='loginButtons' onClick={submitNewAccount} disabled={!createAccountEnabled}>Submit</button>
+                            <div className='createAccountFlex' style={{justifyContent: loading ? 'center' : 'space-between'}}>
+                                {loading ? (
+                                    <ThreeDots
+                                        visible={true}
+                                        height="20"
+                                        width="50"
+                                        color="#FFFFFF"
+                                        radius="1"
+                                        ariaLabel="three-dots-loading"
+                                    />
+                                ) : (
+                                    <>
+                                        <button className='loginButtons' onClick={() => setOpenCreateAccount(false)}>Cancel</button>
+                                        <button className='loginButtons' onClick={submitNewAccount} disabled={!createAccountEnabled}>Submit</button>        
+                                    </>
+                                )}
                             </div>
                             {(error || !validUsernameLength || !validPasswordLength || !passwordMatch) && 
                                 <div className='info'>
@@ -115,9 +134,24 @@ const SignIn = ({socket}) => {
                         </div>
                     ) : (
                         <>
-                            <div className='createAccountFlex'>
-                                <button className='loginButtons newAccountButton' onClick={setOpenCreateAccount} > New account? </button>
-                                <button className='loginButtons' onClick={submitLogin} disabled={!loginEnabled} > Log in </button>
+                            <div className='createAccountFlex' style={{justifyContent: loading ? 'center' : 'space-between'}}>
+                                {loading ? (
+                                   <ThreeDots
+                                        visible={true}
+                                        height="20"
+                                        width="50"
+                                        color="#FFFFFF"
+                                        radius="1"
+                                        ariaLabel="three-dots-loading"
+                                   />
+                                ) : (
+                                    <>
+                                        <button className='loginButtons newAccountButton' onClick={setOpenCreateAccount}> New account? </button>
+                                        <button className='loginButtons' onClick={submitLogin} disabled={!loginEnabled}> 
+                                            Log in 
+                                        </button>
+                                    </>
+                                )}
                             </div> 
                             {error !== '' &&
                                 <div className='info'>

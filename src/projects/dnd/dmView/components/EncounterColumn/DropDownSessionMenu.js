@@ -1,5 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useUser } from '../../../../../providers/UserProvider';
+import magPlus from '../../pics/icons/magPlus.PNG'
+import magMinus from '../../pics/icons/magMinus.PNG'
+import OptionButton from './OptionButton';
+import streaming from '../../pics/icons/streaming.gif';
 
 const handleOpenSession = (sessionID) => {
     if(!sessionID) {
@@ -97,63 +101,80 @@ const DropDownSessionMenu = ({savedEncounters, socket}) => {
         event.stopPropagation(); 
 
     };
+    
+    const iconSizeChange = (sizeType) => {
+        socket.emit("iconSizeChange", sizeType, streamingEncounter.encounterGuid)
+    };
 
-    let buttonString = streamingEncounter.encounterGuid === null ? `Not Streaming...` : "Streaming: "
+    let buttonString = streamingEncounter.encounterGuid === null ? `Not Streaming...` : "Streaming "
     if(username === 'Username') {
         buttonString = "Sign in to stream"
     }
 
     return (
-        <div className="dropdown" ref={dropdownRef}>
-            <button className="dmViewButton" disabled={username === 'Username'} onClick={() => setIsOpen(!isOpen)}>
-                {buttonString}
-                {streamingEncounter.encounterName !== null && 
-                    <p style={{margin: 0, textWrap: 'nowrap'}}>
-                        {streamingEncounter.encounterName} 🔴
-                    </p>
-                }
-            </button>
-            {isOpen && savedEncounters.length !== 0 && (
-                <ul className="dropdownMenu">
-                    {username !== "Username" &&
-                        <>
-                            {savedEncounters.map((encounter, index) => (
-                                <li
-                                    key={encounter.encounterName + index}
-                                    onClick={(event) => handleDropDownOptionClicked(event, encounter)}
-                                    className="dropdown-item"
-                                >
-                                    {encounter.encounterName} {encounter.encounterGuid === streamingEncounter.encounterGuid && <>🔴</>}
-                                </li>
-                            ))}
-                            {streamingEncounter.encounterGuid !== null &&
-                                <> 
-                                
-                                    {sessionID &&
-                                        <li className='dropdown-item' style={{borderTop: '1px solid black'}} 
-                                            onClick={() => {
-                                                handleOpenSession(sessionID)
+        <>
+            <div className="dropdown" ref={dropdownRef}>
+                <button className="dmViewButton" style={{borderRight: 0, paddingTop: '0px', paddingRight: '10px'}} disabled={username === 'Username'} onClick={() => setIsOpen(!isOpen)}>
+                    <i>{buttonString}</i> 
+                    {streamingEncounter.encounterName !== null && 
+                        <img alt='streaming' className='streamingGif' src={streaming} />
+                    }
+                    {streamingEncounter.encounterName !== null && 
+                        <p style={{margin: 0, textAlign: 'left', textWrap: 'nowrap'}}>
+                            {streamingEncounter.encounterName} 
+                        </p>
+                    }
+                    
+                </button>
+                {isOpen && savedEncounters.length !== 0 && (
+                    <ul className="dropdownMenu">
+                        {username !== "Username" &&
+                            <>
+                                {savedEncounters.map((encounter, index) => (
+                                    <li
+                                        key={encounter.encounterName + index}
+                                        onClick={(event) => handleDropDownOptionClicked(event, encounter)}
+                                        className="dropdown-item"
+                                    >
+                                        {encounter.encounterName} {encounter.encounterGuid === streamingEncounter.encounterGuid && 
+                                            <img alt='streaming' className='streamingGif' src={streaming} />
+                                        }
+                                    </li>
+                                ))}
+                                {streamingEncounter.encounterGuid !== null &&
+                                    <> 
+                                        {sessionID &&
+                                            <li className='dropdown-item' style={{borderTop: '1px solid black'}} 
+                                                onClick={() => {
+                                                    handleOpenSession(sessionID)
+                                                    setIsOpen(false)
+                                                }}
+                                            >
+                                                Open Player View 📺
+                                            </li>
+                                        }
+                                        <li className="dropdown-item" 
+                                            onClick={(event) => {
+                                                handleDropDownOptionClicked(event, null)
                                                 setIsOpen(false)
                                             }}
                                         >
-                                            Open Player View 📺
+                                            Stop Streaming
                                         </li>
-                                    }
-                                    <li className="dropdown-item" 
-                                        onClick={(event) => {
-                                            handleDropDownOptionClicked(event, null)
-                                            setIsOpen(false)
-                                        }}
-                                    >
-                                        Stop Streaming
-                                    </li>
-                                </>
-                            }
-                        </>
-                    }
-                </ul>
-            )}
-        </div>
+                                    </>
+                                }
+                            </>
+                        }
+                    </ul>
+                )}
+            </div>
+            {sessionID && streamingEncounter.encounterGuid !== null &&
+                <div className='magWrapper'>
+                    <OptionButton imgClassName={'magOptions'} src={magPlus} message={"Icon Size: Grow"} onClickFunction={()=> iconSizeChange("+")}/>
+                    <OptionButton imgClassName={'magOptions'} src={magMinus} message={"Icon Size: Shrink"} onClickFunction={()=> iconSizeChange("-")}/>
+                </div>
+            }
+        </>
     );
 };
 

@@ -329,7 +329,7 @@ export const levelData = {
     '28': {'xp': 120000, 'profBonus': 8},
     '29': {'xp': 135000, 'profBonus': 9},
     '30': {'xp': 155000, 'profBonus': 9},
-    '--': "--"
+    '--': {'xp': 0, 'profBonus': 0}
 };
 
 const sharedItems = {
@@ -382,7 +382,8 @@ const sharedItems = {
     "document__license_url": "",
     "document__url": "",
     "hidden": false,
-    "deathSaves": { successCount: 0, failureCount: 0 }
+    "deathSaves": { successCount: 0, failureCount: 0 },
+    "xp": "--"
 }
 
 export const COLOR_RED = "#F44E3B"

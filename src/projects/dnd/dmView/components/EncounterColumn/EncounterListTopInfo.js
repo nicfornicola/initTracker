@@ -4,6 +4,7 @@ import NewEncounterButton from './NewEncounterButton';
 import DropDownSessionMenu from './DropDownSessionMenu';
 import { useUser } from '../../../../../providers/UserProvider';
 
+
 const EncounterListTopInfo = ({savedEncounters, setSavedEncounters, handleLoadEncounter, currentEncounter, setCurrentEncounter, handleNewEncounter, socket}) => {
     const { username } = useUser();
 

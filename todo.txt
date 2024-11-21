@@ -2,8 +2,14 @@
 offline mod
 -----
 
-    menu
+    dmview 
     --
+        add default background image option for dmview instead of my default 
+        dndbeyond imported folder per user
+        homebrew monster folder
+        edit statblock (make sure to show all fields even if the current monster doesnt have it i.e. bonus action: none) 
+        create custom
+
         upload all chars from a campaign - I can get campaign players info from the character api at the bottom
         when importing characters, save their IDS in a tab for easy import later
 
@@ -39,12 +45,6 @@ offline mod
         change name and AC and init bonus
         auto roll init or enter manual 
 
-
-
-    database
-    -- 
-    
-
 playerview
 ------
     add button to resize images and add more options to move their positions
@@ -58,16 +58,16 @@ playerview
 
 BROKEN 
 ----
-actions and stuff is not loading from database correctly
 card container style crashes backend
 i think refresh timer is weird
 enironment stat card is SO fucked
-dnd_b imports show their hp from time of import and then auto refresh to the current amount - fix is hit a refresh on page load to make sure its up to date 
 
 DONE - offline mode
 ------
-    make table for images
-    connect to DM instead of connecting to encounter, that way when the dm changes encounter the playerview would "follow" by changing backgrounds... not sure how this would work tho
+dnd_b imports show their hp from time of import and then auto refresh to the current amount - fix is hit a refresh on page load to make sure its up to date 
+actions and stuff is not loading from database correctly
+make table for images
+connect to DM instead of connecting to encounter, that way when the dm changes encounter the playerview would "follow" by changing backgrounds... not sure how this would work tho
 
 add effects 
 toggle ally/neutral/enemy in encounter list

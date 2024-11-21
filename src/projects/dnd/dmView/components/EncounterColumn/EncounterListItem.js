@@ -47,9 +47,8 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const handleClickOutside = (event) => {
         if (hpWidgetRef.current && !hpWidgetRef.current.contains(event.target) &&
             hpButtonRef.current && !hpButtonRef.current.contains(event.target)) {
-                setTimeout(() => { // set timeout to give onBlur to trigger
-                    setOpenHpWidget(false); 
-                }, 0);
+                // set timeout to give time for onBlur to trigger
+                setTimeout(() => { setOpenHpWidget(false); }, 0);
         }
         
         if (teamWidgetRef.current && !teamWidgetRef.current.contains(event.target) &&
@@ -82,13 +81,9 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         // If creature change then update it in the list to cause a rerender
         setCurrentEncounter(prev => ({
                 ...prev,
-                creatures: [
-                    ...prev.creatures.map(
-                        (oldCreature) => {
-                            return oldCreature.creatureGuid === creature.creatureGuid ? creature : oldCreature;
-                        }
-                    )
-                ]
+                creatures: [...prev.creatures.map((oldCreature) => {
+                        return oldCreature.creatureGuid === creature.creatureGuid ? creature : oldCreature;
+                })]
             })
         );
 
@@ -112,7 +107,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         if(openEffectWidget && effectButtonRef.current) {
             const rect = effectButtonRef.current.getBoundingClientRect();
             setEffectWidgetPosition(rect)
-            const isInsideVertically = rect.top >= listSizeRect.top-30 && rect.bottom <= listSizeRect.bottom-30;
+            const isInsideVertically = rect.top >= listSizeRect.top-30 && rect.bottom <= listSizeRect.bottom+10;
             setIsEffectWidgetInside(isInsideVertically)
         }
 
@@ -405,7 +400,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                     
                 </div>
                 {openTeamWidget && isTeamWidgetInside && ( 
-                    <div className='editTeamContainer editHpGrow' ref={teamWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: teamWidgetPosition.top + teamWidgetPosition.height*1.5, left: teamWidgetPosition.left - teamWidgetPosition.width*5.8}}>
+                    <div className='editTeamContainer editHpGrow' ref={teamWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: teamWidgetPosition.top - teamWidgetPosition.height*6.5, left: teamWidgetPosition.left - teamWidgetPosition.width*5.8}}>
                         <div className="teamContainerFlag"/>
                         <Compact
                             color={borderColor}
@@ -428,7 +423,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                     </div>
                 )}
                 {openEffectWidget && isEffectWidgetInside && ( 
-                    <div className='effectsBarContainer editHpGrow' ref={effectWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: effectWidgetPosition.bottom + 10, left: effectWidgetPosition.left - effectWidgetPosition.width*17.8}}>
+                    <div className='effectsBarContainer editHpGrow' ref={effectWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: effectWidgetPosition.top - 185, left: effectWidgetPosition.left - effectWidgetPosition.width*17.8}}>
                         <div className="effectContainerFlag"/>
                         <div className="effectsBar" onClick={(event) => event.stopPropagation()} >
                         {Object.entries(effectImgMap).map(([effect, image]) => (
@@ -444,14 +439,9 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                     </div>
                 )}
                 {openHpWidget && isHpWidgetInside && ( 
-                    <div className='editStatsContainer editHpGrow' ref={hpWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: hpWidgetPosition.top - 10, left: hpWidgetPosition.right + 20, height: hpWidgetPosition.height*4}}>
-                        <div className="infoContainerFlag"/>
+                    <div className='editStatsContainer editHpGrow' ref={hpWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: hpWidgetPosition.top - 135, left: hpWidgetPosition.right + 20, height: hpWidgetPosition.height*4}}>
+                        <div className="hpContainerFlag"/>
                         <div className='hpChanges'>
-                            <div className='editHpContainer'>
-                                <button className='editHpButton healButton' onClick={(event) => handleChangeHpCreature("heal", event)}>HEAL</button>
-                                <input className='editStatsInput' type='number' value={hpChange} onFocus={handleHighlight} onChange={(event) => setHpChange(parseInt(event.target.value))} autoFocus/>
-                                <button className='editHpButton damageButton' onClick={(event) => handleChangeHpCreature("damage", event)}>DAMAGE</button>
-                            </div>
                             <div className='extraHpContainer'>
                                 <div className='extraHpInputs' >
                                     <label className='hpTitle tempHp' style={{color: creature.hit_points_temp === 0 ? 'grey' : ''}} htmlFor='temphp'><strong>Temp HP</strong></label>
@@ -462,6 +452,12 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                                     <input id='override' type='number' className='editStatsInputExtra' value={creature.hit_points_override} style={{color: creature.hit_points_override === 0 ? 'grey' : ''}} onFocus={handleHighlight} onChange={handleOverrideHp} onBlur={submitOverRideHpChange}/>
                                 </div>
                             </div>
+                            <div className='editHpContainer'>
+                                <button className='editHpButton healButton' onClick={(event) => handleChangeHpCreature("heal", event)}>HEAL</button>
+                                <input className='editStatsInput' type='number' value={hpChange} onFocus={handleHighlight} onChange={(event) => setHpChange(parseInt(event.target.value))} autoFocus/>
+                                <button className='editHpButton damageButton' onClick={(event) => handleChangeHpCreature("damage", event)}>DAMAGE</button>
+                            </div>
+                           
                         </div>
 
                     </div>

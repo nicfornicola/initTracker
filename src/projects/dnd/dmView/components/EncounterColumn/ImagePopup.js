@@ -108,14 +108,15 @@ const ImagePopup = ({setPlayerViewBackground, encounterGuid, socket}) => {
                     visible={true}
                     width="200"
                     ariaLabel="infinity-spin-loading"
-            /> :
+                /> 
+                :
                 <DialogContent >
                     <label htmlFor="grid" className='uploadedTitle'>Uploaded Youtube Links </label>
                     <hr/>
                     <TextInput setUploadedLinks={setUploadedLinks} socket={socket}/>
                     {uploadedLinks.length > 0 ? (
                         <>     
-                            <GridMap imageArr={uploadedLinks} handleClick={handleClick} isYoutubeLink={true} />
+                            <GridMap imageArr={uploadedLinks} setImageArr={setUploadedLinks} handleClick={handleClick} isYoutubeLink={true} socket={socket}/>
                             <hr/>
                         </>
                     ) : (
@@ -126,7 +127,7 @@ const ImagePopup = ({setPlayerViewBackground, encounterGuid, socket}) => {
                     <FileUpload setUploadedFiles={setUploadedFiles} storageKey={"background"} socket={socket}/>
                     {uploadedFiles.length > 0 ? (
                         <>     
-                            <GridMap imageArr={uploadedFiles} handleClick={handleClick}/>
+                            <GridMap imageArr={uploadedFiles} setImageArr={setUploadedFiles} handleClick={handleClick} socket={socket}/>
                             <hr/>
                         </>
                     ) : (

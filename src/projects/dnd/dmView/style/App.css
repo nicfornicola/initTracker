@@ -119,18 +119,12 @@ hr {
 .card {
     position: relative;
     border: 2px solid #ffffff;
-    border-radius: 60px 60px 10px 10px;
-    width: 200px;
-    min-height: 240px;
-    max-height: 290px;
+    border-bottom-left-radius: calc(.05 * var(--iconWidth));
+    border-bottom-right-radius: calc(.05 * var(--iconWidth));
+    border-top-left-radius: calc(.3 * var(--iconWidth));
+    border-top-right-radius: calc(.3 * var(--iconWidth));
     text-align: center;
     background-color: #949e9bac;
-}
-
-.cardTurnHighlight {
-    position: relative;
-    border-radius: inherit;
-    min-height: 240px;
 }
 
 .chosenCard {
@@ -155,55 +149,50 @@ hr {
 }
 
 .name {
-    font-size: 1.2em;
+    font-size: calc(.08 * var(--iconWidth)); /* Font size is 10% of the parent's width */
 }
 
 .lastName {
-    font-size: .6em;
-    margin-left: 30%;
-    margin-right: 30%;
+    font-size: calc(.05 * var(--iconWidth)); /* Font size is 10% of the parent's width */
+    margin-left: 25%;
+    margin-right: 25%;
 }
 
 .initiative-box,
 .hp-box {
+    display: flex; 
     position: absolute;
     justify-content: center; 
-    display: flex; 
-    flex-direction: column; 
-    bottom: -.01%;
+    align-items: center;
     background-color: #f0f0f0;
     border-top: 1px solid #3d3d3d;
     border-right: 1px solid #3d3d3d;
-    height: 10%;
+    height: 8%;
+    font-size: calc(.07 * var(--iconWidth)); /* Font size is 10% of the parent's width */
     min-width: 12%;
 }
 
 .initiative-box {
     right: 0px;
-    border-top-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-bottom-right-radius: calc(.0412 * var(--iconWidth));
+    border-top-left-radius: calc(.04 * var(--iconWidth));
     border-left: 1px solid #3d3d3d;
     border-right: none;
 }
 
 .hp-box {
-    border-top-right-radius: 8px;
-    border-bottom-left-radius: 8px;
+    border-bottom-left-radius: calc(.0412 * var(--iconWidth));
+    border-top-right-radius: calc(.04 * var(--iconWidth));
 }
 
 .hp {
-    margin: 3px;
-}
-
-.tempHp {
-    color: rgb(97, 191, 191);
+    margin-right: 3px;
 }
 
 .newTabLink {
     margin-left: 10px;
     border: 2px solid #00ffff00;
     border-radius: 10px;
-
 }
 
 .newTabLink:hover {
@@ -230,10 +219,14 @@ hr {
 
 @keyframes playerViewIconShadowPulse {
     0%, 100% {
-      box-shadow:  inset 0px -30px 30px -10px rgb(0, 255, 255);
+        box-shadow: 
+            inset 0px -30px 30px -10px rgb(0, 255, 255), 
+            0px 0px 5px 5px var(--static-border);
     }
     45%, 55% {
-      box-shadow:  inset 0px -40px 30px 20px rgb(0, 255, 255);
+        box-shadow: 
+            inset 0px -40px 30px 20px rgb(0, 255, 255), 
+            0px 0px 5px 5px var(--static-border);
     }
 }
 
@@ -302,23 +295,25 @@ hr {
 }
 
 .image-container {
+    display: flex;
+    flex-direction: column;
     position: relative;
-    display: inline-block;
-    width: 180px;
-    height: 180px;
-    padding-top: 8px;
+    align-items: center;
+    width: 100%;
+    height: 80%;
+    margin-top: 5%;
     padding-bottom: 0px;
-    border-top-left-radius: 55px;
-    border-top-right-radius: 55px;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;    
+    border-bottom-left-radius: calc(.15 * var(--iconWidth));
+    border-bottom-right-radius: calc(.15 * var(--iconWidth));
+    border-top-left-radius: calc(.275 * var(--iconWidth));
+    border-top-right-radius: calc(.275 * var(--iconWidth));
 }
 
 .image-container .image {
     position: absolute;
     display: block;
-    width: inherit;
-    height: inherit;
+    width: 90%;
+    height: 100%;
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
     border-bottom-left-radius: inherit;
@@ -327,22 +322,18 @@ hr {
 
 .image-container .imageSmoke {
     position: absolute;
-    width: inherit;
-    height: inherit;
+    width: 90%;
+    height: 100%;
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
     border-bottom-left-radius: inherit;
     border-bottom-right-radius: inherit;
     background: linear-gradient(to top, #0000009c, #00000000);
-
 }
 
 .avatarEffectsBar {
     position: absolute;
     bottom: 0%;
-    left: 0%;
-    width: 100%;
-    height: 25%; 
 }
 
 .option:hover + .tooltiptext,
@@ -374,7 +365,6 @@ hr {
     width: fit-content;
     z-index: 9999;
     padding: 5px;
-    /* transform: translate(-50%, 50%); */
 }
 
 .effectsBarPlayerAvatar {
@@ -396,12 +386,19 @@ hr {
     background-color: rgba(0, 0, 0, 0.9); 
 }
 
+.effectPlayerView {
+    width: calc(.25 * var(--iconWidth)); 
+    height: calc(.25 * var(--iconWidth)); 
+    top: 50%;
+    margin: 1px;
+}
+
 .effect {
     width: 40px; 
     height: 40px; 
     top: 50%;
     margin: 1px;
-    border-radius: 20px;
+    border-radius: 15px;
 }
 
 .tooltiptext {
@@ -418,6 +415,8 @@ hr {
     opacity: 1;
     transition: opacity 0.3s;
     z-index: 99;
+    font-family: 'Bitter', serif;
+    width: fit-content;
 }
 
 .roundNum {
@@ -441,6 +440,7 @@ hr {
 .effectWrapper {
     position: relative;
     text-align: center;
+    border-radius: 100%;
 }
 
 .optionWrapper {
@@ -451,7 +451,7 @@ hr {
 .avatarEffectsBar .tooltiptext,
 .effectWrapper .tooltiptext {
     bottom: 110%;
-    width: 100px;
+    width: 90px;
 }
 
 .exhaustionContainer {
@@ -476,11 +476,6 @@ hr {
     border-radius: 3px;
     margin: 0%;
     font-size: smaller;
-}
-
-.backgroundThumbnail {
-    width: 100%;
-    height: 100%;
 }
 
 .uploadContainer {
@@ -1062,6 +1057,35 @@ input {
 
 }
 
+.imageContainer {
+    display: flex;
+}
+
+.imageContainer .backgroundThumbnail {
+    width: 100%; /* Stretches the image to fill the container width */
+    height: 100%;
+    object-fit: fill; /* Makes the image fill the size while maintaining aspect ratio */
+    aspect-ratio: 1 / 1;
+}
+
+.imageX:hover,
+.imageContainer:hover .imageX {
+    opacity: 1;
+}
+
+.imageX {
+    opacity: 0;
+    position: relative;
+    top: 2px;
+    right: 25px;
+    z-index: 1;
+    width: fit-content;
+    height: fit-content;
+    padding: 0px;
+    border-radius: 4px;
+    border: 2px solid red;
+}
+
 .statblockX {
     position: absolute;
     right: 20px;
@@ -1303,6 +1327,7 @@ input {
     list-style: none;
     margin: 0;
     z-index: 2;
+    width: fit-content;
 }
 
 /* Dropdown menu items */
@@ -1312,10 +1337,35 @@ input {
     cursor: pointer;
     border-bottom: 1px dotted #ccc;
     justify-content: space-between;
+    text-wrap: nowrap;
+
 }
 
 .dropdown-item:hover {
     background-color: #d9d9d9;
+}
+
+.streamingGif {
+    position: relative;
+    top: 15%;
+    right: 2px;
+    rotate: 45deg;
+    height: 18px; 
+    width: 18px; 
+}
+
+.magWrapper {
+    border: 1px solid #ccc;
+    border-left: 0;
+    background-color: #f9f9f9;
+    padding: 2px 2px 2px 2px;
+}
+
+.magOptions {
+    margin: 0;
+    border-radius: 10px 10px 0px 10px;
+    width: 18px;
+    height: 18px;
 }
 
 .encounterDropdownX {
@@ -1547,7 +1597,7 @@ input {
     box-shadow: 1px 1px 10px #000000;
     width: 6%;
     z-index: 9999;
-    padding: 5px;
+    padding: 0px 5px 5px 5px;
 }
 
 .editTeamContainer {
@@ -1567,19 +1617,19 @@ input {
 .effectContainerFlag {
     position: absolute;
     transform: rotate(45deg);
-    top: calc(0% - 6.5px);
+    bottom: calc(0% - 6.5px);
     right:  calc(28%);
     background-color: inherit;
     height: 9px;
     width: 9px;
-    border-top: inherit;
-    border-left: inherit;
+    border-bottom: inherit;
+    border-right: inherit;
 }
 
-.infoContainerFlag {
+.hpContainerFlag {
     position: absolute;
     transform: rotate(45deg);
-    top: 12%;
+    bottom: 20%;
     right:  calc(100% - 8px);
     background-color: inherit;
     height: 16px;
@@ -1591,13 +1641,13 @@ input {
 .teamContainerFlag {
     position: absolute;
     transform: rotate(45deg);
-    top: calc(0% - 6.5px);
-    right:  calc(50%);
+    bottom: calc(0% - 6.5px);
+    right:  calc(47.5%);
     background-color: inherit;
     height: 8px;
     width: 8px;
-    border-top: inherit;
-    border-left: inherit;
+    border-right: inherit;
+    border-bottom: inherit;
 }
 
 .hpChanges {
@@ -1634,7 +1684,7 @@ input {
 }
 
 .extraHpInputs {
-    height: 100%;
+    height: 45%;
 }
 
 .hpTitle {

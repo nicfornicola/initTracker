@@ -76,7 +76,7 @@ const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, setUploadI
                             <>     
                                 <label htmlFor="grid" className='uploadedTitle'>Uploaded Avatars</label>
                                 <hr/>
-                                <GridMap imageArr={uploadedAvatars} handleClick={handleClick}/>
+                                <GridMap imageArr={uploadedAvatars} setImageArr={setUploadedAvatars} handleClick={handleClick} socket={socket}/>
                             </>
                         ) : (
                             <div>Uploaded Avatars will apear here...</div>
