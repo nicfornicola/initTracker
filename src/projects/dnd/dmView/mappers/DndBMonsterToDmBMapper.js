@@ -126,7 +126,7 @@ export const DndBMonsterToDmBMapper = async (monsterRes, encounterMonsterRes, en
         "size": creatureSizes[monsterRes.sizeId],
         "isReleased": monsterRes.isReleased,
         "damage_resistances": "Dnd_Beyond doesn't provide this info :(",
-        "environments": [],
+        "environments": '',
         "deathSaves": {
             "failCount": 0,
             "successCount": 0,

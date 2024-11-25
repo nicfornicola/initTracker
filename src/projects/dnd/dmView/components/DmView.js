@@ -4,7 +4,7 @@ import SearchList from './SearchList.js';
 import Home from './Home.js';
 import EncounterColumn from './EncounterColumn/EncounterColumn';
 import SideMenu from './SideMenu/SideMenu.js';
-import { backendUrl, generateUniqueId, INIT_ENCOUNTER, SHORT_REFRESH} from '../constants';
+import { backendUrl, generateUniqueId, INIT_ENCOUNTER, isDev, SHORT_REFRESH} from '../constants';
 import YouTubeEmbed from './EncounterColumn/YouTubeEmbed.js';
 import io from 'socket.io-client';
 import { refreshMonsterProfiles } from '../refresh/refresh';
@@ -13,6 +13,7 @@ import ReactGA from "react-ga4";
 import { useLocation } from 'react-router-dom';
 import defaultBackground from '../pics/backgrounds/happyTavern.png'
 import { useUser } from '../../../../providers/UserProvider.js';
+import mockEncounters from '../mockEncounters.json'
 
 function getLocalStorageSize() {
     let totalSize = 0;
@@ -94,6 +95,12 @@ const DmView = () => {
     const [socket, setSocket] = useState(null);
 
     useEffect(() => {
+        if(isDev && username === "nicdev") {
+            console.log("MOCK ENCOUNTERS", mockEncounters)
+            setSavedEncounters(mockEncounters)
+        }
+
+
         if(username === 'Username') {
             setPlayerViewBackground({type: "image", src: defaultBackground})
             setSavedEncounters([])
@@ -127,9 +134,11 @@ const DmView = () => {
             socket.on('sendSavedEncounters', (encountersResponse) => {
                 if(encountersResponse.length === 0) {
                     console.log("Nothing saved...")
+                } else {
+                    console.log("GOT ENCOUNTERS", encountersResponse)
+                    console.log(encountersResponse)
+                    setSavedEncounters(encountersResponse)
                 }
-
-                setSavedEncounters(encountersResponse)
             });
 
         }

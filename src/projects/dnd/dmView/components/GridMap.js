@@ -5,7 +5,6 @@ import { useUser } from '../../../../providers/UserProvider.js';
 
 const GridMap = ({imageArr, setImageArr, handleClick, isYoutubeLink = false, socket}) => {
     const { username } = useUser();
-    console.log(imageArr)
     const deleteImage = (imgObj) => {
         socket.emit("deleteImage", username, imgObj.imageGuid);
         setImageArr((prevImageArr) =>

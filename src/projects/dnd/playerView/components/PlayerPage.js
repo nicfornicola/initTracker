@@ -83,7 +83,6 @@ function PlayerPage() {
                 setCardContainerStyle(encounterRes.cardContainerStyle)
                 let w = 200 + (20 * encounterRes.iconsize)
                 let h = 240 + (24 * encounterRes.iconsize)
-                console.log(w,h)
                 setIconSize({width: w, height: h})
 
                 if(encounterRes.backgroundGuid === 'default') {

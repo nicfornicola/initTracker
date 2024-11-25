@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { useUser } from '../../../../providers/UserProvider.js';
 import '../../dmView/style/App.css';
 import { ThreeDots } from 'react-loader-spinner'
+import { isDev } from '../constants.js';
 
 const SignIn = ({socket}) => {
     const { username, setUsername } = useUser();
@@ -13,7 +14,19 @@ const SignIn = ({socket}) => {
     const [loading, setLoading] = useState(null)
     const [error, setError] = useState('')
 
+    const goodLogin = (emitUsername) => {
+        setLoading(false)
+        setUsername(emitUsername);
+        setLoggedIn(true)
+        setError('')
+    }
+
     useEffect(() => {
+        if(isDev && !loggedIn) {
+            goodLogin("nicdev")
+        }
+
+
         if(socket) {
             socket.on('badLogin', (errorCode) => {
                 setLoading(false)
@@ -29,10 +42,7 @@ const SignIn = ({socket}) => {
     
             //get this when login or successful account creation
             socket.on('goodLogin', (emitUsername) => {
-                setLoading(false)
-                setUsername(emitUsername);
-                setLoggedIn(true)
-                setError('')
+                goodLogin(emitUsername)
             });
         }
     }, [socket])

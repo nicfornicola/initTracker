@@ -3,7 +3,7 @@ import EncounterListItem from './EncounterListItem'
 import {sortCreatureArray, INIT_ENCOUNTER_NAME} from '../../constants'
 
 const EncounterList = ({currentEncounter, setCurrentEncounter, handleSaveEncounter, turnNum, handleUploadMonsterImage, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, socket}) => {
-    const [creatures, setCurrentEncounterCreatures] = useState(currentEncounter.creatures);
+    const [currentEncounterCreatures, setCurrentEncounterCreatures] = useState(currentEncounter.creatures);
     const [scrollPosition, setScrollPosition] = useState(0);
     const [listSizeRect, setListSizeRect] = useState(0);
     const listRef = useRef(null);
@@ -34,7 +34,7 @@ const EncounterList = ({currentEncounter, setCurrentEncounter, handleSaveEncount
     }, [])
 
     const resort = () => {
-        setCurrentEncounter(prev => ({...prev, creatures: [...sortCreatureArray(creatures)]}));
+        setCurrentEncounter(prev => ({...prev, creatures: [...sortCreatureArray(currentEncounterCreatures)]}));
     }
 
     const setPlayerViewOnCreatureChange = () => {
@@ -46,15 +46,15 @@ const EncounterList = ({currentEncounter, setCurrentEncounter, handleSaveEncount
     useEffect(() => {
         setPlayerViewOnCreatureChange()
         // eslint-disable-next-line
-    }, [creatures])
+    }, [currentEncounterCreatures])
 
     return (
         <div className='encounterCreaturesList' ref={listRef}>
-            {creatures.map((creatureListItem, index) => (
+            {currentEncounterCreatures.map((creatureListItem, index) => (
                 <EncounterListItem key={creatureListItem.creatureGuid + index} creatureListItem={creatureListItem} setCurrentEncounter={setCurrentEncounter} index={index} isTurn={index+1 === turnNum} listSizeRect={listSizeRect} scrollPosition={scrollPosition} handleUploadMonsterImage={handleUploadMonsterImage} resort={resort} setPlayerViewOnCreatureChange={setPlayerViewOnCreatureChange} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} socket={socket}/>
             ))}
         </div>
-  );
+    );
 }
 
 export default EncounterList;

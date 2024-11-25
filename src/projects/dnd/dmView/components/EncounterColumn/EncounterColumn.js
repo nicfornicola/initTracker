@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import StatBlock from '../StatBlock';
+import StatBlock from '../Statblock/StatBlock.js';
 import { generateUniqueId, dummyDefault, envObject, sortCreatureArray, INIT_ENCOUNTER_NAME, COLOR_RED, COLOR_GREEN } from '../../constants';
 import EncounterListTopInfo from './EncounterListTopInfo'
 import DropdownMenu from './DropdownMenu';
@@ -69,7 +69,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         socket.emit("removeCreatureFromEncounter", xCreature.creatureGuid)
     };  
 
-    //This is mostly for handling ui, not saving to the database
+    // This is mostly for handling ui, not saving to the database
     // Since database changes happen on a lower level to avoid bloat
     const handleSaveEncounter = () => {
         if(currentEncounter.encounterName !== INIT_ENCOUNTER_NAME) {
@@ -244,7 +244,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
             </div>
             <div className={`column animated-label ${showSearchList ? '' : 'expand'}`}>
                 {encounterSelectedCreature ? (
-                    <StatBlock creature={encounterSelectedCreature} img={encounterSelectedCreature.avatarUrl} closeFunction={() => setEncounterSelectedCreature(false)}/>
+                    <StatBlock encounterSelectedCreature={encounterSelectedCreature} img={encounterSelectedCreature.avatarUrl} closeStatBlock={() => setEncounterSelectedCreature(false)} />
                 ) : (
                     <>No Encounter Creature Selected</>
                 )}

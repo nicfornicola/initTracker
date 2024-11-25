@@ -11,8 +11,6 @@ export const ImportDndBeyondMonsters = async (encounterMonsters, encounterGuid) 
         console.log("No non-charters imports...")
         return []
     } else {
-        console.log("urlIds", urlIds)
-        console.log("-----")
         const url = `${backendUrl}/dndb_monster_import/${urlIds}`;
     
         let monstersRes = {}

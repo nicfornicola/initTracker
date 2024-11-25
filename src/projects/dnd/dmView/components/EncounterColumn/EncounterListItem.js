@@ -182,7 +182,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
             hit_points_current: creature.hit_points_current,
             hit_points_override: creature.hit_points_override,
         }, creature.creatureGuid, "dm");
-
     }
 
     const handleChangeName = (event) => {
@@ -200,7 +199,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         setCreature({...creature})
     }
 
-    // on blur is not wokring
     const submitTempHpChange = () => {
         //hit_points | hit_points_current | hit_points_temp | hit_points_override
         socket.emit('playerHpChange', {hit_points_temp: creature.hit_points_temp}, creature.creatureGuid, "dm");

@@ -86,6 +86,7 @@ export const backgroundImages = [
 ];
 
 export const isProd = window.location.href.includes("dmbuddy.com") 
+export const isDev = !isProd && window.location.href.includes("/?") 
 export const backendUrl = isProd
                     ? `https://dm-buddy-svc-359507bf4ad4.herokuapp.com` 
                     : "http://localhost:8081";
@@ -264,6 +265,110 @@ export const imagesAvailable = [
 //     14: 'Stunned',
 //     15: 'Unconscious',
 // }
+
+export const sizeOptions = [
+    '--',
+    'Tiny',
+    'Small',
+    'Medium',
+    'Large',
+    'Huge',
+    'Gargantuan',
+];
+
+export const typeOptions = [
+    '--',
+    'Aberration',
+    'Beast',
+    'Celestial',
+    'Construct',
+    'Dragon',
+    'Elemental',
+    'Fey',
+    'Fiend',
+    'Giant',
+    'Humanoid',
+    'Monstrosity',
+    'Ooze',
+    'Plant',
+    'Undead'
+];
+
+export const alignmentOptions = [
+    '--',
+    'Lawful Good',
+    'Neutral Good',
+    'Chaotic Good',
+    'Lawful Neutral',
+    'True Neutral',
+    'Chaotic Neutral',
+    'Lawful Evil',
+    'Nuetral Evil',
+    'Chaotic Evil',
+    'Unaligned',
+];
+
+export const raceOptions = [
+    '--',
+    'Aarakocra',
+    'Aasimar',
+    'Bugbear',
+    'Centaur',
+    'Changeling',
+    'Dragonborn',
+    'Dwarf',
+    'Dwarf(Duergar)',
+    'Dwarf(Hill)',
+    'Dwarf(Mountain)',
+    'Elf',
+    'Elf(Drow)',
+    'Elf(Eladrin)',
+    'Elf(High)',
+    'Elf(Sea)',
+    'Elf(Shadar-kai)',
+    'Elf(Wood)',
+    'Firbolg',
+    'Genasi',
+    'Genasi(Air)',
+    'Genasi(Earth)',
+    'Genasi(Fire)',
+    'Genasi(Water)',
+    'Gith',
+    'Gnome',
+    'Gnome(Deep)',
+    'Gnome(Forest)',
+    'Gnome(Rock)',
+    'Gnome(Svirfneblin)',
+    'Goblin',
+    'Goliath',
+    'Half-Elf',
+    'Half-Elf(Aquatic)',
+    'Half-Orc',
+    'Halfling',
+    'Halfling(Ghostwise)',
+    'Halfling(Lightfoot)',
+    'Halfling(Stout)',
+    'Hobgoblin',
+    'Human',
+    'Human(Variant)',
+    'Kalashtar',
+    'Kenku',
+    'Leonin',
+    'Lizardfolk',
+    'Loxodon',
+    'Minotaur',
+    'Orc',
+    'Satyr',
+    'Shifter',
+    'Simic Hybrid',
+    'Tabaxi',
+    'Tiefling',
+    'Triton',
+    'Vedalken',
+    'Verdan',
+    'Warforged',
+    'Yuan-Ti'
+];
 
 export const creatureTypes = {
     1: 'Aberration',

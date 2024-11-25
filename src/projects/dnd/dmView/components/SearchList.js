@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import data from '../monsterJsons/5eCoreRules.json'; // Adjust the import path as necessary
 import {monsterList, imagesAvailable, generateUniqueId, INIT_ENCOUNTER_NAME, backendUrl} from '../constants'
 import axios from 'axios';
-import StatBlock from './StatBlock';
+import StatBlock from './Statblock/StatBlock';
 import Open5eToDmBMapper from '../mappers/Open5eToDmBMapper'
 import { InfinitySpin } from 'react-loader-spinner'
 
@@ -235,7 +235,7 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
             </div>
             <div className='column animated-label'>
             {searchSelectedCreature ? (
-                <StatBlock creature={searchSelectedCreature} img={searchSelectedCreature.avatarUrl} closeFunction={() => setSearchSelectedCreature(false)}/>
+                <StatBlock creature={searchSelectedCreature} img={searchSelectedCreature.avatarUrl} closeStatBlock={() => setSearchSelectedCreature(false)}/>
             ) : (
                 <>{'No Search Creature Selected'}</>
             )}
