@@ -1,11 +1,12 @@
 // App.js
-import {React, useState} from 'react';
+import React from 'react';
 
 import { Route, Routes } from 'react-router-dom';
 
 import PlayerPage from './projects/dnd/playerView/components/PlayerPage';
 import WhoAreYou from './projects/dnd/playerView/components/PlayerUI/WhoAreYou';
 import DmView from './projects/dnd/dmView/components/DmView';
+import ErrorBoundary from "./projects/dnd/dmView/components/ErrorBoundary"; // Assuming you have created this component
 
 import Blog from './projects/blog/components/Blog';
 import Pantheon from './projects/king/components/Pantheon';
@@ -22,15 +23,17 @@ import HowTo from './projects/dnd/dmView/components/SideMenu/HowToDMB';
 
 function App() {
 
-    return (
-        <Routes>
-            <Route path="/" element={<DmView />}/>
-            <Route path="/playerView/:sessionID" element={<PlayerPage />} />
-            <Route path="/join/:sessionID" element={<WhoAreYou />} />
-            <Route path="/help" element={<HowTo/>} />
-            <Route path="/king/" element={<Pantheon />} />
-            <Route path="/blog" element={<Blog/>}/>
-        </Routes>
+    return (        
+        <ErrorBoundary>
+            <Routes>
+                <Route path="/" element={<DmView />}/>
+                <Route path="/playerView/:sessionID" element={<PlayerPage />} />
+                <Route path="/join/:sessionID" element={<WhoAreYou />} />
+                <Route path="/help" element={<HowTo/>} />
+                <Route path="/king/" element={<Pantheon />} />
+                <Route path="/blog" element={<Blog/>}/>
+            </Routes>
+        </ErrorBoundary>
     );
 }
 

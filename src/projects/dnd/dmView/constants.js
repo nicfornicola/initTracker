@@ -437,6 +437,10 @@ export const levelData = {
     '--': {'xp': 0, 'profBonus': 0}
 };
 
+export const getLevelData = (key) => {
+    return key in levelData ? levelData[key]['xp'] : '--';
+}
+
 const sharedItems = {
     "from": "dmb",
     "name": "Dummy",

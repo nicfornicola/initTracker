@@ -760,8 +760,6 @@ hr {
     border-radius: 10px;
     margin: 10px;
     box-sizing: border-box; /* Include border and padding in the element's total width and height */
-    /* transition: width .5s ease;
-    animation: editHpGrow 0.25s ease-out forwards; */
 }
 
 .column.expand {

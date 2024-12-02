@@ -32,8 +32,6 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         image = isDefault ? open5eData.img_main : avatarUrl
     }
 
-    console.log(open5eData)
-
     return {
         ...open5eData,  
         "name": open5eData.name,
@@ -67,7 +65,9 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         },
         "skills": mapSkills(open5eData.skills),
         "armor_desc": "(" + open5eData.armor_desc + ")",
-        "environments": open5eData?.environments.length > 0 ? open5eData.environments.join(", ") : ''
+        "environments": open5eData?.environments.length > 0 ? open5eData.environments.join(", ") : '',
+        "lair_actions": [],
+        "legendary_actions": []
     }
 };
 

@@ -29,7 +29,7 @@ function updateSavedEncounters(jsonArray, newEncounter) {
 const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, savedEncounters, setSavedEncounters, handleRefresh,  refreshCheck, autoRefresh, showSearchList, handleNewEncounter, setEncounterGuid, socket}) => {
     const [roundNum, setRoundNum] = useState(currentEncounter.roundNum);
     const [turnNum, setTurnNum] = useState(currentEncounter.turnNum);
-    const [encounterSelectedCreature, setEncounterSelectedCreature] = useState(null);
+    const [selectedIndex, setSelectedIndex] = useState(null);
     const [showSaveMessage, setShowSaveMessage] = useState(false);
     const [saveMessageColor, setSaveMessageColor] = useState("");
     const [isSaveDisabled, setIsSaveDisabled] = useState(currentEncounter.creatures.length === 0);
@@ -59,12 +59,13 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
     const clickEncounterCreatureX = (event, xCreature, index) => {
         event.stopPropagation(); 
 
+        // if deleting the creature currently selected unselect it
+        if(selectedIndex !== null && xCreature.creatureGuid === currentEncounter.creatures[selectedIndex].creatureGuid) {
+            setSelectedIndex(null)
+        }
+
         let newArray = currentEncounter.creatures.filter((_, i) => i !== index)
         setCurrentEncounter(prev => ({...prev, creatures: [...newArray]}));
-
-        if(encounterSelectedCreature && xCreature.creatureGuid === encounterSelectedCreature.creatureGuid) {
-            setEncounterSelectedCreature(null)
-        }
 
         socket.emit("removeCreatureFromEncounter", xCreature.creatureGuid)
     };  
@@ -221,7 +222,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                     <EncounterListTopInfo savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} setSavedEncounters={setSavedEncounters} handleSaveEncounter={handleSaveEncounter} handleNewEncounter={handleNewEncounter} saveMessageColor={saveMessageColor} showSaveMessage={showSaveMessage} isSaveDisabled={isSaveDisabled} socket={socket}/>
                     <EncounterControls setNameChange={setNameChange} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} handleTurnNums={handleTurnNums} handleRefresh={handleRefresh} refreshCheck={refreshCheck} autoRefresh={autoRefresh} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleAutoRollInitiative={handleAutoRollInitiative} socket={socket}/>
                     {currentEncounter.creatures.length ? (
-                        <EncounterList currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleSaveEncounter={handleSaveEncounter} turnNum={turnNum} handleUploadMonsterImage={handleUploadMonsterImage} encounterSelectedCreature={encounterSelectedCreature} setEncounterSelectedCreature={setEncounterSelectedCreature} clickEncounterCreatureX={clickEncounterCreatureX} socket={socket}/>
+                        <EncounterList currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleSaveEncounter={handleSaveEncounter} turnNum={turnNum} handleUploadMonsterImage={handleUploadMonsterImage} setSelectedIndex={setSelectedIndex} clickEncounterCreatureX={clickEncounterCreatureX} socket={socket}/>
                     ) : (
                         <div className='encounterCreaturesNoItemsContainer'> 
                             <div className='encounterCreaturesNoItems'>
@@ -240,11 +241,10 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                         <button className='dmViewButton' onClick={() => handleAddExtra('global')}> Add Global Token </button>
                     </div>
                 </div>
-                
             </div>
             <div className={`column animated-label ${showSearchList ? '' : 'expand'}`}>
-                {encounterSelectedCreature ? (
-                    <StatBlock encounterSelectedCreature={encounterSelectedCreature} img={encounterSelectedCreature.avatarUrl} closeStatBlock={() => setEncounterSelectedCreature(false)} />
+                {selectedIndex !== null ? (
+                    <StatBlock selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} closeStatBlock={() => setSelectedIndex(null)} socket={socket}/>
                 ) : (
                     <>No Encounter Creature Selected</>
                 )}

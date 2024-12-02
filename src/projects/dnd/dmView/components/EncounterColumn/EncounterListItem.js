@@ -10,10 +10,17 @@ import Compact from '@uiw/react-color-compact';
 import { effectImgMap } from '../../constants.js';
 import Effect from './Effect.js';
 
-const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCurrentEncounter, scrollPosition, handleUploadMonsterImage, encounterSelectedCreature, setEncounterSelectedCreature, clickEncounterCreatureX, resort, socket}) => {
+const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCurrentEncounter, scrollPosition, handleUploadMonsterImage, setSelectedIndex, clickEncounterCreatureX, resort, socket}) => {
     const [hidden, setHidden] = useState(creatureListItem.hidden);
     const [creature, setCreature] = useState(creatureListItem)
     const [isHovered, setIsHovered] = useState(false);
+
+
+    const [name, setName] = useState(creatureListItem.name);
+    const [ac, setAc] = useState(creatureListItem.armor_class);
+    const [dexBonus, setDexBonus] = useState(creatureListItem.initiative);
+    const [maxHp, setMaxHp] = useState(creatureListItem.hit_points);
+    const [currentHp, setCurrentHp] = useState(creatureListItem.hit_points_current);
 
     const [hpChange, setHpChange] = useState(0);
     const [openHpWidget, setOpenHpWidget] = useState(false);
@@ -75,14 +82,11 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }, [creatureListItem]);
 
     useEffect(() => {
-        if(encounterSelectedCreature !== null && creature.creatureGuid === encounterSelectedCreature.creatureGuid)
-            setEncounterSelectedCreature(creature)
-
         // If creature change then update it in the list to cause a rerender
         setCurrentEncounter(prev => ({
                 ...prev,
                 creatures: [...prev.creatures.map((oldCreature) => {
-                        return oldCreature.creatureGuid === creature.creatureGuid ? creature : oldCreature;
+                    return oldCreature.creatureGuid === creature.creatureGuid ? creature : oldCreature;
                 })]
             })
         );
@@ -113,10 +117,29 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
 
     }, [openHpWidget, openTeamWidget, openEffectWidget, scrollPosition, listSizeRect]);
 
+
+    // This useeffect is for checking changes from the statblock edit
+    useEffect(() => {
+        if(creatureListItem.name !== creature.name)
+            setName(creatureListItem.name)
+        if(creatureListItem.armor_class !== creature.armor_class)
+            setAc(creatureListItem.armor_class)
+        if(creatureListItem.dexterity_save !== creature.dexterity_save)
+            setDexBonus(creatureListItem.dexterity_save)
+        if(creatureListItem.hit_points !== creature.hit_points) {
+            setMaxHp(creatureListItem.hit_points)
+            setCurrentHp(creatureListItem.hit_points_current)
+        }
+    // eslint-disable-next-line
+    }, [creatureListItem.name, creatureListItem.armor_class, creatureListItem.dexterity_save, creatureListItem.hit_points]);
+
     useEffect(() => {
         // Specifically check for these changes because they change how the playerview behaves
         setCreature({
                     ...creature, 
+                    name: name,
+                    armor_class: ac,
+                    dexterity_save: dexBonus,
                     alignment: alignment,
                     type: isPlayer ? 'player' : 'monster',
                     border: borderColor,
@@ -124,7 +147,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                     effects: [...effects]
         })
     // eslint-disable-next-line
-    }, [alignment, isPlayer, borderColor, hidden, effects]);
+    }, [alignment, isPlayer, borderColor, hidden, effects, name, ac, dexBonus]);
 
     const openEditHpWidget = (event) => {
         event.stopPropagation()
@@ -158,7 +181,9 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         //hit_points | hit_points_current | hit_points_temp | hit_points_override
         socket.emit('playerHpChange', {hit_points_current: creature.hit_points_current, hit_points_temp: creature.hit_points_temp}, creature.creatureGuid, "dm");
 
+
         setOpenHpWidget(!openHpWidget)
+        setCurrentHp(creature.hit_points_current)
         setCreature({...creature})
     }
 
@@ -172,6 +197,8 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         creature.hit_points = override === 0 ? creature.hit_points_default : override
         creature.hit_points_current = creature.hit_points - dif
         
+        setMaxHp(creature.hit_points)
+        setCurrentHp(creature.hit_points_current)
         setCreature({...creature})
     }
 
@@ -184,12 +211,14 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         }, creature.creatureGuid, "dm");
     }
 
-    const handleChangeName = (event) => {
+    const handleChangeName = (event, send = false) => {
         let newName = event.target.value
         if(creature.name !== newName) {
-            creature.name = event.target.value
-            setCreature({...creature})
-            socket.emit("creatureNameChange", newName, creature.creatureGuid, "dm")
+            setName(event.target.value)
+            if(send) {
+                socket.emit("creatureNameChange", newName, creature.creatureGuid, "dm")
+            }
+                
         }
     }
 
@@ -265,6 +294,12 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         let ac = parseInt(event.target.value)
         creature.armor_class = isNaN(ac) ? '0' : ac
         setCreature({...creature});
+    }    
+    
+    const handleInitiativeBonusChange = (event) => {
+        let dexBonus = parseInt(event.target.value)
+        creature.dexterity_save = isNaN(dexBonus) ? '0' : dexBonus
+        setCreature({...creature});
     }
 
     const handleArmorClassChangeSubmit = (event) => {
@@ -306,7 +341,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     let effectsCount = effects.length > 0 ? `x${effects.length}` : ''
     return (
             <li className='listItem'
-                onClick={() => setEncounterSelectedCreature(creature)}
+                onClick={() => setSelectedIndex(index)}
                 style={{
                         border: isTurn ? '2px solid rgba(0, 122, 130)' : '',
                         animation: isTurn ? 'shadowPulseTurn 2s ease-in-out infinite' : ''
@@ -336,13 +371,13 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                         </div>
                         <div className='listItemMiddleStats'>
                             <div className='nameInputContainer'>
-                                <input className='nameInput' type='text' defaultValue={creature.name} onBlur={handleChangeName} onClick={(event) => event.stopPropagation()}/>
+                                <input className='nameInput' type='text' value={name} onChange={handleChangeName} onBlur={(e) => handleChangeName(e, true)} onClick={(event) => event.stopPropagation()}/>
                             </div>
                             <div className='middleStatsContainer'>
-                                    <label htmlFor='ac' className='middleStatsLabel'>AC</label>
-                                    <input id='ac' className='middleStatsInput' onFocus={handleHighlight} type='text' defaultValue={creature.armor_class} onChange={handleArmorClassChange} onBlur={handleArmorClassChangeSubmit} onClick={(event) => event.stopPropagation()}/>
-                                    <label htmlFor='init' className='middleStatsLabel'>Init.</label>
-                                    <input id='init'className='middleStatsInput' onFocus={handleHighlight} disabled={true}  type='text' defaultValue={creature.dexterity_save ? '+' + creature.dexterity_save : '+0'} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
+                                <label htmlFor='ac' className='middleStatsLabel'>AC</label>
+                                <input id='ac' className='middleStatsInput' onFocus={handleHighlight} type='text' value={ac} onChange={handleArmorClassChange} onBlur={handleArmorClassChangeSubmit} onClick={(event) => event.stopPropagation()}/>
+                                <label htmlFor='init' className='middleStatsLabel'>Init.</label>
+                                <input id='init'className='middleStatsInput' onFocus={handleHighlight} type='text' value={dexBonus} onChange={handleInitiativeBonusChange} onClick={(event) => event.stopPropagation()}/>
                             </div>
                             
                         </div>
@@ -367,8 +402,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                             </button>
                         </div>
                     </div>
-                   
-                    {creature.hit_points !== null  ? 
+                    {maxHp !== null  ? 
                         <div className='encounterCreaturesHpContainer'>
                             <button 
                                 className='encounterCreaturesHp'
@@ -381,9 +415,9 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                                     ...hpStyle
                                 }}
                             >
-                                {creature.hit_points_current}
+                                {currentHp}
                                 <span>/</span>
-                                {creature.hit_points}
+                                {maxHp}
                                 {creature.hit_points_temp !== 0 && (
                                     <span className='tempHp'> (+{creature.hit_points_temp}) </span>
                                 )}
@@ -395,7 +429,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                     :
                         <div className='encounterCreaturesHp'/>
                     }
-                    
                 </div>
                 {openTeamWidget && isTeamWidgetInside && ( 
                     <div className='editTeamContainer editHpGrow' ref={teamWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: teamWidgetPosition.top - teamWidgetPosition.height*6.5, left: teamWidgetPosition.left - teamWidgetPosition.width*5.8}}>

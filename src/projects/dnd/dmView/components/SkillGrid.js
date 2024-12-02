@@ -1,15 +1,11 @@
 import React from 'react';
 import SkillGridItem from './SkillGridItem';
 
-const Spacer = () => {
-    return <div className="skillGridHeader"/>
-}
-
 const Titles = () => {
     return (
         <>
-            <Spacer/>
-            <Spacer/>
+            <div className="skillGridHeader"/>
+            <div className="skillGridHeader titleFontFamily">Score</div>
             <div className="skillGridHeader titleFontFamily">Mod</div>
             <div className="skillGridHeader titleFontFamily">Save</div>
         </>
@@ -26,17 +22,17 @@ const TitleRow = () => {
     )
 }
 
-const SkillGrid = ({creature, edit=false}) => {
+const SkillGrid = ({creature, edit=false, handleChange}) => {
    
     return (
         <div className="skillGridContainer">
             <TitleRow/>
-            <SkillGridItem skill={'STR'} skillMod={creature.strength} skillSaveMod= {creature.strength_save} edit={edit}/>
-            <SkillGridItem skill={'DEX'} skillMod={creature.dexterity} skillSaveMod= {creature.dexterity_save} edit={edit}/>
-            <SkillGridItem skill={'CON'} skillMod={creature.constitution} skillSaveMod= {creature.constitution_save} edit={edit}/>
-            <SkillGridItem skill={'INT'} skillMod={creature.intelligence} skillSaveMod= {creature.intelligence_save} edit={edit}/>
-            <SkillGridItem skill={'WIS'} skillMod={creature.wisdom} skillSaveMod= {creature.wisdom_save} edit={edit}/>
-            <SkillGridItem skill={'CHA'} skillMod={creature.charisma} skillSaveMod= {creature.charisma_save} edit={edit}/>
+            <SkillGridItem skillName={'STR'} skillTotal={creature.strength} skillSave={creature.strength_save} edit={edit} handleChange={handleChange}/>
+            <SkillGridItem skillName={'DEX'} skillTotal={creature.dexterity} skillSave={creature.dexterity_save} edit={edit} handleChange={handleChange}/>
+            <SkillGridItem skillName={'CON'} skillTotal={creature.constitution} skillSave={creature.constitution_save} edit={edit} handleChange={handleChange}/>
+            <SkillGridItem skillName={'INT'} skillTotal={creature.intelligence} skillSave={creature.intelligence_save} edit={edit} handleChange={handleChange}/>
+            <SkillGridItem skillName={'WIS'} skillTotal={creature.wisdom} skillSave={creature.wisdom_save} edit={edit} handleChange={handleChange}/>
+            <SkillGridItem skillName={'CHA'} skillTotal={creature.charisma} skillSave={creature.charisma_save} edit={edit} handleChange={handleChange}/>
         </div>
     );
 }

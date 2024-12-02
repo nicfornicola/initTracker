@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
-const EditStat = ({label, value, cKey, category = undefined, handleChange = undefined, type = 'text'}) => {
-
+const ControlledEditStat = ({label, value, setValue, setCreature, type = 'text'}) => {
+    
     let w, h, alignItems, textAlign = ''
     if(type === 'number') {
         w = '45px';
@@ -12,17 +12,24 @@ const EditStat = ({label, value, cKey, category = undefined, handleChange = unde
         h = '15px'
     }
 
+    const handleChange = (event) => {
+        setValue(event.target.value);
+    };
+
+    const handleBlur = () => {
+        setCreature()
+    }
+
     return (
         <div className='editBlock' style={{alignItems}}>
             <i className='editBlockTitle'>{label}</i>
             <input className="editBlockInput" type={type} style={{width: w, height: h, textAlign: textAlign}}
                 value={value}
-                onChange={(e) => handleChange(e, cKey, category)} 
-                onBlur={(e) => handleChange(e, cKey, category, undefined, true)} 
-                onFocus={(e) => {e.target.select()}}
+                onChange={handleChange} 
+                onBlur={handleBlur} 
             />
         </div>
     )
 }
 
-export default EditStat;
+export default ControlledEditStat;

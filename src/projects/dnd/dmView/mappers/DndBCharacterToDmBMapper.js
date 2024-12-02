@@ -39,7 +39,9 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, encounterGuid, skil
             "skills": skills_json_array || [],
             "spell_list": [],
             "hidden": false,
-            "environments": ''
+            "environments": '',
+            "legendary_actions": [],
+            "lair_actions": []
         }
     } else {
         return {
@@ -79,8 +81,9 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, encounterGuid, skil
             "skills":  [],
             "spell_list": [],   
             "hidden": false,
-            "environments": ''
-
+            "environments": '',
+            "legendary_actions": [],
+            "lair_actions": []
         }
     }
 };

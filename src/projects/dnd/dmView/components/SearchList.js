@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import data from '../monsterJsons/5eCoreRules.json'; // Adjust the import path as necessary
-import {monsterList, imagesAvailable, generateUniqueId, INIT_ENCOUNTER_NAME, backendUrl} from '../constants'
+import {monsterList, imagesAvailable, generateUniqueId, INIT_ENCOUNTER_NAME, backendUrl, isDev} from '../constants'
 import axios from 'axios';
 import StatBlock from './Statblock/StatBlock';
 import Open5eToDmBMapper from '../mappers/Open5eToDmBMapper'
@@ -88,7 +88,9 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
             setLoading(false)
 
         }
-        fetchData();
+
+        if(!isDev)
+            fetchData();
 
     }, [searchTerm, itemsToShow]);
 
@@ -155,7 +157,6 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
 
         if(action === "add") {
             setCurrentEncounter(prev => {
-              
                 if(prev.creatures.length === 0 && prev.encounterName === INIT_ENCOUNTER_NAME) {
                     socket.emit("newEncounter", encounterGuid)
                 }
@@ -197,38 +198,39 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
                         onScroll={handleScroll}
                     >
                         <ul className='monsterSearchList'>
-                            {loading ? 
-                            <InfinitySpin
-                                visible={true}
-                                width="200"
-                                ariaLabel="infinity-spin-loading"
-                            /> :
-                            
-                            displayedItems.map((item, index) => (
-                                <li
-                                    // className='monsterSearchItem animated-label'
-                                    className='listItem'
-                                    key={item.id + item.filterDimensions.source}
-                                    onClick={(e) => handleSearchSelectCreature(item, "select", e)}
-                                >
-                                    <div className='searchListCreatureContainer animated-box'>
-                                        <img className="monsterSearchIcon" src={item.avatarUrl} alt={"list Icon"} />
-                                        <div className='searchListCreatureDetails'>
-                                            <strong>{item.name}</strong>
-                                            <div className='searchCreatureSmallDetails'>
-                                                <span className='monsterSearchDetailText'> CR: {item.filterDimensions.level}</span>
-                                                <span className='monsterSearchDetailText'> - {item.filterDimensions.sourceShort}</span>
+                            {loading ? (
+                                <InfinitySpin
+                                    visible={true}
+                                    width="200"
+                                    ariaLabel="infinity-spin-loading"
+                                /> 
+                            ) : (
+                                displayedItems.map((item, index) => (
+                                    <li
+                                        // className='monsterSearchItem animated-label'
+                                        className='listItem'
+                                        key={item.id + item.filterDimensions.source}
+                                        onClick={(e) => handleSearchSelectCreature(item, "select", e)}
+                                    >
+                                        <div className='searchListCreatureContainer animated-box'>
+                                            <img className="monsterSearchIcon" src={item.avatarUrl} alt={"list Icon"} />
+                                            <div className='searchListCreatureDetails'>
+                                                <strong>{item.name}</strong>
+                                                <div className='searchCreatureSmallDetails'>
+                                                    <span className='monsterSearchDetailText'> CR: {item.filterDimensions.level}</span>
+                                                    <span className='monsterSearchDetailText'> - {item.filterDimensions.sourceShort}</span>
+                                                </div>
+                                                
                                             </div>
                                             
+                                            <button className='monsterSearchAdd' onClick={(e) => handleSearchSelectCreature(item, "add", e)}>
+                                                ➕
+                                            </button>
                                         </div>
                                         
-                                        <button className='monsterSearchAdd' onClick={(e) => handleSearchSelectCreature(item, "add", e)}>
-                                            ➕
-                                        </button>
-                                    </div>
-                                    
-                                </li>
-                            ))}
+                                    </li>
+                                ))
+                            )}
                         </ul>
                     </div>
                 </div>
