@@ -6,6 +6,8 @@ import EditStatDropdown from './EditStatDropdown';
 import EditStat from './EditStat';
 import EditStatBig from './EditStatBig';
 import GridWrap from './GridWrap';
+import ContentArray from './ContentArray';
+import ContentString from './ContentString';
 
 function getSpells(spellString) {
     let formattedSections = ""
@@ -109,26 +111,26 @@ function addSign(modNumber) {
     return `${modNumber}`; // Negative number already has a minus sign
 }
 
-const CreautureInfo = ({creature}) => {
+const CreatureInfo = ({creature}) => {
     let string = ``
 
-    if(creature.size) {
+    if(creature.size && creature.size !== '--') {
         string += `${creature.size}`
     }
 
-    if(creature.creature_type) {
+    if(creature.creature_type && creature.creature_type !== '--') {
         string += ` ${creature.creature_type}`
     }
     
-    if(creature.subtype) {
+    if(creature.subtype && creature.subtype !== '--') {
         string += ` (${creature.subtype})`
     }
 
-    if(creature.group && creature.group !== "null") {
+    if(creature.group && creature.group !== "null" && creature.group !== '--') {
         string += ` (${creature.group})`
     } 
     
-    if(creature.creature_alignment) {
+    if(creature.creature_alignment && creature.creature_alignment !== '--') {
         string += ` (${creature.creature_alignment})`
     }
 
@@ -158,22 +160,18 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
             handleValueChange(value, cKey, send)
         }
     }
+    
     const handleValueChange = (value, cKey, send) => {
         if (send) {
             if(value !== currentEncounter.creatures[selectedIndex][cKey]) {
                 // socket.emit('statBlockEdit', currentEncounter.creatures[selectedIndex].creatureGuid, cKey, value);
                 console.log("SEND handleValueChange");
-                setCurrentEncounter((prev) => {
-                    const updatedCreatures = [...prev.creatures];
-                    updatedCreatures[selectedIndex] = {
-                        ...creature
-                    };
-
-                    return {
-                        ...prev,
-                        creatures: updatedCreatures,
-                    };
-                });
+                setCurrentEncounter((prev) => ({
+                    ...prev,
+                    creatures: prev.creatures.map((oldCreature, i) =>
+                        i === selectedIndex ? { ...creature } : oldCreature
+                    ),
+                }));
             }
         } else {
             console.log("SET", cKey, value, send, "handleValueChange");
@@ -363,7 +361,7 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
                             <div className='creatureType'>
                                 <hr className="lineSeperator" />
                                 <p className='source'>{creature.document__title}</p>
-                                <CreautureInfo creature={creature}/>
+                                <CreatureInfo creature={creature}/>
                             </div>
                             <div className='stickyStatGrid textShadow' >
                                 <p className="stickyStatItem"><strong>AC</strong>&nbsp;{creature.armor_class} 
@@ -371,7 +369,9 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
                                         <span className='extraInfo'> &nbsp; {creature.armor_desc} </span>
                                     } 
                                 </p>
-                                <p className="stickyStatItem"><strong>Initiative</strong>&nbsp;{addSign(creature.dexterity_save)} <span className='extraInfo'>&nbsp;({parseInt(creature.dexterity_save)+10})</span></p>
+                                <p className="stickyStatItem"><strong>Initiative</strong>&nbsp;{addSign(creature.dexterity_save)} 
+                                    <span className='extraInfo'>&nbsp;({parseInt(creature.dexterity_save)+10})</span>
+                                </p>
                                 <p className="stickyStatItem stickyStatExtraWide">
                                     <strong>HP</strong>&nbsp;{creature.hit_points_current}/{creature.hit_points} 
                                     {creature.hit_points_temp !== 0 && (
@@ -386,7 +386,7 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
                                 <p className="stickyStatItem stickyStatExtraWide">
                                     <strong>Speed</strong>&nbsp;
                                     {creature.speed && Object.entries(creature.speed).map(([key, value], index, array) => (
-                                        value !== 0 && value !== '0' && ( // Check if the value is not 0
+                                        value !== 0 && value !== '0' && (
                                             <span key={index + key}>
                                                 {capsFirstLetter(key)}{key !== "hover" && <> {value}</> }&nbsp;
                                             </span>
@@ -405,36 +405,19 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
                                     <span >{creature.skills}</span>
                                 </p>
                             )}
-                            {creature.damage_vulnerabilities && (
-                                <p><strong>Vulnerabilities</strong> {creature.damage_vulnerabilities}</p>
-                            )}
-                            {creature.damage_resistances && 
-                                <p><strong>Resistances</strong> {creature.damage_resistances}</p>
-                            }
-                            {creature.damage_immunities && (
-                                <p><strong>Immunities</strong> {creature.damage_immunities}</p>
-                            )}
-                            {creature.condition_immunities && (
-                                <p><strong>Condition Immunities</strong> {creature.condition_immunities}</p>
-                            )}
-                            {creature.senses && (
-                                <p><strong>Senses</strong> {capsFirstLetter(creature.senses)}</p>                        
-                            )}
 
-                            {creature.languages && (
-                                <p><strong>Languages</strong> {creature.languages}</p>
-                            )}
-                            {creature.challenge_rating &&
-                                <p>
-                                    <strong>CR </strong>{creature.challenge_rating}
-                                    <i>({getLevelData(creature.challenge_rating)} XP)</i> 
-                                </p>
-                            }
-                            
-                            
+                            <ContentString label={'Vulnerabilities'} contentString={creature.damage_vulnerabilities} />
+                            <ContentString label={'Resistances'} contentString={creature.damage_resistances} />
+                            <ContentString label={'Immunities'} contentString={creature.damage_immunities} />
+                            <ContentString label={'Condition Immunities'} contentString={creature.condition_immunities} />
+                            <ContentString label={'Senses'} contentString={creature.senses} />
+                            <ContentString label={'Languages'} contentString={creature.languages} />
+                            <ContentString label={'CR'} contentString={creature.challenge_rating} italics={`(${getLevelData(creature.challenge_rating)} XP)`}/>
+                           
                             {creature.from === "dnd_b" && !creature.isReleased &&
                                 <div style={{border: '1px solid red', wordWrap: 'break-word'}}><strong>Alert!</strong> This creature comes from a paid source on DndB so only minimal data is available :( <a href={creature.link}>{creature.link}</a></div>
                             }
+
                             {creature.special_abilities && 
                                 <>
                                     <h1 className='infoTitle'>TRAITS</h1>
@@ -467,72 +450,37 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
 
                             {creature.actions && 
                                 <>
-                                    <h1 className='infoTitle'>ACTIONS</h1>
-                                    <hr className="lineSeperator" />
-
                                     {creature.from === "dnd_b" ? (
                                         <>
+                                            <h1 className='infoTitle'>ACTIONS</h1>
+                                            <hr className="lineSeperator" />
                                             {creature.actions &&
                                                 <div className='actionInfo' dangerouslySetInnerHTML={{ __html: creature.actions }} />
                                             }
                                         </>
                                     ) : (
-                                        creature.actions.map((action, index) => (
-                                            <div className='actionInfo' key={index+action.name}>
-                                                <strong>{action.name}:</strong> {getDesc(action)}
-                                            </div>
-                                        ))
+                                        <ContentArray label={'ACTIONS'} contentArray={creature.actions}/>
+
                                     )}
                                 </>
                             }
                             
-
-                            {creature.bonus_actions && creature.bonus_actions.length !== 0 && (
-                                <>
-                                    <h1 className='infoTitle'>BONUS ACTIONS</h1>
-                                    <hr className="lineSeperator" />
-                                    {creature.bonus_actions.map((action, index) => (
-                                        <div className='actionInfo' key={index+action.name}>
-                                            <strong>{action.name}:</strong> {getDesc(action)}
-                                        </div>
-                                    ))}
-                                </>
-                            )}
-
-                            {creature.reactions && creature.reactions.length !== 0 && (
-                                <>
-                                    <h1 className='infoTitle'>REACTIONS</h1>
-                                    <hr className="lineSeperator" />
-                                    {creature.reactions.map((reaction, index) => (
-                                        <div className='actionInfo' key={index+reaction.name}>
-                                            <strong>{reaction.name}:</strong> {getDesc(reaction)}
-                                        </div>
-                                    ))}
-                                </>
-                            )}
-
+                            <ContentArray label={'BONUS ACTIONS'} contentArray={creature.bonus_actions}/>
+                            <ContentArray label={'REACTIONS'} contentArray={creature.reactions}/>
+                            
                             {creature.legendary_actions && 
                                 <>
-                                    <h1 className='infoTitle'>LEGENDARY ACTIONS</h1>
-                                    <hr className="lineSeperator" />
+                                    
                                     {creature.from === "dnd_b" ? (
                                         <>
+                                            <h1 className='infoTitle'>LEGENDARY ACTIONS</h1>
+                                            <hr className="lineSeperator" />
                                             {creature.actions &&
                                                 <div className='actionInfo' dangerouslySetInnerHTML={{ __html: creature.legendary_actions }} />
                                             }
                                         </>
                                     ) : (
-                                        creature.legendary_actions.length !== 0 && (
-                                            <>
-                                                
-                                                <div className='actionInfo'>{creature.legendary_desc}</div>
-                                                {creature.legendary_actions.map((legAction, index) => (
-                                                    <div className='actionInfo' key={index+legAction.name}>
-                                                        <strong>{legAction.name}:</strong> {getDesc(legAction)}
-                                                    </div>
-                                                ))}
-                                            </>
-                                        )
+                                        <ContentArray label={'LEGENDARY ACTIONS'} contentArray={creature.legendary_actions}/>
                                     )}
                                 </>
                             }

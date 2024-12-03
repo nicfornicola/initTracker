@@ -844,6 +844,16 @@ hr {
     transition: opacity .2s ease-in-out;
 }
 
+.actionTrash {
+    opacity: 0;
+}
+
+.actionTrash:hover,
+.actionListItem:hover .actionTrash {
+    opacity: 1;
+    transition: opacity .4s ease-in-out;
+}
+
 .encounterTitleEditInput {
     width: 90%;
     margin: 0px;
@@ -1594,8 +1604,6 @@ input {
     border-top-left-radius: 2px;
     border-bottom-left-radius: 2px;
 }
-
-
 
 .middleStatsContainer {
     position: relative;

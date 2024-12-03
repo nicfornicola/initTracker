@@ -40,7 +40,7 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         "creatureGuid": null,
         "link": open5eData.link,
         "searchHint": open5eData.searchHint,
-        "filterDimensions":{ ...open5eData.filterDimensions},
+        "filterDimensions": { ...open5eData.filterDimensions},
         // If dnd_b image is defualt then try to get the open5e image which might still be false
         "avatarUrl": image,
         "hit_points_default": open5eData.hit_points,
@@ -51,11 +51,11 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         "initiative": open5eData.dexterity_save || 0,
         "last_damage": null,
         "effects": [],
-        "creature_alignment": open5eData.alignment,
+        "creature_alignment": open5eData.alignment ?? '--',
         "alignment": "enemy",
         "type": "monster",
         "border": COLOR_RED,
-        "creature_type": open5eData.type,
+        "creature_type": open5eData.type ?? '--',
         "inspiration": false,
         "hidden": false,
         "deathSaves": {
@@ -67,7 +67,15 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         "armor_desc": "(" + open5eData.armor_desc + ")",
         "environments": open5eData?.environments.length > 0 ? open5eData.environments.join(", ") : '',
         "lair_actions": [],
-        "legendary_actions": []
+        "legendary_actions": [],
+        "strength_save": open5eData.strength_save ?? 0,
+        "dexterity_save": open5eData.dexterity_save ?? 0,
+        "constitution_save": open5eData.constitution_save ?? 0,
+        "intelligence_save": open5eData.intelligence_save ?? 0,
+        "charisma_save": open5eData.charisma_save ?? 0,
+        "wisdom_save": open5eData.wisdom_save ?? 0,
+        "size": open5eData.size ?? '--',
+        "subtype": open5eData.subtype ?? '--',
     }
 };
 

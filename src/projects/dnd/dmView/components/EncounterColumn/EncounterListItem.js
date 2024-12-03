@@ -15,10 +15,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const [creature, setCreature] = useState(creatureListItem)
     const [isHovered, setIsHovered] = useState(false);
 
-
-    const [name, setName] = useState(creatureListItem.name);
-    const [ac, setAc] = useState(creatureListItem.armor_class);
-    const [dexBonus, setDexBonus] = useState(creatureListItem.initiative);
     const [maxHp, setMaxHp] = useState(creatureListItem.hit_points);
     const [currentHp, setCurrentHp] = useState(creatureListItem.hit_points_current);
 
@@ -81,18 +77,14 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         // eslint-disable-next-line
     }, [creatureListItem]);
 
-    useEffect(() => {
-        // If creature change then update it in the list to cause a rerender
+    const handleCreatureChange = () => {
         setCurrentEncounter(prev => ({
-                ...prev,
-                creatures: [...prev.creatures.map((oldCreature) => {
-                    return oldCreature.creatureGuid === creature.creatureGuid ? creature : oldCreature;
-                })]
-            })
-        );
-
-        // eslint-disable-next-line
-    }, [creature]);
+            ...prev,
+            creatures: [...prev.creatures.map((oldCreature) => {
+                return oldCreature.creatureGuid === creature.creatureGuid ? creature : oldCreature;
+            })]
+        }));
+    }
 
     useEffect(() => {
         if(openHpWidget && hpButtonRef.current) {
@@ -120,34 +112,27 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
 
     // This useeffect is for checking changes from the statblock edit
     useEffect(() => {
-        if(creatureListItem.name !== creature.name)
-            setName(creatureListItem.name)
-        if(creatureListItem.armor_class !== creature.armor_class)
-            setAc(creatureListItem.armor_class)
-        if(creatureListItem.dexterity_save !== creature.dexterity_save)
-            setDexBonus(creatureListItem.dexterity_save)
         if(creatureListItem.hit_points !== creature.hit_points) {
+            console.log("useEffects hit_points")
             setMaxHp(creatureListItem.hit_points)
             setCurrentHp(creatureListItem.hit_points_current)
         }
     // eslint-disable-next-line
-    }, [creatureListItem.name, creatureListItem.armor_class, creatureListItem.dexterity_save, creatureListItem.hit_points]);
+    }, [creatureListItem.hit_points]);
 
     useEffect(() => {
         // Specifically check for these changes because they change how the playerview behaves
         setCreature({
                     ...creature, 
-                    name: name,
-                    armor_class: ac,
-                    dexterity_save: dexBonus,
                     alignment: alignment,
                     type: isPlayer ? 'player' : 'monster',
                     border: borderColor,
                     hidden: hidden,
                     effects: [...effects]
         })
+        
     // eslint-disable-next-line
-    }, [alignment, isPlayer, borderColor, hidden, effects, name, ac, dexBonus]);
+    }, [alignment, isPlayer, borderColor, hidden, effects]);
 
     const openEditHpWidget = (event) => {
         event.stopPropagation()
@@ -209,17 +194,20 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
             hit_points_current: creature.hit_points_current,
             hit_points_override: creature.hit_points_override,
         }, creature.creatureGuid, "dm");
+        handleCreatureChange()
     }
 
     const handleChangeName = (event, send = false) => {
         let newName = event.target.value
         if(creature.name !== newName) {
-            setName(event.target.value)
-            if(send) {
-                socket.emit("creatureNameChange", newName, creature.creatureGuid, "dm")
-            }
-                
+            setCreature({...creature, name: newName})
         }
+
+        if(send) {
+            socket.emit("creatureNameChange", newName, creature.creatureGuid, "dm")
+            handleCreatureChange()
+        }
+                
     }
 
     const handleTempHp = (event) => {
@@ -231,6 +219,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const submitTempHpChange = () => {
         //hit_points | hit_points_current | hit_points_temp | hit_points_override
         socket.emit('playerHpChange', {hit_points_temp: creature.hit_points_temp}, creature.creatureGuid, "dm");
+        handleCreatureChange()
     }
 
     const handleInitiativeChange = (event) => {
@@ -290,21 +279,21 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         setOpenTeamWidget(!openTeamWidget)
     }
 
-    const handleArmorClassChange = (event) => {
-        let ac = parseInt(event.target.value)
-        creature.armor_class = isNaN(ac) ? '0' : ac
-        setCreature({...creature});
+    const handleArmorClassChange = (event, send = false) => {
+        setCreature({...creature, armor_class: event.target.value});
+
+        if(send) {
+            socket.emit('creatureArmorClassChange', creature.armor_class, creature.creatureGuid, "dm");
+            handleCreatureChange()
+        }
     }    
     
-    const handleInitiativeBonusChange = (event) => {
-        let dexBonus = parseInt(event.target.value)
-        creature.dexterity_save = isNaN(dexBonus) ? '0' : dexBonus
-        setCreature({...creature});
-    }
-
-    const handleArmorClassChangeSubmit = (event) => {
-        if(!isNaN(creature.armor_class))
-            socket.emit('creatureArmorClassChange', creature.armor_class, creature.creatureGuid, "dm");
+    const handleInitiativeBonusChange = (event, send = false) => {
+        setCreature({...creature, dexterity_save: event.target.value});
+        if(send) {
+            // socket.emit('creatureArmorClassChange', creature.armor_class, creature.creatureGuid, "dm");
+            handleCreatureChange()
+        }
     }
 
     const handleOpenEffectWidget = (event) => {
@@ -371,13 +360,13 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                         </div>
                         <div className='listItemMiddleStats'>
                             <div className='nameInputContainer'>
-                                <input className='nameInput' type='text' value={name} onChange={handleChangeName} onBlur={(e) => handleChangeName(e, true)} onClick={(event) => event.stopPropagation()}/>
+                                <input className='nameInput' type='text' value={creature.name} onChange={handleChangeName} onBlur={(e) => handleChangeName(e, true)} onClick={(event) => event.stopPropagation()}/>
                             </div>
                             <div className='middleStatsContainer'>
                                 <label htmlFor='ac' className='middleStatsLabel'>AC</label>
-                                <input id='ac' className='middleStatsInput' onFocus={handleHighlight} type='text' value={ac} onChange={handleArmorClassChange} onBlur={handleArmorClassChangeSubmit} onClick={(event) => event.stopPropagation()}/>
-                                <label htmlFor='init' className='middleStatsLabel'>Init.</label>
-                                <input id='init'className='middleStatsInput' onFocus={handleHighlight} type='text' value={dexBonus} onChange={handleInitiativeBonusChange} onClick={(event) => event.stopPropagation()}/>
+                                <input id='ac' className='middleStatsInput' onFocus={handleHighlight} type='numeric' value={creature.armor_class} onChange={handleArmorClassChange} onBlur={(e) => handleArmorClassChange(e, true)} onClick={(event) => event.stopPropagation()}/>
+                                <label htmlFor='init' className='middleStatsLabel'>Init+</label>
+                                <input id='init'className='middleStatsInput' onFocus={handleHighlight} type='numeric' value={creature.dexterity_save} onChange={handleInitiativeBonusChange} onBlur={(e) => handleInitiativeBonusChange(e, true)} onClick={(event) => event.stopPropagation()}/>
                             </div>
                             
                         </div>
