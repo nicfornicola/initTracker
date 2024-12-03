@@ -7,7 +7,6 @@ offline mod
         add default background image option for dmview instead of my default 
         dndbeyond imported folder per user
         homebrew monster folder
-        edit statblock (make sure to show all fields even if the current monster doesnt have it i.e. bonus action: none) 
         create custom
 
         upload all chars from a campaign - I can get campaign players info from the character api at the bottom
@@ -58,9 +57,8 @@ playerview
 
 BROKEN 
 ----
-card container style crashes backend
+some of the stats still trigger SEND even onBlur with no change
 i think refresh timer is weird
-enironment stat card is SO fucked
 
 DONE - offline mode
 ------
