@@ -285,6 +285,26 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
         }
     };
 
+    const handleCheckChange = (value, cKey, index) => {
+        console.log("handleCheckChange");
+        setCurrentEncounter((prev) => {
+            const updatedCreatures = [...prev.creatures];
+            let updatedCategoryArray = updatedCreatures[selectedIndex][cKey] ?? [];
+
+            updatedCategoryArray[index] = value
+
+            updatedCreatures[selectedIndex] = {
+                ...updatedCreatures[selectedIndex],
+                [cKey]: updatedCategoryArray,
+            };
+
+            return {
+                ...prev,
+                creatures: updatedCreatures,
+            };
+        });
+    }
+
     const handleUserArrayActions = (cKey, category, index) => {
         let updatedArray = []
         if(cKey === 'add') {
@@ -522,7 +542,7 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
                                             }
                                         </>
                                     ) : (
-                                        <ContentArray label={'LEGENDARY ACTIONS'} contentArray={creature.legendary_actions}/>
+                                        <ContentArray label={'LEGENDARY ACTIONS'} contentArray={creature.legendary_actions} labelDesc={creature.legendary_desc} boxes={creature.legendary_acions_count} handleCheck={handleCheckChange}/>
                                     )}
                                 </>
                             }

@@ -18,6 +18,7 @@ offline mod
 
     statblock
     --
+        add "number of attacks", "number of legendary actions", "number of legendary reactions"  in edit mode to allow for check boxes and lair actions
         make stat blocks spots show more then one, see redesign 
         customize more stuff in stat block
         Slot-tracking with check marks of things like legendary actions, and anything else with limited use
@@ -46,9 +47,7 @@ offline mod
 
 playerview
 ------
-    add button to resize images and add more options to move their positions
-    add x button to remove uploadedLinks and images
-    make currentplayerviewimage reference the data to save on space
+    more options to move their positions
 
     death saves for offline mode, put it in the hp box
     different tiers of blood to match what is going on in game, light, med, heavy blood
@@ -62,6 +61,9 @@ i think refresh timer is weird
 
 DONE - offline mode
 ------
+add button to resize images and add 
+add x button to remove uploadedLinks and images
+make currentplayerviewimage reference the data to save on space
 dnd_b imports show their hp from time of import and then auto refresh to the current amount - fix is hit a refresh on page load to make sure its up to date 
 actions and stuff is not loading from database correctly
 make table for images

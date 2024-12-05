@@ -27,6 +27,13 @@ function capitalizeWords(str) {
     return str.replace(/\b\w/g, char => char.toUpperCase());
 }
 
+const getLegendaryBoxes = (desc) => {
+    //change this to do it in the mapper ie. legendary_actions_count
+    // regex to find "3 legendary actions"
+    // extra number 
+    return [false, false, false]
+}
+
 export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
     let isDefault = avatarUrl.includes("Content/Skins/WaterDeep")
     let image = avatarUrl;
@@ -82,6 +89,7 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         "wisdom_save": open5eData.wisdom_save ?? 0,
         "size": open5eData.size ?? '--',
         "subtype": open5eData.subtype ?? '--',
+        "legendary_actions_count": getLegendaryBoxes(open5eData.legendary_desc) ?? []
     }
 };
 
