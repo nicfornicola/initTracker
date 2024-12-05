@@ -286,8 +286,6 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
     };
 
     const handleUserArrayActions = (cKey, category, index) => {
-        // console.log(currentEncounter.creatures[selectedIndex][category]);
-
         let updatedArray = []
         if(cKey === 'add') {
             updatedArray = [...currentEncounter.creatures[selectedIndex][category], {name: 'None', desc: '--'}]
@@ -314,7 +312,6 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
     const fullEditStatBlock = () => {
         setIsEditMode(!isEditMode)
     }
-    console.count("statblock")
 
     if(creature?.dnd_b_player_id) {
         return null;
