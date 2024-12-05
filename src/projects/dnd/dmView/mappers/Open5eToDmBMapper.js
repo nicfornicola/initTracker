@@ -23,6 +23,10 @@ function mapSkills(skills) {
     ))
 }
 
+function capitalizeWords(str) {
+    return str.replace(/\b\w/g, char => char.toUpperCase());
+}
+
 export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
     let isDefault = avatarUrl.includes("Content/Skins/WaterDeep")
     let image = avatarUrl;
@@ -31,6 +35,8 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         //open5e has an image, if dnd_b doesnt have an image use open5e's else just use default
         image = isDefault ? open5eData.img_main : avatarUrl
     }
+
+    console.log(open5eData)
 
     return {
         ...open5eData,  
@@ -51,7 +57,7 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         "initiative": open5eData.dexterity_save || 0,
         "last_damage": null,
         "effects": [],
-        "creature_alignment": open5eData.alignment ?? '--',
+        "creature_alignment": capitalizeWords(open5eData.alignment) ?? '--',
         "alignment": "enemy",
         "type": "monster",
         "border": COLOR_RED,

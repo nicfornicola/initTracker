@@ -31,11 +31,6 @@ const EditStatBig = ({label, content = [], category, handleChange = undefined}) 
             e.target.select();
     }
 
-    const handleAction = (action) => {
-        console.log("handleAction", action, label)
-    }
-    
-    
     return (
         <div className='editBlock'>
             <i className='editBlockTitle'>{label}</i>
@@ -50,7 +45,7 @@ const EditStatBig = ({label, content = [], category, handleChange = undefined}) 
                             onFocus={handleFocus}
                         />
                         {content[0].name !== 'None' && content[0].desc !== '--' &&
-                            <OptionButton src={magMinus} message={`Remove: ${action.name}`} onClickFunction={() => handleAction("remove")} wrapperClassName='actionTrash'/>
+                            <OptionButton src={magMinus} message={`Remove: ${action.name}`} onClickFunction={(e) => handleChange(e, 'remove', category, index, true)} wrapperClassName='actionTrash'/>
                         }
                         </div>
                     <textarea
@@ -67,7 +62,7 @@ const EditStatBig = ({label, content = [], category, handleChange = undefined}) 
             ))}
             {content[0].name !== 'None' && content[0].desc !== '--' &&
                 <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
-                    <OptionButton src={magPlus} message={`Add ${label.slice(0, -1)}`} onClickFunction={() => handleAction("add")}/>
+                    <OptionButton src={magPlus} message={`Add ${label.slice(0, -1)}`} onClickFunction={(e) => handleChange(e, 'add', category)}/>
                 </div>
             }
             

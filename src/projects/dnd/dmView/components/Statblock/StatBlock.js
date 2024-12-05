@@ -9,6 +9,21 @@ import GridWrap from './GridWrap';
 import ContentArray from './ContentArray';
 import ContentString from './ContentString';
 
+
+function formatSpeed(speed) {
+    const order = ['walk', 'climb', 'burrow', 'swim', 'fly', 'hover'];
+    
+    const entries = order
+        .filter(key => speed[key] && (key !== 'hover' || speed[key]))  // Include only truthy values
+        .map(key => [key, speed[key]]);
+    
+    const result = entries
+        .map(([key, value], i, arr) => `${capsFirstLetter(key)}${key !== 'hover' ? ` ${value}` : ''}${i < arr.length - 1 ? ', ' : ''}`)
+        .join('');
+    
+    return result;
+}
+
 function getSpells(spellString) {
     let formattedSections = ""
     if(spellString.includes('*')) {
@@ -140,21 +155,26 @@ const CreatureInfo = ({creature}) => {
 const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurrentEncounter, closeStatBlock, socket}) => {
     const [isEditMode, setIsEditMode] = useState(false)
     const [creature, setCreature] = useState(currentEncounter.creatures[selectedIndex])
-
+    console.log(currentEncounter)
+    console.log(creature)
     // If selectedIndex changes a new creature was clicked
     useEffect(() => {
         setCreature(selectedIndex !== null ? currentEncounter.creatures[selectedIndex] : null)
     // eslint-disable-next-line
     }, [currentEncounter.creatures[selectedIndex], selectedIndex]);
 
-    const handleChange = (e, cKey, category, index = undefined, send = false) => {
-        const { value } = e.target;
-        if(index !== undefined) {
+    const handleChange = (e, cKey, category = undefined, index = undefined, send = false) => {
+        // From EditStatBig add and remove buttonns
+        const { value, checked, type } = e.target;
+
+        if(['add', 'remove'].includes(cKey)) {
+            handleUserArrayActions(cKey, category, index)
+        } else if(index !== undefined) {
             //Array options, Actions, Bonus Actions
             handleArrayChange(value, cKey, category, index, send)
         } else if(category) {
             //Nested objects, speed
-            handleNestedChange(value, cKey, category, send)
+            handleNestedChange(type === 'checkbox' ? checked : value, cKey, category, send)
         } else {
             //Single change on the top level, name, size, type
             handleValueChange(value, cKey, send)
@@ -164,7 +184,7 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
     const handleValueChange = (value, cKey, send) => {
         if (send) {
             if(value !== currentEncounter.creatures[selectedIndex][cKey]) {
-                // socket.emit('statBlockEdit', currentEncounter.creatures[selectedIndex].creatureGuid, cKey, value);
+                socket.emit('statBlockEdit', currentEncounter.creatures[selectedIndex].creatureGuid, cKey, value);
                 console.log("SEND handleValueChange");
                 setCurrentEncounter((prev) => ({
                     ...prev,
@@ -188,12 +208,12 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
             }));
         }
     };
-    
+
     const handleNestedChange = (value, cKey, category, send) => {
         if (send || cKey === 'hover') {
             if(value !== currentEncounter.creatures[selectedIndex]?.[category]?.[cKey]) {
                 console.log("SEND handleNestedChange");
-                // socket.emit('statBlockEdit', currentEncounter.creatures[selectedIndex].creatureGuid, cKey, value);
+                socket.emit('statBlockEditNestedObject', currentEncounter.creatures[selectedIndex].creatureGuid, category, cKey, value);
                 setCurrentEncounter((prev) => {
                     const updatedCreatures = [...prev.creatures];
                     updatedCreatures[selectedIndex] = {
@@ -220,11 +240,8 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
             }));
         }
     };
-    
-    const handleArrayChange = (value, cKey, category, index, send = false) => {
-        // console.log( currentEncounter.creatures[selectedIndex][category][index][cKey] !== creature[category][index][cKey])
-        console.log(currentEncounter.creatures[selectedIndex][category]);
 
+    const handleArrayChange = (value, cKey, category, index, send = false) => {
         if (send) {
             if(value !== "None" && value !== "--" && value !== currentEncounter.creatures[selectedIndex]?.[category]?.[index]?.[cKey]) {
                 console.log("SEND handleArrayChange");
@@ -268,9 +285,36 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
         }
     };
 
+    const handleUserArrayActions = (cKey, category, index) => {
+        // console.log(currentEncounter.creatures[selectedIndex][category]);
+
+        let updatedArray = []
+        if(cKey === 'add') {
+            updatedArray = [...currentEncounter.creatures[selectedIndex][category], {name: 'None', desc: '--'}]
+        } else if (cKey === 'remove') {
+            updatedArray = [...currentEncounter.creatures[selectedIndex][category].filter((_, i) => i !== index)]
+        }
+
+        setCurrentEncounter((prev) => {
+            const updatedCreatures = [...prev.creatures];
+
+            updatedCreatures[selectedIndex] = {
+                ...updatedCreatures[selectedIndex],
+                [category]: updatedArray,
+            };
+
+            return {
+                ...prev,
+                creatures: updatedCreatures,
+            };
+        });
+
+    };
+
     const fullEditStatBlock = () => {
         setIsEditMode(!isEditMode)
     }
+    console.count("statblock")
 
     if(creature?.dnd_b_player_id) {
         return null;
@@ -385,13 +429,7 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
                                 <p className="stickyStatItem"></p>
                                 <p className="stickyStatItem stickyStatExtraWide">
                                     <strong>Speed</strong>&nbsp;
-                                    {creature.speed && Object.entries(creature.speed).map(([key, value], index, array) => (
-                                        value !== 0 && value !== '0' && (
-                                            <span key={index + key}>
-                                                {capsFirstLetter(key)}{key !== "hover" && <> {value}</> }&nbsp;
-                                            </span>
-                                        )
-                                    ))}
+                                    {formatSpeed(creature.speed)}
                                 </p>
                                 <p className="stickyStatItem"></p>
                             </div>
@@ -429,20 +467,27 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
                                             }
                                         </>
                                     ) : (
-                                        creature.special_abilities.map((ability, index) => (
-                                            <div className='actionInfo' key={index+ability.name}>
-                                                <strong>{ability.name}: </strong>
-                                                {ability.name === "Spellcasting" ? (
-                                                    <>
-                                                        {getSpells(getDesc(ability))}
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        {getDesc(ability)}
-                                                    </>
-                                                )}
-                                            </div>
-                                        ))
+                                        creature.special_abilities.map((ability, index) => {
+                                            // Skip rendering if name is "None" and desc is "--"
+                                            if (ability.name === "None" && ability.desc === "--") {
+                                                return null;
+                                            }
+                                    
+                                            return (
+                                                <div className='actionInfo' key={index + ability.name}>
+                                                    <strong>{ability.name}: </strong>
+                                                    {ability.name === "Spellcasting" ? (
+                                                        <>
+                                                            {getSpells(getDesc(ability))}
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            {getDesc(ability)}
+                                                        </>
+                                                    )}
+                                                </div>
+                                            );
+                                        })
                                     )}
                                 </>
                             }

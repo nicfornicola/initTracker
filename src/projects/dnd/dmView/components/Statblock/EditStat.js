@@ -17,6 +17,7 @@ const EditStat = ({label, value, cKey, category = undefined, handleChange = unde
             <i className='editBlockTitle'>{label}</i>
             <input className="editBlockInput" type={type} style={{width: w, height: h, textAlign: textAlign}}
                 value={value}
+                checked={value}
                 onChange={(e) => handleChange(e, cKey, category)} 
                 onBlur={(e) => handleChange(e, cKey, category, undefined, true)} 
                 onFocus={(e) => {e.target.select()}}
