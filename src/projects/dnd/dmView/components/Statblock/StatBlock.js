@@ -419,7 +419,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                             {creature.effects.length > 0 &&
                                 <div style={{backgroundColor: "black", width: 'fit-content', borderRadius: 5}}>
                                     {creature.effects.map((effect) => (
-                                        <img alt='effect' className='effect' src={effectImgMap[effect]}/>
+                                        <img alt='effect' className='effect growImage' src={effectImgMap[effect]}/>
                                     ))}
                                 </div>
                             }

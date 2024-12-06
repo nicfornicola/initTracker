@@ -79,7 +79,7 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         "skills": mapSkills(open5eData.skills),
         "armor_desc": "(" + open5eData.armor_desc + ")",
         "environments": open5eData?.environments.length > 0 ? open5eData.environments.join(", ") : '',
-        "lair_actions": [],
+        "lair_actions": open5eData?.lair_actions || [],
         "legendary_actions": open5eData.legendary_actions,
         "strength_save": open5eData.strength_save ?? 0,
         "dexterity_save": open5eData.dexterity_save ?? 0,

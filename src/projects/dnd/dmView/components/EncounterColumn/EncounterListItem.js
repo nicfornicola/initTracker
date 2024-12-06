@@ -206,7 +206,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
             socket.emit("creatureNameChange", newName, creature.creatureGuid, "dm")
             handleCreatureChange()
         }
-                
     }
 
     const handleTempHp = (event) => {
@@ -301,15 +300,24 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         e.target.select();
     };
 
-    const updateCreatureEffects = (event, effect) => {
+    const updateCreatureEffects = (event, effect, send = false) => {
         event.stopPropagation(); 
         const alreadyExists = effects.some(e => e === effect);
+        let updatedEffects = []
         if(alreadyExists) {
-            setEffects(effects.filter(e => e !== effect))
+            updatedEffects = effects.filter(e => e !== effect)
         } else {
-            setEffects([...effects, effect])
-
+            updatedEffects = [...effects, effect]
         }
+
+        setEffects(updatedEffects)
+        setCurrentEncounter(prev => ({
+            ...prev,
+            creatures: [...prev.creatures.map((oldCreature) => {
+                return oldCreature.creatureGuid === creature.creatureGuid ? {...creature, effects: updatedEffects} : oldCreature;
+            })]
+        }));
+
         socket.emit('creatureEffectChange', effect, alreadyExists ? "remove" : "add", creature.creatureGuid, "dm");
     };
 
