@@ -236,12 +236,10 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     
     const handleInitiativeCheck = (event) => {
         let init = parseInt(event.target.value)
-        console.log(init)
         if(isNaN(init)) {
             creature.initiative = 0
             setCreature({...creature})
         }
-        console.log(creature)
         socket.emit('creatureInitiativeChange', creature.initiative, creature.creatureGuid, "dm");
         resort(creature)
     }    
@@ -262,7 +260,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const handleTeamColorChange = (newBorderColor) => {
         if(newBorderColor.hex !== borderColor) {
             setBorderColor(newBorderColor.hex)
-            // I dont think this is in the database
             socket.emit('creatureBorderColorChange', newBorderColor.hex, creature.creatureGuid, "dm");
 
         }
@@ -291,7 +288,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const handleInitiativeBonusChange = (event, send = false) => {
         setCreature({...creature, dexterity_save: event.target.value});
         if(send) {
-            // socket.emit('creatureArmorClassChange', creature.armor_class, creature.creatureGuid, "dm");
             handleCreatureChange()
         }
     }
@@ -451,8 +447,8 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                                 key={creature.creatureGuid + effect} 
                                 currentEffects={effects} 
                                 updateCreatureEffects={updateCreatureEffects} 
-                                effect={effect} // Create an object to maintain effect structure
-                                image={image} // Use the corresponding image
+                                effect={effect} 
+                                image={image}
                             />
                         ))}
                         </div>

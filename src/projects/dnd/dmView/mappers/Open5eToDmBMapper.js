@@ -45,8 +45,6 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         image = isDefault ? open5eData.img_main : avatarUrl
     }
 
-    console.log("open5e", open5eData)
-
     return {
         ...open5eData,  
         "name": open5eData.name,

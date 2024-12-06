@@ -10,19 +10,16 @@ class ErrorBoundary extends React.Component {
     }
 
     static getDerivedStateFromError(error) {
-        // Update state so the next render shows the fallback UI.
         return { hasError: true, error };
     }
 
     componentDidCatch(error, errorInfo) {
-        // You can log the error to an error reporting service here
         console.error("Error caught by ErrorBoundary:", error, errorInfo);
         this.setState({ errorInfo });
     }
 
     render() {
         if (this.state.hasError) {
-            // Render fallback UI
             return (
                 <div className="background " style={{backgroundImage: `url(${defaultBackground})`}}>
                     <div className=" firstLoadMenuContainer">

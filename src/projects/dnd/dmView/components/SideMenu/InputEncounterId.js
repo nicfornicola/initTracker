@@ -7,8 +7,6 @@ import { ImportDndBeyondEncounter } from '../../api/ImportDndBeyondEncounter'
 import { ImportDndBeyondMonsters } from '../../api/ImportDndBeyondMonsters'
 
 function InputEncounterId({setCurrentEncounter, encounterGuid, socket, onClick=() => {}}) { 
-    //61523d85-da0d-47c8-a796-f9409be52c93
-    //ed9784fc-5aba-473a-9ae9-166fed396e8e - save the king final garden
     const [dndbEncounterId, setDndbEncounterId] = useState('ece19692-6830-4ad3-9e28-ed612f3de79b');
     const eGuid = encounterGuid || generateUniqueId();
 
@@ -20,10 +18,8 @@ function InputEncounterId({setCurrentEncounter, encounterGuid, socket, onClick=(
     const handleDndEncounterImport = async () => {
         try {
             // Get all monster stats (except image)
-            // aa3f3817-f44b-4116-b2e5-39e1eebc9f7d
             const data = await ImportDndBeyondEncounter(dndbEncounterId);
             if(data) {
-                // const {monsters, players, turnNum, roundNum, inProgress} = data.data;
                 const {monsters, players} = data.data;
                 // Turn the players objects into an array of numbers to match user input
                 const playerIds = players.map(player => player.id);

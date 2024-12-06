@@ -1,7 +1,7 @@
 import React from 'react';
 
 function addSign(modNumber) {
-    //catches 0 and null
+    //Catches 0 and null
     if (!modNumber)
         return '+0'
 

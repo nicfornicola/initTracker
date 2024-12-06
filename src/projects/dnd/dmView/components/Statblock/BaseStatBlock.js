@@ -11,7 +11,7 @@ function formatSpeed(speed) {
     const order = ['walk', 'climb', 'burrow', 'swim', 'fly', 'hover'];
     
     const entries = order
-        .filter(key => speed[key] && (key !== 'hover' || speed[key]))  // Include only truthy values
+        .filter(key => speed[key] && (key !== 'hover' || speed[key])) 
         .map(key => [key, speed[key]]);
     
     const result = entries
@@ -150,7 +150,7 @@ const CreatureInfo = ({creature}) => {
 }
 
 const BaseStatBlock = ({creature, closeStatBlock, loading}) => {
-    console.log("basestatblock", creature)
+
     return (
         <div className='statBlock'>
             <div className='infoContainer'>

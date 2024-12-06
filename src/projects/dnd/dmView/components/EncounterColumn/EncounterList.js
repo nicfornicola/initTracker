@@ -34,7 +34,6 @@ const EncounterList = ({currentEncounter, setCurrentEncounter, handleSaveEncount
     }, [])
 
     const resort = (c) => {
-        console.log(currentEncounterCreatures)
         const updatedCreatures = currentEncounterCreatures.map(creature =>
             creature.creatureGuid === c.creatureGuid ? c : creature
         );

@@ -12,13 +12,7 @@ export const ImportDndBeyondCharacters = async (playerIds, encounterGuid, encoun
         try {
             const url = `${baseUrl}/${playerId}`;
 
-            const response = await axios.get(url, {
-                // headers: {
-                //     'Content-Type': 'application/json',
-                //     'Access-Control-Allow-Origin': '*',
-                // },
-                // withCredentials: false,
-            });
+            const response = await axios.get(url, {});
             const resData = response.data.data;
             console.log(i.toString() + "/" + playerIds.length + " " + resData.name + " retrieved! (" + playerId +")");
             i++;
@@ -47,17 +41,10 @@ export const ImportDndBeyondCharacters = async (playerIds, encounterGuid, encoun
 
     const allSettledResponses = await Promise.allSettled(promises);
 
-    // Filter for the players with a 403 status for the alert
     const privatePlayers = allSettledResponses
         .filter(player => player.status === 'fulfilled' && player.value.status === 403)
-        .map(player => player.value); // Extract the value from the fulfilled promises
+        .map(player => player.value);
         
-    //Mock data
-    // let privatePlayers = [
-    //     {name:"aaldir", dnd_b_player_id:"1234132131"},
-    //     {name:"kraenic", dnd_b_player_id:"1236567"},
-    //     {name:"ezra", dnd_b_player_id:"67556776"}]
-
     if (privatePlayers.length > 0) {
         let resultString = '';
         

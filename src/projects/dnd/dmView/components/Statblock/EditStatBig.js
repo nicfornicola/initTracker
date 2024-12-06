@@ -10,10 +10,6 @@ function getDesc(object) {
 
 const EditStatBig = ({label, content = [], category, handleChange = undefined}) => {
 
-    //catergory, name, desc or description
-    // if(!content || content.length === 0)
-    //     content = [{name: 'None', desc: '--'}]
-
     const textareaRefs = useRef([]);
     
     useEffect(() => {

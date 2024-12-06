@@ -182,7 +182,6 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
     const handleValueChange = (value, cKey, send) => {
         if (send) {
             if(parseInt(value) !== parseInt(currentEncounter.creatures[selectedIndex][cKey])) {
-                console.log("SEND handleValueChange");
                 setCurrentEncounter((prev) => ({
                     ...prev,
                     creatures: prev.creatures.map((oldCreature, i) =>
@@ -199,7 +198,6 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
             }
 
         } else {
-            console.log("SET", cKey, value, send, "handleValueChange");
             // also change current hp if max hp is changing and the creature is at full hp 
             let hpCurrent = {};
 
@@ -218,7 +216,6 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
     const handleNestedChange = (value, cKey, category, send) => {
         if (send || cKey === 'hover') {
             if(value !== currentEncounter.creatures[selectedIndex]?.[category]?.[cKey]) {
-                console.log("SEND handleNestedChange");
                 socket.emit('statBlockEditNestedObject', currentEncounter.creatures[selectedIndex].creatureGuid, category, cKey, value);
                 setCurrentEncounter((prev) => {
                     const updatedCreatures = [...prev.creatures];
@@ -236,7 +233,6 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                 });
             }
         } else {
-            console.log("SET", cKey, category, value, send, "handleNestedChange");
             setCreature((prev) => ({
                 ...prev,
                 [category]: {
@@ -250,7 +246,6 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
     const handleArrayChange = (value, cKey, category, index, send = false) => {
         if (send) {
             if(value !== "None" && value !== "--" && value !== currentEncounter.creatures[selectedIndex]?.[category]?.[index]?.[cKey]) {
-                console.log("SEND handleArrayChange", value, category, index, cKey, currentEncounter.creatures[selectedIndex].creatureGuid);
                 socket.emit('statBlockEditArrayUpdate', value, category, index, cKey, currentEncounter.creatures[selectedIndex].creatureGuid);
 
                 setCurrentEncounter((prev) => {
@@ -275,7 +270,6 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
             }
                 
         } else {
-            console.log("SET", cKey, category, value, send, "handleArrayChange");
             setCreature(prev => {
                 // this catches the array object being empty i.e. [{}] instead of [{name: '', desc: ''}]
                 const updatedArray = prev[category] !== null ? [...prev[category]] : [{name: '', desc: ''}]; // Copy the whole actions array
@@ -292,7 +286,6 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
     };
 
     const handleCheckChange = (value, cKey) => {
-        console.log("handleCheckChange");
         setCurrentEncounter((prev) => {
             const updatedCreatures = [...prev.creatures];
             let newCount = updatedCreatures[selectedIndex][cKey];
@@ -318,12 +311,10 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
             let actionsArray = currentEncounter.creatures[selectedIndex][category] || []
             updatedArray = [...actionsArray, {name: 'None', desc: '--'}]
         } else if (cKey === 'remove') {
-            console.log(cKey, category, index, currentEncounter.creatures[selectedIndex].creatureGuid)
             updatedArray = [...currentEncounter.creatures[selectedIndex][category].filter((_, i) => i !== index)]
         }
 
         socket.emit("statBlockEditArrayAction", category, index, currentEncounter.creatures[selectedIndex].creatureGuid, cKey)
-
 
         setCurrentEncounter((prev) => {
             const updatedCreatures = [...prev.creatures];

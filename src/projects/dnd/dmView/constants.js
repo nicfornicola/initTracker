@@ -97,29 +97,24 @@ export const skills_long = ["Strength Score", "Dexterity Score", "Constitution S
 export const skill_codes = [3520, 3521, 3522, 3523, 3524, 3525];
 export const skills_short = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
 
-export const sortCreaturesByInitiative = (creatures) => {
-    return creatures.sort((a, b) => {
-        if (a.initiative === null && b.initiative !== null) {
-            return 1; // `a` (initiative === null) should come after `b` (initiative !== null)
-        } else if (a.initiative !== null && b.initiative === null) {
-            return -1; // `a` (initiative !== null) should come before `b` (initiative === null)
-        } else if (a.initiative !== null && b.initiative !== null) {
-            // Both initiatives are not null, compare them numerically
-            const initiativeComparison = b.initiative - a.initiative;
+export const sortCreatureArray = (array) => {
+    return array.sort((a, b) => {
+        const initiativeA = a.initiative;
+        const initiativeB = b.initiative;
+
+        if (initiativeA === null && initiativeB !== null) {
+            return 1;
+        } else if (initiativeA !== null && initiativeB === null) {
+            return -1;
+        } else if (initiativeA !== null && initiativeB !== null) {
+            const initiativeComparison = Math.abs(initiativeB) - Math.abs(initiativeA);
             if (initiativeComparison !== 0) {
                 return initiativeComparison;
             } else {
-                // Initiatives are the same, compare by creature.name alphabetically
-                const nameComparison = a.name.localeCompare(b.name);
-                if (nameComparison !== 0) {
-                    return nameComparison;
-                } else {
-                    // Name is also the same, compare by guid
-                    return a.creatureGuid.localeCompare(b.creatureGuid);
-                }
+                return a.name.localeCompare(b.name);
             }
         } else {
-            return 0; // Both initiatives are null, maintain the current order
+            return 0;
         }
     });
 };
@@ -186,32 +181,6 @@ export const generateUniqueId = () => {
     return num
 }
 
-export const sortCreatureArray = (array) => {
-    return array.sort((a, b) => {
-        // Extract initiative and name from both objects
-        const initiativeA = a.initiative;
-        const initiativeB = b.initiative;
-
-        // Handle cases where one initiative is null
-        if (initiativeA === null && initiativeB !== null) {
-            return 1;
-        } else if (initiativeA !== null && initiativeB === null) {
-            return -1;
-        } else if (initiativeA !== null && initiativeB !== null) {
-            // Both initiatives are not null, compare them numerically using absolute values
-            const initiativeComparison = Math.abs(initiativeB) - Math.abs(initiativeA);
-            if (initiativeComparison !== 0) {
-                return initiativeComparison;
-            } else {
-                // Initiatives are the same, compare by name alphabetically
-                return a.name.localeCompare(b.name);
-            }
-        } else {
-            return 0; // Both are null, maintain the current order
-        }
-    });
-};
-
 export const INIT_ENCOUNTER_NAME = 'Name Your Encounter';
 
 export const INIT_ENCOUNTER = {
@@ -247,24 +216,6 @@ export const imagesAvailable = [
     "Critical Role: Tal’Dorei Campaign Setting",
     "Tome of Beasts 2023"
 ]
-
-// export const conditionTypes = {
-//     1: 'Blinded',
-//     2: 'Charmed',
-//     3: 'Deafened',
-//     4: 'Exhausted',
-//     5: 'Frightened',
-//     6: 'Grappled',
-//     7: 'Incapacitated',
-//     8: 'Invisible',
-//     9: 'Paralyzed',
-//     10: 'Petrified',
-//     11: 'Poisened',
-//     12: 'Prone',
-//     13: 'Restrained',
-//     14: 'Stunned',
-//     15: 'Unconscious',
-// }
 
 export const sizeOptions = [
     '--',

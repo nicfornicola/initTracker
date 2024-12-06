@@ -7,7 +7,6 @@ export const ImportDndBeyondEncounter = async (gameId) => {
     try {
         const url = `${backendUrl}/dndb_encounter_import/${gameId}`;
         
-        //aa3f3817-f44b-4116-b2e5-39e1eebc9f7d
         return await axios.get(url, {
         headers: {
             'Content-Type': 'application/json',

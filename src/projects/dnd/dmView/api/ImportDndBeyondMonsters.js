@@ -22,7 +22,7 @@ export const ImportDndBeyondMonsters = async (encounterMonsters, encounterGuid) 
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',
                 },
-                withCredentials: false, // Include credentials if needed
+                withCredentials: false,
             });
             monstersRes = response.data.data;
             encounterMonsters.forEach(encounterMonster => {

@@ -104,7 +104,6 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
                 return {avatarUrl: "https://www.dndbeyond.com/avatars/0/10/636238825974097081.jpeg", largeAvatarUrl: "https://www.dndbeyond.com/avatars/thumbnails/30761/774/400/347/638061093283829548.png"}
             } else {
                 const urlName = name.replace(/ /g, '-');
-                // const url = `${proxyUrl}https://monster-service.dndbeyond.com/v1/Monster?search=${urlName}&take=1`
                 const url = `${backendUrl}/dndb_get_monster_image/${urlName}`;
 
                 const response = await axios.get(url).then(res => {
@@ -144,7 +143,7 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
     const handleSearchSelectCreature = async (creature, action, event, index) => {
         setSelectedPack({index: index, action: action})
         event.stopPropagation();
-        console.log(creature, action)
+
         axios.get(`${backendUrl}/open5e_monster_import/`, {
             params: { link: creature.link } // Include the link in query parameters
         }).then(response => {
@@ -214,7 +213,6 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
                             ) : (
                                 displayedItems.map((item, index) => (
                                     <li
-                                        // className='monsterSearchItem animated-label'
                                         className='listItem'
                                         key={item.id + item.filterDimensions.source}
                                         onClick={(e) => handleSearchSelectCreature(item, "select", e, index)}

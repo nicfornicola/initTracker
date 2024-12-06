@@ -70,7 +70,7 @@ const ImagePopup = ({setPlayerViewBackground, encounterGuid, socket}) => {
         
         socket.emit("encounterBackgroundChange", imageObj, encounterGuid)
 
-        if (isYoutubeLink) { // https://www.youtube.com/watch?v=H-bd0eyF-HA&ab_channel=AnimatedBattleMaps
+        if (isYoutubeLink) { // i.e. https://www.youtube.com/watch?v=H-bd0eyF-HA&ab_channel=AnimatedBattleMaps
             const videoId = imageObj.image.split("vi/")[1].split('/max')[0];
             if (videoId) {
                 let embedUrl = "https://www.youtube.com/embed/" + videoId

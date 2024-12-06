@@ -125,8 +125,7 @@ const DmView = () => {
             // Emit room ID to the server after connection is established
             socket.on('connect', () => {
                 console.log(`Connected to DmView`);
-                // Need to make logon UI - connect and get my saved encounters
-                socket.emit('connectDmView', username); // Send the encounter ID to the server
+                socket.emit('connectDmView', username); 
             });
 
             // Recieve messages from backend
@@ -170,7 +169,7 @@ const DmView = () => {
         try {
             console.log("Refreshing Players")
             console.log("----------------")
-            //Get player stats for HP for players from dnd beyond
+            // Get player stats for HP for players from dnd beyond
             // Keep isPlayer check so dms can import character without auto refresh
             const filteredPlayers = currentEncounter.creatures.filter(creature => creature.dnd_b_player_id && creature.type === 'player');
             const playerIds = filteredPlayers.map(player => player.dnd_b_player_id.toString()); // Map to get the ids as strings
@@ -193,8 +192,6 @@ const DmView = () => {
                         creatureGuid: creature.creatureGuid, // original guid
                         effects: creature.effects,
                         initiative: creature.initiative, // might remove this in the future for auto initiative in the dnd_b app
-                        // avatarUrl: creature.avatarUrl
-
                     }
 
                     for (const key of 
@@ -245,7 +242,7 @@ const DmView = () => {
             console.error("You should not be seeing that button if both are false...")
         }
 
-        // Set this for a minimum animation spin of 2 seconds
+        // Set this for a minimum animation spin of 1 seconds
         setTimeout(() => {
             setRefreshLoading(false)
             setRefreshCheck(true);
@@ -304,7 +301,6 @@ const DmView = () => {
     // eslint-disable-next-line
     }, [currentEncounter]);
 
-    //
     useEffect(() => {
         setCurrentEncounter({...currentEncounter, backgroundGuid: playerViewBackground.src})
     }, [playerViewBackground]);

@@ -1,4 +1,3 @@
-// App.js
 import React from 'react';
 
 import { Route, Routes } from 'react-router-dom';
@@ -6,20 +5,12 @@ import { Route, Routes } from 'react-router-dom';
 import PlayerPage from './projects/dnd/playerView/components/PlayerPage';
 import WhoAreYou from './projects/dnd/playerView/components/PlayerUI/WhoAreYou';
 import DmView from './projects/dnd/dmView/components/DmView';
-import ErrorBoundary from "./projects/dnd/dmView/components/ErrorBoundary"; // Assuming you have created this component
+import ErrorBoundary from "./projects/dnd/dmView/components/ErrorBoundary"; 
 
 import Blog from './projects/blog/components/Blog';
 import Pantheon from './projects/king/components/Pantheon';
 
 import HowTo from './projects/dnd/dmView/components/SideMenu/HowToDMB';
-
-// When someone comes to dmbuddy for the first load, set these variables, or remember what they have already
-// if(!window.location.href.includes("/playerView")) {
-//     localStorage.setItem('hideDeadEnemies', localStorage.getItem('hideDeadEnemies') === null ? false : JSON.parse(localStorage.getItem('hideDeadEnemies')));
-//     localStorage.setItem('enemyBloodToggle', localStorage.getItem('enemyBloodToggle') === null ? 1 : JSON.parse(localStorage.getItem('enemyBloodToggle')));
-//     localStorage.setItem('hideEnemies', true);
-//     localStorage.setItem('cardContainerStyle', JSON.stringify({width: '80%'}));
-// }
 
 function App() {
 

@@ -8,11 +8,11 @@ const ActionTracker = ({ actions_count, label, handleCheck }) => {
 
 
     const handleMouseEnter = (index) => {
-        setHoverIndex(index); // Set hover index on enter
+        setHoverIndex(index);
     };
 
     const handleMouseLeave = () => {
-        setHoverIndex(null); // Reset hover index
+        setHoverIndex(null);
     };
 
     const handleClick = (index) => {

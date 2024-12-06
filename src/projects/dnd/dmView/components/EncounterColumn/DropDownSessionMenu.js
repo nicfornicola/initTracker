@@ -97,9 +97,7 @@ const DropDownSessionMenu = ({savedEncounters, socket}) => {
         if(openSessionTab)
             handleOpenSession(sessionID)
 
-        //Set to null when stop was clicked
         event.stopPropagation(); 
-
     };
     
     const iconSizeChange = (sizeType) => {

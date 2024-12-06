@@ -16,7 +16,6 @@ function InputCharacterId({setCurrentEncounter, encounterGuid, socket, onClick=(
         setPlayerNumbers(numbersArray)
     }    
 
-    //124519382, 124686426, 124687100, 125381766, 125717017, 125809224]
     const handleDndCharacterImport = async () => {
         const playerData = await ImportDndBeyondCharacters(playerNumbers, eGuid);
         

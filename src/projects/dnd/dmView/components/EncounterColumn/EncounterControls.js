@@ -37,10 +37,6 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
     const [enemyBloodToggle, setEnemyBloodToggle] = useState(currentEncounter.enemyBloodToggle);
     const [hideDeadEnemies, setHideDeadEnemies] = useState(currentEncounter.hideDeadEnemies);
 
-    // useEffect(() => {
-    //     setRefreshSpin(refreshLoading)
-    // }, [refreshLoading]);    
-    
     useEffect(() => {
         setEncounterName(currentEncounter.encounterName)
         setHideEnemies(currentEncounter.hideEnemies)
