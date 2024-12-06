@@ -28,22 +28,13 @@ function capitalizeWords(str) {
 }
 
 const getLegendaryBoxes = (desc, actions) => {
-    console.log(desc, actions)
-
     // regex to find "3 legendary actions"
-    let match = desc.match(/(\d+)\s+legendary\s+actions/);
-    console.log(match)
-
     //Multiply by ten
     //i.e. 32 = 3 legendary actions, 2 are used
-    if(!match) {
-        console.log(actions)
-        match = actions[0].name.match(/(\d+)\s+legendary\s+actions/);
-    }
-
-
-    return match ? parseInt(match[1]) * 10 : 0
-}
+    const match = desc?.match(/(\d+)\s+legendary\s+actions/) 
+               || actions?.[0]?.name?.match(/(\d+)\s+legendary\s+actions/);
+    return match ? parseInt(match[1]) * 10 : 0;
+};
 
 export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
     let isDefault = avatarUrl.includes("Content/Skins/WaterDeep")
@@ -100,7 +91,7 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         "wisdom_save": open5eData.wisdom_save ?? 0,
         "size": open5eData.size ?? '--',
         "subtype": open5eData.subtype ?? '--',
-        "legendary_actions_count": getLegendaryBoxes(open5eData.legendary_desc, open5eData.legendary_actions) ?? 0
+        "legendary_actions_count": getLegendaryBoxes(open5eData?.legendary_desc, open5eData?.legendary_actions) ?? 0
     }
 };
 

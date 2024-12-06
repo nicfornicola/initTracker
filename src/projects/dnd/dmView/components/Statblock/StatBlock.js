@@ -152,7 +152,7 @@ const CreatureInfo = ({creature}) => {
     return <p><i>{string}</i></p>
 }
 
-const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurrentEncounter, closeStatBlock, socket}) => {
+const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeStatBlock, socket}) => {
     const [isEditMode, setIsEditMode] = useState(false)
     const [creature, setCreature] = useState(currentEncounter.creatures[selectedIndex])
     // If selectedIndex changes a new creature was clicked
@@ -164,7 +164,6 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
     const handleChange = (e, cKey, category = undefined, index = undefined, send = false) => {
         // From EditStatBig add and remove buttonns
         const { value, checked, type } = e.target;
-
         if(['add', 'remove'].includes(cKey)) {
             handleUserArrayActions(cKey, category, index)
         } else if(index !== undefined) {
@@ -178,11 +177,11 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
             handleValueChange(value, cKey, send)
         }
     }
+   
     
     const handleValueChange = (value, cKey, send) => {
         if (send) {
-            if(value !== currentEncounter.creatures[selectedIndex][cKey]) {
-                socket.emit('statBlockEdit', currentEncounter.creatures[selectedIndex].creatureGuid, cKey, value);
+            if(parseInt(value) !== parseInt(currentEncounter.creatures[selectedIndex][cKey])) {
                 console.log("SEND handleValueChange");
                 setCurrentEncounter((prev) => ({
                     ...prev,
@@ -190,12 +189,21 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
                         i === selectedIndex ? { ...creature } : oldCreature
                     ),
                 }));
+
+                if(cKey === 'hit_points' && parseInt(creature.hit_points) === parseInt(creature.hit_points_current)) {
+                    socket.emit('playerHpChange', {hit_points: value, hit_points_current: value}, creature.creatureGuid, "dm");
+                } else {
+                    socket.emit('statBlockEdit', currentEncounter.creatures[selectedIndex].creatureGuid, cKey, value);
+                }
+                
             }
+
         } else {
             console.log("SET", cKey, value, send, "handleValueChange");
             // also change current hp if max hp is changing and the creature is at full hp 
             let hpCurrent = {};
-            if(cKey === 'hit_points' && creature.hit_points === creature.hit_points_current) {
+
+            if(cKey === 'hit_points' && parseInt(creature.hit_points) === parseInt(creature.hit_points_current)) {
                 hpCurrent = {hit_points_current: value}
             }
 
@@ -242,8 +250,8 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
     const handleArrayChange = (value, cKey, category, index, send = false) => {
         if (send) {
             if(value !== "None" && value !== "--" && value !== currentEncounter.creatures[selectedIndex]?.[category]?.[index]?.[cKey]) {
-                console.log("SEND handleArrayChange");
-                // socket.emit('statBlockEdit', currentEncounter.creatures[selectedIndex].creatureGuid, cKey, value);
+                console.log("SEND handleArrayChange", value, category, index, cKey, currentEncounter.creatures[selectedIndex].creatureGuid);
+                socket.emit('statBlockEditArrayUpdate', value, category, index, cKey, currentEncounter.creatures[selectedIndex].creatureGuid);
 
                 setCurrentEncounter((prev) => {
                     const updatedCreatures = [...prev.creatures];
@@ -305,11 +313,17 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
 
     const handleUserArrayActions = (cKey, category, index) => {
         let updatedArray = []
+
         if(cKey === 'add') {
-            updatedArray = [...currentEncounter.creatures[selectedIndex][category], {name: 'None', desc: '--'}]
+            let actionsArray = currentEncounter.creatures[selectedIndex][category] || []
+            updatedArray = [...actionsArray, {name: 'None', desc: '--'}]
         } else if (cKey === 'remove') {
+            console.log(cKey, category, index, currentEncounter.creatures[selectedIndex].creatureGuid)
             updatedArray = [...currentEncounter.creatures[selectedIndex][category].filter((_, i) => i !== index)]
         }
+
+        socket.emit("statBlockEditArrayAction", category, index, currentEncounter.creatures[selectedIndex].creatureGuid, cKey)
+
 
         setCurrentEncounter((prev) => {
             const updatedCreatures = [...prev.creatures];
@@ -331,7 +345,7 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
         setIsEditMode(!isEditMode)
     }
 
-    if(creature?.dnd_b_player_id) {
+    if(creature?.dnd_b_player_id || !creature?.creatureGuid) {
         return null;
     } else return (
         <div className='statBlock'>
@@ -349,7 +363,7 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
                         <div className='topInfo shadowBox' style={{padding: '10px'}}>
                             {/* Edit creature image could be here too */}
                             <GridWrap>
-                                <EditStat label={`Name ${!isProd ? creature.creatureGuid : ''}`} value={creature.name || ''} cKey={'name'} handleChange={handleChange} />
+                                <EditStat label={`Name ${!isProd ? creature.creatureGuid : ''}`} value={creature?.name || ''} cKey={'name'} handleChange={handleChange} />
                                 <EditStatDropdown label={"Size"} options={sizeOptions} value={creature.size} cKey={'size'} handleChange={handleChange}/>
                                 <EditStatDropdown label={"Type"} options={typeOptions} value={creature.creature_type} cKey={'creature_type'} handleChange={handleChange}/>
                                 <EditStatDropdown label={"Race"} options={raceOptions} value={creature.subtype} cKey={'subtype'} handleChange={handleChange}/> 
@@ -410,7 +424,7 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
                 ) : (
                     <>
                         <div className='topInfo shadowBox'>
-                            <h1 className='creatureName titleFontFamily'>{creature.name}</h1>
+                            <h1 className='creatureName titleFontFamily'>{creature?.name}</h1>
                             {creature.effects.length > 0 &&
                                 <div style={{backgroundColor: "black", width: 'fit-content', borderRadius: 5}}>
                                     {creature.effects.map((effect) => (
@@ -432,7 +446,7 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
                                     } 
                                 </p>
                                 <p className="stickyStatItem"><strong>Initiative</strong>&nbsp;{addSign(creature.dexterity_save)} 
-                                    <span className='extraInfo'>&nbsp;({parseInt(creature.dexterity_save)+10})</span>
+                                    <span className='extraInfo'>&nbsp;({parseInt(creature.dexterity_save)+10 || 10})</span>
                                 </p>
                                 <p className="stickyStatItem stickyStatExtraWide">
                                     <strong>HP</strong>&nbsp;{creature.hit_points_current}/{creature.hit_points} 

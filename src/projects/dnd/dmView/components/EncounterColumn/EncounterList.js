@@ -33,8 +33,12 @@ const EncounterList = ({currentEncounter, setCurrentEncounter, handleSaveEncount
         };
     }, [])
 
-    const resort = () => {
-        setCurrentEncounter(prev => ({...prev, creatures: [...sortCreatureArray(currentEncounterCreatures)]}));
+    const resort = (c) => {
+        console.log(currentEncounterCreatures)
+        const updatedCreatures = currentEncounterCreatures.map(creature =>
+            creature.creatureGuid === c.creatureGuid ? c : creature
+        );
+        setCurrentEncounter(prev => ({...prev, creatures: [...sortCreatureArray(updatedCreatures)]}));
     }
 
     const setPlayerViewOnCreatureChange = () => {

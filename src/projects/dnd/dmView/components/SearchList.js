@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 // import data from '../monsterJsons/5eCoreRules.json'; // Adjust the import path as necessary
 import {monsterList, imagesAvailable, generateUniqueId, INIT_ENCOUNTER_NAME, backendUrl, isDev} from '../constants'
 import axios from 'axios';
-import StatBlock from './Statblock/StatBlock';
 import Open5eToDmBMapper from '../mappers/Open5eToDmBMapper'
 import { InfinitySpin } from 'react-loader-spinner'
+import BaseStatBlock from './Statblock/BaseStatBlock';
+import { ThreeDots } from 'react-loader-spinner'
 
 // Function to get the image URL based on the type
 const getImageUrl = (creature) => {
@@ -51,6 +52,8 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
     const [displayedItems, setDisplayedItems] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);
+    const [selectedPack, setSelectedPack] = useState({index: null, action: null});
+    
 
     useEffect(() => {
         async function fetchData() {
@@ -138,24 +141,28 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
     };
 
     // Set the selected creature in search bar on left and gets the data from open5e
-    const handleSearchSelectCreature = async (creature, action, event) => {
+    const handleSearchSelectCreature = async (creature, action, event, index) => {
+        setSelectedPack({index: index, action: action})
         event.stopPropagation();
-
+        console.log(creature, action)
         axios.get(`${backendUrl}/open5e_monster_import/`, {
             params: { link: creature.link } // Include the link in query parameters
         }).then(response => {
             return Open5eToDmBMapper(response.data, creature.avatarUrl); 
         }).then(mappedCreature => {
-            handleLoadCreatureToEncounter(mappedCreature, action);
+            handleSelectCreature(mappedCreature, action);
+        }).then(() => {
+            setSelectedPack({index: null, action: null})
+
         }).catch(error => {
             console.warn(`Error loading creature: ${creature.id}`, error);
         });
     };
 
-    const handleLoadCreatureToEncounter = (creature, action) => {
-        let newCreature = {...creature, creatureGuid: generateUniqueId(), encounterGuid: encounterGuid}
-
+    const handleSelectCreature = (creature, action) => {
         if(action === "add") {
+            let newCreature = {...creature, creatureGuid: generateUniqueId(), encounterGuid: encounterGuid}
+
             setCurrentEncounter(prev => {
                 if(prev.creatures.length === 0 && prev.encounterName === INIT_ENCOUNTER_NAME) {
                     socket.emit("newEncounter", encounterGuid)
@@ -172,7 +179,7 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
             });           
         }
         else if(action === "select")
-            setSearchSelectedCreature(newCreature);
+            setSearchSelectedCreature(creature);
     };
 
     return (
@@ -210,7 +217,7 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
                                         // className='monsterSearchItem animated-label'
                                         className='listItem'
                                         key={item.id + item.filterDimensions.source}
-                                        onClick={(e) => handleSearchSelectCreature(item, "select", e)}
+                                        onClick={(e) => handleSearchSelectCreature(item, "select", e, index)}
                                     >
                                         <div className='searchListCreatureContainer animated-box'>
                                             <img className="monsterSearchIcon" src={item.avatarUrl} alt={"list Icon"} />
@@ -223,11 +230,21 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
                                                 
                                             </div>
                                             
-                                            <button className='monsterSearchAdd' onClick={(e) => handleSearchSelectCreature(item, "add", e)}>
-                                                ➕
+                                            <button className='monsterSearchAdd' onClick={(e) => handleSearchSelectCreature(item, "add", e, index)}>
+                                                {index === selectedPack.index ?
+                                                    <ThreeDots
+                                                        visible={true}
+                                                        height="20"
+                                                        width="35"
+                                                        color="black"
+                                                        radius="1"
+                                                        ariaLabel="three-dots-loading"
+                                                    />
+                                                :
+                                                    (<>➕</>)
+                                                }
                                             </button>
                                         </div>
-                                        
                                     </li>
                                 ))
                             )}
@@ -236,8 +253,8 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
                 </div>
             </div>
             <div className='column animated-label'>
-            {searchSelectedCreature ? (
-                <StatBlock creature={searchSelectedCreature} img={searchSelectedCreature.avatarUrl} closeStatBlock={() => setSearchSelectedCreature(false)}/>
+            {(searchSelectedCreature || (selectedPack.index && selectedPack.action === 'select')) ? (
+                <BaseStatBlock creature={searchSelectedCreature} closeStatBlock={() => setSearchSelectedCreature(null)} loading={selectedPack.index}/>
             ) : (
                 <>{'No Search Creature Selected'}</>
             )}

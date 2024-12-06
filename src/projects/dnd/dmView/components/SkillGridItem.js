@@ -20,7 +20,7 @@ function getModString(modNumber) {
 const SkillGridInput = ({value, cKey, disabled = false, handleChange, style}) => {
     return (
         <input className='statBlockSkillsInput' 
-            disabled={disabled}
+            disabled={disabled || handleChange === undefined}
             style={style} 
             value={value} 
             onFocus={(e) => e.target.select()} 

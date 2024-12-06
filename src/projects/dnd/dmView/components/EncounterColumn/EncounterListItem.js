@@ -21,15 +21,15 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const [hpChange, setHpChange] = useState(0);
     const [openHpWidget, setOpenHpWidget] = useState(false);
     const [isHpWidgetInside, setIsHpWidgetInside] = useState(true);
-    const [hpWidgetPosition, setHpWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0})
+    const [hpWidgetPosition, setHpWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0, width: 100})
 
     const [openTeamWidget, setOpenTeamWidget] = useState(false);
     const [isTeamWidgetInside, setIsTeamWidgetInside] = useState(true)
-    const [teamWidgetPosition, setTeamWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0})
+    const [teamWidgetPosition, setTeamWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0, width: 100})
 
     const [openEffectWidget, setOpenEffectWidget] = useState(false);
     const [isEffectWidgetInside, setIsEffectWidgetInside] = useState(true)
-    const [effectWidgetPosition, setEffectWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0})
+    const [effectWidgetPosition, setEffectWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0, width: 100})
 
     const [isPlayer, setIsPlayer] = useState(creature.type === "player");
     const [alignment, setAlignment] = useState(creature.alignment);
@@ -113,12 +113,11 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     // This useeffect is for checking changes from the statblock edit
     useEffect(() => {
         if(creatureListItem.hit_points !== creature.hit_points) {
-            console.log("useEffects hit_points")
             setMaxHp(creatureListItem.hit_points)
             setCurrentHp(creatureListItem.hit_points_current)
         }
     // eslint-disable-next-line
-    }, [creatureListItem.hit_points]);
+    }, [creatureListItem.hit_points, creatureListItem.hit_points_current]);
 
     useEffect(() => {
         // Specifically check for these changes because they change how the playerview behaves
@@ -158,14 +157,14 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
 
             hpNum *= -1                
         }
-        creature.hit_points_current = creature.hit_points_current + hpNum
+        
+        creature.hit_points_current = parseInt(creature.hit_points_current) + hpNum
 
         if(creature.hit_points_current > creature.hit_points)
             creature.hit_points_current = creature.hit_points
 
         //hit_points | hit_points_current | hit_points_temp | hit_points_override
         socket.emit('playerHpChange', {hit_points_current: creature.hit_points_current, hit_points_temp: creature.hit_points_temp}, creature.creatureGuid, "dm");
-
 
         setOpenHpWidget(!openHpWidget)
         setCurrentHp(creature.hit_points_current)
@@ -237,19 +236,20 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     
     const handleInitiativeCheck = (event) => {
         let init = parseInt(event.target.value)
+        console.log(init)
         if(isNaN(init)) {
             creature.initiative = 0
             setCreature({...creature})
         }
+        console.log(creature)
         socket.emit('creatureInitiativeChange', creature.initiative, creature.creatureGuid, "dm");
-        resort()
+        resort(creature)
     }    
     
     const handleHideEnemy = (event) => {
         event.stopPropagation()
         socket.emit('creatureHiddenToggle', !hidden, creature.creatureGuid, "dm");
         setHidden(!hidden)
-
     }  
     
     const handleAlignmentChange = (team) => {
@@ -366,7 +366,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                                 <label htmlFor='ac' className='middleStatsLabel'>AC</label>
                                 <input id='ac' className='middleStatsInput' onFocus={handleHighlight} type='numeric' value={creature.armor_class} onChange={handleArmorClassChange} onBlur={(e) => handleArmorClassChange(e, true)} onClick={(event) => event.stopPropagation()}/>
                                 <label htmlFor='init' className='middleStatsLabel'>Init+</label>
-                                <input id='init'className='middleStatsInput' onFocus={handleHighlight} type='numeric' value={creature.dexterity_save} onChange={handleInitiativeBonusChange} onBlur={(e) => handleInitiativeBonusChange(e, true)} onClick={(event) => event.stopPropagation()}/>
+                                <input id='init'className='middleStatsInput' onFocus={handleHighlight} type='numeric' value={creature.dexterity_save || 0} onChange={handleInitiativeBonusChange} onBlur={(e) => handleInitiativeBonusChange(e, true)} onClick={(event) => event.stopPropagation()}/>
                             </div>
                             
                         </div>
@@ -443,7 +443,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                     </div>
                 )}
                 {openEffectWidget && isEffectWidgetInside && ( 
-                    <div className='effectsBarContainer editHpGrow' ref={effectWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: effectWidgetPosition.top - 185, left: effectWidgetPosition.left - effectWidgetPosition.width*17.8}}>
+                    <div className='effectsBarContainer editHpGrow' ref={effectWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: effectWidgetPosition.top - 185, left: (effectWidgetPosition.left - effectWidgetPosition.width*17.8) || 0}}>
                         <div className="effectContainerFlag"/>
                         <div className="effectsBar" onClick={(event) => event.stopPropagation()} >
                         {Object.entries(effectImgMap).map(([effect, image]) => (
@@ -474,7 +474,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                             </div>
                             <div className='editHpContainer'>
                                 <button className='editHpButton healButton' onClick={(event) => handleChangeHpCreature("heal", event)}>HEAL</button>
-                                <input className='editStatsInput' type='number' value={hpChange} onFocus={handleHighlight} onChange={(event) => setHpChange(parseInt(event.target.value))} autoFocus/>
+                                <input className='editStatsInput' type='number' value={hpChange} onChange={(event) => setHpChange(parseInt(event.target.value))} autoFocus onFocus={handleHighlight}/>
                                 <button className='editHpButton damageButton' onClick={(event) => handleChangeHpCreature("damage", event)}>DAMAGE</button>
                             </div>
                            

@@ -244,7 +244,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
             </div>
             <div className={`column animated-label ${showSearchList ? '' : 'expand'}`}>
                 {selectedIndex !== null ? (
-                    <StatBlock selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} closeStatBlock={() => setSelectedIndex(null)} socket={socket}/>
+                    <StatBlock selectedIndex={selectedIndex} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} closeStatBlock={() => setSelectedIndex(null)} socket={socket}/>
                 ) : (
                     <>No Encounter Creature Selected</>
                 )}

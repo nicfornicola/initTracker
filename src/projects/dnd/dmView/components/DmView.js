@@ -4,7 +4,7 @@ import SearchList from './SearchList.js';
 import Home from './Home.js';
 import EncounterColumn from './EncounterColumn/EncounterColumn';
 import SideMenu from './SideMenu/SideMenu.js';
-import { backendUrl, generateUniqueId, INIT_ENCOUNTER, isDev, SHORT_REFRESH} from '../constants';
+import { backendUrl, generateUniqueId, INIT_ENCOUNTER, isDev, SHORT_REFRESH, sortCreatureArray} from '../constants';
 import YouTubeEmbed from './EncounterColumn/YouTubeEmbed.js';
 import io from 'socket.io-client';
 import { refreshMonsterProfiles } from '../refresh/refresh';
@@ -215,7 +215,7 @@ const DmView = () => {
             if(updatedDifCreatures.length > 0) { console.log("updateFound", updatedDifCreatures); socket.emit("updateDndBPlayers", updatedDifCreatures) }
             else { console.log("No updates to send...") }
 
-            setCurrentEncounter(prev => ({...prev, creatures: [...updatedCreatures]}));
+            setCurrentEncounter(prev => ({...prev, creatures: sortCreatureArray([...updatedCreatures])}));
             console.log("Players Refreshed!")
             console.log("----------------")
 
@@ -340,7 +340,7 @@ const DmView = () => {
     const handleLoadEncounter = (encounter) => {
         console.log("%cLoaded: " + encounter.encounterName + ' ' + encounter.encounterGuid, "background: #fdfd96;")
 
-        setCurrentEncounter({...encounter})
+        setCurrentEncounter({...encounter, creatures: sortCreatureArray(encounter.creatures)})
         setEncounterGuid(encounter.encounterGuid)
 
         if(encounter.backgroundGuid === 'default') {

@@ -19,7 +19,7 @@ const ContentArray = ({label, contentArray, labelDesc = null, actions_count = un
         <>
             <div className={`actionToken-container`}>
                 <h1 className='infoTitle'>{label} </h1>
-                {actions_count && 
+                {actions_count && handleCheck &&
                     <ActionTracker 
                         actions_count={actions_count}
                         label={label}

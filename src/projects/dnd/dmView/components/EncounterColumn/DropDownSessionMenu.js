@@ -150,7 +150,7 @@ const DropDownSessionMenu = ({savedEncounters, socket}) => {
                                                     setIsOpen(false)
                                                 }}
                                             >
-                                                Open Player View 📺
+                                                <strong>Open Player View</strong> 📺
                                             </li>
                                         }
                                         <li className="dropdown-item" 
@@ -158,6 +158,7 @@ const DropDownSessionMenu = ({savedEncounters, socket}) => {
                                                 handleDropDownOptionClicked(event, null)
                                                 setIsOpen(false)
                                             }}
+                                            style={{textDecoration: 'underline', textDecorationThickness: '2px', textDecorationColor: 'red'}}
                                         >
                                             Stop Streaming
                                         </li>

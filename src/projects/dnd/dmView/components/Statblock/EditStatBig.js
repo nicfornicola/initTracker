@@ -11,8 +11,8 @@ function getDesc(object) {
 const EditStatBig = ({label, content = [], category, handleChange = undefined}) => {
 
     //catergory, name, desc or description
-    if(!content || content.length === 0)
-        content = [{name: 'None', desc: '--'}]
+    // if(!content || content.length === 0)
+    //     content = [{name: 'None', desc: '--'}]
 
     const textareaRefs = useRef([]);
     
@@ -34,7 +34,7 @@ const EditStatBig = ({label, content = [], category, handleChange = undefined}) 
     return (
         <div className='editBlock'>
             <i className='editBlockTitle'>{label}</i>
-            {content.map((action, index) => (
+            {content?.map((action, index) => (
                 <div key={label + index} className='actionListItem'>
                     <div style={{display: 'flex'}}>
                         <input className="editBlockInput" type='text'
@@ -44,10 +44,8 @@ const EditStatBig = ({label, content = [], category, handleChange = undefined}) 
                             size={action.name.length}
                             onFocus={handleFocus}
                         />
-                        {content[0].name !== 'None' && content[0].desc !== '--' &&
-                            <OptionButton src={magMinus} message={`Remove: ${action.name}`} onClickFunction={(e) => handleChange(e, 'remove', category, index, true)} wrapperClassName='actionTrash'/>
-                        }
-                        </div>
+                        <OptionButton src={magMinus} message={`Remove: ${action.name}`} onClickFunction={(e) => handleChange(e, 'remove', category, index, true)} wrapperClassName='actionTrash'/>
+                    </div>
                     <textarea
                         ref={(element) => (textareaRefs.current[index] = element)} 
                         className="editBlockBigInput"
@@ -60,11 +58,9 @@ const EditStatBig = ({label, content = [], category, handleChange = undefined}) 
                              
                 </div>
             ))}
-            {content[0].name !== 'None' && content[0].desc !== '--' &&
-                <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
-                    <OptionButton src={magPlus} message={`Add ${label.slice(0, -1)}`} onClickFunction={(e) => handleChange(e, 'add', category)}/>
-                </div>
-            }
+            <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
+                <OptionButton src={magPlus} message={`Add ${label.slice(0, -1)}`} onClickFunction={(e) => handleChange(e, 'add', category)}/>
+            </div>
             
         </div>
     )

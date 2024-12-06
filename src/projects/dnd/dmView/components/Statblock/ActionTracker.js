@@ -4,10 +4,8 @@ const ActionTracker = ({ actions_count, label, handleCheck }) => {
     const [hoverIndex, setHoverIndex] = useState(null); // Track hover index
     const filledCircles = actions_count % 10;
     const totalCircles = Math.floor(actions_count / 10);
-    console.log(filledCircles, "/", totalCircles)
     let isHoveringFilled = filledCircles > hoverIndex
 
-    console.log()
 
     const handleMouseEnter = (index) => {
         setHoverIndex(index); // Set hover index on enter

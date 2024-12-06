@@ -12,17 +12,19 @@ offline mod
         upload all chars from a campaign - I can get campaign players info from the character api at the bottom
         when importing characters, save their IDS in a tab for easy import later
 
+    edit mode
+    --
+        edit number of legendary actions
+        edit legendary desc 
+
     search list
     --
         add better search, by race, by cr
 
     statblock
     --
-        add "number of attacks", "number of legendary actions", "number of legendary reactions"  in edit mode to allow for check boxes and lair actions
-        make stat blocks spots show more then one, see redesign 
-        customize more stuff in stat block
-        Slot-tracking with check marks of things like legendary actions, and anything else with limited use
         But even better would be being able to auto-reset things with turn limits and such, like legendary actions.
+        make stat blocks spots show more then one, see redesign 
         add (i) next to AC or name that is homebrewed to show default or something
         on hover of a spell it shows a tooltip of what the spell is from the spell_list that is found in open5e creature
         add hover (i) on statblock to see the creature desc
@@ -33,7 +35,6 @@ offline mod
 
     encounter list changes 
     --
-        when add creature - add the row with spinny wheel while loading
         when doing next turn on last member, auto scroll to top if off the screen
 
     player controller
@@ -48,7 +49,6 @@ offline mod
 playerview
 ------
     more options to move their positions
-
     death saves for offline mode, put it in the hp box
     different tiers of blood to match what is going on in game, light, med, heavy blood
     do a little loading wheel to show next refresh on dnd_b mode
@@ -61,6 +61,9 @@ i think refresh timer is weird
 
 DONE - offline mode
 ------
+when add creature - add the row with spinny wheel while loading
+"number of legendary actions" tracker
+
 add button to resize images and add 
 add x button to remove uploadedLinks and images
 make currentplayerviewimage reference the data to save on space
@@ -105,6 +108,7 @@ add environment token under encounter list
 
 FIXED
 ----
+initative entrys sometimes reset/arent auto sorting
 on enemy show do not auto refresh unless you have dnd_beyond enemies
 when bad guys are in list, play is available even if not saved or no name
 on autorefresh dmb when no dnd_b avatar gets bugged because I dont set a default

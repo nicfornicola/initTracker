@@ -805,6 +805,7 @@ hr {
     right: 0px;
     opacity: 0;
     height: 100%;
+    margin-left: 20px;
 }
 
 .monsterSearchDetailText {
@@ -968,6 +969,14 @@ input {
 
 .spinningImage {
     animation: spin 1.5s linear infinite; /* Spin for 3 seconds, infinite loops */
+}
+
+.statBlockSpinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+
 }
 
 .encounterControlsContainer {
