@@ -12,14 +12,20 @@ const EditStat = ({label, value, cKey, category = undefined, handleChange = unde
         h = '15px'
     }
 
+    const validate = (e, cKey, category, send = false) => {
+        if((type === 'number' && !isNaN(e.target.value)) || type === 'text') {
+            handleChange(e, cKey, category, undefined, send)
+        }
+    }
+
     return (
         <div className='editBlock' style={{alignItems}}>
             <i className='editBlockTitle'>{label}</i>
-            <input className="editBlockInput" type={type} style={{width: w, height: h, textAlign: textAlign}}
+            <input className="editBlockInput" style={{width: w, height: h, textAlign: textAlign}}
                 value={value}
                 checked={value}
-                onChange={(e) => handleChange(e, cKey, category)} 
-                onBlur={(e) => handleChange(e, cKey, category, undefined, true)} 
+                onChange={(e) => validate(e, cKey, category)} 
+                onBlur={(e) => validate(e, cKey, category, true)} 
                 onFocus={(e) => {e.target.select()}}
             />
         </div>

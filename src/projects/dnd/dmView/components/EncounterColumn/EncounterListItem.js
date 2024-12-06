@@ -7,7 +7,7 @@ import isPlayerImg from '../../pics/icons/isPlayerImg.png';
 import FlagPole from './FlagPole';
 import EffectImg from '../../pics/icons/effectImg.png';
 import Compact from '@uiw/react-color-compact';
-import { effectImgMap } from '../../constants.js';
+import { effectImgMap, addSign} from '../../constants.js';
 import Effect from './Effect.js';
 
 const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCurrentEncounter, scrollPosition, handleUploadMonsterImage, setSelectedIndex, clickEncounterCreatureX, resort, socket}) => {
@@ -172,18 +172,20 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }
 
     const handleOverrideHp = (event) => {
-        let override = parseInt(event.target.value) || 0
+        if(!isNaN(event.target.value)) {
+            let override = parseInt(event.target.value) || 0
         
-        // Set override in creature
-        creature.hit_points_override = override
-        // Find old diff between current and max
-        let dif = creature.hit_points - creature.hit_points_current
-        creature.hit_points = override === 0 ? creature.hit_points_default : override
-        creature.hit_points_current = creature.hit_points - dif
-        
-        setMaxHp(creature.hit_points)
-        setCurrentHp(creature.hit_points_current)
-        setCreature({...creature})
+            // Set override in creature
+            creature.hit_points_override = override
+            // Find old diff between current and max
+            let dif = creature.hit_points - creature.hit_points_current
+            creature.hit_points = override === 0 ? creature.hit_points_default : override
+            creature.hit_points_current = creature.hit_points - dif
+            
+            setMaxHp(creature.hit_points)
+            setCurrentHp(creature.hit_points_current)
+            setCreature({...creature})
+        }
     }
 
     const submitOverRideHpChange = () => {
@@ -209,9 +211,11 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }
 
     const handleTempHp = (event) => {
-        let tempHp = parseInt(event.target.value)
-        creature.hit_points_temp = isNaN(tempHp) ? 0 : tempHp
-        setCreature({...creature})
+        if(!isNaN(event.target.value)) {
+            let tempHp = parseInt(event.target.value)
+            creature.hit_points_temp = isNaN(tempHp) ? 0 : tempHp
+            setCreature({...creature})
+        }
     }
 
     const submitTempHpChange = () => {
@@ -220,11 +224,14 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         handleCreatureChange()
     }
 
+    const handleHpChange = (event) => {
+        if(!isNaN(event.target.value)) { 
+            setHpChange(parseInt(event.target.value)) 
+        }
+    }
+
     const handleInitiativeChange = (event) => {
-        if(event.target.value === "-") {
-            creature.initiative = "-"
-            setCreature({...creature})
-        } else {
+        if(!isNaN(event.target.value)) {
             let init = parseInt(event.target.value)
             if(creature.initiative !== init) {
                 creature.initiative = isNaN(init) ? "" : init       
@@ -233,12 +240,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         }
     }
     
-    const handleInitiativeCheck = (event) => {
-        let init = parseInt(event.target.value)
-        if(isNaN(init)) {
-            creature.initiative = 0
-            setCreature({...creature})
-        }
+    const handleInitiativeCheck = () => {
         socket.emit('creatureInitiativeChange', creature.initiative, creature.creatureGuid, "dm");
         resort(creature)
     }    
@@ -276,19 +278,23 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }
 
     const handleArmorClassChange = (event, send = false) => {
-        setCreature({...creature, armor_class: event.target.value});
-
-        if(send) {
-            socket.emit('creatureArmorClassChange', creature.armor_class, creature.creatureGuid, "dm");
-            handleCreatureChange()
+        if(!isNaN(event.target.value)) {
+            setCreature({...creature, armor_class: event.target.value});
+            if(send) {
+                socket.emit('creatureArmorClassChange', creature.armor_class, creature.creatureGuid, "dm");
+                handleCreatureChange()
+            }
         }
     }    
     
     const handleInitiativeBonusChange = (event, send = false) => {
-        setCreature({...creature, dexterity_save: event.target.value});
-        if(send) {
-            handleCreatureChange()
+        if(!isNaN(event.target.value)) {
+            setCreature({...creature, dexterity_save: event.target.value});
+            if(send) {
+                handleCreatureChange()
+            }
         }
+        
     }
 
     const handleOpenEffectWidget = (event) => {
@@ -369,8 +375,8 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                             <div className='middleStatsContainer'>
                                 <label htmlFor='ac' className='middleStatsLabel'>AC</label>
                                 <input id='ac' className='middleStatsInput' onFocus={handleHighlight} type='numeric' value={creature.armor_class} onChange={handleArmorClassChange} onBlur={(e) => handleArmorClassChange(e, true)} onClick={(event) => event.stopPropagation()}/>
-                                <label htmlFor='init' className='middleStatsLabel'>Init+</label>
-                                <input id='init'className='middleStatsInput' onFocus={handleHighlight} type='numeric' value={creature.dexterity_save || 0} onChange={handleInitiativeBonusChange} onBlur={(e) => handleInitiativeBonusChange(e, true)} onClick={(event) => event.stopPropagation()}/>
+                                <label htmlFor='init' className='middleStatsLabel'>Init</label>
+                                <input id='init'className='middleStatsInput' onFocus={handleHighlight} type='numeric' value={addSign(creature.dexterity_save)} onChange={handleInitiativeBonusChange} onBlur={(e) => handleInitiativeBonusChange(e, true)} onClick={(event) => event.stopPropagation()}/>
                             </div>
                             
                         </div>
@@ -478,7 +484,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                             </div>
                             <div className='editHpContainer'>
                                 <button className='editHpButton healButton' onClick={(event) => handleChangeHpCreature("heal", event)}>HEAL</button>
-                                <input className='editStatsInput' type='number' value={hpChange} onChange={(event) => setHpChange(parseInt(event.target.value))} autoFocus onFocus={handleHighlight}/>
+                                <input className='editStatsInput' value={hpChange} onChange={handleHpChange} autoFocus onFocus={handleHighlight}/>
                                 <button className='editHpButton damageButton' onClick={(event) => handleChangeHpCreature("damage", event)}>DAMAGE</button>
                             </div>
                            

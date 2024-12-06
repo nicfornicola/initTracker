@@ -1,6 +1,6 @@
 import '../../../dmView/style/App.css';
 import React, {useState, useEffect} from 'react';
-import { getLevelData, effectImgMap, sizeOptions, typeOptions, alignmentOptions, raceOptions, isProd } from '../../constants';
+import { getLevelData, effectImgMap, sizeOptions, typeOptions, alignmentOptions, raceOptions, isProd, addSign } from '../../constants';
 import SkillGrid from '../SkillGrid';
 import EditStatDropdown from './EditStatDropdown';
 import EditStat from './EditStat';
@@ -115,17 +115,6 @@ function capsFirstLetter(word) {
     return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-function addSign(modNumber) {
-    if (modNumber == null)
-        return '+0'
-
-    if (modNumber >= 0) {
-        return `+${modNumber}`;
-    }
-
-    return `${modNumber}`; // Negative number already has a minus sign
-}
-
 const CreatureInfo = ({creature}) => {
     let string = ``
 
@@ -180,6 +169,20 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
    
     
     const handleValueChange = (value, cKey, send) => {
+
+        // also change current hp if max hp is changing and the creature is at full hp 
+        let hpCurrent = {};
+
+        if(cKey === 'hit_points' && parseInt(creature.hit_points) === parseInt(creature.hit_points_current)) {
+            hpCurrent = {hit_points_current: value}
+        }
+
+        setCreature((prev) => ({
+            ...prev,
+            ...hpCurrent,
+            [cKey]: value
+        }));
+
         if (send) {
             if(parseInt(value) !== parseInt(currentEncounter.creatures[selectedIndex][cKey])) {
                 setCurrentEncounter((prev) => ({
@@ -196,20 +199,8 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                 }
                 
             }
+            
 
-        } else {
-            // also change current hp if max hp is changing and the creature is at full hp 
-            let hpCurrent = {};
-
-            if(cKey === 'hit_points' && parseInt(creature.hit_points) === parseInt(creature.hit_points_current)) {
-                hpCurrent = {hit_points_current: value}
-            }
-
-            setCreature((prev) => ({
-                ...prev,
-                ...hpCurrent,
-                [cKey]: value
-            }));
         }
     };
 
@@ -372,7 +363,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                 <GridWrap >
                                     <EditStat label={"Max Hp"} value={creature.hit_points} cKey={'hit_points'} handleChange={handleChange} type='number'/>
                                     <EditStat label={'Armor Class'} value={creature.armor_class} cKey={'armor_class'} handleChange={handleChange} type='number'/>
-                                    <EditStat label={"Init Bonus"} value={creature.dexterity_save} cKey={'dexterity_save'} handleChange={handleChange} type='number'/>
+                                    <EditStat label={"Init Bonus"} value={addSign(creature.dexterity_save)} cKey={'dexterity_save'} handleChange={handleChange} type='number'/>
                                 </GridWrap>
                                 <span style={{border: '1px solid grey'}}/>
                                 <GridWrap columns={6}>

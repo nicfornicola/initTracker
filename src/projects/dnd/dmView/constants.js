@@ -209,6 +209,22 @@ combinedArray.sort((a, b) => {
     return a.name.localeCompare(b.name)
 });
 
+export const addSign = (modNumber) => {
+    //Catches 0 and null
+    if (!modNumber)
+        return '+0'
+
+    if (typeof modNumber === 'string' && modNumber.includes('+')) {
+        return modNumber
+    }
+
+    if (modNumber > 0) {
+        return `+${modNumber}`
+    }
+
+    return `${modNumber}`; // Negative number already has a minus sign
+}
+
 export const monsterList = combinedArray
 export const imagesAvailable = [
     "5e Core Rules",

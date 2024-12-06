@@ -1,16 +1,6 @@
 import React from 'react';
+import { addSign } from '../constants';
 
-function addSign(modNumber) {
-    //Catches 0 and null
-    if (!modNumber)
-        return '+0'
-
-    if (modNumber > 0) {
-        return `+${modNumber}`;
-    }
-
-    return `${modNumber}`; // Negative number already has a minus sign
-}
 
 function getModString(modNumber) {
     let result = Math.floor((modNumber-10)/2);
@@ -18,6 +8,12 @@ function getModString(modNumber) {
 }
 
 const SkillGridInput = ({value, cKey, disabled = false, handleChange, style}) => {
+
+    const validate = (e, cKey, send = false) => {
+        if(!isNaN(e.target.value))
+            handleChange(e, cKey, undefined, undefined, send)
+    }
+
     return (
         <input className='statBlockSkillsInput' 
             disabled={disabled || handleChange === undefined}
@@ -25,8 +21,8 @@ const SkillGridInput = ({value, cKey, disabled = false, handleChange, style}) =>
             value={value} 
             onFocus={(e) => e.target.select()} 
             type='text' 
-            onChange={e => handleChange(e, cKey)} 
-            onBlur={e => handleChange(e, cKey, undefined, undefined, true)} 
+            onChange={e => validate(e, cKey)} 
+            onBlur={e => validate(e, cKey, true)} 
             onClick={(event) => event.stopPropagation()} 
         />
     )
