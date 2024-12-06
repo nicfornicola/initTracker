@@ -155,8 +155,6 @@ const CreatureInfo = ({creature}) => {
 const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurrentEncounter, closeStatBlock, socket}) => {
     const [isEditMode, setIsEditMode] = useState(false)
     const [creature, setCreature] = useState(currentEncounter.creatures[selectedIndex])
-    console.log(currentEncounter)
-    console.log(creature)
     // If selectedIndex changes a new creature was clicked
     useEffect(() => {
         setCreature(selectedIndex !== null ? currentEncounter.creatures[selectedIndex] : null)
@@ -285,18 +283,18 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
         }
     };
 
-    const handleCheckChange = (value, cKey, index) => {
+    const handleCheckChange = (value, cKey) => {
         console.log("handleCheckChange");
         setCurrentEncounter((prev) => {
             const updatedCreatures = [...prev.creatures];
-            let updatedCategoryArray = updatedCreatures[selectedIndex][cKey] ?? [];
-
-            updatedCategoryArray[index] = value
-
+            let newCount = updatedCreatures[selectedIndex][cKey];
+            value ? newCount-- : newCount++
             updatedCreatures[selectedIndex] = {
                 ...updatedCreatures[selectedIndex],
-                [cKey]: updatedCategoryArray,
+                [cKey]: newCount,
             };
+
+            socket.emit('creatureActionCountChange', newCount, cKey, currentEncounter.creatures[selectedIndex].creatureGuid);
 
             return {
                 ...prev,
@@ -388,10 +386,13 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
                             <EditStatBig label={"Traits"} content={creature?.special_abilities} category={'special_abilities'} handleChange={handleChange}/>
                         <hr className="editlineSeperator" />
                             <EditStatBig label={"Actions"} content={creature?.actions} category={'actions'} handleChange={handleChange}/>
+                        <hr className="editlineSeperator" />
                             <EditStatBig label={"Bonus Actions"} content={creature?.bonus_actions} category={'bonus_actions'} handleChange={handleChange}/>
+                        <hr className="editlineSeperator" />
                             <EditStatBig label={"Reactions"} content={creature?.reactions} category={'reactions'} handleChange={handleChange}/>
                         <hr className="editlineSeperator" />
                             <EditStatBig label={"Legendary Actions"} content={creature?.legendary_actions} category={'legendary_actions'} handleChange={handleChange}/>
+                        <hr className="editlineSeperator" />
                             <EditStatBig label={"Lair Actions"} content={creature?.lair_actions} category={'lair_actions'} handleChange={handleChange}/>
                         <hr className="editlineSeperator" />
 
@@ -542,7 +543,7 @@ const StatBlock = ({selectedIndex, setSelectedIndex, currentEncounter, setCurren
                                             }
                                         </>
                                     ) : (
-                                        <ContentArray label={'LEGENDARY ACTIONS'} contentArray={creature.legendary_actions} labelDesc={creature.legendary_desc} boxes={creature.legendary_acions_count} handleCheck={handleCheckChange}/>
+                                        <ContentArray label={'LEGENDARY ACTIONS'} contentArray={creature.legendary_actions} labelDesc={creature.legendary_desc} actions_count={creature.legendary_actions_count} handleCheck={handleCheckChange}/>
                                     )}
                                 </>
                             }

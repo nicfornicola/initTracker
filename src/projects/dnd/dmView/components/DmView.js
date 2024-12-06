@@ -100,7 +100,6 @@ const DmView = () => {
             setSavedEncounters(mockEncounters)
         }
 
-
         if(username === 'Username') {
             setPlayerViewBackground({type: "image", src: defaultBackground})
             setSavedEncounters([])

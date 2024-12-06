@@ -1,10 +1,11 @@
 import React from 'react';
+import ActionTracker from './ActionTracker';
 
 function getDesc(object) {
     return object.desc || object.description || "No Description found :("
 }
 
-const ContentArray = ({label, contentArray, labelDesc = null, boxes = undefined, handleCheck=undefined}) => {
+const ContentArray = ({label, contentArray, labelDesc = null, actions_count = undefined, handleCheck=undefined}) => {
 
     const filteredContent = contentArray?.filter(
         (action) => !(action.name === "None" && action.desc === "--")
@@ -16,18 +17,20 @@ const ContentArray = ({label, contentArray, labelDesc = null, boxes = undefined,
 
     return (
         <>
-            <h1 className='infoTitle'>{label}</h1>
+            <div className={`actionToken-container`}>
+                <h1 className='infoTitle'>{label} </h1>
+                {actions_count && 
+                    <ActionTracker 
+                        actions_count={actions_count}
+                        label={label}
+                        handleCheck={handleCheck}
+                    />
+                }
+            </div>
             <hr className="lineSeperator" />
-            {labelDesc && boxes && // check boxes to track "legendary actions"
+            {labelDesc && // check boxes to track "legendary actions"
                 <div className='actionInfo'>
-                    {labelDesc}
-                    {boxes.map((checked, index)  => (
-                        <input  
-                            checked={checked}
-                            onChange={(e) => handleCheck(e.target.checked, "legendary_actions_count", index)}
-                        />
-                    ))}
-                   
+                    {labelDesc}                
                 </div>
             }
             {filteredContent.map((action, index) => (

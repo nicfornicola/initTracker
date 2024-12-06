@@ -1030,13 +1030,13 @@ input {
 .titleFontFamily {
     font-family: "Spectral SC", serif;
     margin: 0px;
+    color: #822000
 }
 
 .statBlock {
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    color: #822000;
     height: 100%
 }
 
@@ -1122,6 +1122,11 @@ input {
 .editBlockTitle {
     padding-right: 5px;
     font-weight: bold;
+    color: #822000
+}
+
+.globalColor {
+    color: #822000
 }
 
 .editBlockInput {
@@ -1175,6 +1180,7 @@ input {
     margin-left: 0px;
     font-size: 20px;
     top: 5px;
+    color: #822000
 }
 
 
@@ -1214,6 +1220,7 @@ input {
     display: grid;
     grid-template-columns: 1fr 1fr; /* Two columns */
     margin-bottom: 15px;
+    color: #3c3c3c;
 }
 
 .stickyStatItem {
@@ -2034,7 +2041,51 @@ input {
     width: 100%;
     height: 100%;
 }
+
+.actionToken-container {
+    display: flex;
+    align-items: flex-end
+}
   
+/* Basic styling for each token */
+.actionToken {
+    width: 8px; /* Adjusted size */
+    height: 8px; /* Adjusted size */
+    margin: 5px;
+    border-radius: 20%;
+    border: 2px solid #3d0f00; 
+    cursor: pointer;
+    background: linear-gradient(to left, transparent 50%, rgb(144, 36, 0) 50%);
+    background-size: 200% 100%;
+    background-position: 0% 0;
+    transition: background-position 0.4s ease; /* Smooth transition for animation */
+
+}
+
+/* State when token is filled (animation goes from left to right) */
+.actionToken.filled {
+    background-position: 0% 0; /* Completely filled from left to right */
+
+}
+
+/* State when token is unfilled (animation goes from right to left) */
+.actionToken.unfilled {
+    background-position: 100% 0; /* Completely unfilled from right to left */
+
+}
+
+/* Hover state for unfilled (animates fill from left to right) */
+.actionToken.unfilled.hover {
+    background-position: 30% 0; /* Animate the unfilled token to halfway filled */
+    border-color: #822000; /* Animate the filled token to unfilled */
+}
+
+/* Hover state for filled (animates unfill from right to left) */
+.actionToken.filled.hover {
+    background-position: 70% 0; /* Animate the filled token to unfilled */
+    border-color: #822000; /* Animate the filled token to unfilled */
+}
+
 @keyframes wave {
     0% {
         transform: translate3d(0, 0, 0) rotate(0deg);
