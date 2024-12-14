@@ -149,13 +149,19 @@ hr {
 }
 
 .name {
-    font-size: calc(.08 * var(--iconWidth)); /* Font size is 10% of the parent's width */
+    font-size: calc(.08 * var(--iconWidth)); 
+    width: 100%;
+    overflow: hidden;       
 }
 
 .lastName {
-    font-size: calc(.05 * var(--iconWidth)); /* Font size is 10% of the parent's width */
+    position: relative;
+    font-size: calc(.05 * var(--iconWidth));
     margin-left: 25%;
     margin-right: 25%;
+    bottom: 5px;
+    overflow: hidden;       
+    height: 10%;
 }
 
 .initiative-box,
@@ -170,6 +176,7 @@ hr {
     height: 8%;
     font-size: calc(.07 * var(--iconWidth)); /* Font size is 10% of the parent's width */
     min-width: 12%;
+    bottom: 0;
 }
 
 .initiative-box {
@@ -942,18 +949,19 @@ hr {
     animation: grow 0.3s ease-in-out forwards;
 }
 
+.grow {
+    animation: grow .5s ease-in-out forwards;
+}
+
 input {
     margin-top: 10px; 
 }
-
 
 .titleLabel {
     color: grey;
     font-weight: bold;
 }
 
-
-    
 .dmLowOptions {
     display: flex;
 }
@@ -1117,7 +1125,7 @@ input {
 .statblockX {
     background-color: rgb(186, 186, 186);
     cursor: pointer;
-    visibility: visible;
+    visibility: hidden;
     z-index: 1;
     margin: 3px
 }
@@ -1131,7 +1139,8 @@ input {
 .editBlockTitle {
     padding-right: 5px;
     font-weight: bold;
-    color: #822000
+    color: #822000;
+    text-wrap: nowrap;
 }
 
 .globalColor {
@@ -1197,6 +1206,7 @@ input {
     position: relative;
     background-color: #e0dab8;
     border-radius: 8px;
+    padding: 8px;
 }
 
 .img {
@@ -1273,6 +1283,7 @@ input {
 .skillGridItem span {
     font-size: .5vw; /* Responsive font size */
 }
+
 .statBlockScroll {
     padding-top: 1%;
     overflow-y: scroll; 
@@ -2111,4 +2122,19 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none; 
     margin: 0;
+}
+
+.userGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px;
+    width: 95%;
+    list-style-position: inside;
+    padding: 0;
+}
+
+.userItem {
+    background-color: #6b6b6bd0;
+    padding: 5px;
+    border-radius: 8px;
 }

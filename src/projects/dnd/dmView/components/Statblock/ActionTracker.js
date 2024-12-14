@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 
-const ActionTracker = ({ actions_count, label, handleCheck }) => {
+const ActionTracker = ({ actions_count, cKey, handleCheck, nested=false, actionIndex=undefined}) => {
     const [hoverIndex, setHoverIndex] = useState(null); // Track hover index
     const filledCircles = actions_count % 10;
     const totalCircles = Math.floor(actions_count / 10);
     let isHoveringFilled = filledCircles > hoverIndex
-
 
     const handleMouseEnter = (index) => {
         setHoverIndex(index);
@@ -17,10 +16,11 @@ const ActionTracker = ({ actions_count, label, handleCheck }) => {
 
     const handleClick = (index) => {
         if(hoverIndex === index) {
-            setHoverIndex(prev => isHoveringFilled ? prev-10 : prev+10)
+            setHoverIndex(prev => isHoveringFilled ? prev-100 : prev+100)
         }
-        handleCheck(index < filledCircles, 'legendary_actions_count');
-        
+        //This detemine adding or subtracting from rechargeCount
+        let addCheck = index >= filledCircles
+        handleCheck(addCheck, cKey, nested, actionIndex);
     };
 
     const getClass = (index) => {
@@ -43,7 +43,7 @@ const ActionTracker = ({ actions_count, label, handleCheck }) => {
     }
 
     return (
-        <div className="actionToken-container">
+        <>
             {Array.from({ length: totalCircles }).map((_, index) => (
                 <div
                     key={index}
@@ -53,7 +53,7 @@ const ActionTracker = ({ actions_count, label, handleCheck }) => {
                     onMouseLeave={handleMouseLeave} // Reset hover when mouse leaves the container
                 />
             ))}
-        </div>
+        </>
     );
 };
 

@@ -225,8 +225,10 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }
 
     const handleHpChange = (event) => {
+
         if(!isNaN(event.target.value)) { 
-            setHpChange(parseInt(event.target.value)) 
+            let input = event.target.value; 
+            setHpChange(input === '' ? '' :  parseInt(event.target.value)) 
         }
     }
 

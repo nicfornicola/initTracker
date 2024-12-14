@@ -5,7 +5,7 @@ function getDesc(object) {
     return object.desc || object.description || "No Description found :("
 }
 
-const ContentArray = ({label, contentArray, labelDesc = null, actions_count = undefined, handleCheck=undefined}) => {
+const ContentArray = ({label, contentArray, labelDesc = null, actions_count = undefined, handleCheck=undefined, cKey=undefined, nested=false}) => {
 
     const filteredContent = contentArray?.filter(
         (action) => !(action.name === "None" && action.desc === "--")
@@ -17,12 +17,14 @@ const ContentArray = ({label, contentArray, labelDesc = null, actions_count = un
 
     return (
         <>
+            {/* This is for legendary actions since it goes next to the big title */}
             <div className={`actionToken-container`}>
                 <h1 className='infoTitle'>{label} </h1>
                 {actions_count && handleCheck &&
                     <ActionTracker 
                         actions_count={actions_count}
                         label={label}
+                        cKey={cKey}
                         handleCheck={handleCheck}
                     />
                 }
@@ -35,7 +37,21 @@ const ContentArray = ({label, contentArray, labelDesc = null, actions_count = un
             }
             {filteredContent.map((action, index) => (
                 <div className='actionInfo' key={index + action.name}>
-                    <strong>{action.name}:</strong> {getDesc(action)}
+                    {action?.rechargeCount !== 0 && !isNaN(action?.rechargeCount) ? (
+                        <div className={`actionToken-container`}>
+                            <strong>{action.name} </strong>
+                            <ActionTracker 
+                                actions_count={action.rechargeCount}
+                                cKey={cKey}
+                                nested={nested}
+                                handleCheck={handleCheck}
+                                actionIndex={index}
+                            />
+                        </div>
+                    ) : ( 
+                        <strong>{action.name}: </strong>
+                    )}
+                        {getDesc(action)}
                 </div>
             ))}
             {label ===  'Legendary Actions'}

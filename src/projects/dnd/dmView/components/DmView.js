@@ -77,6 +77,29 @@ function findDifferences(obj1, obj2) {
     return differences;
   }
 
+
+function addRechargeCountToSpecialAbilities(data) {
+    // Array of keys to process for rechargeCount
+    const abilityKeys = ["special_abilities", "actions", "bonus_actions"];
+
+    return data.map(obj => {
+    if (obj.creatures && Array.isArray(obj.creatures)) {
+        obj.creatures.forEach(creature => {
+            abilityKeys.forEach(key => {
+                if (creature[key] && Array.isArray(creature[key])) {
+                    creature[key] = creature[key].map(ability => {
+                        const match = ability.name.match(/\((\d+)\/[^)]+\)/); // Match (X/any text) pattern
+                        ability.rechargeCount = match ? parseInt(match[1]) * 10 : 0; // Add rechargeCount or set to 0
+                        return ability;
+                    });
+                }
+            });
+        });
+    }
+    return obj;
+    });
+}
+
 const DmView = () => {
     const [playerViewBackground, setPlayerViewBackground] = useState({type: "image", src: defaultBackground});
     const [currentEncounter, setCurrentEncounter] = useState(INIT_ENCOUNTER);
@@ -97,7 +120,8 @@ const DmView = () => {
     useEffect(() => {
         if(isDev && username === "nicdev") {
             console.log("MOCK ENCOUNTERS", mockEncounters)
-            setSavedEncounters(mockEncounters)
+
+            setSavedEncounters(addRechargeCountToSpecialAbilities(mockEncounters))
         }
 
         if(username === 'Username') {
@@ -130,13 +154,8 @@ const DmView = () => {
 
             // Recieve messages from backend
             socket.on('sendSavedEncounters', (encountersResponse) => {
-                if(encountersResponse.length === 0) {
-                    console.log("Nothing saved...")
-                } else {
-                    console.log("GOT ENCOUNTERS", encountersResponse)
-                    console.log(encountersResponse)
-                    setSavedEncounters(encountersResponse)
-                }
+                console.log("Encounter Recieved:", encountersResponse.length, encountersResponse)
+                setSavedEncounters(encountersResponse)
             });
 
         }
@@ -348,7 +367,7 @@ const DmView = () => {
                 : {type: 'image', src: encounter.backgroundGuid}
             )
         }
-    };  
+    };      
 
     return (
         <div className="background" style={{backgroundImage: playerViewBackground.type === "image" && playerViewBackground.src ? `url(${playerViewBackground.src})` : 'none'}}>

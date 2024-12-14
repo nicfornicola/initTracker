@@ -8,7 +8,7 @@ import EditStatBig from './EditStatBig';
 import GridWrap from './GridWrap';
 import ContentArray from './ContentArray';
 import ContentString from './ContentString';
-
+import ActionTracker from './ActionTracker';
 
 function formatSpeed(speed) {
     const order = ['walk', 'climb', 'burrow', 'swim', 'fly', 'hover'];
@@ -144,6 +144,7 @@ const CreatureInfo = ({creature}) => {
 const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeStatBlock, socket}) => {
     const [isEditMode, setIsEditMode] = useState(false)
     const [creature, setCreature] = useState(currentEncounter.creatures[selectedIndex])
+
     // If selectedIndex changes a new creature was clicked
     useEffect(() => {
         setCreature(selectedIndex !== null ? currentEncounter.creatures[selectedIndex] : null)
@@ -276,23 +277,49 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
         }
     };
 
-    const handleCheckChange = (value, cKey) => {
-        setCurrentEncounter((prev) => {
-            const updatedCreatures = [...prev.creatures];
-            let newCount = updatedCreatures[selectedIndex][cKey];
-            value ? newCount-- : newCount++
-            updatedCreatures[selectedIndex] = {
-                ...updatedCreatures[selectedIndex],
-                [cKey]: newCount,
-            };
+    const handleRechargeCheck = (addCheck, cKey, nested, actionIndex) => {
 
-            socket.emit('creatureActionCountChange', newCount, cKey, currentEncounter.creatures[selectedIndex].creatureGuid);
+        if(nested) {
+            setCurrentEncounter((prev) => {
+                const updatedCreatures = [...prev.creatures];
+                const updatedAction = updatedCreatures[selectedIndex][cKey];
 
-            return {
-                ...prev,
-                creatures: updatedCreatures,
-            };
-        });
+                let newCount = updatedAction[actionIndex].rechargeCount;
+                addCheck ? newCount++ : newCount--
+
+                updatedAction[actionIndex] = {
+                    ...updatedAction[actionIndex],
+                    rechargeCount: newCount
+                }
+
+                updatedCreatures[selectedIndex] = {
+                    ...updatedCreatures[selectedIndex],
+                    [cKey]: [...updatedAction],
+                };
+    
+                return {
+                    ...prev,
+                    creatures: updatedCreatures,
+                };
+            });
+        } else {
+            setCurrentEncounter((prev) => {
+                const updatedCreatures = [...prev.creatures];
+                let newCount = updatedCreatures[selectedIndex][cKey];
+                addCheck ? newCount++ : newCount--
+                updatedCreatures[selectedIndex] = {
+                    ...updatedCreatures[selectedIndex],
+                    [cKey]: newCount,
+                };
+    
+                socket.emit('creatureActionCountChange', newCount, cKey, currentEncounter.creatures[selectedIndex].creatureGuid);
+    
+                return {
+                    ...prev,
+                    creatures: updatedCreatures,
+                };
+            });
+        }
     }
 
     const handleUserArrayActions = (cKey, category, index) => {
@@ -334,50 +361,47 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
             <div className='infoContainer'>
                 <div className='statblockOptionsFlex'>
                     <button className='statblockEdit' onClick={fullEditStatBlock}>{isEditMode ? <>Save</> : <>Edit</>} </button>
-                    <button className='statblockX' onClick={closeStatBlock}>❌</button>
+                    {!isEditMode && <button className='statblockX' onClick={closeStatBlock}>❌</button>}
                 </div>
-
                 {isEditMode ? (
-                    <div className='statBlockScroll' style={{
-                        overflowX: 'hidden',
-                        overflowY: 'auto'
-                    }}>
-                        <div className='topInfo shadowBox' style={{padding: '10px'}}>
+                    <div style={{overflowX: 'hidden', overflowY: 'auto'}}>
+                        <div className='topInfo shadowBox'>
                             {/* Edit creature image could be here too */}
-                            <GridWrap>
+                            <GridWrap columns={2}>
                                 <EditStat label={`Name ${!isProd ? creature.creatureGuid : ''}`} value={creature?.name || ''} cKey={'name'} handleChange={handleChange} />
-                                <EditStatDropdown label={"Size"} options={sizeOptions} value={creature.size} cKey={'size'} handleChange={handleChange}/>
-                                <EditStatDropdown label={"Type"} options={typeOptions} value={creature.creature_type} cKey={'creature_type'} handleChange={handleChange}/>
                                 <EditStatDropdown label={"Race"} options={raceOptions} value={creature.subtype} cKey={'subtype'} handleChange={handleChange}/> 
-                                <EditStatDropdown label={"Alignment"} options={alignmentOptions} value={creature.creature_alignment} cKey={'creature_alignment'} handleChange={handleChange}/>
-                                <div style={{display: 'flex'}}>
-                                    <EditStat label={"CR"} value={creature.challenge_rating} cKey={'challenge_rating'} handleChange={handleChange} type='number'/>
-                                </div>
                             </GridWrap>
                             <hr className="editlineSeperator" />
-
-                            <div style={{
-                                display: 'flex',
-                                justifyContent: 'space-between'
-                            }}>
-                                <GridWrap >
-                                    <EditStat label={"Max Hp"} value={creature.hit_points} cKey={'hit_points'} handleChange={handleChange} type='number'/>
-                                    <EditStat label={'Armor Class'} value={creature.armor_class} cKey={'armor_class'} handleChange={handleChange} type='number'/>
-                                    <EditStat label={"Init Bonus"} value={addSign(creature.dexterity_save)} cKey={'dexterity_save'} handleChange={handleChange} type='number'/>
-                                </GridWrap>
-                                <span style={{border: '1px solid grey'}}/>
-                                <GridWrap columns={6}>
-                                    <EditStat label={"Walk"} value={creature.speed.walk || 0} cKey={'walk'} category={'speed'} handleChange={handleChange} type='number' />
-                                    <EditStat label={"Climb"} value={creature.speed.climb || 0} cKey={'climb'} category={'speed'} handleChange={handleChange} type='number' />
-                                    <EditStat label={"Burrow"} value={creature.speed.burrow || 0} cKey={'burrow'} category={'speed'} handleChange={handleChange} type='number' />
-                                    <EditStat label={"Swim"} value={creature.speed.swim || 0} cKey={'swim'} category={'speed'} handleChange={handleChange} type='number' />
-                                    <EditStat label={"Fly"} value={creature.speed.fly || 0} cKey={'fly'} category={'speed'} handleChange={handleChange} type='number' />
-                                    <EditStat label={"Hover"} value={creature.speed.hover || false} cKey={'hover'} category={'speed'} handleChange={handleChange} type='checkbox' />
-                                </GridWrap>
-                            </div>
+                            <GridWrap>
+                                <EditStatDropdown label={"Size"} options={sizeOptions} value={creature.size} cKey={'size'} handleChange={handleChange}/>
+                                <EditStatDropdown label={"Type"} options={typeOptions} value={creature.creature_type} cKey={'creature_type'} handleChange={handleChange}/>
+                                <EditStatDropdown label={"Alignment"} options={alignmentOptions} value={creature.creature_alignment} cKey={'creature_alignment'} handleChange={handleChange}/>
+                            </GridWrap>
+                            <hr className="editlineSeperator" />
+                            <GridWrap>
+                                <EditStat label={"Max Hp"} value={creature.hit_points} cKey={'hit_points'} handleChange={handleChange} type='number'/>
+                                <EditStat label={'AC'} value={creature.armor_class} cKey={'armor_class'} handleChange={handleChange} type='number'/>
+                                <EditStat label={"Init Bonus"} value={addSign(creature.dexterity_save)} cKey={'dexterity_save'} handleChange={handleChange} type='number'/>
+                            </GridWrap>
+                            <hr/>
+                            <GridWrap columns={6} scroll={'auto'}>
+                                <EditStat label={"Walk"} value={creature.speed.walk || 0} cKey={'walk'} category={'speed'} handleChange={handleChange} type='number' />
+                                <EditStat label={"Climb"} value={creature.speed.climb || 0} cKey={'climb'} category={'speed'} handleChange={handleChange} type='number' />
+                                <EditStat label={"Burrow"} value={creature.speed.burrow || 0} cKey={'burrow'} category={'speed'} handleChange={handleChange} type='number' />
+                                <EditStat label={"Swim"} value={creature.speed.swim || 0} cKey={'swim'} category={'speed'} handleChange={handleChange} type='number' />
+                                <EditStat label={"Fly"} value={creature.speed.fly || 0} cKey={'fly'} category={'speed'} handleChange={handleChange} type='number' />
+                                <EditStat label={"Hover"} value={creature.speed.hover || false} cKey={'hover'} category={'speed'} handleChange={handleChange} type='checkbox' />
+                            </GridWrap>
                             <hr className="editlineSeperator" />
                             <SkillGrid creature={creature} edit={true} handleChange={handleChange}/>
                         </div>
+                        <GridWrap columns={2} paddingTop={15}>
+                            <EditStat label={"Vulnerabilites"} value={creature.damage_vulnerabilities} cKey={'damage_vulnerabilities'} handleChange={handleChange} />
+                            <EditStat label={"Resistances"} value={creature.damage_resistances} cKey={'damage_resistances'} handleChange={handleChange} />
+                            <EditStat label={"Senses"} value={creature.senses} cKey={'senses'} handleChange={handleChange} />
+                            <EditStat label={"Immunities"} value={creature.damage_immunities} cKey={'damage_immunities'} handleChange={handleChange} />
+                            <EditStat label={"Condition Immunities"} value={creature.condition_immunities} cKey={'condition_immunities'} handleChange={handleChange} />
+                        </GridWrap>
                         <hr className="editlineSeperator" />
                             <EditStatBig label={"Traits"} content={creature?.special_abilities} category={'special_abilities'} handleChange={handleChange}/>
                         <hr className="editlineSeperator" />
@@ -391,16 +415,13 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                         <hr className="editlineSeperator" />
                             <EditStatBig label={"Lair Actions"} content={creature?.lair_actions} category={'lair_actions'} handleChange={handleChange}/>
                         <hr className="editlineSeperator" />
-
-                            <GridWrap >
-                                <EditStat label={"Vulnerabilites"} value={creature.damage_vulnerabilities} cKey={'damage_vulnerabilities'} handleChange={handleChange} />
-                                <EditStat label={"Resistances"} value={creature.damage_resistances} cKey={'damage_resistances'} handleChange={handleChange} />
-                                <EditStat label={"Immunities"} value={creature.damage_immunities} cKey={'damage_immunities'} handleChange={handleChange} />
-                                <EditStat label={"Condition Immunities"} value={creature.condition_immunities} cKey={'condition_immunities'} handleChange={handleChange} />
-                                <EditStat label={"Senses"} value={creature.senses} cKey={'senses'} handleChange={handleChange} />
-                                <EditStat label={"Languages"} value={creature.languages} cKey={'languages'} handleChange={handleChange} />
-                                <EditStat label={"Environments"} value={creature.environments} cKey={'environments'} handleChange={handleChange} />
-                            </GridWrap>
+                        <GridWrap>
+                            <EditStat label={"Languages"} value={creature.languages} cKey={'languages'} handleChange={handleChange} />
+                            <EditStat label={"Environments"} value={creature.environments} cKey={'environments'} handleChange={handleChange} />
+                            <div style={{display: 'flex'}}>
+                                <EditStat label={"CR"} value={creature.challenge_rating} cKey={'challenge_rating'} handleChange={handleChange} type='number'/>
+                            </div>
+                        </GridWrap>
                         <hr className="lineSeperator" />
                     </div>
                 ) : (
@@ -489,7 +510,22 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                     
                                             return (
                                                 <div className='actionInfo' key={index + ability.name}>
-                                                    <strong>{ability.name}: </strong>
+                                                    {ability.rechargeCount !== 0 ? (
+                                                        <div className={`actionToken-container`}>
+                                                            <strong>{ability.name} </strong>
+                                                            <ActionTracker 
+                                                                actions_count={ability.rechargeCount}
+                                                                label={ability.name}
+                                                                cKey={'special_abilities'}
+                                                                nested={true}
+                                                                handleCheck={handleRechargeCheck}
+                                                                actionIndex={index}
+                                                            />
+                                                        </div>
+                                                    ) : ( 
+                                                        <strong>{ability.name}: </strong>
+                                                    )}
+
                                                     {ability.name === "Spellcasting" ? (
                                                         <>
                                                             {getSpells(getDesc(ability))}
@@ -518,14 +554,14 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                             }
                                         </>
                                     ) : (
-                                        <ContentArray label={'ACTIONS'} contentArray={creature.actions}/>
+                                        <ContentArray label={'ACTIONS'} contentArray={creature.actions} cKey={'actions'} handleCheck={handleRechargeCheck} nested={true}/>
 
                                     )}
                                 </>
                             }
                             
-                            <ContentArray label={'BONUS ACTIONS'} contentArray={creature.bonus_actions}/>
-                            <ContentArray label={'REACTIONS'} contentArray={creature.reactions}/>
+                            <ContentArray label={'BONUS ACTIONS'} contentArray={creature.bonus_actions} cKey={'bonus_actions'} handleCheck={handleRechargeCheck} nested={true}/>
+                            <ContentArray label={'REACTIONS'} contentArray={creature.reactions} cKey={'reactions'} handleCheck={handleRechargeCheck} nested={true}/>
                             
                             {creature.legendary_actions && 
                                 <>
@@ -539,7 +575,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                             }
                                         </>
                                     ) : (
-                                        <ContentArray label={'LEGENDARY ACTIONS'} contentArray={creature.legendary_actions} labelDesc={creature.legendary_desc} actions_count={creature.legendary_actions_count} handleCheck={handleCheckChange}/>
+                                        <ContentArray label={'LEGENDARY ACTIONS'} contentArray={creature.legendary_actions} labelDesc={creature.legendary_desc} actions_count={creature.legendary_actions_count} handleCheck={handleRechargeCheck} cKey={'legendary_actions_count'}/>
                                     )}
                                 </>
                             }

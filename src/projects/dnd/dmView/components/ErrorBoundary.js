@@ -1,9 +1,8 @@
 import React from "react";
 import defaultBackground from '../pics/backgrounds/happyTavern.png'
+import ReactGA from "react-ga4";
 
 class ErrorBoundary extends React.Component {
-
-
     constructor(props) {
         super(props);
         this.state = { hasError: false, error: null, errorInfo: null };
@@ -14,7 +13,20 @@ class ErrorBoundary extends React.Component {
     }
 
     componentDidCatch(error, errorInfo) {
-        console.error("Error caught by ErrorBoundary:", error, errorInfo);
+        // Log error details to Google Analytics
+        ReactGA.event({
+            category: "Error",
+            label: error.message, // Short description of the error
+            value: errorInfo.componentStack ? errorInfo.componentStack.length : 0,
+        });
+
+        // Log as pageview
+        ReactGA.send({
+            hitType: "pageview",
+            page: "/error",
+            title: "Error Page",
+        });
+        console.error("ErrorBoundary:", error, errorInfo);
         this.setState({ errorInfo });
     }
 

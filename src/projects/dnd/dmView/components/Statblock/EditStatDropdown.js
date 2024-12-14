@@ -10,6 +10,7 @@ const EditStatDropdown = ({label, options, value, cKey, handleChange = undefined
         <div className='editBlock'>
             <i className='editBlockTitle'>{label}</i>
             <select className='editBlockInput' 
+                style={{width: 'fit-content'}}
                 value={value ? capsFirstLetter(value) : '--'} 
                 onChange={(e) => handleChange(e, cKey)}
                 onBlur={(e) => handleChange(e, cKey, undefined, undefined, true)}

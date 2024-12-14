@@ -27,7 +27,7 @@ function capitalizeWords(str) {
     return str.replace(/\b\w/g, char => char.toUpperCase());
 }
 
-const getLegendaryBoxes = (desc, actions) => {
+const getRechargeBoxes = (desc, actions) => {
     // regex to find "3 legendary actions"
     //Multiply by ten
     //i.e. 32 = 3 legendary actions, 2 are used
@@ -35,6 +35,16 @@ const getLegendaryBoxes = (desc, actions) => {
                || actions?.[0]?.name?.match(/(\d+)\s+legendary\s+actions/);
     return match ? parseInt(match[1]) * 10 : 0;
 };
+
+function addRechargeCount(objectsArr) {
+    if(objectsArr === null) 
+        return null
+    return objectsArr.map(obj => {
+        const match = obj.name.match(/\((\d+)\/[^)]+\)/); // Match (X/any text) pattern
+        obj.rechargeCount = match ? parseInt(match[1]) * 10 : 0; // Set to null if no pattern is found
+        return obj;
+    });
+}
 
 export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
     let isDefault = avatarUrl.includes("Content/Skins/WaterDeep")
@@ -80,7 +90,6 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         "armor_desc": "(" + open5eData.armor_desc + ")",
         "environments": open5eData?.environments.length > 0 ? open5eData.environments.join(", ") : '',
         "lair_actions": open5eData?.lair_actions || [],
-        "legendary_actions": open5eData.legendary_actions,
         "strength_save": open5eData.strength_save ?? 0,
         "dexterity_save": open5eData.dexterity_save ?? 0,
         "constitution_save": open5eData.constitution_save ?? 0,
@@ -89,7 +98,11 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         "wisdom_save": open5eData.wisdom_save ?? 0,
         "size": open5eData.size ?? '--',
         "subtype": open5eData.subtype ?? '--',
-        "legendary_actions_count": getLegendaryBoxes(open5eData?.legendary_desc, open5eData?.legendary_actions) ?? 0
+        "legendary_actions_count": getRechargeBoxes(open5eData?.legendary_desc, open5eData?.legendary_actions) ?? 0,
+        "special_abilities": addRechargeCount(open5eData?.special_abilities || null),
+        "actions": addRechargeCount(open5eData?.actions || null),
+        "bonus_actions": addRechargeCount(open5eData?.bonus_actions || null),
+        "legendary_actions": addRechargeCount(open5eData?.legendary_actions || null)
     }
 };
 

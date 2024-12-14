@@ -2,7 +2,8 @@ import React from 'react';
 
 const EditStat = ({label, value, cKey, category = undefined, handleChange = undefined, type = 'text'}) => {
 
-    let w, h, alignItems, textAlign = ''
+    let w = label === 'Name' ? '100%' : '95%'
+    let h, alignItems, textAlign = ''
     if(type === 'number') {
         w = '45px';
         alignItems = 'center'
@@ -13,7 +14,7 @@ const EditStat = ({label, value, cKey, category = undefined, handleChange = unde
     }
 
     const validate = (e, cKey, category, send = false) => {
-        if((type === 'number' && !isNaN(e.target.value)) || type === 'text') {
+        if((type === 'number' && !isNaN(e.target.value)) || type === 'text' || type === 'checkbox') {
             handleChange(e, cKey, category, undefined, send)
         }
     }
@@ -22,6 +23,7 @@ const EditStat = ({label, value, cKey, category = undefined, handleChange = unde
         <div className='editBlock' style={{alignItems}}>
             <i className='editBlockTitle'>{label}</i>
             <input className="editBlockInput" style={{width: w, height: h, textAlign: textAlign}}
+                type={type === 'checkbox' ? type : 'text'}
                 value={value}
                 checked={value}
                 onChange={(e) => validate(e, cKey, category)} 

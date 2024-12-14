@@ -225,22 +225,22 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
                                                     <span className='monsterSearchDetailText'> CR: {item.filterDimensions.level}</span>
                                                     <span className='monsterSearchDetailText'> - {item.filterDimensions.sourceShort}</span>
                                                 </div>
-                                                
                                             </div>
-                                            
+                                            {index === selectedPack.index &&
+                                            <div className='grow'>
+                                                <ThreeDots
+                                                    visible={true}
+                                                    height="20"
+                                                    width="35"
+                                                    color="black"
+                                                    radius="1"
+                                                    ariaLabel="three-dots-loading"
+                                                />
+                                            </div>
+
+                                            }
                                             <button className='monsterSearchAdd' onClick={(e) => handleSearchSelectCreature(item, "add", e, index)}>
-                                                {index === selectedPack.index ?
-                                                    <ThreeDots
-                                                        visible={true}
-                                                        height="20"
-                                                        width="35"
-                                                        color="black"
-                                                        radius="1"
-                                                        ariaLabel="three-dots-loading"
-                                                    />
-                                                :
-                                                    (<>➕</>)
-                                                }
+                                                ➕
                                             </button>
                                         </div>
                                     </li>
@@ -252,7 +252,7 @@ const SearchList = ({setCurrentEncounter, encounterGuid, socket}) => {
             </div>
             <div className='column animated-label'>
             {(searchSelectedCreature || (selectedPack.index && selectedPack.action === 'select')) ? (
-                <BaseStatBlock creature={searchSelectedCreature} closeStatBlock={() => setSearchSelectedCreature(null)} loading={selectedPack.index}/>
+                <BaseStatBlock creature={searchSelectedCreature} closeStatBlock={() => setSearchSelectedCreature(null)} loading={selectedPack.index && selectedPack.action === 'select'}/>
             ) : (
                 <>{'No Search Creature Selected'}</>
             )}

@@ -54,16 +54,15 @@ playerview
     do a little loading wheel to show next refresh on dnd_b mode
 
 
-BROKEN 
+BUGS 
 ----
 some of the stats still trigger SEND even onBlur with no change
-i think refresh timer is weird
+dndb hp is slightly off
 
 DONE - offline mode
 ------
 when add creature - add the row with spinny wheel while loading
 "number of legendary actions" tracker
-
 add button to resize images and add 
 add x button to remove uploadedLinks and images
 make currentplayerviewimage reference the data to save on space
@@ -71,7 +70,6 @@ dnd_b imports show their hp from time of import and then auto refresh to the cur
 actions and stuff is not loading from database correctly
 make table for images
 connect to DM instead of connecting to encounter, that way when the dm changes encounter the playerview would "follow" by changing backgrounds... not sure how this would work tho
-
 add effects 
 toggle ally/neutral/enemy in encounter list
 add button instead of just clicking any where so you can click an read stats without adding to encounter
@@ -81,7 +79,6 @@ toggle hide
 move buttons from player view to dm view
 auto refresh timer broken on auto refresh for DMB
 somtimes can have two encounter of the same name
-
 current turn tracked on refresh from dndb
 import export encouter list
 toggle visible button  

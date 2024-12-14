@@ -99,7 +99,7 @@ const Icon = ({creature, isTurn, hideDeadEnemies, enemyBloodToggle, iconSize}) =
                             )}
                         </div>
 
-                        <div className="name" style={{opacity: 1}}>{name}</div> 
+                        <div className="name" style={{height: isPlayer ? '8%' : '16%' }}>{name}</div> 
                         <div className='lastName'> {lastName}</div>
 
                         {showHp && ( 
