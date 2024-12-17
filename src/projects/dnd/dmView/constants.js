@@ -85,18 +85,6 @@ export const backgroundImages = [
     { imageGuid: "constant", image: background24 }
 ];
 
-export const isProd = window.location.href.includes("dmbuddy.com") 
-export const isDev = !isProd && window.location.href.includes("/?") 
-export const backendUrl = isProd
-                    ? `https://dm-buddy-svc-359507bf4ad4.herokuapp.com` 
-                    : "http://localhost:8081";
-
-backendUrl === "http://localhost:8081" ? console.log("Using dev") : console.log("Using prod")
-
-export const skills_long = ["Strength Score", "Dexterity Score", "Constitution Score", "Intelligence Score", "Wisdom Score", "Charisma Score"];
-export const skill_codes = [3520, 3521, 3522, 3523, 3524, 3525];
-export const skills_short = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
-
 export const sortCreatureArray = (array) => {
     return array.sort((a, b) => {
         const initiativeA = a.initiative;
@@ -118,6 +106,53 @@ export const sortCreatureArray = (array) => {
         }
     });
 };
+
+export const generateUniqueId = () => {
+    let num = Math.random().toString(36).substring(2, 12).toUpperCase();
+    return num
+}
+
+export const addSign = (modNumber) => {
+    //Catches 0 and null
+    if (!modNumber)
+        return '+0'
+
+    if (typeof modNumber === 'string' && modNumber.includes('+')) {
+        return modNumber
+    }
+
+    if (modNumber > 0) {
+        return `+${modNumber}`
+    }
+
+    return `${modNumber}`; // Negative number already has a minus sign
+}
+
+export function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1)); // Random index from 0 to i
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+    return array;
+}
+
+export const getLevelData = (key) => {
+    return key in levelData ? levelData[key]['xp'] : '--';
+}
+
+export const isProd = window.location.href.includes("dmbuddy.com") 
+export const isDev = !isProd && window.location.href.includes("/?") 
+export const backendUrl = isProd
+                    ? `https://dm-buddy-svc-359507bf4ad4.herokuapp.com` 
+                    : "http://localhost:8081";
+
+backendUrl === "http://localhost:8081" ? console.log("Using dev") : console.log("Using prod")
+
+export const skills_long = ["Strength Score", "Dexterity Score", "Constitution Score", "Intelligence Score", "Wisdom Score", "Charisma Score"];
+export const skill_codes = [3520, 3521, 3522, 3523, 3524, 3525];
+export const skills_short = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
+
+
 
 export const effectObjs = [
     {img: aid, effect: "Aided"}, 
@@ -176,11 +211,6 @@ export const effectImgMap = {
 export const LONG_REFRESH = 10
 export const SHORT_REFRESH = 1
 
-export const generateUniqueId = () => {
-    let num = Math.random().toString(36).substring(2, 12).toUpperCase();
-    return num
-}
-
 export const INIT_ENCOUNTER_NAME = 'Name Your Encounter';
 
 export const INIT_ENCOUNTER = {
@@ -204,28 +234,17 @@ let combinedArray = [...CoreRules,
                      ...TomeOfBeasts3,
                      ...TomeOfBeasts2023
                     ];
-                    
-combinedArray.sort((a, b) => {
-    return a.name.localeCompare(b.name)
+        
+
+
+const sortedCreatures = combinedArray.toSorted((a, b) => {
+    return a.name.localeCompare(b.name);
 });
 
-export const addSign = (modNumber) => {
-    //Catches 0 and null
-    if (!modNumber)
-        return '+0'
+export const sortedMonsterList = sortedCreatures;
+export const reversedMonsterList = [...sortedCreatures].reverse(); 
+export const shuffledMonsterList = shuffleArray(combinedArray);
 
-    if (typeof modNumber === 'string' && modNumber.includes('+')) {
-        return modNumber
-    }
-
-    if (modNumber > 0) {
-        return `+${modNumber}`
-    }
-
-    return `${modNumber}`; // Negative number already has a minus sign
-}
-
-export const monsterList = combinedArray
 export const imagesAvailable = [
     "5e Core Rules",
     "Tome of Beasts",
@@ -399,9 +418,7 @@ export const levelData = {
     '--': {'xp': 0, 'profBonus': 0}
 };
 
-export const getLevelData = (key) => {
-    return key in levelData ? levelData[key]['xp'] : '--';
-}
+
 
 const sharedItems = {
     "from": "dmb",

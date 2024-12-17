@@ -3739,17 +3739,31 @@
     },
     {
       "id": "open5e-succubusincubus",
-      "name": "Succubus/Incubus",
+      "name": "Incubus",
       "path": "",
       "link": "https://api.open5e.com/monsters/succubusincubus",
       "lastUpdateMs": 0,
-      "searchHint": "succubusincubus fiend shapechanger neutral evil",
+      "searchHint": "incubus fiend shapechanger neutral evil",
       "filterDimensions": {
         "level": "4",            
         "sourceShort": "5e",
         "source": "5e Core Rules",
         "type": "Fiend (shapechanger)"
       }
+    },
+    {
+        "id": "open5e-succubusincubus",
+        "name": "Succubus",
+        "path": "",
+        "link": "https://api.open5e.com/monsters/succubusincubus",
+        "lastUpdateMs": 0,
+        "searchHint": "succubus fiend shapechanger neutral evil",
+        "filterDimensions": {
+          "level": "4",            
+          "sourceShort": "5e",
+          "source": "5e Core Rules",
+          "type": "Fiend (shapechanger)"
+        }
     },
     {
       "id": "open5e-swarm-of-bats",

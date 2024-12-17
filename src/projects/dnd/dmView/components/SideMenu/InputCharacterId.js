@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 import ChampionImage from '../../pics/icons/refreshPlayers.png'
 import { ImportDndBeyondCharacters } from '../../api/ImportDndBeyondCharacters'
 import { generateUniqueId, INIT_ENCOUNTER_NAME} from '../../constants'
+import { useImportedPlayers } from '../../../../../providers/ImportedPlayersProvider';
 
 function InputCharacterId({setCurrentEncounter, encounterGuid, socket, onClick=() => {}}) {
     const [playerNumbers, setPlayerNumbers] = useState([]);
     const [playerNumberInputValue, setPlayerNumberInputValue] = useState('');
     const eGuid = encounterGuid || generateUniqueId();
+    const {setImportedPlayers} = useImportedPlayers();
 
     const handlePlayerNumbers = (event) => {
         let input = event.target.value;
@@ -18,7 +20,7 @@ function InputCharacterId({setCurrentEncounter, encounterGuid, socket, onClick=(
 
     const handleDndCharacterImport = async () => {
         const playerData = await ImportDndBeyondCharacters(playerNumbers, eGuid);
-        
+        setImportedPlayers((prev) => {return [...prev, ...playerData]})
         setCurrentEncounter(prev => {
 
             if(prev.creatures.length === 0 && prev.encounterName === INIT_ENCOUNTER_NAME) {

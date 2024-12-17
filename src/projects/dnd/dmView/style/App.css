@@ -454,6 +454,10 @@ hr {
     position: relative;
 }
 
+.searchListOption {
+    bottom: -5px;
+}
+
 .optionWrapper .tooltiptext,
 .avatarEffectsBar .tooltiptext,
 .effectWrapper .tooltiptext {
@@ -778,7 +782,7 @@ hr {
 }
 
 .monsterSearch {
-    max-height: 85vh;
+    height: 78vh;
     overflow-y: scroll; 
     width: 101%;
 }
@@ -786,8 +790,6 @@ hr {
 .monsterSearchList {
    padding: 0px;
    margin: 0;
-   border: 2px solid #858585;
-
 }
 
 .listItem:hover .searchListCreatureContainer {
@@ -1000,6 +1002,10 @@ input {
     padding: 10px 0px 0px 10px;
 }
 
+.searchInputFlex {
+    display: flex;
+}
+
 .saveDisclaimer {
     color: #ff4000;
     font-style: oblique;
@@ -1080,7 +1086,6 @@ input {
     box-sizing: border-box; /* Include border and padding in the element's total width and height */
     background-color: #f8f2d3d7;
     border-radius: 8px;
-
 }
 
 .imageContainer {
@@ -2138,3 +2143,28 @@ input[type="number"]::-webkit-outer-spin-button {
     padding: 5px;
     border-radius: 8px;
 }
+
+
+.react-tabs__tab {
+    background: #f8f2d3d7 !important;
+    overflow: hidden;
+    bottom: -5px !important;
+    margin-right: 2px;
+}
+
+.react-tabs__tab-list {
+    margin: 0 !important; 
+}
+
+.react-tabs__tab-panel {
+    background: #f8f2d3d7 !important;
+
+    border-left: 1px solid #822000;
+    border-right: 1px solid #822000;
+    border-bottom: 1px solid #822000;
+}
+
+.react-tabs__tab--selected {
+    background: #f8f2d3d7 !important;
+}
+

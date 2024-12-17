@@ -37,7 +37,7 @@ const ContentArray = ({label, contentArray, labelDesc = null, actions_count = un
             }
             {filteredContent.map((action, index) => (
                 <div className='actionInfo' key={index + action.name}>
-                    {action?.rechargeCount !== 0 && !isNaN(action?.rechargeCount) ? (
+                    {action?.rechargeCount !== 0 && !isNaN(action?.rechargeCount) && handleCheck ? (
                         <div className={`actionToken-container`}>
                             <strong>{action.name} </strong>
                             <ActionTracker 

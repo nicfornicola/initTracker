@@ -1,0 +1,72 @@
+[
+    {
+      "id": "open5e-young-green-dragon",
+      "name": "Homebrewed Dragon",
+      "path": "",
+      "link": "https://api.open5e.com/monsters/young-green-dragon",
+      "lastUpdateMs": 0,
+      "searchHint": "young green dragon dragon  lawful evil",
+      "filterDimensions": {
+        "level": "8",            
+        "sourceShort": "5e",
+        "source": "5e Core Rules",
+        "type": "Dragon"
+      }
+    },
+    {
+      "id": "open5e-young-red-dragon",
+      "name": "Homebrewed Cool Guy",
+      "path": "",
+      "link": "https://api.open5e.com/monsters/young-red-dragon",
+      "lastUpdateMs": 0,
+      "searchHint": "young red dragon dragon  chaotic evil",
+      "filterDimensions": {
+        "level": "10",            
+        "sourceShort": "5e",
+        "source": "5e Core Rules",
+        "type": "Dragon"
+      }
+    },
+    {
+      "id": "open5e-young-silver-dragon",
+      "name": "Young Silver Dragon",
+      "path": "",
+      "link": "https://api.open5e.com/monsters/young-silver-dragon",
+      "lastUpdateMs": 0,
+      "searchHint": "young silver dragon dragon  lawful good",
+      "filterDimensions": {
+        "level": "9",            
+        "sourceShort": "5e",
+        "source": "5e Core Rules",
+        "type": "Dragon"
+      }
+    },
+    {
+      "id": "open5e-young-white-dragon",
+      "name": "Young White Dragon",
+      "path": "",
+      "link": "https://api.open5e.com/monsters/young-white-dragon",
+      "lastUpdateMs": 0,
+      "searchHint": "young white dragon dragon  chaotic evil",
+      "filterDimensions": {
+        "level": "6",            
+        "sourceShort": "5e",
+        "source": "5e Core Rules",
+        "type": "Dragon"
+      }
+    },
+    {
+      "id": "open5e-zombie",
+      "name": "Zombie",
+      "path": "",
+      "link": "https://api.open5e.com/monsters/zombie",
+      "lastUpdateMs": 0,
+      "searchHint": "zombie undead  neutral evil",
+      "filterDimensions": {
+        "level": "1/4",            
+        "sourceShort": "5e",
+        "source": "5e Core Rules",
+        "type": "Undead"
+      }
+    }
+  ]

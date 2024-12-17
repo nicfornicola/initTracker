@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef  } from 'react';
 import '../../dmView/style/App.css';
-import SearchList from './SearchList.js';
+import SearchColumn from './Searching/SearchColumn.js';
 import Home from './Home.js';
 import EncounterColumn from './EncounterColumn/EncounterColumn';
 import SideMenu from './SideMenu/SideMenu.js';
@@ -378,11 +378,13 @@ const DmView = () => {
             { onFirstLoad ? ( 
                 <Home savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters}  currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} handleNewEncounter={handleNewEncounter} handleLoadEncounter={handleLoadEncounter} socket={socket}/>
             ) : ( 
-                <>
+                <>  
                     <SideMenu uploadLocalStorage={uploadLocalStorage} setCurrentEncounter={setCurrentEncounter} showSearchList={showSearchList} setShowSearchList={setShowSearchList} encounterGuid={encounterGuid} socket={socket}/>
+                    
                     {showSearchList &&  
-                        <SearchList setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket}/>
+                        <SearchColumn setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket}/>
                     }
+                    
                     <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} setSavedEncounters={setSavedEncounters} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} setEncounterGuid={setEncounterGuid} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter} socket={socket}/>
                 </>
             )}

@@ -2,8 +2,10 @@ import axios from 'axios';
 import { getSkillDetails } from '../../playerView/api/getSkillDetails';
 import { backendUrl } from '../constants';
 import DndBCharacterToDmBMapper from '../mappers/DndBCharacterToDmBMapper'
+import { useImportedPlayers } from '../../../../providers/ImportedPlayersProvider';
 
 export const ImportDndBeyondCharacters = async (playerIds, encounterGuid, encounterPlayerData=undefined) => {
+    
     console.log("Import Character-service in ImportDndBeyondCharacters");
     let i = 1;
     const baseUrl = `${backendUrl}/dndb_character_import`;
@@ -61,6 +63,7 @@ export const ImportDndBeyondCharacters = async (playerIds, encounterGuid, encoun
     const successfulResponses = allSettledResponses
         .filter(result => result.status === "fulfilled" && result.value !== null && result.value.name !== 'name_not_found')
         .map(result => result.value);
+
 
     return successfulResponses;
 };
