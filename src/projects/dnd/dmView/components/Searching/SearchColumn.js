@@ -52,6 +52,7 @@ const getDefaultImages = (creature) => {
     }
 }
 const titles = ["Monster Search", "Homebrew", "Imports"]
+const panels = Array(3).fill(null); // Creates an array with 3 elements
 
 const SearchColumn = ({setCurrentEncounter, encounterGuid, socket}) => {
     const defaultDisplayNumber = 20;
@@ -69,16 +70,14 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, socket}) => {
     const [loading, setLoading] = useState(true);
     const [loadingPack, setLoadingPack] = useState({index: null, action: null});
 
-    console.log("Imported: ", importedPlayers)
     
     useEffect(() => {
-        console.log("selectedIndex", titles[selectedIndex], selectedIndex)
         if(!isDev) {
             async function fetchData() {
                 let list;
                 if(selectedIndex === 0) {
                     if(sortType === "shuffle" || sortType === "reshuffle") {
-                        list = shuffleArray(shuffledMonsterList)
+                        list = shuffledMonsterList
                     } else if(sortType === 'A') {
                         list = sortedMonsterList
                     } else if(sortType === 'Z') {
@@ -89,23 +88,16 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, socket}) => {
                 } else if (selectedIndex === 2) {
                     list = importedPlayers;
                 }
-    
+
                 const filtered = list.filter(item => {
                         let searchValue = searchTerm.toLowerCase()
-                        if(selectedIndex === 0 || selectedIndex === 1)
-                            return item.searchHint.toLowerCase().includes(searchValue) || item.filterDimensions.level === searchValue
-                        else {
-                            console.log(typeof searchValue)
-                            console.log(searchValue)
+                        return (selectedIndex === 0 || selectedIndex === 1)
+                            ? item.searchHint.toLowerCase().includes(searchValue) || item.filterDimensions.level === searchValue
+                            : [item.name, item.type, item.dnd_b_player_id].map(x => (x || '').toLowerCase())
+                                .some(x => x.includes(searchValue));
 
-                            console.log(typeof item.dnd_b_player_id)
-                            console.log(item.dnd_b_player_id)
-
-                            return [item.name.toLowerCase(), item.type.toLowerCase(), item.dnd_b_player_id.toLowerCase()]
-                                .every(x => x.includes(searchValue))
-                        }
                     }).slice(0, numberOfListItems);
-                
+
                 // Homebrew and Import do not need avatarUrls because they comes from the Dmb database
                 if(selectedIndex === 0) {
                     const promises = filtered.map(async creature => {
@@ -124,18 +116,26 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, socket}) => {
                     });
 
                     setDisplayedItems(await Promise.all(promises));
+                } else {
+                    setDisplayedItems(filtered)
                 }
 
-                console.log("setLoading(false)")
                 setLoading(false)
             }
-    
-            fetchData();
+
+            // Debounce delay of 200ms to before doing any filtering to allow for more accurate filtering and less renders
+            const timeoutId = setTimeout(() => {
+                fetchData();
+            }, 200); 
+
+            return () => clearTimeout(timeoutId); // Cleanup timeout
         }
-    }, [searchTerm, numberOfListItems, sortType, selectedIndex]);
+    }, [searchTerm, numberOfListItems, sortType, selectedIndex, importedPlayers, homebrewList]);
 
     const shuffleSearchList = () => {
         setLoading(true)
+        // This shuffle the shuffledMonsterList and then inside the useeffect it is set to displayedItems
+        shuffleArray(shuffledMonsterList)
         setSortType(prev => prev === 'shuffle' ? 'reshuffle' : 'shuffle')
     }
 
@@ -158,12 +158,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, socket}) => {
 
             const response = await axios.get(url).then(res => {
                 let data = res.data.data
-                if(data.length > 0) {
-                    return data[0]
-                }
-                else { 
-                    return res
-                }
+                return data.length > 0 ? data[0] : res
             })
             return response
 
@@ -180,11 +175,17 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, socket}) => {
     // Set the number of list items to 10 more when hit the limit
     const handleScroll = (e) => {
         const { scrollTop, scrollHeight, clientHeight } = e.target;
-        if (scrollHeight - scrollTop - 2 <= clientHeight) {
+        if (scrollHeight - scrollTop - (clientHeight/4) <= clientHeight) {
             setNumberOfListItems(loading ? displayedItems.length : displayedItems.length+defaultDisplayNumber);
-            e.target.scrollTop -= 10
         }
     };
+
+    const handleTabSelect = (index) => {
+        if(index != selectedIndex) {
+            setLoading(true); 
+            setSelectedIndex(index)
+        }
+    }
 
     let sortMessage = sortType === "shuffle" || sortType === "reshuffle" || sortType === "Z" ? "Sort A-Z" : "Sort Z-A"
 
@@ -192,7 +193,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, socket}) => {
         <>
             <div className='column columnBorder'>
                 <div className='infoContainer'>
-                    <Tabs onSelect={(index) => {setLoading(true); setSelectedIndex(index)}} forceRenderTabPanel={true}>
+                    <Tabs onSelect={(index) => handleTabSelect(index)} forceRenderTabPanel={true}>
                         <TabList>
                             <Tab>Search</Tab>
                             <Tab>Homebrew</Tab>
@@ -215,28 +216,20 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, socket}) => {
                         </div>
                         {loading ? (
                             <>
-                                <TabPanel>
-                                    <InfinitySpin visible={true} width="200" ariaLabel="infinity-spin-loading" />                      
-                                </TabPanel>
-                                <TabPanel>
-                                    <InfinitySpin visible={true} width="200" ariaLabel="infinity-spin-loading" />                      
-                                </TabPanel>
-                                <TabPanel>
-                                    <InfinitySpin visible={true} width="200" ariaLabel="infinity-spin-loading" />                      
-                                </TabPanel>
+                                {panels.map((_, index) => (
+                                    <TabPanel key={titles[index] + "spinner"}>
+                                        <InfinitySpin visible={true} width="200" ariaLabel="infinity-spin-loading" />                      
+                                    </TabPanel>
+                                ))}
                             </>
                         ) : ( 
                             <div className='monsterSearch' onScroll={handleScroll}>
                                 <ul className='monsterSearchList'>
-                                    <TabPanel>
-                                        <SearchTab displayedItems={displayedItems}  setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} searchTerm={searchTerm} setSearchSelectedCreature={setSearchSelectedCreature} loadingPack={loadingPack} setLoadingPack={setLoadingPack} socket={socket}/>
-                                    </TabPanel>
-                                    <TabPanel>
-                                        <SearchTab displayedItems={homebrewList}  setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} searchTerm={searchTerm} setSearchSelectedCreature={setSearchSelectedCreature} loadingPack={loadingPack} setLoadingPack={setLoadingPack} socket={socket}/>
-                                    </TabPanel>
-                                    <TabPanel>
-                                        <SearchTab displayedItems={importedPlayers}  setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} searchTerm={searchTerm} setSearchSelectedCreature={setSearchSelectedCreature} loadingPack={loadingPack} setLoadingPack={setLoadingPack} socket={socket}/>
-                                    </TabPanel>
+                                    {panels.map((_, index) => (
+                                        <TabPanel key={titles[index]}>
+                                            <SearchTab displayedItems={displayedItems} setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} searchTerm={searchTerm} setSearchSelectedCreature={setSearchSelectedCreature} loadingPack={loadingPack} setLoadingPack={setLoadingPack} socket={socket} />
+                                        </TabPanel>
+                                    ))}
                                 </ul>
                             </div>
                         )}

@@ -4,7 +4,7 @@ import { generateUniqueId, INIT_ENCOUNTER_NAME, backendUrl} from '../../constant
 import axios from 'axios';
 import Open5eToDmBMapper from '../../mappers/Open5eToDmBMapper'
 import { ThreeDots } from 'react-loader-spinner'
-
+import { useImportedPlayers } from '../../../../../providers/ImportedPlayersProvider';
 import 'react-tabs/style/react-tabs.css';
 
 const alignmentOptions = [
@@ -38,24 +38,29 @@ function highlightSubstring(substring, fullString) {
 }
 
 const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTerm, setSearchSelectedCreature, loadingPack, setLoadingPack, socket}) => {    
-   
+    const {setImportedPlayers} = useImportedPlayers();
+
     // Set the selected creature in search bar on left and gets the data from open5e
     const handleSearchSelectCreature = async (creature, action, event, index) => {
-        setLoadingPack({index: index, action: action})
         event.stopPropagation();
 
-        axios.get(`${backendUrl}/open5e_monster_import/`, {
-            params: { link: creature.link } // Include the link in query parameters
-        }).then(response => {
-            return Open5eToDmBMapper(response.data, creature.avatarUrl); 
-        }).then(mappedCreature => {
-            handleSelectCreature(mappedCreature, action);
-        }).then(() => {
-            setLoadingPack({index: null, action: null})
-
-        }).catch(error => {
-            console.warn(`Error loading creature: ${creature.id}`, error);
-        });
+        if(creature?.dnd_b_player_id !== undefined) {
+            if(action === "add") {
+                setLoadingPack({index: index, action: action})
+                handleSelectCreature(creature, action)                
+            }
+        } else {
+            setLoadingPack({index: index, action: action})
+            axios.get(`${backendUrl}/open5e_monster_import/`, {
+                params: { link: creature.link } // Include the link in query parameters
+            }).then(response => {
+                return Open5eToDmBMapper(response.data, creature.avatarUrl); 
+            }).then(mappedCreature => {
+                handleSelectCreature(mappedCreature, action);
+            }).catch(error => {
+                console.warn(`Error loading creature: ${creature.id}`, error);
+            });
+        }
     };
 
     const handleSelectCreature = (creature, action) => {
@@ -79,6 +84,8 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
         }
         else if(action === "select")
             setSearchSelectedCreature(creature);
+
+        setLoadingPack({index: null, action: null})
     };
 
 
@@ -115,17 +122,23 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
                             </div>
                         </div>
                         {index === loadingPack.index &&
-                        <div className='grow'>
-                            <ThreeDots
-                                visible={true}
-                                height="20"
-                                width="35"
-                                color="black"
-                                radius="1"
-                                ariaLabel="three-dots-loading"
-                            />
-                        </div>
-
+                            <div className='grow'>
+                                <ThreeDots
+                                    visible={true}
+                                    height="20"
+                                    width="35"
+                                    color="black"
+                                    radius="1"
+                                    ariaLabel="three-dots-loading"
+                                />
+                            </div>
+                        }
+                        {item?.dnd_b_player_id && 
+                            <button className='encounterCreatureX' style={{left: '5%'}} onClick={() => {
+                                setImportedPlayers(prev => prev.filter((_, i) => i !== index))
+                            }}>
+                                X
+                            </button>
                         }
                         <button className='monsterSearchAdd' onClick={(e) => handleSearchSelectCreature(item, "add", e, index)}>
                             ➕

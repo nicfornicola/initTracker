@@ -14,6 +14,28 @@ export const ImportedPlayersProvider = ({ children }) => {
     const { username } = useUser();
     const [importedPlayers, setImportedPlayers] = useState([]);
 
+    const addImportedPlayer = (newPlayers) => {
+        setImportedPlayers((prevPlayers) => {
+            const updatedPlayers = [...prevPlayers];
+    
+            newPlayers.forEach((newPlayer) => {
+                const existingPlayerIndex = updatedPlayers.findIndex(
+                    (player) => player.dnd_b_player_id === newPlayer.dnd_b_player_id
+                );
+    
+                if (existingPlayerIndex !== -1) {
+                    updatedPlayers[existingPlayerIndex] = newPlayer;
+                    console.log("overwriting", newPlayer.dnd_b_player_id, newPlayer.name)
+                } else {
+                    updatedPlayers.push(newPlayer);
+                    console.log("append", newPlayer.dnd_b_player_id, newPlayer.name)
+                }
+            });
+    
+            return updatedPlayers;
+        });
+    };
+
     useEffect(() => {
         if (username !== 'Username') {
             // Simulate fetching imported players
@@ -24,7 +46,7 @@ export const ImportedPlayersProvider = ({ children }) => {
         }
     }, [username]);
 
-    const value = useMemo(() => ({ importedPlayers, setImportedPlayers }), [importedPlayers]);
+    const value = useMemo(() => ({ importedPlayers, setImportedPlayers, addImportedPlayer }), [importedPlayers]);
 
     return (
         <ImportedPlayerContext.Provider value={value}>

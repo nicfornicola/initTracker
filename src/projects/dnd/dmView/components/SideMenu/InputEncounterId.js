@@ -10,7 +10,7 @@ import { useImportedPlayers } from '../../../../../providers/ImportedPlayersProv
 function InputEncounterId({setCurrentEncounter, encounterGuid, socket, onClick=() => {}}) { 
     const [dndbEncounterId, setDndbEncounterId] = useState('ece19692-6830-4ad3-9e28-ed612f3de79b');
     const eGuid = encounterGuid || generateUniqueId();
-    const {setImportedPlayers} = useImportedPlayers();
+    const {addImportedPlayer} = useImportedPlayers();
 
     const handleDndBEncounterId = (event) => {
         let input = event.target.value;
@@ -26,7 +26,7 @@ function InputEncounterId({setCurrentEncounter, encounterGuid, socket, onClick=(
                 // Turn the players objects into an array of numbers to match user input
                 const playerIds = players.map(player => player.id);
                 const dmbPlayers = await ImportDndBeyondCharacters(playerIds, eGuid, players);
-                setImportedPlayers((prev) => {return [...prev, ...dmbPlayers]})
+                addImportedPlayer(dmbPlayers)
 
                 // Send the whole monsters object since it comes with hp data
                 const dmbMonsters = await ImportDndBeyondMonsters(monsters, eGuid);

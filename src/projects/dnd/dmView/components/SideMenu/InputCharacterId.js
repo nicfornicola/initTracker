@@ -9,7 +9,7 @@ function InputCharacterId({setCurrentEncounter, encounterGuid, socket, onClick=(
     const [playerNumbers, setPlayerNumbers] = useState([]);
     const [playerNumberInputValue, setPlayerNumberInputValue] = useState('');
     const eGuid = encounterGuid || generateUniqueId();
-    const {setImportedPlayers} = useImportedPlayers();
+    const {addImportedPlayer} = useImportedPlayers();
 
     const handlePlayerNumbers = (event) => {
         let input = event.target.value;
@@ -19,20 +19,22 @@ function InputCharacterId({setCurrentEncounter, encounterGuid, socket, onClick=(
     }    
 
     const handleDndCharacterImport = async () => {
-        const playerData = await ImportDndBeyondCharacters(playerNumbers, eGuid);
-        setImportedPlayers((prev) => {return [...prev, ...playerData]})
+        const playerDataArray = await ImportDndBeyondCharacters(playerNumbers, eGuid);
+
+        addImportedPlayer(playerDataArray)
+
         setCurrentEncounter(prev => {
 
             if(prev.creatures.length === 0 && prev.encounterName === INIT_ENCOUNTER_NAME) {
                 socket.emit("newEncounter", eGuid)
             }
 
-            socket.emit("importedDndBCreatures", playerData);
+            socket.emit("importedDndBCreatures", playerDataArray);
 
             return {
             ...prev,
             encounterGuid: eGuid,
-            creatures: [...prev.creatures, ...playerData]
+            creatures: [...prev.creatures, ...playerDataArray]
           }
         });        
         setPlayerNumbers([])
