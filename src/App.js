@@ -11,6 +11,8 @@ import Users from "./projects/dnd/dmView/components/Users";
 import Blog from './projects/blog/components/Blog';
 import Pantheon from './projects/king/components/Pantheon';
 
+import Mixer from './projects/mixer/components/Mixer';
+
 import HowTo from './projects/dnd/dmView/components/SideMenu/HowToDMB';
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
                 <Route path="/users" element={<Users/>} />
                 <Route path="/king/" element={<Pantheon />} />
                 <Route path="/blog" element={<Blog/>}/>
+                <Route path="/mixer" element={<Mixer/>}/>
             </Routes>
         </ErrorBoundary>
     );

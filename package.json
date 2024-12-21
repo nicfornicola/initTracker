@@ -1,5 +1,5 @@
 {
-    "name": "Nic's Dnd Tracker",
+    "name": "DmBuddy",
     "version": "0.1.0",
     "homepage": "/",
     "private": true,
@@ -7,6 +7,7 @@
         "@emotion/react": "^11.13.0",
         "@emotion/styled": "^11.13.0",
         "@mui/material": "^5.16.4",
+        "@mui/icons-material": "^5.16.4",
         "@uiw/react-color-compact": "^2.3.2",
         "axios": "^1.7.2",
         "lz-string": "^1.5.0",
