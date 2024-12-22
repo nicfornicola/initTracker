@@ -536,6 +536,7 @@ hr {
     background-size: cover;
     background-position: center; 
     background-repeat: no-repeat; 
+    overflow: hidden;
 }
 
 .playerViewAdds {
@@ -1119,11 +1120,11 @@ input {
 
 .statblockOptionsFlex {
     display: flex;
-    justify-content: flex-end;
-    right: 20px;
-    top: 20px;
     position: absolute;
     height: 30px;
+    width: 95%;
+    align-items: center;
+
 }
 
 .statblockEdit,
@@ -1132,7 +1133,8 @@ input {
     cursor: pointer;
     visibility: hidden;
     z-index: 1;
-    margin: 3px
+    margin: 3px;
+    text-wrap: nowrap;
 }
 
 .editBlock {

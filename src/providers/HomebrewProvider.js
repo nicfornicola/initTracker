@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { useUser } from './UserProvider.js';
-import FakeHomebrew from '../projects/dnd/dmView/monsterJsons/FakeHomebrew.json'
+
 // Create a Context
 const HomebrewProviderContext = createContext();
 
@@ -14,17 +14,36 @@ export const HomebrewProvider = ({ children }) => {
     const { username } = useUser();
     const [homebrewList, setHomebrewList] = useState([]);
 
+    const addToHomebrewList = (newCreature) => {
+        setHomebrewList((prevCreatures) => {
+            const updatedCreatures = [...prevCreatures];
+                const foundIndex = updatedCreatures.findIndex(
+                    (creature) => creature.dmb_homebrew_guid === newCreature.dmb_homebrew_guid
+                );
+    
+                if (foundIndex !== -1) {
+                    updatedCreatures[foundIndex] = newCreature;
+                    console.log("overwriting", newCreature.dmb_homebrew_guid, newCreature.name)
+                } else {
+                    updatedCreatures.push(newCreature);
+                    console.log("append", newCreature.dmb_homebrew_guid, newCreature.name)
+                }
+                return updatedCreatures;
+        });
+            
+    };
+
     useEffect(() => {
         if (username !== 'Username') {
-            // Simulate fetching imported players
             console.log(`Logged in - getting homebrew for ${username}`);
-            setHomebrewList(FakeHomebrew);
+            setHomebrewList([]);
         } else {
-            setHomebrewList([]); // Clear the players if no username
+            setHomebrewList([]);
         }
     }, [username]);
 
-    const value = useMemo(() => ({ homebrewList, setHomebrewList }), [homebrewList]);
+    const value = useMemo(() => ({ homebrewList, setHomebrewList, addToHomebrewList }), [homebrewList]);
+    console.log(homebrewList)
 
     return (
         <HomebrewProviderContext.Provider value={value}>

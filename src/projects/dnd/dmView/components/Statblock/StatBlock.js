@@ -1,6 +1,6 @@
 import '../../../dmView/style/App.css';
 import React, {useState, useEffect} from 'react';
-import { getLevelData, effectImgMap, sizeOptions, typeOptions, alignmentOptions, raceOptions, isProd, addSign } from '../../constants';
+import { getLevelData, effectImgMap, sizeOptions, typeOptions, alignmentOptions, raceOptions, isProd, addSign, generateUniqueId } from '../../constants';
 import SkillGrid from '../SkillGrid';
 import EditStatDropdown from './EditStatDropdown';
 import EditStat from './EditStat';
@@ -9,6 +9,7 @@ import GridWrap from './GridWrap';
 import ContentArray from './ContentArray';
 import ContentString from './ContentString';
 import ActionTracker from './ActionTracker';
+import { useHomebrewProvider } from '../../../../../providers/HomebrewProvider';
 
 function formatSpeed(speed) {
     const order = ['walk', 'climb', 'burrow', 'swim', 'fly', 'hover'];
@@ -142,9 +143,11 @@ const CreatureInfo = ({creature}) => {
 }
 
 const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeStatBlock, socket}) => {
+    console.log(currentEncounter.creatures)
     const [isEditMode, setIsEditMode] = useState(false)
     const [creature, setCreature] = useState(currentEncounter.creatures[selectedIndex])
-
+    const {addToHomebrewList} = useHomebrewProvider();
+    
     // If selectedIndex changes a new creature was clicked
     useEffect(() => {
         setCreature(selectedIndex !== null ? currentEncounter.creatures[selectedIndex] : null)
@@ -354,13 +357,36 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
         setIsEditMode(!isEditMode)
     }
 
+    const handleAddToHomebrew = (creature, action="") => {
+        let homebrewCreature = creature;
+        //If it does not have a homebrew guid or new homebrew is clicked, add one then send it
+        if(!creature?.dmb_homebrew_guid || action === "new") {
+            homebrewCreature = {...creature, dmb_homebrew_guid: generateUniqueId()}
+            setCreature(homebrewCreature)
+            setCurrentEncounter(prev => {
+
+                prev.creatures[selectedIndex] = homebrewCreature
+                return prev
+            })
+        }
+           
+        addToHomebrewList(homebrewCreature)
+    }
+
     if(creature?.dnd_b_player_id || !creature?.creatureGuid) {
         return null;
     } else return (
         <div className='statBlock'>
             <div className='infoContainer'>
-                <div className='statblockOptionsFlex'>
-                    <button className='statblockEdit' onClick={fullEditStatBlock}>{isEditMode ? <>Save</> : <>Edit</>} </button>
+                <div className='statblockOptionsFlex' style={isEditMode ? {justifyContent: 'center', top: '-5px'} : {justifyContent: 'flex-end', top: ''}}>
+                    <button className='statblockEdit' onClick={fullEditStatBlock}>{isEditMode ? <>Save Creature</> : <>Edit</>} </button>
+                    {isEditMode && 
+                        <>
+                            <button className='statblockEdit' onClick={() => handleAddToHomebrew(creature)}>{creature?.dmb_homebrew_guid ? <>Overwrite Homebrew</> : <>Save to Homebrew</>}</button>
+                            {creature?.dmb_homebrew_guid && <button className='statblockEdit' onClick={() => handleAddToHomebrew(creature, "new")}> Save New Homebrew </button>}
+                        </>
+                    }
+
                     {!isEditMode && <button className='statblockX' onClick={closeStatBlock}>❌</button>}
                 </div>
                 {isEditMode ? (
@@ -369,7 +395,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                             {/* Edit creature image could be here too */}
                             <GridWrap columns={2}>
                                 <EditStat label={`Name ${!isProd ? creature.creatureGuid : ''}`} value={creature?.name || ''} cKey={'name'} handleChange={handleChange} />
-                                <EditStatDropdown label={"Race"} options={raceOptions} value={creature.subtype} cKey={'subtype'} handleChange={handleChange}/> 
+                                <EditStatDropdown label={`Race ${!isProd && (creature?.dmb_homebrew_guid || '')}`} options={raceOptions} value={creature.subtype} cKey={'subtype'} handleChange={handleChange}/> 
                             </GridWrap>
                             <hr className="editlineSeperator" />
                             <GridWrap>

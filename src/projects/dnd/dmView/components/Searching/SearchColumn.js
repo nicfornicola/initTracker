@@ -91,7 +91,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, socket}) => {
 
                 const filtered = list.filter(item => {
                         let searchValue = searchTerm.toLowerCase()
-                        return (selectedIndex === 0 || selectedIndex === 1)
+                        return (selectedIndex === 0)
                             ? item.searchHint.toLowerCase().includes(searchValue) || item.filterDimensions.level === searchValue
                             : [item.name, item.type, item.dnd_b_player_id].map(x => (x || '').toLowerCase())
                                 .some(x => x.includes(searchValue));
@@ -181,7 +181,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, socket}) => {
     };
 
     const handleTabSelect = (index) => {
-        if(index != selectedIndex) {
+        if(index !== selectedIndex) {
             setLoading(true); 
             setSelectedIndex(index)
         }

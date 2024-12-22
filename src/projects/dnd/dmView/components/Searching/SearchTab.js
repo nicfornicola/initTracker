@@ -5,6 +5,7 @@ import axios from 'axios';
 import Open5eToDmBMapper from '../../mappers/Open5eToDmBMapper'
 import { ThreeDots } from 'react-loader-spinner'
 import { useImportedPlayers } from '../../../../../providers/ImportedPlayersProvider';
+import { useHomebrewProvider } from '../../../../../providers/HomebrewProvider';
 import 'react-tabs/style/react-tabs.css';
 
 const alignmentOptions = [
@@ -17,6 +18,17 @@ const alignmentOptions = [
     'chaotic evil','unaligned' 
 ]
 
+function getKey(c) {
+    let keyExtra = ""
+    if(c?.from === 'dnd_b')
+        keyExtra = c.dnd_b_player_id
+    else if(c?.dmb_homebrew_guid)
+        keyExtra = c?.dmb_homebrew_guid
+    else 
+        keyExtra = c.filterDimensions.source
+
+    return c.name + keyExtra;
+}
 
 function highlightSubstring(substring, fullString) {
     if (!substring) return fullString;
@@ -39,6 +51,7 @@ function highlightSubstring(substring, fullString) {
 
 const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTerm, setSearchSelectedCreature, loadingPack, setLoadingPack, socket}) => {    
     const {setImportedPlayers} = useImportedPlayers();
+    const {setHomebrewList} = useHomebrewProvider();
 
     // Set the selected creature in search bar on left and gets the data from open5e
     const handleSearchSelectCreature = async (creature, action, event, index) => {
@@ -88,13 +101,12 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
         setLoadingPack({index: null, action: null})
     };
 
-
     return (
         <>
             {displayedItems.length > 0 ? ( displayedItems?.map((item, index) => (
                 <li
                     className='listItem'
-                    key={item.id + (item?.from === 'dnd_b' ? item.dnd_b_player_id : item.filterDimensions.source)}
+                    key={getKey(item)}
                     onClick={(e) => handleSearchSelectCreature(item, "select", e, index)}
                 >
                     <div className='searchListCreatureContainer animated-box'>
@@ -109,14 +121,24 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
                                     </>
                                 ) : (
                                     <>
-                                        <span className='monsterSearchDetailText'> CR: {item.filterDimensions.level}</span>
-                                        <span className='monsterSearchDetailText'> - {highlightSubstring(searchTerm, item.filterDimensions.type.split(' ')[0])}</span>
-                                        <span className='monsterSearchDetailText'> - {item.filterDimensions.sourceShort}</span>
-                                        {(searchTerm.length >= 4 && alignmentOptions.includes(searchTerm.toLowerCase())) && 
-                                            <span className='monsterSearchDetailText' style={{textShadow: '1px 1px 2px gray',}}> 
-                                                - <b>{searchTerm.toLowerCase()}</b>
-                                            </span>
-                                        }
+                                        {item?.dmb_homebrew_guid ? (
+                                            <>
+                                                <span className='monsterSearchDetailText'> CR: {item.challenge_rating}</span>
+                                                {item?.creature_type !== "--" && <span className='monsterSearchDetailText'> - {highlightSubstring(searchTerm, item.creature_type)}</span>}
+                                                <span className='monsterSearchDetailText'> - {item?.dmb_homebrew_guid}</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span className='monsterSearchDetailText'> CR: {item.filterDimensions.level}</span>
+                                                <span className='monsterSearchDetailText'> - {highlightSubstring(searchTerm, item.filterDimensions.type.split(' ')[0])}</span>
+                                                <span className='monsterSearchDetailText'> - {item.filterDimensions.sourceShort}</span>
+                                                {(searchTerm.length >= 4 && alignmentOptions.includes(searchTerm.toLowerCase())) && 
+                                                    <span className='monsterSearchDetailText' style={{textShadow: '1px 1px 2px gray',}}> 
+                                                        - <b>{searchTerm.toLowerCase()}</b>
+                                                    </span>
+                                                }
+                                            </>
+                                        )}
                                     </>
                                 )}
                             </div>
@@ -136,6 +158,14 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
                         {item?.dnd_b_player_id && 
                             <button className='encounterCreatureX' style={{left: '5%'}} onClick={() => {
                                 setImportedPlayers(prev => prev.filter((_, i) => i !== index))
+                            }}>
+                                X
+                            </button>
+                        }
+
+                        {item?.dmb_homebrew_guid && 
+                            <button className='encounterCreatureX' style={{left: '5%'}} onClick={() => {
+                                setHomebrewList(prev => prev.filter((_, i) => i !== index))
                             }}>
                                 X
                             </button>
