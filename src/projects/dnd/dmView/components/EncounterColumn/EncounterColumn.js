@@ -60,7 +60,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         event.stopPropagation(); 
 
         // if deleting the creature currently selected unselect it
-        if(selectedIndex !== null && xCreature.creatureGuid === currentEncounter.creatures[selectedIndex].creatureGuid) {
+        if(selectedIndex !== null && xCreature?.creatureGuid === currentEncounter.creatures[selectedIndex]?.creatureGuid) {
             setSelectedIndex(null)
         }
 

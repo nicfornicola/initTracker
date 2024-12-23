@@ -141,6 +141,7 @@ export const getLevelData = (key) => {
 }
 
 export const isProd = window.location.href.includes("dmbuddy.com") 
+export const cheaterMode = window.location.href.includes("cheater") 
 export const isDev = !isProd && window.location.href.includes("/?") 
 export const backendUrl = isProd
                     ? `https://dm-buddy-svc-359507bf4ad4.herokuapp.com` 

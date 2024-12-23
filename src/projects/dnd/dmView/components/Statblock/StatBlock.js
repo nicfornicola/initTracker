@@ -364,13 +364,12 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
             homebrewCreature = {...creature, dmb_homebrew_guid: generateUniqueId()}
             setCreature(homebrewCreature)
             setCurrentEncounter(prev => {
-
                 prev.creatures[selectedIndex] = homebrewCreature
                 return prev
             })
         }
-           
-        addToHomebrewList(homebrewCreature)
+        // Give the homebrew version a different creatureGuid
+        addToHomebrewList({...homebrewCreature})
     }
 
     if(creature?.dnd_b_player_id || !creature?.creatureGuid) {

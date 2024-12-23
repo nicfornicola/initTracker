@@ -5,7 +5,7 @@ import YouTubeEmbed from '../../dmView/components/EncounterColumn/YouTubeEmbed.j
 import io from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 import defaultBackground from '../../dmView/pics/backgrounds/happyTavern.png';
-import { backendUrl } from '../../dmView/constants.js';
+import { backendUrl, cheaterMode } from '../../dmView/constants.js';
 
 function getVideoLink(thumbnailLink) {
     const videoId = thumbnailLink.split("vi/")[1].split('/max')[0];
@@ -123,7 +123,6 @@ function PlayerPage() {
                 <YouTubeEmbed embedUrl={playerViewBackground.src}/>
             }
 
-
             {roundNum !== 0 && 
                 <div className='roundNum'>
                     {roundNum}
@@ -135,7 +134,7 @@ function PlayerPage() {
                     <div className='loading'>Dm not streaming... get it together man..</div>
                 ) : (
                     creatures.map((creature, index) => { 
-                        return (((creature.type === 'monster' || creature.type === 'global') && creature.alignment !== "ally" && hideEnemies) || creature.hidden) 
+                        return (((creature.type === 'monster' || creature.type === 'global') && creature.alignment !== "ally" && hideEnemies) || creature.hidden || !cheaterMode) 
                         ? null
                         : <Icon key={creature.creatureGuid} isTurn={turnNum === index+1} creature={creature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggle={enemyBloodToggle} iconSize={iconSize}/>;
                     })
