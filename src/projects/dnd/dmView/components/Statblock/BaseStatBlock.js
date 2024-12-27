@@ -167,7 +167,7 @@ const BaseStatBlock = ({creature, closeStatBlock, loading}) => {
                     </div>
                 ) : (
                     <>
-                        <div className='statblockOptionsFlex'>
+                        <div className='statblockOptionsFlex' style={{justifyContent: 'flex-end'}}>
                             <button className='statblockX' onClick={closeStatBlock}>❌</button>
                         </div>
                         <div className='topInfo shadowBox'>

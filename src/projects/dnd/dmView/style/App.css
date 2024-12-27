@@ -1124,14 +1124,13 @@ input {
     height: 30px;
     width: 95%;
     align-items: center;
-
 }
 
 .statblockEdit,
 .statblockX {
     background-color: rgb(186, 186, 186);
     cursor: pointer;
-    visibility: hidden;
+    visibility: visible;
     z-index: 1;
     margin: 3px;
     text-wrap: nowrap;

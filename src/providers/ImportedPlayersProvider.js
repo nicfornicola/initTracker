@@ -21,34 +21,39 @@ export const ImportedPlayersProvider = ({ children }) => {
         const updatedPlayers = [...importedPlayers];
 
         newPlayers.forEach((newPlayer) => {
-            // let action = "append"
-            // newPlayer = {...newPlayer, creatureGuid: generateUniqueId(), encounterGuid: null, username: username}
+            let action = "append"
+            newPlayer = {...newPlayer, creatureGuid: generateUniqueId(), encounterGuid: null, username: username}
 
-            const existingPlayerIndex = updatedPlayers.findIndex(
+            const foundIndex = updatedPlayers.findIndex(
                 (player) => player.dnd_b_player_id === newPlayer.dnd_b_player_id
             );
 
-            if (existingPlayerIndex !== -1) {
-                updatedPlayers[existingPlayerIndex] = newPlayer;
-                console.log("overwrite", newPlayer.dnd_b_player_id, newPlayer.name)
-                // action = "overwrite"
-
+            if (foundIndex !== -1) {
+                newPlayer = {...newPlayer, creatureGuid: updatedPlayers[foundIndex].creatureGuid};
+                updatedPlayers[foundIndex] = newPlayer
+                action = "overwrite"
             } else {
                 updatedPlayers.push(newPlayer);
-                console.log("append", newPlayer.dnd_b_player_id, newPlayer.name)
             }
 
-            // const url = `${backendUrl}/dmb_update_custom/${username}/${action}`;
-            // axios.post(url, newPlayer, {
-            //     headers: { 'Content-Type': 'application/json' },
-            // }).then((res) => {
-            //     console.log(res)
-            // });
+            const url = `${backendUrl}/dmb_update_homebrew/${username}/${action}`;
+            axios.post(url, newPlayer, {
+                headers: { 'Content-Type': 'application/json' },
+            });
         });
     
         setImportedPlayers(updatedPlayers);
-
         
+    };
+
+    const removeFromImportList  = (creature, index) => {
+        const url = `${backendUrl}/dmb_update_homebrew/${username}/delete`;
+        axios.post(url, creature, {
+            headers: { 'Content-Type': 'application/json' },
+        }).then((res) => {
+            if(res.status === 200)
+                setImportedPlayers(prev => prev.filter((_, i) => i !== index))
+        });
     };
 
     useEffect(() => {
@@ -58,15 +63,14 @@ export const ImportedPlayersProvider = ({ children }) => {
             const url = `${backendUrl}/dmb_get_imports/${username}`;
         
             axios.get(url).then((res) => {
-                console.log(res)
-                setImportedPlayers([]);
+                setImportedPlayers(res.data);
             });
         } else {
             setImportedPlayers([]); // Clear the players if no username
         }
     }, [username]);
 
-    const value = useMemo(() => ({ importedPlayers, setImportedPlayers, addImportedPlayer }), [importedPlayers]);
+    const value = useMemo(() => ({ importedPlayers, setImportedPlayers, addImportedPlayer, removeFromImportList }), [importedPlayers]);
 
     return (
         <ImportedPlayerContext.Provider value={value}>

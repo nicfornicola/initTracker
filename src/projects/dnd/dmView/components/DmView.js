@@ -152,9 +152,7 @@ const DmView = () => {
                 socket.emit('connectDmView', username); 
             });
 
-            // Recieve messages from backend
             socket.on('sendSavedEncounters', (encountersResponse) => {
-                console.log("Encounter Recieved:", encountersResponse.length, encountersResponse)
                 setSavedEncounters(encountersResponse)
             });
 
@@ -222,8 +220,6 @@ const DmView = () => {
                                 break;
                             }
                         }
-
-                    console.log("REFRESHED:", creature.name)
                 }
                 return creature
             });

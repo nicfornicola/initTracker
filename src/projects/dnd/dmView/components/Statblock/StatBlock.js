@@ -143,7 +143,6 @@ const CreatureInfo = ({creature}) => {
 }
 
 const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeStatBlock, socket}) => {
-    console.log(currentEncounter.creatures)
     const [isEditMode, setIsEditMode] = useState(false)
     const [creature, setCreature] = useState(currentEncounter.creatures[selectedIndex])
     const {addToHomebrewList} = useHomebrewProvider();
@@ -378,13 +377,13 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
         <div className='statBlock'>
             <div className='infoContainer'>
                 <div className='statblockOptionsFlex' style={isEditMode ? {justifyContent: 'center', top: '-5px'} : {justifyContent: 'flex-end', top: ''}}>
-                    <button className='statblockEdit' onClick={fullEditStatBlock}>{isEditMode ? <>Save Creature</> : <>Edit</>} </button>
                     {isEditMode && 
                         <>
-                            <button className='statblockEdit' onClick={() => handleAddToHomebrew(creature)}>{creature?.dmb_homebrew_guid ? <>Overwrite Homebrew</> : <>Save to Homebrew</>}</button>
                             {creature?.dmb_homebrew_guid && <button className='statblockEdit' onClick={() => handleAddToHomebrew(creature, "new")}> Save New Homebrew </button>}
+                            <button className='statblockEdit' onClick={() => handleAddToHomebrew(creature)}>{creature?.dmb_homebrew_guid ? <>Overwrite Homebrew</> : <>Save to Homebrew</>}</button>
                         </>
                     }
+                    <button className='statblockEdit' onClick={fullEditStatBlock}>{isEditMode ? <>Save Creature</> : <>Edit</>} </button>
 
                     {!isEditMode && <button className='statblockX' onClick={closeStatBlock}>❌</button>}
                 </div>

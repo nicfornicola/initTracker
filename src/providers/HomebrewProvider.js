@@ -30,29 +30,31 @@ export const HomebrewProvider = ({ children }) => {
                 //Get the new creatures stats but keep the old homebrew creatureGuid and homebrewGuid
                 newCreature = {...newCreature, creatureGuid: updatedCreatures[foundIndex].creatureGuid}
                 updatedCreatures[foundIndex] = newCreature;
-                console.log("overwriting", newCreature.dmb_homebrew_guid, newCreature.name)
                 action = "overwrite"
 
             } else {
                 // Assign new creatureGuid to NEW homebrew creature, the homebrewGuid is assigned in statblock so it can be updated in the currentEncounter easier
                 newCreature = {...newCreature, creatureGuid: generateUniqueId()}
                 updatedCreatures.push(newCreature);
-                console.log("append", newCreature.dmb_homebrew_guid, newCreature.name)
             }
 
         setHomebrewList(updatedCreatures)
 
-        const url = `${backendUrl}/dmb_update_custom/${username}/${action}`;
-        console.log("newCreature")
-        console.log(newCreature)
+        const url = `${backendUrl}/dmb_update_homebrew/${username}/${action}`;
         axios.post(url, newCreature, {
             headers: { 'Content-Type': 'application/json' },
-        }).then((res) => {
-            console.log("====res=====")
-            console.log(res.data)
-            console.log(res.body)
         });
             
+    };
+
+    const removeFromHomebrewList  = (creature, index) => {
+        const url = `${backendUrl}/dmb_update_homebrew/${username}/delete`;
+        axios.post(url, creature, {
+            headers: { 'Content-Type': 'application/json' },
+        }).then((res) => {
+            if(res.status === 200)
+                setHomebrewList(prev => prev.filter((_, i) => i !== index))
+        });
     };
 
     useEffect(() => {
@@ -60,7 +62,6 @@ export const HomebrewProvider = ({ children }) => {
             console.log(`Logged in - getting homebrew for ${username}`);
             const url = `${backendUrl}/dmb_get_homebrew/${username}`;
             axios.get(url).then((res) => {
-                console.log(res.data)
                 setHomebrewList(res.data);
             });
         } else {
@@ -68,8 +69,7 @@ export const HomebrewProvider = ({ children }) => {
         }
     }, [username]);
 
-    const value = useMemo(() => ({ homebrewList, setHomebrewList, addToHomebrewList }), [homebrewList]);
-    console.log(homebrewList)
+    const value = useMemo(() => ({ homebrewList, setHomebrewList, addToHomebrewList, removeFromHomebrewList }), [homebrewList]);
 
     return (
         <HomebrewProviderContext.Provider value={value}>

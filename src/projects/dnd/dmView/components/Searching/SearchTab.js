@@ -50,15 +50,15 @@ function highlightSubstring(substring, fullString) {
 }
 
 const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTerm, setSearchSelectedCreature, loadingPack, setLoadingPack, socket}) => {    
-    const {setImportedPlayers} = useImportedPlayers();
-    const {setHomebrewList} = useHomebrewProvider();
+    const {removeFromImportList} = useImportedPlayers();
+    const {removeFromHomebrewList} = useHomebrewProvider();
 
     // Set the selected creature in search bar on left and gets the data from open5e
     const handleSearchSelectCreature = async (creature, action, event, index) => {
         event.stopPropagation();
 
-        if(creature?.dnd_b_player_id !== undefined) {
-            if(action === "add") {
+        if(creature?.creatureGuid !== undefined) {
+            if(action === "add" || (action === "select" && !creature?.dnd_b_player_id)) {
                 setLoadingPack({index: index, action: action})
                 handleSelectCreature(creature, action)                
             }
@@ -103,35 +103,35 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
 
     return (
         <>
-            {displayedItems.length > 0 ? ( displayedItems?.map((item, index) => (
+            {displayedItems.length > 0 ? ( displayedItems?.map((creature, index) => (
                 <li
                     className='listItem'
-                    key={getKey(item)}
-                    onClick={(e) => handleSearchSelectCreature(item, "select", e, index)}
+                    key={getKey(creature)}
+                    onClick={(e) => handleSearchSelectCreature(creature, "select", e, index)}
                 >
                     <div className='searchListCreatureContainer animated-box'>
-                        <img className="monsterSearchIcon" src={item.avatarUrl} alt={"list Icon"} />
+                        <img className="monsterSearchIcon" src={creature.avatarUrl} alt={"list Icon"} />
                         <div className='searchListCreatureDetails'>
-                        <strong>{highlightSubstring(searchTerm, item.name)}</strong>
+                        <strong>{highlightSubstring(searchTerm, creature.name)}</strong>
                             <div className='searchCreatureSmallDetails'>
-                                {item?.from === 'dnd_b' ? (
+                                {creature?.from === 'dnd_b' ? (
                                     <>
-                                        <span className='monsterSearchDetailText'>{highlightSubstring(searchTerm, item.type)}</span>
-                                        <span className='monsterSearchDetailText'> - {highlightSubstring(searchTerm, item.dnd_b_player_id)}</span>
+                                        <span className='monsterSearchDetailText'>{highlightSubstring(searchTerm, creature.type)}</span>
+                                        <span className='monsterSearchDetailText'> - {highlightSubstring(searchTerm, creature.dnd_b_player_id)}</span>
                                     </>
                                 ) : (
                                     <>
-                                        {item?.dmb_homebrew_guid ? (
+                                        {creature?.dmb_homebrew_guid ? (
                                             <>
-                                                <span className='monsterSearchDetailText'> CR: {item.challenge_rating}</span>
-                                                {item?.creature_type !== "--" && <span className='monsterSearchDetailText'> - {highlightSubstring(searchTerm, item.creature_type)}</span>}
-                                                <span className='monsterSearchDetailText'> - {item?.dmb_homebrew_guid}</span>
+                                                <span className='monsterSearchDetailText'> CR: {creature.challenge_rating}</span>
+                                                {creature?.creature_type !== "--" && <span className='monsterSearchDetailText'> - {highlightSubstring(searchTerm, creature.creature_type)}</span>}
+                                                <span className='monsterSearchDetailText'> - {creature?.dmb_homebrew_guid}</span>
                                             </>
                                         ) : (
                                             <>
-                                                <span className='monsterSearchDetailText'> CR: {item.filterDimensions.level}</span>
-                                                <span className='monsterSearchDetailText'> - {highlightSubstring(searchTerm, item.filterDimensions.type.split(' ')[0])}</span>
-                                                <span className='monsterSearchDetailText'> - {item.filterDimensions.sourceShort}</span>
+                                                <span className='monsterSearchDetailText'> CR: {creature.filterDimensions.level}</span>
+                                                <span className='monsterSearchDetailText'> - {highlightSubstring(searchTerm, creature.filterDimensions.type.split(' ')[0])}</span>
+                                                <span className='monsterSearchDetailText'> - {creature.filterDimensions.sourceShort}</span>
                                                 {(searchTerm.length >= 4 && alignmentOptions.includes(searchTerm.toLowerCase())) && 
                                                     <span className='monsterSearchDetailText' style={{textShadow: '1px 1px 2px gray',}}> 
                                                         - <b>{searchTerm.toLowerCase()}</b>
@@ -155,22 +155,21 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
                                 />
                             </div>
                         }
-                        {item?.dnd_b_player_id && 
+                        {creature?.dnd_b_player_id && 
                             <button className='encounterCreatureX' style={{left: '5%'}} onClick={() => {
-                                setImportedPlayers(prev => prev.filter((_, i) => i !== index))
+                                removeFromImportList(creature, index)
                             }}>
                                 X
                             </button>
                         }
-
-                        {item?.dmb_homebrew_guid && 
+                        {creature?.dmb_homebrew_guid && 
                             <button className='encounterCreatureX' style={{left: '5%'}} onClick={() => {
-                                setHomebrewList(prev => prev.filter((_, i) => i !== index))
+                                removeFromHomebrewList(creature, index)
                             }}>
                                 X
                             </button>
                         }
-                        <button className='monsterSearchAdd' onClick={(e) => handleSearchSelectCreature(item, "add", e, index)}>
+                        <button className='monsterSearchAdd' onClick={(e) => handleSearchSelectCreature(creature, "add", e, index)}>
                             ➕
                         </button>
                     </div>
