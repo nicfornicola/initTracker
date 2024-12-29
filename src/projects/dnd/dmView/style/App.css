@@ -996,11 +996,12 @@ input {
     position: relative;
     width: 96.6%;
     margin-top: 2%;
-    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.5);
     z-index: 1;
     background-color: #e0d8b2;
     border-radius: 10px 10px 0px 0px;
     padding: 10px 0px 0px 10px;
+    border-bottom: 2px solid #444444;
 }
 
 .searchInputFlex {
@@ -1474,7 +1475,7 @@ input {
     margin-top: 1%;
     background-color: #cfc9a8;
     box-sizing: border-box;
-    border-radius: 0;
+    border-radius: 5px;
 }
 
 .encounterCreatureLeftContainer,
@@ -1522,21 +1523,56 @@ input {
     opacity: 1;
 }
 
+.importInputs {
+    display: flex;
+    width: 96.6%;
+    margin-top: 2%;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.5);
+    background-color: #e0d8b2;
+    border-radius: 10px 10px 10px 10px;
+    padding: 10px 0px 10px 10px;
+}
+
 .dndBImportContainer {
     display: flex;
+    height: 30px;
+}
+
+.menuIconImports {
+    height: inherit;
 }
 
 .dndBImportButtons {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    position: relative;
+    display: inline-block;
+    height: inherit;
 }
 
 .dndbInput {
     width: 80%;
+    height: inherit;
     margin: 0;
-    padding: 5px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 25px;
+    border: 0;
+    border-radius: 0 5px 5px 0;
+    font-size: 16px
+}
 
+.dndbInputButtonSearch {
+    position: absolute; 
+    right: 6%;
+    top: 15%;
+    border: none; 
+    background: none; 
+    cursor: pointer;
+    padding: 2px;
+}
+
+.dndbInputButtonSearch:hover {
+    background-color: #84848472;
+    border-radius: 5px;
 }
 
 .dndBInputContainer {
@@ -1888,6 +1924,7 @@ input {
 
 .uploadIconContainer,
 .monsterEncounterIcon {
+    box-sizing: border-box;
     position: absolute;
     height: 100%;
     width: 100%;

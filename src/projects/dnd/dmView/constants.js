@@ -476,8 +476,8 @@ const sharedItems = {
     "xp": "--"
 }
 
-export const COLOR_RED = "#F44E3B"
-export const COLOR_GREEN = "#68BC00"
+export const COLOR_RED = "#D44E3B"
+export const COLOR_GREEN = "#68AA33"
 
 export const dummyDefault = {
     ...sharedItems,

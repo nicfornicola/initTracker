@@ -4,10 +4,11 @@ import eyeClosed from '../../pics/icons/eyeClosed.png';
 import eyeOpen from '../../pics/icons/eyeOpen.png'; 
 import OptionButton from '../EncounterColumn/OptionButton';
 import isPlayerImg from '../../pics/icons/isPlayerImg.png';
+import isPetImg from '../../pics/icons/pet.PNG';
 import FlagPole from './FlagPole';
 import EffectImg from '../../pics/icons/effectImg.png';
 import Compact from '@uiw/react-color-compact';
-import { effectImgMap, addSign} from '../../constants.js';
+import { effectImgMap, addSign, COLOR_GREEN, COLOR_RED} from '../../constants.js';
 import Effect from './Effect.js';
 
 const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCurrentEncounter, scrollPosition, handleUploadMonsterImage, setSelectedIndex, clickEncounterCreatureX, resort, socket}) => {
@@ -32,7 +33,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const [effectWidgetPosition, setEffectWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0, width: 100})
 
     const [isPlayer, setIsPlayer] = useState(creature.type === "player");
-    const [isPet, setIsPet] = useState(creature.type === "pet");
+    const [isPet, setIsPet] = useState(creature.alignment === "pet");
     const [alignment, setAlignment] = useState(creature.alignment);
     const [borderColor, setBorderColor] = useState(creature.border);
     const [effects, setEffects] = useState(creature.effects);
@@ -255,7 +256,13 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }  
     
     const handleAlignmentChange = (team) => {
-        if(team !== alignment) {
+        // If the creature is a pet and the new team is 'neutral' or 'enemy'
+        if (team === 'neutral' || team === 'enemy') {
+            setIsPet(false); // Remove pet status
+        }
+
+        // If pet is false dont let ally be chosen
+        if (!isPet || team === 'neutral' || team === 'enemy') {
             setAlignment(team);
             socket.emit('creatureAlignmentChange', team, creature.creatureGuid, "dm");
         }
@@ -277,8 +284,11 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
 
     const handlePetCheckboxChange = (event) => {
         let checked = event.target.checked
+        let team = checked ? 'pet' : 'ally'
+
         setIsPet(checked);
-        handleAlignmentChange(checked ? 'pet' : 'ally')
+        setAlignment(team);
+        socket.emit('creatureAlignmentChange', team, creature.creatureGuid, "dm");
     };
 
     const handleTeamChangeWidget = (event) => {
@@ -344,9 +354,13 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     } else if(isBloodied) {
         color = "orange"
     }
-    
+
     let hpStyle = {color: color, borderColor: color}
     let effectsCount = effects.length > 0 ? `x${effects.length}` : ''
+    let teamColor = COLOR_GREEN
+    if (alignment === "enemy") teamColor = COLOR_RED
+    else if (alignment === "neutral") teamColor = '#999999'
+
     return (
             <li className='listItem'
                 onClick={() => setSelectedIndex(index)}
@@ -367,11 +381,11 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                         transition: 'background-position .5s, box-shadow 0.15s ease',
                     }} 
                 >
-                    <div className='encounterCreatureLeftContainer'>
+                    <div className='encounterCreatureLeftContainer' >
                         <div className='initiativeInputContainer'>
-                            <input className='inputButton' onFocus={handleHighlight} onBlur={handleInitiativeCheck} type='text' value={creature.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
+                            <input style={{borderLeft: `6px solid ${teamColor}`}}className='inputButton' onFocus={handleHighlight} onBlur={handleInitiativeCheck} type='text' value={creature.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                         </div>
-                        <div className="monsterEncounterIconContainer" onClick={(event) => handleUploadMonsterImage(event, creature)}>
+                        <div className="monsterEncounterIconContainer" onClick={(event) => handleUploadMonsterImage(event, creature)} >
                             <img className="monsterEncounterIcon" src={creature.avatarUrl} alt={"list Icon"} />
                             <div className='uploadIconContainer'>
                                 <img className="uploadIcon" src={uploadImage} alt={"list Icon"} />
@@ -396,7 +410,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                             <OptionButton src={hidden ? eyeClosed : eyeOpen}  message={(hidden ? "Hidden" : "Visible")} onClickFunction={handleHideEnemy} imgClassName={'option-no-margin'} />
                         </div>
                         <div>
-                            <FlagPole flagColor={borderColor} handleTeamChangeWidget={handleTeamChangeWidget} ref={teamButtonRef} alignment={alignment} isWidgetOpen={openTeamWidget} />
+                            <FlagPole flagColor={borderColor} teamColor={teamColor} handleTeamChangeWidget={handleTeamChangeWidget} ref={teamButtonRef} alignment={alignment} isWidgetOpen={openTeamWidget} />
                         </div>
                         <div ref={effectButtonRef} style={{position:"relative"}} onClick={(event) => handleOpenEffectWidget(event)}>
                             <OptionButton src={EffectImg} message={`Effects ${effectsCount}`} imgStyle={{margin: 0, animation: effectsCount ? 'shadowPulse 4s ease-in-out infinite' : ''}}/>
@@ -430,9 +444,16 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                                     <span className='tempHp'> (+{creature.hit_points_temp}) </span>
                                 )}
                             </button>
-                            {creature.type === "player" && 
+                            {creature.type === "player" ? 
                                 <OptionButton src={isPlayerImg} message={'Player Token'} wrapperClassName={'hpButtonPlayerOverlay'} imgStyle={{margin: 0}} onClickFunction={(event) => openEditHpWidget(event)}/>
+                            :
+                                <>
+                                    {creature.alignment === "pet" && 
+                                        <OptionButton src={isPetImg} message={'Pet Token'} wrapperClassName={'hpButtonPlayerOverlay'} imgStyle={{margin: 0}} onClickFunction={(event) => openEditHpWidget(event)}/>
+                                    }
+                                </>
                             }
+                            
                         </div>
                     :
                         <div className='encounterCreaturesHp'/>

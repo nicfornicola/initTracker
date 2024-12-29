@@ -13,7 +13,7 @@ const Home = ({savedEncounters, setSavedEncounters, currentEncounter, setCurrent
                 <div className='homepageTopContent'>
                     <h1>DmBuddy.com</h1>
                     <span>
-                        Home Brew Focused Encounter Building and Player View
+                        Home Brew Focused Encounter Builder and Player View
                     </span>
                     <span className='firstLoadExtra'>
                         (with Dnd Beyond Importing)
@@ -21,7 +21,6 @@ const Home = ({savedEncounters, setSavedEncounters, currentEncounter, setCurrent
                 </div>
 
                 <div className="homePageGrid">
-                    
                     <div className="gridCell largeCell">
                         <SignIn socket={socket}/>
                     </div>
@@ -29,7 +28,6 @@ const Home = ({savedEncounters, setSavedEncounters, currentEncounter, setCurrent
                         <button className='homePageButton' onClick={handleNewEncounter} > New Encounter </button>
                     </div>
                     <div className="gridCell">
-                        Import Dnd Beyond Encounter
                         <InputEncounterId 
                             setCurrentEncounter={setCurrentEncounter} 
                             encounterGuid={encounterGuid} 
@@ -47,7 +45,6 @@ const Home = ({savedEncounters, setSavedEncounters, currentEncounter, setCurrent
                         />
                     </div>
                     <div className="gridCell">
-                        Import Dnd Beyond Character
                         <InputCharacterId 
                             setCurrentEncounter={setCurrentEncounter} 
                             encounterGuid={encounterGuid} 

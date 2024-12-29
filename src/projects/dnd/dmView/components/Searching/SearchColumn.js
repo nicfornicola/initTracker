@@ -13,6 +13,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { useImportedPlayers } from '../../../../../providers/ImportedPlayersProvider';
 import { useHomebrewProvider } from '../../../../../providers/HomebrewProvider';
+import InputCharacterId from '../SideMenu/InputCharacterId';
+import InputEncounterId from '../SideMenu/InputEncounterId';
 
 // Function to get the image URL based on the type
 const getDefaultImages = (creature) => {
@@ -197,9 +199,16 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, socket}) => {
                         <TabList>
                             <Tab>Search</Tab>
                             <Tab>Homebrew</Tab>
-                            <Tab>Import</Tab>
+                            <Tab>DndBeyond Imports</Tab>
                         </TabList>
                         <h3 className='titleFontFamily' style={{borderBottom: '1px solid #822000'}}>{titles[selectedIndex]}</h3>
+                        {selectedIndex === 2 && 
+                            <div className='importInputs editHpGrow'>
+                                <InputCharacterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket} />
+                                <InputEncounterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket} />
+                            </div>
+                        }
+                        
                         <div className='encounterControlsContainer'>
                             <div className='searchInputFlex'>
                                 <input

@@ -1,11 +1,7 @@
 import React, {forwardRef} from 'react';
-import { COLOR_GREEN, COLOR_RED } from '../../constants';
 
-const FlagPole = forwardRef(({flagColor, handleTeamChangeWidget, alignment, isWidgetOpen}, ref) => {
-    let teamColor = COLOR_GREEN
-    
-    if (alignment === "enemy") teamColor = COLOR_RED
-    else if (alignment === "neutral") teamColor = '#999999'
+const FlagPole = forwardRef(({flagColor, handleTeamChangeWidget, teamColor, isWidgetOpen}, ref) => {
+   
 
     return (
         <div style={{border: `2px ridge ${teamColor}`}} className='flagpole-container' ref={ref} onClick={handleTeamChangeWidget}>

@@ -43,7 +43,7 @@ function InputCharacterId({setCurrentEncounter, encounterGuid, socket, onClick=(
 
     return (
         <div className='dndBImportContainer'>
-            <img src={ChampionImage} alt="Click to Upload" className="menuIcon" onClick={onClick}/>
+            <img src={ChampionImage} alt="Click to Upload" className="menuIconImports" onClick={onClick}/>
             <div className='dndBImportButtons'>
                 <input
                     className='dndbInput'
@@ -55,8 +55,7 @@ function InputCharacterId({setCurrentEncounter, encounterGuid, socket, onClick=(
                     onChange={handlePlayerNumbers}
                 />
                 <div>
-                    {playerNumberInputValue.length !== 0 && <button className='submitButton' onClick={() => handleDndCharacterImport()}>✅</button>}
-                    {playerNumberInputValue.length !== 0 && <button className='submitButton' onClick={() => setPlayerNumberInputValue('')}>❌</button>}
+                    {playerNumberInputValue.length !== 0 && <button className='dndbInputButtonSearch' onClick={() => handleDndCharacterImport()}> 🔍 </button>}
                 </div>
             </div>
         </div>

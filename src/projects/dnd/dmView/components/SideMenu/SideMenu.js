@@ -66,13 +66,6 @@ function SideMenu({uploadLocalStorage, setCurrentEncounter, showSearchList, setS
 
                 <hr/>
                 <li className='menuItem' >
-                    <InputCharacterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket} onClick={() => setIsOpen(!isOpen)}/>
-                </li>
-                <li className='menuItem' >
-                    <InputEncounterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket} onClick={() => setIsOpen(!isOpen)}/>
-                </li>
-                <hr/>
-                <li className='menuItem' >
                     <div className='loginImageFlex'>
                         <img src={LoginImage} alt="Login" className="menuIcon" onClick={() => setIsOpen(!isOpen)} />
                         {isOpen && 

@@ -8,7 +8,7 @@ import { ImportDndBeyondMonsters } from '../../api/ImportDndBeyondMonsters'
 import { useImportedPlayers } from '../../../../../providers/ImportedPlayersProvider';
 
 function InputEncounterId({setCurrentEncounter, encounterGuid, socket, onClick=() => {}}) { 
-    const [dndbEncounterId, setDndbEncounterId] = useState('ece19692-6830-4ad3-9e28-ed612f3de79b');
+    const [dndbEncounterId, setDndbEncounterId] = useState('');
     const eGuid = encounterGuid || generateUniqueId();
     const {addImportedPlayer} = useImportedPlayers();
 
@@ -54,7 +54,7 @@ function InputEncounterId({setCurrentEncounter, encounterGuid, socket, onClick=(
 
     return (
         <div className='dndBImportContainer'>
-            <img src={EncounterImage} alt="Click to Upload" className="menuIcon" onClick={onClick}/>
+            <img src={EncounterImage} alt="Click to Upload" className="menuIconImports" onClick={onClick}/>
             <div className='dndBImportButtons'>
                 <input
                     className='dndbInput'
@@ -64,8 +64,7 @@ function InputEncounterId({setCurrentEncounter, encounterGuid, socket, onClick=(
                     onChange={handleDndBEncounterId}
                 />
                 <div>
-                    {dndbEncounterId.length !== 0 && <button className='submitButton' onClick={() => handleDndEncounterImport()}>✅</button>}
-                    {dndbEncounterId.length !== 0 && <button className='submitButton' onClick={() => setDndbEncounterId('')}>❌</button>}
+                    {dndbEncounterId.length !== 0 && <button className='dndbInputButtonSearch' onClick={() => handleDndEncounterImport()}> 🔍 </button>}
                 </div>
             </div>
         </div>

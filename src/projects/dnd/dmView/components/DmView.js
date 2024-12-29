@@ -224,8 +224,10 @@ const DmView = () => {
                 return creature
             });
 
-            if(updatedDifCreatures.length > 0) { console.log("updateFound", updatedDifCreatures); socket.emit("updateDndBPlayers", updatedDifCreatures) }
-            else { console.log("No updates to send...") }
+            if(updatedDifCreatures.length > 0) { 
+                console.log("updateFound", updatedDifCreatures); 
+                socket.emit("updateDndBPlayers", updatedDifCreatures)
+            } else { console.log("No updates to send...") }
 
             setCurrentEncounter(prev => ({...prev, creatures: sortCreatureArray([...updatedCreatures])}));
             console.log("Players Refreshed!")
@@ -376,11 +378,9 @@ const DmView = () => {
             ) : ( 
                 <>  
                     <SideMenu uploadLocalStorage={uploadLocalStorage} setCurrentEncounter={setCurrentEncounter} showSearchList={showSearchList} setShowSearchList={setShowSearchList} encounterGuid={encounterGuid} socket={socket}/>
-                    
                     {showSearchList &&  
                         <SearchColumn setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket}/>
                     }
-                    
                     <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} setSavedEncounters={setSavedEncounters} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} setEncounterGuid={setEncounterGuid} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter} socket={socket}/>
                 </>
             )}
