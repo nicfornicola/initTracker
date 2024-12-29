@@ -31,6 +31,28 @@ function getVideoLink(thumbnailLink) {
         return {type: 'image', src: defaultBackground};
     }
 }
+// monster, player, global
+const showIcon = (creature, hideEnemies) => {
+    if(cheaterMode){
+        return true
+    }
+
+    let isGoodGuy = creature.alignment === "ally" || creature.alignment === "pet"
+    let isPlayer = creature.type === 'player'
+
+    // Individual takes priority whether its a player good or bad or pet
+    if(creature.hidden)
+        return false 
+    // then check global hide button  
+    else if(hideEnemies) {
+        // Return true if its a good guy or a player, false if bad guy or global
+        return isGoodGuy || isPlayer;
+    }
+    
+    // if global check is visible then show everyone that isnt individually hidden
+    return true
+}
+
 
 function PlayerPage() {
     const [playerViewBackground, setPlayerViewBackground] = useState({type: "image", src: defaultBackground});
@@ -134,9 +156,10 @@ function PlayerPage() {
                     <div className='loading'>Dm not streaming... get it together man..</div>
                 ) : (
                     creatures.map((creature, index) => { 
-                        return (((creature.type === 'monster' || creature.type === 'global') && creature.alignment !== "ally" && hideEnemies) || creature.hidden || !cheaterMode) 
-                        ? null
-                        : <Icon key={creature.creatureGuid} isTurn={turnNum === index+1} creature={creature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggle={enemyBloodToggle} iconSize={iconSize}/>;
+                        return showIcon(creature, hideEnemies) 
+                        ? <Icon key={creature.creatureGuid} isTurn={turnNum === index+1} creature={creature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggle={enemyBloodToggle} iconSize={iconSize}/>
+                        : null
+
                     })
                 )}
             </div>

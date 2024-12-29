@@ -26,7 +26,7 @@ function getBloodImg(creature) {
 
 const Icon = ({creature, isTurn, hideDeadEnemies, enemyBloodToggle, iconSize}) => {
     const isPlayer = creature.type === "player";
-    const isAlly = creature.alignment === "ally" || creature.type === "player";
+    const isAlly = creature.alignment === "pet" || creature.type === "player";
     const effectsFound = creature.effects.length > 0
     const showInitiativeBox = creature.initiative !== null;
     const isExhausted = creature.exhaustionLvl > 0

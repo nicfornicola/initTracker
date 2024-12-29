@@ -32,6 +32,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const [effectWidgetPosition, setEffectWidgetPosition] = useState({top: 0, left: 0, right: 0, height: 0, width: 100})
 
     const [isPlayer, setIsPlayer] = useState(creature.type === "player");
+    const [isPet, setIsPet] = useState(creature.type === "pet");
     const [alignment, setAlignment] = useState(creature.alignment);
     const [borderColor, setBorderColor] = useState(creature.border);
     const [effects, setEffects] = useState(creature.effects);
@@ -274,6 +275,12 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         socket.emit('creatureIsPlayerChange', checked, creature.creatureGuid, "dm");
     };
 
+    const handlePetCheckboxChange = (event) => {
+        let checked = event.target.checked
+        setIsPet(checked);
+        handleAlignmentChange(checked ? 'pet' : 'ally')
+    };
+
     const handleTeamChangeWidget = (event) => {
         event.stopPropagation();
         setOpenTeamWidget(!openTeamWidget)
@@ -439,16 +446,25 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                             onChange={handleTeamColorChange}
                         />
                         <div className='teamChoices'>
-                            <button className="editTeamColorButton" style={{color: "green"}} onClick={() => handleAlignmentChange('ally')}> {alignment === "ally" ? <strong><u>Ally</u></strong> : <small>Ally</small>} </button>
+                            <button className="editTeamColorButton" style={{color: "green"}} onClick={() => handleAlignmentChange('ally')}> {alignment === "ally" || alignment === "pet" ? <strong><u>Ally</u></strong> : <small>Ally</small>} </button>
                             <button className="editTeamColorButton" style={{color: "black"}} onClick={() => handleAlignmentChange('neutral')}> {alignment === "neutral" ? <strong><u>Neutral</u></strong> : <small>Neutral</small>} </button>
                             <button className="editTeamColorButton" style={{color: "red"}} onClick={() => handleAlignmentChange('enemy')}> {alignment === "enemy" ? <strong><u>Enemy</u></strong> : <small>Enemy</small>} </button>
                             <div className='editIsPlayerButtonContainer'>
-                                <div className='editIsPlayerText'>{isPlayer ? "Player" : "Non-Player"}</div>
+                                <div className='editIsPlayerText'>Player</div>
                                 <input
                                     type="checkbox"
                                     className='editIsPlayerButton'
                                     checked={isPlayer}
                                     onChange={handleCheckboxChange}
+                                />
+                            </div>
+                            <div className='editIsPlayerButtonContainer'>
+                                <div className='editIsPlayerText'>Pet</div>
+                                <input
+                                    type="checkbox"
+                                    className='editIsPlayerButton'
+                                    checked={isPet}
+                                    onChange={handlePetCheckboxChange}
                                 />
                             </div>
                         </div>

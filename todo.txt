@@ -4,13 +4,10 @@ offline mod
 
     dmview 
     --
+        move import also under import tab?
+        create from scratch from homebrew tab (+ button) to open an empty statblock
         add default background image option for dmview instead of my default 
-        dndbeyond imported folder per user
-        homebrew monster folder
-        create custom
-
         upload all chars from a campaign - I can get campaign players info from the character api at the bottom
-        when importing characters, save their IDS in a tab for easy import later
 
     edit mode
     --
@@ -19,7 +16,6 @@ offline mod
 
     search list
     --
-        add better search, by race, by cr
 
     statblock
     --
@@ -39,7 +35,7 @@ offline mod
 
     player controller
     --
-        add list of of other players below img of their own 
+        add list of other players below img of their own 
         connect effects
         death saves rolls
         upload their own image
@@ -61,6 +57,9 @@ dndb hp is slightly off
 
 DONE - offline mode
 ------
+dndbeyond imported folder per user
+homebrew monster folder
+add better search, by race, by cr
 when add creature - add the row with spinny wheel while loading
 "number of legendary actions" tracker
 add button to resize images and add 

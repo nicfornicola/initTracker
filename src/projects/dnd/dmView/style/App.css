@@ -1816,7 +1816,6 @@ input {
 
 .editIsPlayerButtonContainer {
     display: flex;
-    width: 25%;
     font-size: 8px;
     background-color: #bcbcbc8c;
     border-bottom: solid 1px #919191;
