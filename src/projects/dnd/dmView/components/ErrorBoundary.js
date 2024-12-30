@@ -45,7 +45,7 @@ class ErrorBoundary extends React.Component {
                                         Try refreshing the page
                                     </li>
                                     <li>
-                                        Try reacreating your encounter
+                                        Try recreating your encounter
                                     </li>
                                 </ul>
                                 

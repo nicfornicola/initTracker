@@ -18,10 +18,23 @@ body {
     align-items: center; 
 }
 
+.howToTable {
+    td {
+        outline: 1px solid #999999;
+        padding: 8px;
+        text-align: left;
+    }
+}
+
 .backgroundDemo { 
     position: relative;
     width: 60%;
     height: 450px; 
+}
+
+.demoFlex {
+    display: flex;
+    align-items: center;
 }
 
 .iconDemo {
@@ -88,6 +101,7 @@ hr {
                1px -1px 0 #000,
               -1px  1px 0 #000,
                1px  1px 0 #000; 
+               overflow-y: scroll;
 }
 
 .videoBackground {

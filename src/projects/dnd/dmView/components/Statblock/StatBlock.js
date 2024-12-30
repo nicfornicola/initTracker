@@ -392,8 +392,8 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                         <div className='topInfo shadowBox'>
                             {/* Edit creature image could be here too */}
                             <GridWrap columns={2}>
-                                <EditStat label={`Name ${!isProd ? creature.creatureGuid : ''}`} value={creature?.name || ''} cKey={'name'} handleChange={handleChange} />
-                                <EditStatDropdown label={`Race ${!isProd && (creature?.dmb_homebrew_guid || '')}`} options={raceOptions} value={creature.subtype} cKey={'subtype'} handleChange={handleChange}/> 
+                                <EditStat label={`Name ${!isProd ? creature?.creatureGuid : ''}`} value={creature?.name || ''} cKey={'name'} handleChange={handleChange} />
+                                <EditStatDropdown label={`Race ${!isProd ? creature?.dmb_homebrew_guid : ''}`} options={raceOptions} value={creature.subtype} cKey={'subtype'} handleChange={handleChange}/> 
                             </GridWrap>
                             <hr className="editlineSeperator" />
                             <GridWrap>
