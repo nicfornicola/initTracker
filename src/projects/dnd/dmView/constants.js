@@ -519,6 +519,33 @@ export const dummyDefault = {
     ]
 }
 
+export const homebrewTemplate = {
+    ...sharedItems,
+    "name": "Homebrew Template",
+    "name_default": "Homebrew Template",
+    "hit_points": 20,
+    "hit_points_default": 20,
+    "hit_points_current": 20,
+    "initiative": 0,
+    "type": "default",
+    "alignment": "enemy",
+    "border": COLOR_RED,
+    "desc": "",
+    "size": "--",
+    "armor_class": 10,
+    "armor_desc": null,
+    "speed": {
+        "walk": 30
+    },
+    "languages": "Common",
+    "challenge_rating": "0",
+    "cr": 0,
+    "actions": [],
+    "page_no": 0,
+    "environments": [],
+    "avatarUrl": "https://www.dndbeyond.com/Content/Skins/Waterdeep/images/icons/monsters/beast.jpg"
+}
+
 
 export const envObject = {
     ...sharedItems,

@@ -73,8 +73,17 @@ const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, setUploadI
                 /> : 
                     <DialogContent >
                         {uploadedAvatars.length > 0 ? (
-                            <>     
-                                <label htmlFor="grid" className='uploadedTitle'>Uploaded Avatars</label>
+                            <>
+                                <div className='uploadImageTopInfo'>     
+                                    <label htmlFor="grid" className='uploadedTitle'>Uploaded Avatars</label>
+                                    <img src={uploadIconCreature.avatarUrl} alt={"list Icon"} width={75} style={{border: '1px solid black'}}/>
+
+                                    <div style={{display: 'flex', flexDirection: 'column', width: '40%'}}>
+                                        <div>Selecting new image for: </div>
+                                        <strong>{uploadIconCreature.name}</strong>
+                                    </div>
+                                </div>
+
                                 <hr/>
                                 <GridMap imageArr={uploadedAvatars} setImageArr={setUploadedAvatars} handleClick={handleClick} socket={socket}/>
                             </>

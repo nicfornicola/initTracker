@@ -56,14 +56,15 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
     // Set the selected creature in search bar on left and gets the data from open5e
     const handleSearchSelectCreature = async (creature, action, event, index) => {
         event.stopPropagation();
-
+        // This is the non loading version of the creature
+        let loadingPackage = {index: index, action: action, searchingFor: creature}
         if(creature?.creatureGuid !== undefined) {
             if(action === "add" || (action === "select" && !creature?.dnd_b_player_id)) {
-                setLoadingPack({index: index, action: action})
+                setLoadingPack(loadingPackage)
                 handleSelectCreature(creature, action)                
             }
         } else {
-            setLoadingPack({index: index, action: action})
+            setLoadingPack(loadingPackage)
             axios.get(`${backendUrl}/open5e_monster_import/`, {
                 params: { link: creature.link } // Include the link in query parameters
             }).then(response => {
@@ -73,6 +74,7 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
             }).catch(error => {
                 console.warn(`Error loading creature: ${creature.id}`, error);
             });
+
         }
     };
 
@@ -95,10 +97,11 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
                 };
             });           
         }
-        else if(action === "select")
+        else if(action === "select") {
             setSearchSelectedCreature(creature);
+        }
 
-        setLoadingPack({index: null, action: null})
+        setLoadingPack({index: null, action: null, searchingFor: null})
     };
 
     return (
@@ -110,7 +113,9 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
                     onClick={(e) => handleSearchSelectCreature(creature, "select", e, index)}
                 >
                     <div className='searchListCreatureContainer animated-box'>
-                        <img className="monsterSearchIcon" src={creature.avatarUrl} alt={"list Icon"} />
+                        <div className="monsterEncounterIconContainer">
+                            <img className="monsterSearchIcon" src={creature.avatarUrl} alt={"list Icon"} />
+                        </div>
                         <div className='searchListCreatureDetails'>
                         <strong>{highlightSubstring(searchTerm, creature.name)}</strong>
                             <div className='searchCreatureSmallDetails'>
@@ -155,23 +160,20 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
                                 />
                             </div>
                         }
-                        {creature?.dnd_b_player_id && 
-                            <button className='encounterCreatureX' style={{left: '5%'}} onClick={() => {
-                                removeFromImportList(creature, index)
-                            }}>
-                                X
+                        <div className='searchListButtonContainer'>
+                            {(creature?.dnd_b_player_id || creature?.dmb_homebrew_guid) &&
+                                <button className='searchCreatureX' onClick={(event) => {
+                                    event.stopPropagation()
+                                    creature?.dnd_b_player_id ? removeFromImportList(creature, index) : removeFromHomebrewList(creature, index)
+                                }}>
+                                    X
+                                </button>
+                            }
+                            <button className='monsterSearchAdd' onClick={(e) => handleSearchSelectCreature(creature, "add", e, index)}>
+                                ➕
                             </button>
-                        }
-                        {creature?.dmb_homebrew_guid && 
-                            <button className='encounterCreatureX' style={{left: '5%'}} onClick={() => {
-                                removeFromHomebrewList(creature, index)
-                            }}>
-                                X
-                            </button>
-                        }
-                        <button className='monsterSearchAdd' onClick={(e) => handleSearchSelectCreature(creature, "add", e, index)}>
-                            ➕
-                        </button>
+                        </div>
+
                     </div>
                 </li>
             ))) : (

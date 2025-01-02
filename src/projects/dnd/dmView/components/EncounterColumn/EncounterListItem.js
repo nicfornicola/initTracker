@@ -1,5 +1,4 @@
 import React, {useEffect, useState, useRef} from 'react';
-import uploadImage from '../../pics/uploadImage.png'
 import eyeClosed from '../../pics/icons/eyeClosed.png'; 
 import eyeOpen from '../../pics/icons/eyeOpen.png'; 
 import OptionButton from '../EncounterColumn/OptionButton';
@@ -10,6 +9,7 @@ import EffectImg from '../../pics/icons/effectImg.png';
 import Compact from '@uiw/react-color-compact';
 import { effectImgMap, addSign, COLOR_GREEN, COLOR_RED} from '../../constants.js';
 import Effect from './Effect.js';
+import EditAvatar from '../Statblock/EditAvatar.js';
 
 const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCurrentEncounter, scrollPosition, handleUploadMonsterImage, setSelectedIndex, clickEncounterCreatureX, resort, socket}) => {
     const [hidden, setHidden] = useState(creatureListItem.hidden);
@@ -385,12 +385,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                         <div className='initiativeInputContainer'>
                             <input style={{borderLeft: `6px solid ${teamColor}`}}className='inputButton' onFocus={handleHighlight} onBlur={handleInitiativeCheck} type='text' value={creature.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                         </div>
-                        <div className="monsterEncounterIconContainer" onClick={(event) => handleUploadMonsterImage(event, creature)} >
-                            <img className="monsterEncounterIcon" src={creature.avatarUrl} alt={"list Icon"} />
-                            <div className='uploadIconContainer'>
-                                <img className="uploadIcon" src={uploadImage} alt={"list Icon"} />
-                            </div>
-                        </div>
+                        <EditAvatar handleUploadMonsterImage={handleUploadMonsterImage} creature={creature}/>
                         <div className='listItemMiddleStats'>
                             <div className='nameInputContainer'>
                                 <input className='nameInput' type='text' value={creature.name} onChange={handleChangeName} onBlur={(e) => handleChangeName(e, true)} onClick={(event) => event.stopPropagation()}/>

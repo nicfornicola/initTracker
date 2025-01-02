@@ -62,7 +62,7 @@ function HowTo() {
                         <ul>
                             <li>Any creature can be used as a template for homebrewing and will save here </li>
                             <li>From here you can delete it or add it by hitting the 'x' or '+' </li>
-                            <li>Monsters can be added to homebrew by adding them to an encounter, opening their statblock and clicking edit. There you can click 'Save to Homebrew' or 'Overwrite to Homebrew' if its already saved. More on that in the edit mode section</li>
+                            <li>Monsters can be added to homebrew by adding them to an encounter, opening their statblock and clicking edit. There you can click 'Save new Homebrew' or 'Overwrite to Homebrew' if its already saved. More on that in the edit mode section</li>
                         </ul>
                     </div>
                     <hr/>

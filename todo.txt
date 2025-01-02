@@ -4,8 +4,8 @@ offline mod
 
     dmview 
     --
-        move import also under import tab?
         create from scratch from homebrew tab (+ button) to open an empty statblock
+        create from template (homebrew button next to + button) to the templates statblocks
         add default background image option for dmview instead of my default 
         upload all chars from a campaign - I can get campaign players info from the character api at the bottom
 

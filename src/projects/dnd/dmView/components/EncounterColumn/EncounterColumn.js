@@ -5,7 +5,6 @@ import EncounterListTopInfo from './EncounterListTopInfo'
 import DropdownMenu from './DropdownMenu';
 import EncounterControls from './EncounterControls'
 import EncounterList from './EncounterList'
-import UploadMonsterImage from './UploadMonsterImage'
 
 function updateSavedEncounters(jsonArray, newEncounter) {
     if(jsonArray === null) jsonArray = []
@@ -26,15 +25,13 @@ function updateSavedEncounters(jsonArray, newEncounter) {
     return jsonArray;
 }
 
-const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, savedEncounters, setSavedEncounters, handleRefresh,  refreshCheck, autoRefresh, showSearchList, handleNewEncounter, setEncounterGuid, socket}) => {
+const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, savedEncounters, setSavedEncounters, handleRefresh,  refreshCheck, autoRefresh, showSearchList, handleNewEncounter, setEncounterGuid, setUploadIconMenu, setUploadIconCreature, handleUploadMonsterImage, socket}) => {
     const [roundNum, setRoundNum] = useState(currentEncounter.roundNum);
     const [turnNum, setTurnNum] = useState(currentEncounter.turnNum);
     const [selectedIndex, setSelectedIndex] = useState(null);
     const [showSaveMessage, setShowSaveMessage] = useState(false);
     const [saveMessageColor, setSaveMessageColor] = useState("");
     const [isSaveDisabled, setIsSaveDisabled] = useState(currentEncounter.creatures.length === 0);
-    const [uploadIconMenu, setUploadIconMenu] = useState(false);
-    const [uploadIconCreature, setUploadIconCreature] = useState(null);
 
     const [nameChange, setNameChange] = useState(false)
 
@@ -208,16 +205,17 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
 
         return {"roundNum": roundNum, "turnNum": turnNum}
     }
- 
-    const handleUploadMonsterImage = (event, creature) => {
-        event.stopPropagation()
-        setUploadIconMenu(true)
-        setUploadIconCreature(creature)
+
+    let widthType = ''; 
+    if(!showSearchList && selectedIndex === null) {
+        widthType = '100%'
+    } else if((showSearchList && selectedIndex === null) || (!showSearchList && selectedIndex !== null)) {
+        widthType = '50%'
     }
 
     return (
         <>
-            <div className={`column columnBorder ${showSearchList ? '' : 'expand'}`}>
+            <div className={`column columnBorder`} style={{width: widthType}}>
                 <div className='infoContainer'>
                     <EncounterListTopInfo savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} setSavedEncounters={setSavedEncounters} handleSaveEncounter={handleSaveEncounter} handleNewEncounter={handleNewEncounter} saveMessageColor={saveMessageColor} showSaveMessage={showSaveMessage} isSaveDisabled={isSaveDisabled} socket={socket}/>
                     <EncounterControls setNameChange={setNameChange} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} handleTurnNums={handleTurnNums} handleRefresh={handleRefresh} refreshCheck={refreshCheck} autoRefresh={autoRefresh} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleAutoRollInitiative={handleAutoRollInitiative} socket={socket}/>
@@ -242,14 +240,15 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                     </div>
                 </div>
             </div>
-            <div className={`column animated-label ${showSearchList ? '' : 'expand'}`}>
-                {selectedIndex !== null ? (
-                    <StatBlock selectedIndex={selectedIndex} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} closeStatBlock={() => setSelectedIndex(null)} socket={socket}/>
-                ) : (
-                    <>No Encounter Creature Selected</>
-                )}
-            </div>
-            <UploadMonsterImage setCurrentEncounter={setCurrentEncounter} uploadIconMenu={uploadIconMenu} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} socket={socket}/>
+            {selectedIndex !== null && (
+                <div className={`column animated-label ${showSearchList ? '' : 'expand'}`}>
+                    {selectedIndex !== null ? (
+                        <StatBlock selectedIndex={selectedIndex} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} closeStatBlock={() => setSelectedIndex(null)} handleUploadMonsterImage={handleUploadMonsterImage} socket={socket}/>
+                    ) : (
+                        <>No Encounter Creature Selected</>
+                    )}
+                </div>
+            )}
         </>
   );
 }

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 // import data from '../monsterJsons/5eCoreRules.json'; // Adjust the import path as necessary
-import {shuffledMonsterList, imagesAvailable, backendUrl, isDev, shuffleArray, sortedMonsterList, reversedMonsterList} from '../../constants'
+import {shuffledMonsterList, imagesAvailable, backendUrl, isDev, shuffleArray, sortedMonsterList, reversedMonsterList, homebrewTemplate, generateUniqueId} from '../../constants'
 import axios from 'axios';
 import { InfinitySpin } from 'react-loader-spinner'
-import BaseStatBlock from '../Statblock/BaseStatBlock';
+import StatBlock from '../Statblock/StatBlock';
 import OptionButton from '../EncounterColumn/OptionButton';
 import Refresh from '../../pics/icons/refresh.png'
 import Asort from '../../pics/icons/Asort.PNG'
@@ -15,6 +15,8 @@ import { useImportedPlayers } from '../../../../../providers/ImportedPlayersProv
 import { useHomebrewProvider } from '../../../../../providers/HomebrewProvider';
 import InputCharacterId from '../SideMenu/InputCharacterId';
 import InputEncounterId from '../SideMenu/InputEncounterId';
+import magPlus from '../../pics/icons/magPlus.PNG'
+
 
 // Function to get the image URL based on the type
 const getDefaultImages = (creature) => {
@@ -56,7 +58,7 @@ const getDefaultImages = (creature) => {
 const titles = ["Monster Search", "Homebrew", "Imports"]
 const panels = Array(3).fill(null); // Creates an array with 3 elements
 
-const SearchColumn = ({setCurrentEncounter, encounterGuid, socket}) => {
+const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterImage, socket}) => {
     const defaultDisplayNumber = 20;
     const {importedPlayers} = useImportedPlayers();
     const {homebrewList} = useHomebrewProvider();
@@ -65,13 +67,21 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, socket}) => {
     const [sortType, setSortType] = useState('shuffle');
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [searchSelectedCreature, setSearchSelectedCreature] = useState(null);
+    const [searchSelectedEncounter, setSearchSelectedEncounter] = useState({encounterName: "search", creatures: []});
 
     const [numberOfListItems, setNumberOfListItems] = useState(defaultDisplayNumber);
     const [displayedItems, setDisplayedItems] = useState([]);
 
     const [loading, setLoading] = useState(true);
-    const [loadingPack, setLoadingPack] = useState({index: null, action: null});
-
+    const [loadingPack, setLoadingPack] = useState({index: null, action: null, searchingFor: null});
+    
+    useEffect(() => {
+        if(searchSelectedCreature) {
+            let encounterName = searchSelectedCreature.name === 'Homebrew Template' ? 'newhomebrew' : 'selected'
+            let searchEncounter = {encounterName: encounterName, creatures: [{...searchSelectedCreature, creatureGuid: generateUniqueId()}]}
+            setSearchSelectedEncounter(searchEncounter)
+        }
+    }, [searchSelectedCreature]);
     
     useEffect(() => {
         if(!isDev) {
@@ -134,6 +144,11 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, socket}) => {
         }
     }, [searchTerm, numberOfListItems, sortType, selectedIndex, importedPlayers, homebrewList]);
 
+    const addNewHomebrew = () => {
+        let newHomebrew = {...homebrewTemplate}
+        setSearchSelectedCreature(newHomebrew)
+    }
+
     const shuffleSearchList = () => {
         setLoading(true)
         // This shuffle the shuffledMonsterList and then inside the useeffect it is set to displayedItems
@@ -190,10 +205,16 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, socket}) => {
     }
 
     let sortMessage = sortType === "shuffle" || sortType === "reshuffle" || sortType === "Z" ? "Sort A-Z" : "Sort Z-A"
+    let showStatBlock = (searchSelectedCreature && searchSelectedEncounter.creatures.length > 0) || ((!isNaN(loadingPack.index) && loadingPack.action === 'select'))
+
+    let widthType = ''; 
+    if(!showStatBlock) {
+        widthType = '45%'
+    }
 
     return (
         <>
-            <div className='column columnBorder'>
+            <div className='column columnBorder' style={{width: widthType}}>
                 <div className='infoContainer'>
                     <Tabs onSelect={(index) => handleTabSelect(index)} forceRenderTabPanel={true}>
                         <TabList>
@@ -218,6 +239,10 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, socket}) => {
                                     value={searchTerm}
                                     onChange={(e) => handleSetSearchTerm(e.target.value)}
                                 />
+                                {selectedIndex !== 2 && 
+                                    <OptionButton src={magPlus} message={'Create New Homebrew'} onClickFunction={addNewHomebrew} wrapperClassName='searchListOption'/>
+                                }
+
                                 <OptionButton src={sortType === "shuffle" || sortType === "reshuffle" || sortType === "Z" ? Asort : Zsort} message={sortMessage} onClickFunction={sortSearchList} wrapperClassName='searchListOption'/>
                                 <OptionButton src={Refresh} message={'Shuffle List'} onClickFunction={shuffleSearchList} wrapperClassName='searchListOption' imgClassName={loading ? 'spinningImage' : ''}/>
                             </div>
@@ -245,14 +270,11 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, socket}) => {
                     </Tabs>
                 </div>
             </div>
-            <div className='column animated-label'>
-            {(searchSelectedCreature || (loadingPack.index && loadingPack.action === 'select')) ? (
-                <BaseStatBlock creature={searchSelectedCreature} closeStatBlock={() => setSearchSelectedCreature(null)} loading={loadingPack.index && loadingPack.action === 'select'}/>
-            ) : (
-                <>{'No Search Creature Selected'}</>
-            )}
-            </div>
-            
+            {showStatBlock && 
+                <div className='column animated-label'>
+                    <StatBlock selectedIndex={0} currentEncounter={searchSelectedEncounter} setCurrentEncounter={setSearchSelectedEncounter} closeStatBlock={() => setSearchSelectedCreature(null)} loading={!isNaN(loadingPack.index) && loadingPack.action === 'select'} searchingFor={loadingPack.searchingFor} handleUploadMonsterImage={handleUploadMonsterImage}/>
+                </div>
+            }
         </>
     );
 }

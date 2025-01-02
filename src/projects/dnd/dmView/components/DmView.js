@@ -14,6 +14,7 @@ import { useLocation } from 'react-router-dom';
 import defaultBackground from '../pics/backgrounds/happyTavern.png'
 import { useUser } from '../../../../providers/UserProvider.js';
 import mockEncounters from '../mockEncounters.json'
+import UploadMonsterImage from './EncounterColumn/UploadMonsterImage.js';
 
 function getLocalStorageSize() {
     let totalSize = 0;
@@ -112,6 +113,8 @@ const DmView = () => {
     const [showSearchList, setShowSearchList] = useState(true);
     const [encounterGuid, setEncounterGuid] = useState(INIT_ENCOUNTER.encounterGuid);
     const [savedEncounters, setSavedEncounters] = useState([]);
+    const [uploadIconMenu, setUploadIconMenu] = useState(false); 
+    const [uploadIconCreature, setUploadIconCreature] = useState(null);
     const { username } = useUser();
 
     const socketRef = useRef(null)
@@ -349,6 +352,12 @@ const DmView = () => {
         setEncounterGuid(newGuid)
         setPlayerViewBackground({type: 'image', src: defaultBackground})
     };  
+     
+    const handleUploadMonsterImage = (event, creature) => {
+        event.stopPropagation()
+        setUploadIconMenu(true)
+        setUploadIconCreature(creature)
+    }
 
     const handleLoadEncounter = (encounter) => {
         console.log("%cLoaded: " + encounter.encounterName + ' ' + encounter.encounterGuid, "background: #fdfd96;")
@@ -379,11 +388,12 @@ const DmView = () => {
                 <>  
                     <SideMenu uploadLocalStorage={uploadLocalStorage} setCurrentEncounter={setCurrentEncounter} showSearchList={showSearchList} setShowSearchList={setShowSearchList} encounterGuid={encounterGuid} socket={socket}/>
                     {showSearchList &&  
-                        <SearchColumn setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket}/>
+                        <SearchColumn setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} handleUploadMonsterImage={handleUploadMonsterImage} socket={socket}/>
                     }
-                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} setSavedEncounters={setSavedEncounters} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} setEncounterGuid={setEncounterGuid} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter} socket={socket}/>
+                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} setSavedEncounters={setSavedEncounters} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} setEncounterGuid={setEncounterGuid} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter} setUploadIconMenu={setUploadIconMenu} setUploadIconCreature={setUploadIconCreature} handleUploadMonsterImage={handleUploadMonsterImage} socket={socket}/>
                 </>
             )}
+            <UploadMonsterImage setCurrentEncounter={setCurrentEncounter} uploadIconMenu={uploadIconMenu} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} socket={socket}/>
             </div>
     );
 };

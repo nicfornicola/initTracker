@@ -543,7 +543,6 @@ hr {
 
 .background {
     display: flex;
-    justify-content: space-between;
     font-family: 'Bitter', serif;
     height: 100vh;
     background-image: url('../pics/dmViewPaperBack.jpg');
@@ -792,19 +791,26 @@ hr {
     width: 45%;
 }
 
+
 .columnBorder {
     color: #822000;
 }
 
+.react-tabs {
+    height: 100%;
+}
+
 .monsterSearch {
-    height: 78vh;
+    height: 81%;
     overflow-y: scroll; 
-    width: 101%;
+    width: 100%;
+    border-bottom: 2px solid #822000;
+
 }
 
 .monsterSearchList {
-   padding: 0px;
-   margin: 0;
+    padding: 0px;
+    margin: 0;
 }
 
 .listItem:hover .searchListCreatureContainer {
@@ -825,17 +831,16 @@ hr {
 
 .monsterSearchAdd {
     position: relative;
-    width: 15%;
-    right: 0px;
+    width: 50px;
     opacity: 0;
     height: 100%;
-    margin-left: 20px;
 }
 
 .monsterSearchDetailText {
     margin-right: 2px;
     font-size: 12px;
     font-style: italic;
+    color: black
 }
 
 
@@ -998,6 +1003,7 @@ input {
 
 .statBlockSpinner {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 50%;
@@ -1069,7 +1075,7 @@ input {
 .titleFontFamily {
     font-family: "Spectral SC", serif;
     margin: 0px;
-    color: #822000
+    color: #822000;
 }
 
 .statBlock {
@@ -1492,6 +1498,12 @@ input {
     border-radius: 5px;
 }
 
+.uploadImageTopInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end
+}
+
 .encounterCreatureLeftContainer,
 .searchListCreatureContainer,
 .encounterCreatureContainer {
@@ -1533,6 +1545,7 @@ input {
     display: flex;
 }
 
+.searchListCreatureContainer:hover .searchCreatureX,
 .searchListCreatureContainer:hover .monsterSearchAdd {
     opacity: 1;
 }
@@ -1916,9 +1929,12 @@ input {
 }
 
 .monsterSearchIcon {
-    margin-right: 10px; /* Space between the image and the name */
-    width: 50px;
-    border-radius: 5px;
+    box-sizing: border-box;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
 .monsterEncounterIconContainer {
@@ -1994,7 +2010,22 @@ input {
     cursor: pointer;
 }
 
-/* Side menu  */
+.searchCreatureX {
+    opacity: 0;
+    background: none;
+    border: none;
+    color: red;
+    font-weight: bolder;
+    cursor: pointer;
+    padding-right: 30px;
+}
+
+.searchListButtonContainer{
+    display: flex;
+    justify-content: flex-end;
+    width: 30%;
+    height: 100%;
+}
 
 .side-menu {
     position: relative;
@@ -2197,10 +2228,14 @@ input[type="number"]::-webkit-outer-spin-button {
 
 
 .react-tabs__tab {
-    background: #f8f2d3d7 !important;
+    background: #faf6e076 !important;
     overflow: hidden;
+    margin-right: 3px;
     bottom: -5px !important;
-    margin-right: 2px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    box-shadow: rgb(67, 67, 67) 0px 0px 2px 0px inset;
+    border: none !important;
 }
 
 .react-tabs__tab-list {
@@ -2209,13 +2244,13 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .react-tabs__tab-panel {
     background: #f8f2d3d7 !important;
-
     border-left: 1px solid #822000;
-    border-right: 1px solid #822000;
     border-bottom: 1px solid #822000;
 }
 
 .react-tabs__tab--selected {
-    background: #f8f2d3d7 !important;
+    background: #f9f1c7d7 !important;
+    box-shadow: rgb(67, 67, 67) 0px 0px 2px 0px ;    
+    bottom: -4px !important;
 }
 
