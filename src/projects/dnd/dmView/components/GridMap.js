@@ -15,8 +15,8 @@ const GridMap = ({imageArr, setImageArr, handleClick, isYoutubeLink = false, soc
     return (
         <Grid container spacing={0.5}>
             {imageArr.map((imgObj, index) => (
-                <Grid key={imgObj.imageGuid + index.toString()} item xs={4} className='imageContainer'>
-                    <img className="backgroundThumbnail growImage" src={imgObj.image} alt={"background"} onClick={() => handleClick(imgObj, isYoutubeLink)} />
+                <Grid key={imgObj.imageGuid + index.toString()} item xs={4} className='imageContainer growImage'>
+                    <img className="backgroundThumbnail" src={imgObj.image} alt={"background"} onClick={() => handleClick(imgObj, isYoutubeLink)} />
                     {imgObj.imageGuid !== 'constant' &&
                         <button className='imageX' onClick={() => deleteImage(imgObj)}>🗑️</button>
                     }

@@ -65,6 +65,8 @@ const FileUpload = ({setUploadedFiles, storageKey, socket}) => {
 
     return (
         <div className="uploadContainer">
+            <hr className='editlineSeperator'/> 
+            <p style={{margin: 0}}>Upload new Images:</p> 
             <input id="file-upload" type="file" accept=".png, .jpg, .jpeg, .gif" onChange={handleFileChange} />
         </div>
     );

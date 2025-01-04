@@ -1133,11 +1133,15 @@ input {
     height: 100%;
     object-fit: fill; /* Makes the image fill the size while maintaining aspect ratio */
     aspect-ratio: 1 / 1;
+    transition: transform .1s ease-in-out; /* Smooth transformation */
 }
 
 .imageX:hover,
-.imageContainer:hover .imageX {
+.imageContainer:hover .imageX,
+.backgroundThumbnail:hover {
     opacity: 1;
+    cursor: pointer;
+    transform: scale(1.1);
 }
 
 .imageX {
@@ -1523,8 +1527,7 @@ input {
 
 .uploadImageTopInfo {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end
+    justify-content: center;
 }
 
 .encounterCreatureLeftContainer,
