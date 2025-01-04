@@ -552,6 +552,19 @@ hr {
     overflow: hidden;
 }
 
+.column {
+    flex: 1;
+    position: relative;
+    width: 24%;
+    height: 97vh;
+    border: 2px solid #7f7977;
+    border-radius: 10px;
+    margin: 10px;
+    box-sizing: border-box; /* Include border and padding in the element's total width and height */
+    color: #822000;
+    transition: width 0.3s ease-in-out; /* Smoothly adjust width */
+}
+
 .playerViewAdds {
     overflow: hidden;
     position: relative;
@@ -777,24 +790,10 @@ hr {
     width: 95%;
 }
 
-.column {
-    position: relative;
-    width: 24%;
-    height: 97vh;
-    border: 2px solid #7f7977;
-    border-radius: 10px;
-    margin: 10px;
-    box-sizing: border-box; /* Include border and padding in the element's total width and height */
-}
-
 .column.expand {
     width: 45%;
 }
 
-
-.columnBorder {
-    color: #822000;
-}
 
 .react-tabs {
     height: 100%;
@@ -918,10 +917,25 @@ hr {
     }
 }
 
+@keyframes slideLeft {
+    0% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+}
+
 .animated-box {
     animation: slideUp 0.5s ease-out forwards;
     /* Initial position for the slide up effect */
     transform: translateY(200%);
+}
+
+.animated-column {
+    animation: slideLeft 0.4s ease-out forwards;
 }
   
 @keyframes imageDrop {
@@ -972,7 +986,7 @@ hr {
 }
 
 .grow {
-    animation: grow .5s ease-in-out forwards;
+    animation: grow .3s ease-in-out forwards;
 }
 
 input {
@@ -1102,7 +1116,7 @@ input {
 .infoContainer {
     display: flex;
     flex-direction: column;
-    padding: 3% 3% 3% 3%;
+    padding: 3%;
     height: 100%;
     width: 100%;
     box-sizing: border-box; /* Include border and padding in the element's total width and height */
@@ -1151,7 +1165,7 @@ input {
 .statblockX {
     background-color: rgb(186, 186, 186);
     cursor: pointer;
-    visibility: visible;
+    visibility: hidden;
     z-index: 1;
     margin: 3px;
     text-wrap: nowrap;
@@ -1226,6 +1240,14 @@ input {
     font-size: 20px;
     top: 5px;
     color: #822000
+}
+
+.titleColor {
+    color: #822000
+}
+
+.infoDesc {
+    color: black;
 }
 
 
@@ -1305,6 +1327,7 @@ input {
     background-color: #e0e0e0;
     text-align: center;
     font-size: .8vw; /* Responsive font size */
+    color: black;
 }
 
 .skillGridItem span {

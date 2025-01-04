@@ -523,7 +523,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                             </div>
                            
                         </div>
-
                     </div>
                 )}
             </li>

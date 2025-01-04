@@ -463,7 +463,7 @@ const sharedItems = {
     "legendary_actions": [],
     "lair_actions": [],
     "special_abilities": [],
-    "type": "",
+    "creature_type": "--",
     "subtype": "",
     "group": "",
     "alignment": "",
@@ -473,7 +473,8 @@ const sharedItems = {
     "document__url": "",
     "hidden": false,
     "deathSaves": { successCount: 0, failureCount: 0 },
-    "xp": "--"
+    "xp": "--",
+    "level": "0"
 }
 
 export const COLOR_RED = "#D44E3B"

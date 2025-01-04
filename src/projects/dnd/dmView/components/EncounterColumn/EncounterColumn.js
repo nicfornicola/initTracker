@@ -25,7 +25,7 @@ function updateSavedEncounters(jsonArray, newEncounter) {
     return jsonArray;
 }
 
-const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, savedEncounters, setSavedEncounters, handleRefresh,  refreshCheck, autoRefresh, showSearchList, handleNewEncounter, setEncounterGuid, setUploadIconMenu, setUploadIconCreature, handleUploadMonsterImage, socket}) => {
+const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, savedEncounters, setSavedEncounters, handleRefresh, refreshCheck, autoRefresh, showSearchList, handleNewEncounter, setEncounterGuid, handleUploadMonsterImage, socket}) => {
     const [roundNum, setRoundNum] = useState(currentEncounter.roundNum);
     const [turnNum, setTurnNum] = useState(currentEncounter.turnNum);
     const [selectedIndex, setSelectedIndex] = useState(null);
@@ -56,10 +56,17 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
     const clickEncounterCreatureX = (event, xCreature, index) => {
         event.stopPropagation(); 
 
-        // if deleting the creature currently selected unselect it
-        if(selectedIndex !== null && xCreature?.creatureGuid === currentEncounter.creatures[selectedIndex]?.creatureGuid) {
-            setSelectedIndex(null)
+        if(selectedIndex !== null) {
+            // if deleting the creature currently selected unselect it
+            if(xCreature?.creatureGuid === currentEncounter.creatures[selectedIndex]?.creatureGuid)
+                setSelectedIndex(null)
+            else if(index < selectedIndex) {
+                // if deleting a creature of lower index then selectedIndex move selectedIndex down by 1 to follow the selected creatures object
+                setSelectedIndex(selectedIndex - 1)
+            }
         }
+
+        
 
         let newArray = currentEncounter.creatures.filter((_, i) => i !== index)
         setCurrentEncounter(prev => ({...prev, creatures: [...newArray]}));
@@ -215,7 +222,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
 
     return (
         <>
-            <div className={`column columnBorder`} style={{width: widthType}}>
+            <div className='column' style={{width: widthType}}>
                 <div className='infoContainer'>
                     <EncounterListTopInfo savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} setSavedEncounters={setSavedEncounters} handleSaveEncounter={handleSaveEncounter} handleNewEncounter={handleNewEncounter} saveMessageColor={saveMessageColor} showSaveMessage={showSaveMessage} isSaveDisabled={isSaveDisabled} socket={socket}/>
                     <EncounterControls setNameChange={setNameChange} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} handleTurnNums={handleTurnNums} handleRefresh={handleRefresh} refreshCheck={refreshCheck} autoRefresh={autoRefresh} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleAutoRollInitiative={handleAutoRollInitiative} socket={socket}/>
@@ -241,7 +248,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                 </div>
             </div>
             {selectedIndex !== null && (
-                <div className={`column animated-label ${showSearchList ? '' : 'expand'}`}>
+                <div className={`column animated-column ${showSearchList ? '' : 'expand'}`}>
                     {selectedIndex !== null ? (
                         <StatBlock selectedIndex={selectedIndex} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} closeStatBlock={() => setSelectedIndex(null)} handleUploadMonsterImage={handleUploadMonsterImage} socket={socket}/>
                     ) : (

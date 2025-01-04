@@ -41,7 +41,7 @@ function getSpells(spellString) {
             const [name, description] = section.split(':').map(part => part.trim());
                 return (
                     <li key={index + name}>
-                        <strong>{name}: </strong> {description}
+                        <strong className='titleColor'>{name}: </strong> {description}
                     </li>
                 );
         });
@@ -93,7 +93,7 @@ function getSpells(spellString) {
         // Create JSX elements
         const formattedSections = spells.map((spell, index) => (
             <li key={index + spell.level}>
-                <strong>{spell.level}:</strong> {spell.spellNames.join(', ')}
+                <strong className='titleColor'>{spell.level}:</strong> {spell.spellNames.join(', ')}
             </li>
         ));
     
@@ -145,17 +145,23 @@ const CreatureInfo = ({creature}) => {
 }
 
 const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeStatBlock, loading=false, searchingFor=null, handleUploadMonsterImage, socket}) => {
-
-    const [creature, setCreature] = useState(currentEncounter.creatures[selectedIndex])
+    // Creature can be null from SearchColumn but not from EncounterColumn, Statblock is not shown if from EncounterColumn
+    const [creature, setCreature] = useState(currentEncounter?.creatures[selectedIndex])
     const {addToHomebrewList} = useHomebrewProvider();
-    const [isEditMode, setIsEditMode] = useState(currentEncounter.encounterName === "newhomebrew")
+    const [isEditMode, setIsEditMode] = useState(currentEncounter?.encounterName === "newhomebrew")
     
     // If selectedIndex changes a new creature was clicked
     useEffect(() => {
-        setCreature(selectedIndex !== null ? currentEncounter.creatures[selectedIndex] : null)
-        setIsEditMode(currentEncounter.encounterName === "newhomebrew")
+        setCreature(selectedIndex !== null ? currentEncounter?.creatures[selectedIndex] : null)
+        
     // eslint-disable-next-line
-    }, [currentEncounter.creatures[selectedIndex], selectedIndex]);
+    }, [currentEncounter?.creatures[selectedIndex], selectedIndex]);
+
+    useEffect(() => {
+        // Auto set edit mode to tree if its a from scratch Homebrew
+        setIsEditMode(currentEncounter?.encounterName === "newhomebrew")
+    // eslint-disable-next-line
+    }, [currentEncounter?.creatures[selectedIndex]?.creatureGuid]);
 
     const handleChange = (e, cKey, category = undefined, index = undefined, send = false) => {
         // From EditStatBig add and remove buttonns
@@ -176,7 +182,6 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
    
     
     const handleValueChange = (value, cKey, send) => {
-
         // also change current hp if max hp is changing and the creature is at full hp 
         let hpCurrent = {};
 
@@ -199,10 +204,15 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                     ),
                 }));
 
+                // This is a weird check for the search selected creatures that have their skills (i.e. STR or STR_Save) edited
+                if(currentEncounter.encounterName === 'selected' && !isEditMode) {
+                    handleAddToHomebrew(creature)
+                }
+
                 if(cKey === 'hit_points' && parseInt(creature.hit_points) === parseInt(creature.hit_points_current)) {
-                    socket.emit('playerHpChange', {hit_points: value, hit_points_current: value}, creature.creatureGuid, "dm");
+                    socket?.emit('playerHpChange', {hit_points: value, hit_points_current: value}, creature.creatureGuid, "dm");
                 } else {
-                    socket.emit('statBlockEdit', currentEncounter.creatures[selectedIndex].creatureGuid, cKey, value);
+                    socket?.emit('statBlockEdit', currentEncounter.creatures[selectedIndex].creatureGuid, cKey, value);
                 }
                 
             }
@@ -212,7 +222,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
     const handleNestedChange = (value, cKey, category, send) => {
         if (send || cKey === 'hover') {
             if(value !== currentEncounter.creatures[selectedIndex]?.[category]?.[cKey]) {
-                socket.emit('statBlockEditNestedObject', currentEncounter.creatures[selectedIndex].creatureGuid, category, cKey, value);
+                socket?.emit('statBlockEditNestedObject', currentEncounter.creatures[selectedIndex].creatureGuid, category, cKey, value);
                 setCurrentEncounter((prev) => {
                     const updatedCreatures = [...prev.creatures];
                     updatedCreatures[selectedIndex] = {
@@ -242,7 +252,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
     const handleArrayChange = (value, cKey, category, index, send = false) => {
         if (send) {
             if(value !== "None" && value !== "--" && value !== currentEncounter.creatures[selectedIndex]?.[category]?.[index]?.[cKey]) {
-                socket.emit('statBlockEditArrayUpdate', value, category, index, cKey, currentEncounter.creatures[selectedIndex].creatureGuid);
+                socket?.emit('statBlockEditArrayUpdate', value, category, index, cKey, currentEncounter.creatures[selectedIndex].creatureGuid);
 
                 setCurrentEncounter((prev) => {
                     const updatedCreatures = [...prev.creatures];
@@ -315,7 +325,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                     [cKey]: newCount,
                 };
     
-                socket.emit('creatureActionCountChange', newCount, cKey, currentEncounter.creatures[selectedIndex].creatureGuid);
+                socket?.emit('creatureActionCountChange', newCount, cKey, currentEncounter.creatures[selectedIndex].creatureGuid);
     
                 return {
                     ...prev,
@@ -335,8 +345,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
             updatedArray = [...currentEncounter.creatures[selectedIndex][category].filter((_, i) => i !== index)]
         }
 
-        if(socket)
-            socket.emit("statBlockEditArrayAction", category, index, currentEncounter.creatures[selectedIndex].creatureGuid, cKey)
+        socket?.emit("statBlockEditArrayAction", category, index, currentEncounter.creatures[selectedIndex].creatureGuid, cKey)
 
         setCurrentEncounter((prev) => {
             const updatedCreatures = [...prev.creatures];
@@ -351,7 +360,6 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                 creatures: updatedCreatures,
             };
         });
-
     };
 
     const toggleEditMode = () => {
@@ -361,7 +369,8 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
     const handleAddToHomebrew = (creature, action="") => {
         let homebrewCreature = creature;
         //If it does not have a homebrew guid or new homebrew is clicked, add one then send it
-        if(!creature?.dmb_homebrew_guid || action === "new") {
+        let isNewEntry = !creature?.dmb_homebrew_guid || action === "new"
+        if(isNewEntry) {
             homebrewCreature = {...creature, dmb_homebrew_guid: generateUniqueId()}
             setCreature(homebrewCreature)
             setCurrentEncounter(prev => {
@@ -371,6 +380,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
         }
         // Give the homebrew version a different creatureGuid
         addToHomebrewList({...homebrewCreature})
+        setIsEditMode(false)
     }
 
     if(creature?.dnd_b_player_id) {
@@ -380,7 +390,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
             <div className='infoContainer'>
                 {loading || !creature ? (
                     <div className='statBlockSpinner'>
-                        <p>Rolling History for</p>
+                        <p><i>Rolling History...</i></p>
                         <div className="monsterEncounterIconContainer">
                             <img className="monsterSearchIcon" src={searchingFor?.avatarUrl} alt={"list Icon"} />
                         </div>
@@ -416,13 +426,14 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                         {isEditMode ? (
                             <div style={{overflowX: 'hidden', overflowY: 'auto'}}>
                                 <div className='topInfo shadowBox'>
-                                    <GridWrap columns={3}>
-                                        <div className='encounterCreatureLeftContainer' >
-                                            <EditAvatar handleUploadMonsterImage={handleUploadMonsterImage} creature={creature}/>
-                                        </div>
-                                        <EditStat label={`Name ${!isProd ? creature?.creatureGuid : ''}`} value={creature?.name || ''} cKey={'name'} handleChange={handleChange} />
-                                        <EditStatDropdown label={`Race ${!isProd ? creature?.dmb_homebrew_guid : ''}`} options={raceOptions} value={creature.subtype} cKey={'subtype'} handleChange={handleChange}/> 
-                                    </GridWrap>
+                                    <div className='encounterCreatureLeftContainer' >
+                                        <EditAvatar handleUploadMonsterImage={handleUploadMonsterImage} creature={creature}/>
+                                        <GridWrap columns={3}>
+                                            <EditStat label={`Name ${!isProd ? creature?.creatureGuid : ''}`} value={creature?.name || ''} cKey={'name'} handleChange={handleChange} />
+                                            <EditStatDropdown label={`Race ${!isProd ? creature?.dmb_homebrew_guid : ''}`} options={raceOptions} value={creature.subtype} cKey={'subtype'} handleChange={handleChange}/> 
+                                        </GridWrap>
+                                    </div>
+
                                     <hr className="editlineSeperator" />
                                     <GridWrap>
                                         <EditStatDropdown label={"Size"} options={sizeOptions} value={creature.size} cKey={'size'} handleChange={handleChange}/>
@@ -495,16 +506,18 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                         <CreatureInfo creature={creature}/>
                                     </div>
                                     <div className='stickyStatGrid textShadow' >
-                                        <p className="stickyStatItem"><strong>AC</strong>&nbsp;{creature.armor_class} 
+                                        <p className="stickyStatItem">
+                                            <strong className='titleColor'>AC</strong>&nbsp;{creature.armor_class} 
                                             {creature.armor_desc && creature.armor_desc !== "()" && 
                                                 <span className='extraInfo'> &nbsp; {creature.armor_desc} </span>
                                             } 
                                         </p>
-                                        <p className="stickyStatItem"><strong>Initiative</strong>&nbsp;{addSign(creature.dexterity_save)} 
+                                        <p className="stickyStatItem">
+                                            <strong className='titleColor'>Initiative</strong>&nbsp;{addSign(creature.dexterity_save)} 
                                             <span className='extraInfo'>&nbsp;({parseInt(creature.dexterity_save)+10 || 10})</span>
                                         </p>
                                         <p className="stickyStatItem stickyStatExtraWide">
-                                            <strong>HP</strong>&nbsp;{creature.hit_points_current}/{creature.hit_points} 
+                                            <strong className='titleColor'>HP</strong>&nbsp;{creature.hit_points_current}/{creature.hit_points} 
                                             {creature.hit_points_temp !== 0 && (
                                                 <span className='tempHp'>&nbsp;(+{creature.hit_points_temp}) </span>
                                             )}
@@ -515,7 +528,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                         </p>
                                         <p className="stickyStatItem"></p>
                                         <p className="stickyStatItem stickyStatExtraWide">
-                                            <strong>Speed</strong>&nbsp;
+                                            <strong className='titleColor'>Speed</strong>&nbsp;
                                             {formatSpeed(creature.speed)}
                                         </p>
                                         <p className="stickyStatItem"></p>
@@ -527,7 +540,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                     {creature.skills.length !== 0 && (
                                         <p>
                                             <strong>Skills </strong>
-                                            <span >{creature.skills}</span>
+                                            <span className='infoDesc'>{creature.skills}</span>
                                         </p>
                                     )}
 
@@ -564,7 +577,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                                         <div className='actionInfo' key={index + ability.name}>
                                                             {ability.rechargeCount !== 0 ? (
                                                                 <div className={`actionToken-container`}>
-                                                                    <strong>{ability.name} </strong>
+                                                                    <strong className='titleColor'>{ability.name} </strong>
                                                                     <ActionTracker 
                                                                         actions_count={ability.rechargeCount}
                                                                         label={ability.name}
@@ -575,18 +588,19 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                                                     />
                                                                 </div>
                                                             ) : ( 
-                                                                <strong>{ability.name}: </strong>
+                                                                <strong className='titleColor'>{ability.name}: </strong>
                                                             )}
-
-                                                            {ability.name === "Spellcasting" ? (
-                                                                <>
-                                                                    {getSpells(getDesc(ability))}
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    {getDesc(ability)}
-                                                                </>
-                                                            )}
+                                                            <span className='infoDesc'>
+                                                                {ability.name === "Spellcasting" ? (
+                                                                    <>
+                                                                        {getSpells(getDesc(ability))}
+                                                                    </>
+                                                                ) : (
+                                                                    <>
+                                                                        {getDesc(ability)}
+                                                                    </>
+                                                                )}
+                                                            </span>
                                                         </div>
                                                     );
                                                 })

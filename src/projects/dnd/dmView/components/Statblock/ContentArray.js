@@ -51,7 +51,7 @@ const ContentArray = ({label, contentArray, labelDesc = null, actions_count = un
                     ) : ( 
                         <strong>{action.name}: </strong>
                     )}
-                        {getDesc(action)}
+                        <span className='infoDesc'>{getDesc(action)}</span>
                 </div>
             ))}
             {label ===  'Legendary Actions'}

@@ -20,6 +20,10 @@ export const HomebrewProvider = ({ children }) => {
         // Assign new guids since this is the home brew version
         newCreature = {...newCreature, username: username, encounterGuid: null}
         
+        if(!newCreature?.dmb_homebrew_guid) {
+            newCreature.dmb_homebrew_guid = generateUniqueId()
+        }
+
         let action = "append"
         const updatedCreatures = [...homebrewList];
             const foundIndex = updatedCreatures.findIndex(
@@ -31,10 +35,9 @@ export const HomebrewProvider = ({ children }) => {
                 newCreature = {...newCreature, creatureGuid: updatedCreatures[foundIndex].creatureGuid}
                 updatedCreatures[foundIndex] = newCreature;
                 action = "overwrite"
-
             } else {
                 // Assign new creatureGuid to NEW homebrew creature, the homebrewGuid is assigned in statblock so it can be updated in the currentEncounter easier
-                newCreature = {...newCreature, creatureGuid: generateUniqueId()}
+                newCreature = {...newCreature, creatureGuid: newCreature.creatureGuid ?? generateUniqueId()}
                 updatedCreatures.push(newCreature);
             }
 

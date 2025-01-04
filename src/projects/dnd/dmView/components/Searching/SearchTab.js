@@ -58,6 +58,8 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
         event.stopPropagation();
         // This is the non loading version of the creature
         let loadingPackage = {index: index, action: action, searchingFor: creature}
+        if(action === 'select')
+            setSearchSelectedCreature(null);
         if(creature?.creatureGuid !== undefined) {
             if(action === "add" || (action === "select" && !creature?.dnd_b_player_id)) {
                 setLoadingPack(loadingPackage)
@@ -81,7 +83,6 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
     const handleSelectCreature = (creature, action) => {
         if(action === "add") {
             let newCreature = {...creature, creatureGuid: generateUniqueId(), encounterGuid: encounterGuid}
-
             setCurrentEncounter(prev => {
                 if(prev.creatures.length === 0 && prev.encounterName === INIT_ENCOUNTER_NAME) {
                     socket.emit("newEncounter", encounterGuid)
@@ -98,7 +99,7 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
             });           
         }
         else if(action === "select") {
-            setSearchSelectedCreature(creature);
+            setSearchSelectedCreature({...creature, creatureGuid: generateUniqueId()});
         }
 
         setLoadingPack({index: null, action: null, searchingFor: null})

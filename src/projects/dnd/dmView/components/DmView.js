@@ -354,6 +354,8 @@ const DmView = () => {
     };  
      
     const handleUploadMonsterImage = (event, creature) => {
+        console.log("handleUploadMonsterImage")
+
         event.stopPropagation()
         setUploadIconMenu(true)
         setUploadIconCreature(creature)

@@ -1,6 +1,6 @@
 import React from 'react';
 import uploadImage from '../../pics/uploadImage.png'
-const EditAvatar = ({handleUploadMonsterImage, creature, }) => {
+const EditAvatar = ({handleUploadMonsterImage, creature}) => {
 
     return (
         <div className="monsterEncounterIconContainer" onClick={(event) => handleUploadMonsterImage(event, creature)} >

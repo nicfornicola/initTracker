@@ -77,9 +77,21 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
     
     useEffect(() => {
         if(searchSelectedCreature) {
+            homebrewList.map(creature => {
+                if (searchSelectedCreature.dmb_homebrew_guid === creature.dmb_homebrew_guid || searchSelectedCreature.creatureGuid === creature.creatureGuid) {
+                    setSearchSelectedCreature(creature)
+                }
+            });
+        }
+    }, [homebrewList]);
+
+    useEffect(() => {
+        if(searchSelectedCreature) {
             let encounterName = searchSelectedCreature.name === 'Homebrew Template' ? 'newhomebrew' : 'selected'
-            let searchEncounter = {encounterName: encounterName, creatures: [{...searchSelectedCreature, creatureGuid: generateUniqueId()}]}
+            let searchEncounter = {encounterName: encounterName, creatures: [{...searchSelectedCreature, creatureGuid: searchSelectedCreature.creatureGuid ?? generateUniqueId()}]}
             setSearchSelectedEncounter(searchEncounter)
+        } else {
+            setSearchSelectedEncounter(null)
         }
     }, [searchSelectedCreature]);
     
@@ -205,7 +217,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
     }
 
     let sortMessage = sortType === "shuffle" || sortType === "reshuffle" || sortType === "Z" ? "Sort A-Z" : "Sort Z-A"
-    let showStatBlock = (searchSelectedCreature && searchSelectedEncounter.creatures.length > 0) || ((!isNaN(loadingPack.index) && loadingPack.action === 'select'))
+    let showStatBlock = (searchSelectedCreature && searchSelectedEncounter?.creatures.length > 0) || ((!isNaN(loadingPack.index) && loadingPack.action === 'select'))
 
     let widthType = ''; 
     if(!showStatBlock) {
@@ -271,7 +283,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
                 </div>
             </div>
             {showStatBlock && 
-                <div className='column animated-label'>
+                <div className='column grow'>
                     <StatBlock selectedIndex={0} currentEncounter={searchSelectedEncounter} setCurrentEncounter={setSearchSelectedEncounter} closeStatBlock={() => setSearchSelectedCreature(null)} loading={!isNaN(loadingPack.index) && loadingPack.action === 'select'} searchingFor={loadingPack.searchingFor} handleUploadMonsterImage={handleUploadMonsterImage}/>
                 </div>
             }

@@ -8,8 +8,8 @@ function capsFirstLetter(word) {
 
 const ContentString = ({label, contentString, italics = undefined}) => {
     return contentString ? <p>
-            <strong>{label}</strong> {capsFirstLetter(contentString)}
-            {italics && <i>{italics}</i>}
+            <strong>{label}</strong> <span className='infoDesc'>{capsFirstLetter(contentString)}</span>
+            {italics && <i className='infoDesc'>{italics}</i>}
         </p> : null
 }
 

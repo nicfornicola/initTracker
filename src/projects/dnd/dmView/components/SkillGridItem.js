@@ -45,7 +45,7 @@ const SkillGridItem = ({skillName, skillTotal, skillSave, edit, handleChange}) =
 
     return (
         <>
-            <div className="skillGridItem titleFontFamily">
+            <div className="skillGridItem" style={{color: '#822000'}}>
                 <strong>{bigLetter}<span>{smallLetters}</span></strong>
             </div>
             <div className="skillGridItem">

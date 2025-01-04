@@ -6496,20 +6496,6 @@
         }
     },
     {
-        "id": "open5e-shadow-elf-champion-warrior-a5e",
-        "name": "Shadow Elf Champion Warrior",
-        "path": "",
-        "link": "https://api.open5e.com/monsters/shadow-elf-champion-warrior-a5e",
-        "lastUpdateMs": 0,
-        "searchHint": "shadow elf champion warrior humanoid  ",
-        "filterDimensions": {
-            "level": "5",            
-            "sourceShort": "MM",
-            "source": "Level Up Advanced 5e Monstrous Menagerie",
-            "type": "Humanoid"
-        }
-    },
-    {
         "id": "open5e-shadow-elf-high-priest-a5e",
         "name": "Shadow Elf High Priest",
         "path": "",

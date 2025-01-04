@@ -5,11 +5,14 @@ import FileUpload from '../FileUpload';
 import GridMap from '../GridMap';
 import { InfinitySpin } from 'react-loader-spinner';
 import { useUser } from '../../../../../providers/UserProvider';
+import { useHomebrewProvider } from '../../../../../providers/HomebrewProvider';
 
+//if undefined 
 const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, setUploadIconMenu, uploadIconMenu, socket}) => {
+    const [loading, setLoading] = useState(false);
     const [uploadedAvatars, setUploadedAvatars] = useState([]);
-    const [loading, setLoading] = useState(true);
     const { username } = useUser();
+    const {addToHomebrewList} = useHomebrewProvider();
 
     const ref = useRef(null);
 
@@ -26,6 +29,7 @@ const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, setUploadI
 
         if(uploadIconMenu) {
             if(uploadedAvatars.length === 0) {
+
                 socket.emit("getImages", "avatar", username);
                 socket.on('sendImagesAvatar', (images) => {
                     let avatars = [];
@@ -50,17 +54,32 @@ const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, setUploadI
     }, [uploadIconMenu]);
 
     const handleClick = (imageObj) => {
-        setCurrentEncounter(prev => {
-            const updatedCreatures = prev.creatures.map(creature => {
-                if (uploadIconCreature.creatureGuid === creature.creatureGuid) {
-                    return {...creature, avatarUrl: imageObj.image};
-                }
-                return creature;
+        const homebrew = !!uploadIconCreature?.dmb_homebrew_guid;
+        const search = uploadIconCreature?.encounterGuid === undefined;
+        const encounter = uploadIconCreature?.encounterGuid === null;
+        let type = 'encounterHomebrew'
+        if(search) {
+            type = 'search'
+        } else if (encounter) {
+            type = 'homebrew'
+        } else if (!homebrew) {
+            type = 'encounter'
+        }
+
+        if(type === 'encounter' || type === 'encounterHomebrew') {
+            setCurrentEncounter(prev => {
+                const updatedCreatures = prev.creatures.map(creature => {
+                    if (uploadIconCreature.creatureGuid === creature.creatureGuid) {
+                        return {...creature, avatarUrl: imageObj.image};
+                    }
+                    return creature;
+                });
+        
+                socket.emit("creatureAvatarChange", imageObj.imageGuid, uploadIconCreature.creatureGuid, "dm");
+                return {...prev, creatures: updatedCreatures};
             });
-    
-            socket.emit("creatureAvatarChange", imageObj.imageGuid, uploadIconCreature.creatureGuid, "dm");
-            return {...prev, creatures: updatedCreatures};
-        });
+        } else if(type === 'homebrew' || type === 'search')
+            addToHomebrewList({...uploadIconCreature, avatarUrl: imageObj.image})
     };
 
     return (
