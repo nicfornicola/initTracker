@@ -58,7 +58,7 @@ const getDefaultImages = (creature) => {
 const titles = ["Monster Search", "Homebrew", "Imports"]
 const panels = Array(3).fill(null); // Creates an array with 3 elements
 
-const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterImage, socket}) => {
+const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterImage, uploadIconCreature, socket}) => {
     const defaultDisplayNumber = 20;
     const {importedPlayers} = useImportedPlayers();
     const {homebrewList} = useHomebrewProvider();
@@ -74,7 +74,13 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
 
     const [loading, setLoading] = useState(true);
     const [loadingPack, setLoadingPack] = useState({index: null, action: null, searchingFor: null});
-    
+
+    useEffect(() => {
+        if(uploadIconCreature) {
+            setSearchSelectedCreature(uploadIconCreature)
+        }
+    }, [uploadIconCreature]);
+
     useEffect(() => {
         if(searchSelectedCreature) {
             homebrewList.map(creature => {
@@ -157,7 +163,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
     }, [searchTerm, numberOfListItems, sortType, selectedIndex, importedPlayers, homebrewList]);
 
     const addNewHomebrew = () => {
-        let newHomebrew = {...homebrewTemplate}
+        let newHomebrew = {...homebrewTemplate, creatureGuid: generateUniqueId()}
         setSearchSelectedCreature(newHomebrew)
     }
 

@@ -15,12 +15,15 @@ const ContentArray = ({label, contentArray, labelDesc = null, actions_count = un
         return null;
     }
 
+    let showActionTracker = !!actions_count && !!handleCheck
+    if(label === "LEGENDARY ACTIONS")
+        console.log("AA", showActionTracker)
     return (
         <>
             {/* This is for legendary actions since it goes next to the big title */}
             <div className={`actionToken-container`}>
                 <h1 className='infoTitle'>{label} </h1>
-                {actions_count && handleCheck &&
+                {showActionTracker &&
                     <ActionTracker 
                         actions_count={actions_count}
                         label={label}
@@ -32,7 +35,7 @@ const ContentArray = ({label, contentArray, labelDesc = null, actions_count = un
             <hr className="lineSeperator" />
             {labelDesc && // check boxes to track "legendary actions"
                 <div className='actionInfo'>
-                    {labelDesc}                
+                    {labelDesc}      
                 </div>
             }
             {filteredContent.map((action, index) => (

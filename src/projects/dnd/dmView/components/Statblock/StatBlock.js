@@ -13,11 +13,16 @@ import { useHomebrewProvider } from '../../../../../providers/HomebrewProvider';
 import { ThreeDots } from 'react-loader-spinner';
 import EditAvatar from './EditAvatar';
 
+function exists(value) {
+    return value && value !== '0';
+  }
+
 function formatSpeed(speed) {
     const order = ['walk', 'climb', 'burrow', 'swim', 'fly', 'hover'];
-    
+    console.log("!!", typeof speed['swim'])
+    console.log("!!", speed['swim'] && 'swim' !== 'hover')
     const entries = order
-        .filter(key => speed[key] && (key !== 'hover' || speed[key]))  // Include only truthy values
+        .filter(key => exists(speed[key])) 
         .map(key => [key, speed[key]]);
     
     const result = entries
@@ -139,6 +144,10 @@ const CreatureInfo = ({creature}) => {
     
     if(creature.creature_alignment && creature.creature_alignment !== '--') {
         string += ` (${creature.creature_alignment})`
+    }
+
+    if(creature?.alignment) {
+        string += ` (${creature.alignment})`
     }
 
     return <p><i>{string}</i></p>
@@ -368,8 +377,8 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
 
     const handleAddToHomebrew = (creature, action="") => {
         let homebrewCreature = creature;
-        //If it does not have a homebrew guid or new homebrew is clicked, add one then send it
-        let isNewEntry = !creature?.dmb_homebrew_guid || action === "new"
+        //If new homebrew is clicked
+        let isNewEntry = action === "new"
         if(isNewEntry) {
             homebrewCreature = {...creature, dmb_homebrew_guid: generateUniqueId()}
             setCreature(homebrewCreature)
@@ -407,21 +416,32 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                 ) : (
                     <>
                         <div className='statblockOptionsFlex' style={isEditMode ? {justifyContent: 'center', top: '-5px'} : {justifyContent: 'flex-end', top: ''}}>
-                            {isEditMode && 
+                            {isEditMode ? (
                                 <>
-                                    {creature?.dmb_homebrew_guid && <button className='statblockEdit' onClick={() => handleAddToHomebrew(creature, "new")}> Save New Homebrew </button>}
-                                    <button className='statblockEdit' onClick={() => handleAddToHomebrew(creature)}>{creature?.dmb_homebrew_guid ? <>Save Homebrew</> : <>Save new Homebrew</>}</button>
+                                    <button className="statblockEdit" onClick={() => handleAddToHomebrew(creature, "new")}>
+                                        Save New Homebrew
+                                    </button>
+                                    {creature?.dmb_homebrew_guid &&
+                                        <button className="statblockEdit" onClick={() => handleAddToHomebrew(creature)}>
+                                            Save Homebrew
+                                        </button>
+                                    }
+                                    <button className="statblockEdit" onClick={toggleEditMode}>
+                                        {currentEncounter.encounterGuid ? 'Save Creature' : 'Cancel'}
+                                    </button>
                                 </>
-                            }
+                            ) : (
+                                <>
+                                    <button className="statblockEdit" onClick={toggleEditMode}>
+                                        {(currentEncounter.encounterGuid || creature?.dmb_homebrew_guid)
+                                            ? "Edit"
+                                            : "Use as Homebrew Template"
+                                        }
+                                    </button>
+                                    <button className='statblockX' onClick={closeStatBlock}>❌</button>
+                                </>
+                            )}
 
-                            {currentEncounter.encounterGuid ?                             
-                                <button className='statblockEdit' onClick={toggleEditMode}>{isEditMode ? <>Save Creature</> : <>Edit</>} </button>
-                            :   // need a few options for this button since the statblock can be multiple things,
-                                // if in edit mode on the "Add new Homebrew" template then close the whole statblock, but if its a creature with data then cancel takes you back to the statblock
-                                <button className='statblockEdit' onClick={isEditMode && currentEncounter.encounterName === 'newhomebrew' ? closeStatBlock : toggleEditMode}>{isEditMode ? <>Cancel</> : <>{creature?.dmb_homebrew_guid ? 'Edit' : 'Use as Homebrew Template'}</>} </button>
-                            }
-
-                            {!isEditMode && <button className='statblockX' onClick={closeStatBlock}>❌</button>}
                         </div>
                         {isEditMode ? (
                             <div style={{overflowX: 'hidden', overflowY: 'auto'}}>
@@ -435,7 +455,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                     </div>
 
                                     <hr className="editlineSeperator" />
-                                    <GridWrap>
+                                    <GridWrap columns={3}>
                                         <EditStatDropdown label={"Size"} options={sizeOptions} value={creature.size} cKey={'size'} handleChange={handleChange}/>
                                         <EditStatDropdown label={"Type"} options={typeOptions} value={creature.creature_type} cKey={'creature_type'} handleChange={handleChange}/>
                                         <EditStatDropdown label={"Alignment"} options={alignmentOptions} value={creature.creature_alignment} cKey={'creature_alignment'} handleChange={handleChange}/>
@@ -474,6 +494,8 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                 <hr className="editlineSeperator" />
                                     <EditStatBig label={"Reactions"} content={creature?.reactions} category={'reactions'} handleChange={handleChange}/>
                                 <hr className="editlineSeperator" />
+
+                                    <EditStatDropdown label={"Legendary Actions Count"} options={[0,1,2,3,4,5,6,7,8,9,10]} value={creature?.legendary_actions_count || 0} cKey={'legendary_actions_count'} handleChange={handleChange}/>
                                     <EditStatBig label={"Legendary Actions"} content={creature?.legendary_actions} category={'legendary_actions'} handleChange={handleChange}/>
                                 <hr className="editlineSeperator" />
                                     <EditStatBig label={"Lair Actions"} content={creature?.lair_actions} category={'lair_actions'} handleChange={handleChange}/>

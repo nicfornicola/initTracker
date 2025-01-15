@@ -1,6 +1,6 @@
 import React from 'react';
 // import data from '../monsterJsons/5eCoreRules.json'; // Adjust the import path as necessary
-import { generateUniqueId, INIT_ENCOUNTER_NAME, backendUrl} from '../../constants'
+import { generateUniqueId, INIT_ENCOUNTER_NAME, backendUrl, COLOR_GREEN, COLOR_RED} from '../../constants'
 import axios from 'axios';
 import Open5eToDmBMapper from '../../mappers/Open5eToDmBMapper'
 import { ThreeDots } from 'react-loader-spinner'
@@ -99,11 +99,32 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
             });           
         }
         else if(action === "select") {
-            setSearchSelectedCreature({...creature, creatureGuid: generateUniqueId()});
+            if(creature.dmb_homebrew_guid) {
+                setSearchSelectedCreature({...creature});
+            } else {
+                let newGuid = generateUniqueId();
+                setSearchSelectedCreature({...creature, creatureGuid: newGuid});
+            }
+
+            
         }
 
         setLoadingPack({index: null, action: null, searchingFor: null})
     };
+
+    // let teamColor = COLOR_GREEN
+    // let showteamColor = !!creature?.alignment
+    // if(showteamColor) {
+    //     if (creature?.alignment === "enemy") teamColor = COLOR_RED
+    //     else if (creature?.alignment === "neutral") teamColor = '#999999'
+    // }
+
+    const colors = {
+        "enemy": COLOR_RED,
+        "neutral": '#999999',
+        "ally": COLOR_GREEN,
+        "pet": COLOR_GREEN
+    }
 
     return (
         <>
@@ -113,7 +134,9 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
                     key={getKey(creature)}
                     onClick={(e) => handleSearchSelectCreature(creature, "select", e, index)}
                 >
-                    <div className='searchListCreatureContainer animated-box'>
+                    <div className='searchListCreatureContainer animated-box' 
+                        style={creature?.alignment ? {borderLeft: `6px solid ${colors[creature?.alignment]}`} : {}}
+                    >
                         <div className="monsterEncounterIconContainer">
                             <img className="monsterSearchIcon" src={creature.avatarUrl} alt={"list Icon"} />
                         </div>
@@ -132,6 +155,7 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
                                                 <span className='monsterSearchDetailText'> CR: {creature.challenge_rating}</span>
                                                 {creature?.creature_type !== "--" && <span className='monsterSearchDetailText'> - {highlightSubstring(searchTerm, creature.creature_type)}</span>}
                                                 <span className='monsterSearchDetailText'> - {creature?.dmb_homebrew_guid}</span>
+                                                <span className='monsterSearchDetailText'> - {creature?.alignment}</span>
                                             </>
                                         ) : (
                                             <>

@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 
 const ActionTracker = ({ actions_count, cKey, handleCheck, nested=false, actionIndex=undefined}) => {
     const [hoverIndex, setHoverIndex] = useState(null); // Track hover index
+
+    if(0 < actions_count && actions_count < 10)
+        actions_count *= 10
+
     const filledCircles = actions_count % 10;
     const totalCircles = Math.floor(actions_count / 10);
     let isHoveringFilled = filledCircles > hoverIndex

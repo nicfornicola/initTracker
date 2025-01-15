@@ -148,7 +148,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         let initatives = []
         currentEncounter.creatures.forEach(creature => {
             if(creature.type !== "player") {
-                let initBonus = creature.dexterity_save ? creature.dexterity_save : 0
+                let initBonus = creature.dexterity_save ? parseInt(creature.dexterity_save) : 0
                 let newInit = Math.floor(Math.random() * 20) + 1 + initBonus
                 creature.initiative = newInit
                 initatives.push({creatureGuid: creature.creatureGuid, initiative: newInit})
@@ -236,10 +236,13 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                                         Add a creature or select one of your
                                         <DropdownMenu savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} socket={socket}/> 
                                     </>
-                                ) : ( <>Add a creature to create an encounter!</>)}
+                                ) : ( 
+                                    <>Add a creature to create an encounter!</>
+                                )}
                             </div>
                         </div>
                     )}
+                    <hr className='seperator'/> 
                     <div className='dummyButtons'>
                         <button className='dmViewButton' onClick={() => handleAddExtra('player')}> Add Player </button>
                         <button className='dmViewButton' onClick={() => handleAddExtra('monster')}> Add Dummy </button>

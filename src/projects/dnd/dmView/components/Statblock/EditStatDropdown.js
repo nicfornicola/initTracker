@@ -1,7 +1,10 @@
 import React from 'react';
 
 function capsFirstLetter(word) {
-    return word.charAt(0).toUpperCase() + word.slice(1)
+    if(typeof word === 'string')
+        return word.charAt(0).toUpperCase() + word.slice(1)
+    else 
+        return word
 }
 
 const EditStatDropdown = ({label, options, value, cKey, handleChange = undefined}) => {

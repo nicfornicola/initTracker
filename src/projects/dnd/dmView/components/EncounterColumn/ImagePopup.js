@@ -110,29 +110,32 @@ const ImagePopup = ({setPlayerViewBackground, encounterGuid, socket}) => {
                     ariaLabel="infinity-spin-loading"
                 /> 
                 :
-                <DialogContent >
-                    <label htmlFor="grid" className='uploadedTitle'>Uploaded Youtube Links </label>
-                    <hr/>
-                    <TextInput setUploadedLinks={setUploadedLinks} socket={socket}/>
+                <DialogContent>
+                    <div style={{display: 'flex', alignItems: 'flex-end', justifyContent: 'center'}}>
+                        <FileUpload setUploadedFiles={setUploadedFiles} storageKey={"background"} socket={socket} label={'Background'}/>
+                        <TextInput setUploadedLinks={setUploadedLinks} socket={socket}/>
+                    </div>
+                    <hr className='lineSeperator' style={{margin: '10px 0 10px 0'}}/>
                     {uploadedLinks.length > 0 ? (
-                        <>     
-                            <GridMap imageArr={uploadedLinks} setImageArr={setUploadedLinks} handleClick={handleClick} isYoutubeLink={true} socket={socket}/>
+                        <>
+                            <label htmlFor="grid" className='uploadedTitle'>Uploaded Youtube Links</label>
                             <hr/>
+                            <GridMap imageArr={uploadedLinks} setImageArr={setUploadedLinks} handleClick={handleClick} isYoutubeLink={true} socket={socket}/>
                         </>
                     ) : (
                         <p>{'>'} No youtube links found</p>
                     )}
-                    <label htmlFor="grid" className='uploadedTitle'>Uploaded Images</label>
-                    <hr/>
-                    <FileUpload setUploadedFiles={setUploadedFiles} storageKey={"background"} socket={socket}/>
+                    <hr className='lineSeperator' style={{margin: '10px 0 10px 0'}}/>
                     {uploadedFiles.length > 0 ? (
                         <>     
-                            <GridMap imageArr={uploadedFiles} setImageArr={setUploadedFiles} handleClick={handleClick} socket={socket}/>
+                            <label htmlFor="grid" className='uploadedTitle'>Uploaded Backgrounds</label>
                             <hr/>
+                            <GridMap imageArr={uploadedFiles} setImageArr={setUploadedFiles} handleClick={handleClick} socket={socket}/>
                         </>
                     ) : (
                         <p>{'>'} No background images found</p>
                     )}
+                    <hr className='lineSeperator' style={{margin: '10px 0 10px 0'}}/>
                     <label htmlFor="grid" className='uploadedTitle'>Default Backgrounds</label>
                     <hr/>
                     <GridMap imageArr={backgroundImages} handleClick={handleClick}/>

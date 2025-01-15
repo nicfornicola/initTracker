@@ -4,8 +4,8 @@ offline mod
 
     dmview 
     --
-        create from scratch from homebrew tab (+ button) to open an empty statblock
-        create from template (homebrew button next to + button) to the templates statblocks
+        add team color, team and isPet to homebrew search view
+        load mosnter with avg hp or roll using hit dice button
         add default background image option for dmview instead of my default 
         upload all chars from a campaign - I can get campaign players info from the character api at the bottom
 
@@ -52,11 +52,18 @@ playerview
 
 BUGS 
 ----
+
 some of the stats still trigger SEND even onBlur with no change
 dndb hp is slightly off
 
 DONE - offline mode
 ------
+when editing from encounter, overwriting image color and such is saved to the client homebrew list but is not saved to database 
+when editing +init, roll init gets the string value instead of number from it i.e. '7+10'
+Swim 0 shows in statblock when edited
+0 shows in the legendary action tracker spot when homebrewed
+create from template (homebrew button next to + button) to the templates statblocks
+create from scratch from homebrew tab (+ button) to open an empty statblock
 dndbeyond imported folder per user
 homebrew monster folder
 add better search, by race, by cr

@@ -504,7 +504,6 @@ hr {
 }
 
 .uploadContainer {
-    margin: 5px;
     font-family: Arial, sans-serif;
     font-size: 16px;
     font-weight: bold;
@@ -1029,7 +1028,7 @@ input {
     flex-direction: column;
     position: relative;
     width: 96.6%;
-    margin-top: 2%;
+    margin-top: 10px;
     box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.5);
     z-index: 1;
     background-color: #e0d8b2;
@@ -1116,7 +1115,7 @@ input {
 .infoContainer {
     display: flex;
     flex-direction: column;
-    padding: 3%;
+    padding: 5px 10px 5px 10px;
     height: 100%;
     width: 100%;
     box-sizing: border-box; /* Include border and padding in the element's total width and height */
@@ -1229,6 +1228,13 @@ input {
     width: 100%; /* Set the width to 50% of the parent container */
 }
 
+.seperator {
+    border: none; /* Remove default styling */
+    border-top: 2px solid #822000; /* Change color and thickness */
+    width: 100%; /* Set the width to 50% of the parent container */
+    margin: 0px;
+
+}
 
 .creatureName {
     position: relative;
@@ -1382,11 +1388,8 @@ input {
 }
 
 .dummyButtons {
-    position: absolute;
+    position: relative;
     width: 94%;
-    border-top: 1px solid #822000; /* Change color and thickness */
-    border-bottom: 1px solid #822000; /* Change color and thickness */
-    bottom: 10px;
 }
 
 .dmViewButtonContainer .dropdown {
@@ -1519,7 +1522,7 @@ input {
 
 .listItem {
     width: 100%;
-    margin-top: 1%;
+    margin-top: 5px;
     background-color: #cfc9a8;
     box-sizing: border-box;
     border-radius: 5px;
@@ -1655,7 +1658,7 @@ input {
     font-weight: bold;
     font-size: .8em;
     background-color: #bcbcbc8c;
-    color: inherit;
+    color: #501400;
     border: none;
     margin: 0 0 4px 0;
     border-bottom: 2px dotted #919191;
@@ -1762,9 +1765,9 @@ input {
     display: flex;
     flex-direction: column;
     list-style-type: none;
-    margin-bottom: 8%; 
     overflow-y: scroll;
     overflow-x: hidden;
+    margin: 5px;
     height: 100%;
     width: 100%;
 }
@@ -1810,12 +1813,12 @@ input {
     position: absolute;
     transform: rotate(45deg);
     bottom: 20%;
-    right:  calc(100% - 8px);
+    left:  calc(100% - 8px);
     background-color: inherit;
     height: 16px;
     width: 16px;
-    border-bottom: inherit;
-    border-left: inherit;
+    border-top: inherit;
+    border-right: inherit;
 }
 
 .teamContainerFlag {

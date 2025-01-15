@@ -31,43 +31,59 @@ const resizeImage = (img, maxWidth, maxHeight, quality) => {
 };
 
 // FileUpload component
-const FileUpload = ({setUploadedFiles, storageKey, socket}) => {
+const FileUpload = ({ setUploadedFiles, storageKey, socket, label }) => {
     const { username } = useUser();
 
     const handleFileChange = (event) => {
-        const file = event.target.files[0];
+        const files = Array.from(event.target.files); // Convert FileList to an array
 
-        if (file && (file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/gif')) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const img = new Image();
-                img.src = e.target.result;
+        files.forEach((file) => {
+            if (file && (file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/gif')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.src = e.target.result;
 
-                img.onload = async () => {
-                    const maxWidth = storageKey === "background" ? 1280 : 300; // Maximum width
-                    const maxHeight = storageKey === "background" ? 720 : 300; // Maximum height
-                    const quality = storageKey === "background" ? .9 : 0.7; // Image quality (0.1 to 1)
+                    img.onload = async () => {
+                        const maxWidth = storageKey === "background" ? 1280 : 300; // Maximum width
+                        const maxHeight = storageKey === "background" ? 720 : 300; // Maximum height
+                        const quality = storageKey === "background" ? 0.9 : 0.7; // Image quality (0.1 to 1)
 
-                    const resizedImage = await resizeImage(img, maxWidth, maxHeight, quality);
+                        const resizedImage = await resizeImage(img, maxWidth, maxHeight, quality);
 
-                    let guid = generateUniqueId();
-                    setUploadedFiles(prevFiles => [...prevFiles, {type: storageKey, imageGuid: guid, image: resizedImage, username: username}]);
-                    socket.emit("uploadNewImage", resizedImage, storageKey, guid, username)
+                        const guid = generateUniqueId();
+                        setUploadedFiles((prevFiles) => [
+                            {
+                                type: storageKey,
+                                imageGuid: guid,
+                                image: resizedImage,
+                                username: username,
+                            },
+                            ...prevFiles,
+                            
+                        ]);
+
+                        socket.emit("uploadNewImage", resizedImage, storageKey, guid, username);
+                    };
                 };
-
-                
-            };
-            reader.readAsDataURL(file);
-        } else {
-            alert('Please upload a .png, .jpg, or gif file.');
-        }
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please upload a .png, .jpg, or .gif file.');
+            }
+        });
     };
 
     return (
         <div className="uploadContainer">
-            <hr className='editlineSeperator'/> 
-            <p style={{margin: 0}}>Upload new Images:</p> 
-            <input id="file-upload" type="file" accept=".png, .jpg, .jpeg, .gif" onChange={handleFileChange} />
+            <hr className="editlineSeperator" />
+            <p style={{ margin: 0 }}>Upload New {label}</p>
+            <input
+                id="file-upload"
+                type="file"
+                accept=".png, .jpg, .jpeg, .gif"
+                multiple // Allow multiple file uploads
+                onChange={handleFileChange}
+            />
         </div>
     );
 };

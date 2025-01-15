@@ -26,28 +26,29 @@ export const HomebrewProvider = ({ children }) => {
 
         let action = "append"
         const updatedCreatures = [...homebrewList];
-            const foundIndex = updatedCreatures.findIndex(
-                (creature) => creature.dmb_homebrew_guid === newCreature.dmb_homebrew_guid
-            );
+        const foundIndex = updatedCreatures.findIndex(
+            (creature) => creature.dmb_homebrew_guid === newCreature.dmb_homebrew_guid
+        );
 
-            if (foundIndex !== -1) {
-                //Get the new creatures stats but keep the old homebrew creatureGuid and homebrewGuid
-                newCreature = {...newCreature, creatureGuid: updatedCreatures[foundIndex].creatureGuid}
-                updatedCreatures[foundIndex] = newCreature;
-                action = "overwrite"
-            } else {
-                // Assign new creatureGuid to NEW homebrew creature, the homebrewGuid is assigned in statblock so it can be updated in the currentEncounter easier
-                newCreature = {...newCreature, creatureGuid: newCreature.creatureGuid ?? generateUniqueId()}
-                updatedCreatures.push(newCreature);
-            }
+        if (foundIndex !== -1) {
+            //Get the new creatures stats but keep the old homebrew creatureGuid and homebrewGuid
+            const oldHomebrewGuid = updatedCreatures[foundIndex].dmb_homebrew_guid
+            const oldCreatureGuid = updatedCreatures[foundIndex].creatureGuid
+            newCreature = {...newCreature, dmb_homebrew_guid: oldHomebrewGuid, creatureGuid: oldCreatureGuid}
+            updatedCreatures[foundIndex] = newCreature;
+            action = "overwrite"
+        } else {
+            // Assign new creatureGuid to NEW homebrew creature, the homebrewGuid is assigned in statblock so it can be updated in the currentEncounter easier
+            newCreature = {...newCreature, creatureGuid: generateUniqueId()}
+            updatedCreatures.push(newCreature);
+        }
 
         setHomebrewList(updatedCreatures)
-
+        console.log(newCreature.alignment)
         const url = `${backendUrl}/dmb_update_homebrew/${username}/${action}`;
         axios.post(url, newCreature, {
             headers: { 'Content-Type': 'application/json' },
         });
-            
     };
 
     const removeFromHomebrewList  = (creature, index) => {
@@ -62,9 +63,9 @@ export const HomebrewProvider = ({ children }) => {
 
     useEffect(() => {
         if (username !== 'Username') {
-            console.log(`Logged in - getting homebrew for ${username}`);
             const url = `${backendUrl}/dmb_get_homebrew/${username}`;
             axios.get(url).then((res) => {
+                console.log(res.data)
                 setHomebrewList(res.data);
             });
         } else {

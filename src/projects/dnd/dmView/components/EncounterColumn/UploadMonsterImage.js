@@ -5,14 +5,11 @@ import FileUpload from '../FileUpload';
 import GridMap from '../GridMap';
 import { InfinitySpin } from 'react-loader-spinner';
 import { useUser } from '../../../../../providers/UserProvider';
-import { useHomebrewProvider } from '../../../../../providers/HomebrewProvider';
 
-//if undefined 
-const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, setUploadIconMenu, uploadIconMenu, socket}) => {
+const UploadMonsterImage = ({uploadIconCreature, setUploadIconCreature, setCurrentEncounter, setUploadIconMenu, uploadIconMenu, socket}) => {
     const [loading, setLoading] = useState(false);
     const [uploadedAvatars, setUploadedAvatars] = useState([]);
     const { username } = useUser();
-    const {addToHomebrewList} = useHomebrewProvider();
 
     const ref = useRef(null);
 
@@ -78,8 +75,9 @@ const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, setUploadI
                 socket.emit("creatureAvatarChange", imageObj.imageGuid, uploadIconCreature.creatureGuid, "dm");
                 return {...prev, creatures: updatedCreatures};
             });
-        } else if(type === 'homebrew' || type === 'search')
-            addToHomebrewList({...uploadIconCreature, avatarUrl: imageObj.image})
+        } else if(type === 'homebrew' || type === 'search') {
+            setUploadIconCreature({...uploadIconCreature, avatarUrl: imageObj.image})
+        }
     };
 
     return (
@@ -111,7 +109,9 @@ const UploadMonsterImage = ({uploadIconCreature, setCurrentEncounter, setUploadI
 
                     </DialogContent> 
                 }
-                <FileUpload setUploadedFiles={setUploadedAvatars} storageKey={"avatar"} socket={socket}/>
+                <div style={{margin: '10px'}}>
+                    <FileUpload setUploadedFiles={setUploadedAvatars} storageKey={"avatar"} socket={socket} label={'Avatar'}/>
+                </div>
             </Dialog>
     );
 };

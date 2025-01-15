@@ -41,13 +41,15 @@ const TextInput = ({setUploadedLinks, socket}) => {
 
     return (
         <form className="uploadContainer" onSubmit={handleSubmit}>
+            <hr className='editlineSeperator'/> 
+            <p style={{margin: 0}}>Upload Youtube Links</p> 
             <input 
                 type="text" 
                 value={link} 
                 onChange={handleChange} 
                 placeholder="Enter youtube link"
             />
-            <button type="submit">Upload Background</button>
+            <button type="submit">Upload</button>
         </form>
     );
 };

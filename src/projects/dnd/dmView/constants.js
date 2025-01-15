@@ -238,7 +238,7 @@ let combinedArray = [...CoreRules,
         
 
 
-const sortedCreatures = combinedArray.toSorted((a, b) => {
+const sortedCreatures = combinedArray.slice().sort((a, b) => {
     return a.name.localeCompare(b.name);
 });
 

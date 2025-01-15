@@ -92,20 +92,21 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         if(openHpWidget && hpButtonRef.current) {
             const rect = hpButtonRef.current.getBoundingClientRect();
             setHpWidgetPosition(rect)
-            setIsHpWidgetInside(listSizeRect.top-30 < rect.top && listSizeRect.bottom+20 > rect.bottom)
+            const isInsideVertically = rect.top >= listSizeRect.top-30 && rect.bottom-50 <= listSizeRect.bottom;
+            setIsHpWidgetInside(isInsideVertically)
         }
 
         if(openTeamWidget && teamButtonRef.current) {
             const rect = teamButtonRef.current.getBoundingClientRect();
             setTeamWidgetPosition(rect)
-            const isInsideVertically = rect.top >= listSizeRect.top-30 && rect.bottom <= listSizeRect.bottom-30;
+            const isInsideVertically = rect.top >= listSizeRect.top-30 && rect.bottom-50 <= listSizeRect.bottom;
             setIsTeamWidgetInside(isInsideVertically)
         }
 
         if(openEffectWidget && effectButtonRef.current) {
             const rect = effectButtonRef.current.getBoundingClientRect();
             setEffectWidgetPosition(rect)
-            const isInsideVertically = rect.top >= listSizeRect.top-30 && rect.bottom <= listSizeRect.bottom+10;
+            const isInsideVertically = rect.top >= listSizeRect.top-30 && rect.bottom-50 <= listSizeRect.bottom;
             setIsEffectWidgetInside(isInsideVertically)
         }
 
@@ -122,18 +123,24 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     }, [creatureListItem.hit_points, creatureListItem.hit_points_current]);
 
     useEffect(() => {
-        // Specifically check for these changes because they change how the playerview behaves
-        setCreature({
-                    ...creature, 
-                    alignment: alignment,
-                    type: isPlayer ? 'player' : 'monster',
-                    border: borderColor,
-                    hidden: hidden,
-                    effects: [...effects]
-        })
+        let newCreature = {
+                ...creature, 
+                alignment: alignment,
+                type: isPlayer ? 'player' : 'monster',
+                border: borderColor,
+                hidden: hidden,
+                effects: [...effects]
+        }
+
+        setCurrentEncounter(prev => ({
+            ...prev,
+            creatures: [...prev.creatures.map((oldCreature) => {
+                return oldCreature.creatureGuid === newCreature.creatureGuid ? newCreature : oldCreature;
+            })]
+        }));
         
     // eslint-disable-next-line
-    }, [alignment, isPlayer, borderColor, hidden, effects]);
+    }, [alignment, isPlayer, isPet, borderColor, hidden, effects]);
 
     const openEditHpWidget = (event) => {
         event.stopPropagation()
@@ -261,25 +268,35 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
             setIsPet(false); // Remove pet status
         }
 
-        // If pet is false dont let ally be chosen
-        if (!isPet || team === 'neutral' || team === 'enemy') {
+        // Only allow ally click if its not a pet
+        if ((!isPet && team === 'ally') || team === 'neutral' || team === 'enemy') {
             setAlignment(team);
             socket.emit('creatureAlignmentChange', team, creature.creatureGuid, "dm");
         }
     };
 
+    if(creature.name === "Glade Stalker")
+        console.log(alignment)
+
     const handleTeamColorChange = (newBorderColor) => {
         if(newBorderColor.hex !== borderColor) {
             setBorderColor(newBorderColor.hex)
             socket.emit('creatureBorderColorChange', newBorderColor.hex, creature.creatureGuid, "dm");
-
         }
     };
 
     const handleCheckboxChange = (event) => {
         let checked = event.target.checked
         setIsPlayer(checked);
+
+        if(checked && creature.alignment === 'pet') {
+            setIsPet(false)
+            setAlignment('ally')
+            socket.emit('creatureAlignmentChange', 'ally', creature.creatureGuid, "dm");
+        }
+
         socket.emit('creatureIsPlayerChange', checked, creature.creatureGuid, "dm");
+        handleCreatureChange()
     };
 
     const handlePetCheckboxChange = (event) => {
@@ -287,6 +304,11 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         let team = checked ? 'pet' : 'ally'
 
         setIsPet(checked);
+        if(checked && isPlayer) {
+            setIsPlayer(false)
+            socket.emit('creatureIsPlayerChange', false, creature.creatureGuid, "dm");
+        }
+
         setAlignment(team);
         socket.emit('creatureAlignmentChange', team, creature.creatureGuid, "dm");
     };
@@ -304,7 +326,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                 handleCreatureChange()
             }
         }
-    }    
+    }
     
     const handleInitiativeBonusChange = (event, send = false) => {
         if(!isNaN(event.target.value)) {
@@ -313,7 +335,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                 handleCreatureChange()
             }
         }
-        
     }
 
     const handleOpenEffectWidget = (event) => {
@@ -383,7 +404,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                 >
                     <div className='encounterCreatureLeftContainer' >
                         <div className='initiativeInputContainer'>
-                            <input style={{borderLeft: `6px solid ${teamColor}`}}className='inputButton' onFocus={handleHighlight} onBlur={handleInitiativeCheck} type='text' value={creature.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
+                            <input style={{borderLeft: `6px solid ${teamColor}`}} className='inputButton' onFocus={handleHighlight} onBlur={handleInitiativeCheck} type='text' value={creature.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                         </div>
                         <EditAvatar handleUploadMonsterImage={handleUploadMonsterImage} creature={creature}/>
                         <div className='listItemMiddleStats'>
@@ -503,7 +524,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                     </div>
                 )}
                 {openHpWidget && isHpWidgetInside && ( 
-                    <div className='editStatsContainer editHpGrow' ref={hpWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: hpWidgetPosition.top - 135, left: hpWidgetPosition.right + 20, height: hpWidgetPosition.height*4}}>
+                    <div className='editStatsContainer editHpGrow' ref={hpWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: hpWidgetPosition.top - 135, right: hpWidgetPosition.right + 100, height: hpWidgetPosition.height*4}}>
                         <div className="hpContainerFlag"/>
                         <div className='hpChanges'>
                             <div className='extraHpContainer'>
@@ -521,7 +542,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                                 <input className='editStatsInput' value={hpChange} onChange={handleHpChange} autoFocus onFocus={handleHighlight}/>
                                 <button className='editHpButton damageButton' onClick={(event) => handleChangeHpCreature("damage", event)}>DAMAGE</button>
                             </div>
-                           
                         </div>
                     </div>
                 )}

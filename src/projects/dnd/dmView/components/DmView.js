@@ -390,12 +390,12 @@ const DmView = () => {
                 <>  
                     <SideMenu uploadLocalStorage={uploadLocalStorage} setCurrentEncounter={setCurrentEncounter} showSearchList={showSearchList} setShowSearchList={setShowSearchList} encounterGuid={encounterGuid} socket={socket}/>
                     {showSearchList &&  
-                        <SearchColumn setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} handleUploadMonsterImage={handleUploadMonsterImage} socket={socket}/>
+                        <SearchColumn setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} handleUploadMonsterImage={handleUploadMonsterImage} uploadIconCreature={uploadIconCreature} socket={socket}/>
                     }
                     <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} setSavedEncounters={setSavedEncounters} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} setEncounterGuid={setEncounterGuid} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter} setUploadIconMenu={setUploadIconMenu} setUploadIconCreature={setUploadIconCreature} handleUploadMonsterImage={handleUploadMonsterImage} socket={socket}/>
                 </>
             )}
-            <UploadMonsterImage setCurrentEncounter={setCurrentEncounter} uploadIconMenu={uploadIconMenu} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} socket={socket}/>
+            <UploadMonsterImage setCurrentEncounter={setCurrentEncounter} uploadIconMenu={uploadIconMenu} setUploadIconCreature={setUploadIconCreature} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} socket={socket}/>
             </div>
     );
 };

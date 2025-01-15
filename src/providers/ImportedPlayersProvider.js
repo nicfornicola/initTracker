@@ -58,8 +58,6 @@ export const ImportedPlayersProvider = ({ children }) => {
 
     useEffect(() => {
         if (username !== 'Username') {
-            // Simulate fetching imported players
-            console.log(`Logged in - getting imported players for ${username}`);
             const url = `${backendUrl}/dmb_get_imports/${username}`;
         
             axios.get(url).then((res) => {
