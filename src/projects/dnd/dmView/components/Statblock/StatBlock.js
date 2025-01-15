@@ -415,39 +415,28 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                     </div>
                 ) : (
                     <>
-                        <div className='statblockOptionsFlex' style={isEditMode ? {justifyContent: 'center', top: '-5px'} : {justifyContent: 'flex-end', top: ''}}>
-                            {isEditMode ? (
-                                <>
-                                    <button className="statblockEdit" onClick={() => handleAddToHomebrew(creature, "new")}>
-                                        Save New Homebrew
-                                    </button>
-                                    {creature?.dmb_homebrew_guid &&
-                                        <button className="statblockEdit" onClick={() => handleAddToHomebrew(creature)}>
-                                            Save Homebrew
-                                        </button>
-                                    }
-                                    <button className="statblockEdit" onClick={toggleEditMode}>
-                                        {currentEncounter.encounterGuid ? 'Save Creature' : 'Cancel'}
-                                    </button>
-                                </>
-                            ) : (
-                                <>
-                                    <button className="statblockEdit" onClick={toggleEditMode}>
-                                        {(currentEncounter.encounterGuid || creature?.dmb_homebrew_guid)
-                                            ? "Edit"
-                                            : "Use as Homebrew Template"
-                                        }
-                                    </button>
-                                    <button className='statblockX' onClick={closeStatBlock}>❌</button>
-                                </>
-                            )}
-
-                        </div>
                         {isEditMode ? (
                             <div style={{overflowX: 'hidden', overflowY: 'auto'}}>
                                 <div className='topInfo shadowBox'>
+                                    <div className='statBlockTopButtons'>
+                                        <button className="statblockEdit" style={{visibility: 'visible'}} onClick={() => handleAddToHomebrew(creature, "new")}>
+                                            Save New Homebrew
+                                        </button>
+                                        {creature?.dmb_homebrew_guid &&
+                                            <button className="statblockEdit" style={{visibility: 'visible'}} onClick={() => handleAddToHomebrew(creature)}>
+                                                Save Homebrew
+                                            </button>
+                                        }
+                                        <button className="statblockEdit" style={{visibility: 'visible'}} onClick={toggleEditMode}>
+                                            {currentEncounter.encounterGuid ? 'Save Creature' : 'Cancel'}
+                                        </button>
+                                    </div>
+                                    
                                     <div className='encounterCreatureLeftContainer' >
                                         <EditAvatar handleUploadMonsterImage={handleUploadMonsterImage} creature={creature}/>
+
+                                        
+
                                         <GridWrap columns={3}>
                                             <EditStat label={`Name ${!isProd ? creature?.creatureGuid : ''}`} value={creature?.name || ''} cKey={'name'} handleChange={handleChange} />
                                             <EditStatDropdown label={`Race ${!isProd ? creature?.dmb_homebrew_guid : ''}`} options={raceOptions} value={creature.subtype} cKey={'subtype'} handleChange={handleChange}/> 
@@ -511,6 +500,15 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                             </div>
                         ) : (
                             <>
+                                <div className='statblockOptionsFlex' style={{justifyContent: 'flex-end', top: ''}}>
+                                    <button className="statblockEdit" onClick={toggleEditMode}>
+                                        {(currentEncounter.encounterGuid || creature?.dmb_homebrew_guid)
+                                            ? "Edit"
+                                            : "Use as Homebrew Template"
+                                        }
+                                    </button>
+                                    <button className='statblockX' onClick={closeStatBlock}>❌</button>
+                                </div>
                                 <div className='topInfo shadowBox'>
                                     <h1 className='creatureName titleFontFamily'>{creature?.name}</h1>
                                     {creature.effects.length > 0 &&

@@ -233,7 +233,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                             <div className='encounterCreaturesNoItems'>
                                 {savedEncounters?.length ? (
                                     <>
-                                        Add a creature or select one of your
+                                        Add a creature or select one of your Encounters
                                         <DropdownMenu savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} socket={socket}/> 
                                     </>
                                 ) : ( 
@@ -242,11 +242,13 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                             </div>
                         </div>
                     )}
-                    <hr className='seperator'/> 
                     <div className='dummyButtons'>
-                        <button className='dmViewButton' onClick={() => handleAddExtra('player')}> Add Player </button>
-                        <button className='dmViewButton' onClick={() => handleAddExtra('monster')}> Add Dummy </button>
-                        <button className='dmViewButton' onClick={() => handleAddExtra('global')}> Add Global Token </button>
+                        <hr className='seperator'/> 
+                        <div>
+                            <button className='dmViewButton' onClick={() => handleAddExtra('player')}> Add Player </button>
+                            <button className='dmViewButton' onClick={() => handleAddExtra('monster')}> Add Dummy </button>
+                            <button className='dmViewButton' onClick={() => handleAddExtra('global')}> Add Lair Tracker </button>
+                        </div>
                     </div>
                 </div>
             </div>
