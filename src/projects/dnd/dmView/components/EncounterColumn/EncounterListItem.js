@@ -15,7 +15,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const [hidden, setHidden] = useState(creatureListItem.hidden);
     const [creature, setCreature] = useState(creatureListItem)
     const [isHovered, setIsHovered] = useState(false);
-    console.log(creature)
 
     const [maxHp, setMaxHp] = useState(creatureListItem.hit_points);
     const [currentHp, setCurrentHp] = useState(creatureListItem.hit_points_current);

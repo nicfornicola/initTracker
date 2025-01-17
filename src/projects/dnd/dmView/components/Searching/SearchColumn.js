@@ -122,25 +122,19 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
                 const filtered = list.filter(item => {
                         let searchValue = searchTerm.toLowerCase()
                         return (selectedIndex === 0)
-                            // ? item.searchHint.toLowerCase().includes(searchValue) || item.filterDimensions.level === searchValue
-                            ? item
-                            : [item.name, item.type, item.dnd_b_player_id].map(x => (x || '').toLowerCase())
-                                .some(x => x.includes(searchValue));
+                            ? [item?.name, item?.challenge_rating, item?.creature_type, item?.creature_alignment].map(x => (x || '').toLowerCase()).some(x => x.includes(searchValue))
+                            : [item?.name, item?.type, item?.dnd_b_player_id].map(x => (x || '').toLowerCase()).some(x => x.includes(searchValue));
 
                     }).slice(0, numberOfListItems);
 
                 // Homebrew and Import do not need avatarUrls because they come from the Dmb database
                 if(selectedIndex === 0) {
-                    console.log(filtered)
                     const promises = filtered.map(async creature => {
                         if (creature.avatarUrl !== null ) {
                             return creature
                         } else {
-                            console.log("getting images")
                             let creatureData = await getDndBMonsterData(creature.name)
-                            console.log('1', creatureData.avatarUrl, creature.creature_type, creature.name)
                             creature.avatarUrl = creatureData.avatarUrl ?? getDefaultImages(creature)
-                            console.log('2', creature.avatarUrl)
 
                             return creature 
                         }

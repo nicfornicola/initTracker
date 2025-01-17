@@ -344,12 +344,10 @@ export const INIT_ENCOUNTER = {
     hideEnemies: true
 }
 
-
-
 const combinedMonsters = allJsonData.flatMap(innerArray => {
-    return innerArray.map(monster => {
-        return monster
-    })
+    return innerArray
+        .filter(monster => !("_copy" in monster)) // Exclude monsters with the `_copy` key
+        .map(monster => monster); // Map the remaining monsters
 });
 
 let combinedArray = [...combinedMonsters.map((m)=> t5eToDmBMapper(m))];

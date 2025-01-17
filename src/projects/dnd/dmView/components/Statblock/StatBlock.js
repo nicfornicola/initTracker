@@ -15,7 +15,7 @@ import EditAvatar from './EditAvatar';
 
 function exists(value) {
     return value && value !== '0';
-  }
+}
 
 function formatSpeed(speed) {
     const order = ['walk', 'climb', 'burrow', 'swim', 'fly', 'hover'];
@@ -125,7 +125,7 @@ const CreatureInfo = ({creature}) => {
     let string = ``
 
     if(creature.size && creature.size !== '--') {
-        string += `${creature.size}`
+        string += `${creature.size} -`
     }
 
     if(creature.creature_type && creature.creature_type !== '--') {
@@ -558,7 +558,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                 </div>
                                     
                                 <div className="statBlockScroll">
-                                    {creature.skills.length !== 0 && (
+                                    {creature.skills && (
                                         <p>
                                             <strong>Skills </strong>
                                             <span className='infoDesc'>{creature.skills}</span>
@@ -574,7 +574,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                     <ContentString label={'CR'} contentString={creature.challenge_rating} italics={`(${getLevelData(creature.challenge_rating)} XP)`}/>
                                 
                                     {creature.from === "dnd_b" && !creature.isReleased &&
-                                        <div style={{border: '1px solid red', wordWrap: 'break-word'}}><strong>Alert!</strong> This creature comes from a paid source on DndB so only minimal data is available :( <a href={creature.link}>{creature.link}</a></div>
+                                        <div style={{border: '1px solid red', wordWrap: 'break-word'}}><strong>Alert!</strong> This creature comes from a paid source on DndB so only minimal data is available :( Try searching for it on DmBuddy :)<a href={creature.link}>{creature.link}</a></div>
                                     }
 
                                     {creature.special_abilities && 

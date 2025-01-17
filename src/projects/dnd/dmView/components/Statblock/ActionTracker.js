@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 
 const ActionTracker = ({ actions_count, cKey, handleCheck, nested=false, actionIndex=undefined}) => {
     const [hoverIndex, setHoverIndex] = useState(null);
-    console.log("==")
-    console.log(actions_count)
 
     const filledCircles = actions_count % 10;
     const totalCircles = Math.floor(actions_count / 10);
