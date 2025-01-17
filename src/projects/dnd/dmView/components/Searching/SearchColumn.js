@@ -20,7 +20,7 @@ import magPlus from '../../pics/icons/magPlus.PNG'
 
 // Function to get the image URL based on the type
 const getDefaultImages = (creature) => {
-    const monsterType = creature.filterDimensions.type.split(' ')[0].toLowerCase();
+    const monsterType = creature.creature_type;
 
     switch (monsterType) {
         case "aberration":
@@ -122,25 +122,26 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
                 const filtered = list.filter(item => {
                         let searchValue = searchTerm.toLowerCase()
                         return (selectedIndex === 0)
-                            ? item.searchHint.toLowerCase().includes(searchValue) || item.filterDimensions.level === searchValue
+                            // ? item.searchHint.toLowerCase().includes(searchValue) || item.filterDimensions.level === searchValue
+                            ? item
                             : [item.name, item.type, item.dnd_b_player_id].map(x => (x || '').toLowerCase())
                                 .some(x => x.includes(searchValue));
 
                     }).slice(0, numberOfListItems);
 
-                // Homebrew and Import do not need avatarUrls because they comes from the Dmb database
+                // Homebrew and Import do not need avatarUrls because they come from the Dmb database
                 if(selectedIndex === 0) {
+                    console.log(filtered)
                     const promises = filtered.map(async creature => {
-                        if ('avatarUrl' in creature) {
+                        if (creature.avatarUrl !== null ) {
                             return creature
                         } else {
-                            let creatureData = imagesAvailable.includes(creature.filterDimensions.source)
-                                ? await getDndBMonsterData(creature.name)
-                                : {avatarUrl: getDefaultImages(creature)}
-                            
-                            if('avatarUrl' in creatureData)
-                                creature.avatarUrl = creatureData.avatarUrl
-        
+                            console.log("getting images")
+                            let creatureData = await getDndBMonsterData(creature.name)
+                            console.log('1', creatureData.avatarUrl, creature.creature_type, creature.name)
+                            creature.avatarUrl = creatureData.avatarUrl ?? getDefaultImages(creature)
+                            console.log('2', creature.avatarUrl)
+
                             return creature 
                         }
                     });

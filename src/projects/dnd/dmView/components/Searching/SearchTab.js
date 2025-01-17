@@ -25,7 +25,7 @@ function getKey(c) {
     else if(c?.dmb_homebrew_guid)
         keyExtra = c?.dmb_homebrew_guid
     else 
-        keyExtra = c.filterDimensions.source
+        keyExtra = c.sourceShort
 
     return c.name + keyExtra;
 }
@@ -112,13 +112,6 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
         setLoadingPack({index: null, action: null, searchingFor: null})
     };
 
-    // let teamColor = COLOR_GREEN
-    // let showteamColor = !!creature?.alignment
-    // if(showteamColor) {
-    //     if (creature?.alignment === "enemy") teamColor = COLOR_RED
-    //     else if (creature?.alignment === "neutral") teamColor = '#999999'
-    // }
-
     const colors = {
         "enemy": COLOR_RED,
         "neutral": '#999999',
@@ -159,9 +152,9 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
                                             </>
                                         ) : (
                                             <>
-                                                <span className='monsterSearchDetailText'> CR: {creature.filterDimensions.level}</span>
-                                                <span className='monsterSearchDetailText'> - {highlightSubstring(searchTerm, creature.filterDimensions.type.split(' ')[0])}</span>
-                                                <span className='monsterSearchDetailText'> - {creature.filterDimensions.sourceShort}</span>
+                                                <span className='monsterSearchDetailText'> CR: {creature.cr}</span>
+                                                <span className='monsterSearchDetailText'> - {highlightSubstring(searchTerm, creature.creature_type)}</span>
+                                                <span className='monsterSearchDetailText'> - {creature.sourceShort}</span>
                                                 {(searchTerm.length >= 4 && alignmentOptions.includes(searchTerm.toLowerCase())) && 
                                                     <span className='monsterSearchDetailText' style={{textShadow: '1px 1px 2px gray',}}> 
                                                         - <b>{searchTerm.toLowerCase()}</b>
