@@ -1,5 +1,5 @@
-# Nics Initiative Tracker and Encounter Builder
-### Player View - dmbuddy.com/dnd
+# DmBuddy.com
+###  - dmbuddy.com/
 ![PlayerView](src/projects/dnd/pics/demo/playerViewDemo.PNG)
-### DM View/ Encounter Builder - dmbuddy.com/dnd/dm
+### DM View/Player View/Encounter Builder - dmbuddy.com
 ![DmView](src/projects/dnd/pics/demo/dmViewDemo.png)

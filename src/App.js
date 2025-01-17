@@ -21,8 +21,8 @@ function App() {
         <ErrorBoundary>
             <Routes>
                 <Route path="/" element={<DmView />}/>
-                <Route path="/playerView/:sessionID/*" element={<PlayerPage />} />
-                <Route path="/join/:sessionID" element={<WhoAreYou />} />
+                <Route path="/playerView/:sessionID/*" element={<PlayerPage/>} />
+                <Route path="/join/:sessionID" element={<WhoAreYou/>} />
                 <Route path="/help" element={<HowTo/>} />
                 <Route path="/users" element={<Users/>} />
                 <Route path="/king/" element={<Pantheon />} />

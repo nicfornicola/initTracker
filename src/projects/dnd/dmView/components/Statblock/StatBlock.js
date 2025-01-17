@@ -19,8 +19,6 @@ function exists(value) {
 
 function formatSpeed(speed) {
     const order = ['walk', 'climb', 'burrow', 'swim', 'fly', 'hover'];
-    console.log("!!", typeof speed['swim'])
-    console.log("!!", speed['swim'] && 'swim' !== 'hover')
     const entries = order
         .filter(key => exists(speed[key])) 
         .map(key => [key, speed[key]]);
@@ -196,6 +194,9 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
 
         if(cKey === 'hit_points' && parseInt(creature.hit_points) === parseInt(creature.hit_points_current)) {
             hpCurrent = {hit_points_current: value}
+        } else if(cKey === "legendary_actions_count") {
+            if(0 < value < 10)
+                value *= 10
         }
 
         setCreature((prev) => ({
@@ -484,7 +485,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                     <EditStatBig label={"Reactions"} content={creature?.reactions} category={'reactions'} handleChange={handleChange}/>
                                 <hr className="editlineSeperator" />
 
-                                    <EditStatDropdown label={"Legendary Actions Count"} options={[0,1,2,3,4,5,6,7,8,9,10]} value={creature?.legendary_actions_count || 0} cKey={'legendary_actions_count'} handleChange={handleChange}/>
+                                    <EditStatDropdown label={"Legendary Actions Count"} options={[0,1,2,3,4,5,6,7,8,9,10]} value={Math.floor(creature?.legendary_actions_count/10) || 0} cKey={'legendary_actions_count'} handleChange={handleChange}/>
                                     <EditStatBig label={"Legendary Actions"} content={creature?.legendary_actions} category={'legendary_actions'} handleChange={handleChange}/>
                                 <hr className="editlineSeperator" />
                                     <EditStatBig label={"Lair Actions"} content={creature?.lair_actions} category={'lair_actions'} handleChange={handleChange}/>

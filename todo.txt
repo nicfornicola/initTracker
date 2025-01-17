@@ -52,7 +52,6 @@ playerview
 
 BUGS 
 ----
-
 some of the stats still trigger SEND even onBlur with no change
 dndb hp is slightly off
 

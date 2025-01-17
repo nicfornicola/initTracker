@@ -3,7 +3,7 @@ import defaultBackground from '../pics/backgrounds/happyTavern.png'
 import io from 'socket.io-client';
 import { backendUrl } from "../constants";
 
-const ErrorBoundary = () => {
+const Users = () => {
     const socketRef = useRef(null)
     const [socket, setSocket] = useState(null);
     const [users, setUsers] = useState(null);
@@ -50,4 +50,4 @@ const ErrorBoundary = () => {
     );
 }
 
-export default ErrorBoundary;
+export default Users;

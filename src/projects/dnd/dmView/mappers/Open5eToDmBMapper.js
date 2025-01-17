@@ -102,7 +102,8 @@ export const Open5eToDmBMapper = async (open5eData, avatarUrl) => {
         "special_abilities": addRechargeCount(open5eData?.special_abilities || null),
         "actions": addRechargeCount(open5eData?.actions || null),
         "bonus_actions": addRechargeCount(open5eData?.bonus_actions || null),
-        "legendary_actions": addRechargeCount(open5eData?.legendary_actions || null)
+        "legendary_actions": addRechargeCount(open5eData?.legendary_actions || null),
+        "dnd_b_player_id": null
     }
 };
 

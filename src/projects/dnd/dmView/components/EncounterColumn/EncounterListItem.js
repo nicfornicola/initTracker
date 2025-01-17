@@ -15,6 +15,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
     const [hidden, setHidden] = useState(creatureListItem.hidden);
     const [creature, setCreature] = useState(creatureListItem)
     const [isHovered, setIsHovered] = useState(false);
+    console.log(creature)
 
     const [maxHp, setMaxHp] = useState(creatureListItem.hit_points);
     const [currentHp, setCurrentHp] = useState(creatureListItem.hit_points_current);
@@ -275,9 +276,6 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
         }
     };
 
-    if(creature.name === "Glade Stalker")
-        console.log(alignment)
-
     const handleTeamColorChange = (newBorderColor) => {
         if(newBorderColor.hex !== borderColor) {
             setBorderColor(newBorderColor.hex)
@@ -384,7 +382,10 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
 
     return (
             <li className='listItem'
-                onClick={() => setSelectedIndex(index)}
+                onClick={() => { 
+                    if(creature?.dnd_b_player_id === null) 
+                        setSelectedIndex(index)
+                }}
                 style={{
                         border: isTurn ? '2px solid rgba(0, 122, 130)' : '',
                         animation: isTurn ? 'shadowPulseTurn 2s ease-in-out infinite' : ''
@@ -444,7 +445,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                         <div className='encounterCreaturesHpContainer'>
                             <button 
                                 className='encounterCreaturesHp'
-                                onClick={(event) => openEditHpWidget(event)}  ref={hpButtonRef}
+                                onClick={(event) => openEditHpWidget(event)} ref={hpButtonRef}
                                 style={{
                                     backgroundImage: `linear-gradient(to top, ${hpStyle.color} 20%, white 50%)`,
                                     backgroundSize: '200% 200%',
@@ -524,7 +525,7 @@ const EncounterListItem = ({index, creatureListItem, listSizeRect, isTurn, setCu
                     </div>
                 )}
                 {openHpWidget && isHpWidgetInside && ( 
-                    <div className='editStatsContainer editHpGrow' ref={hpWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: hpWidgetPosition.top - 135, right: hpWidgetPosition.right + 100, height: hpWidgetPosition.height*4}}>
+                    <div className='editStatsContainer editHpGrow' ref={hpWidgetRef} onClick={(event) => event.stopPropagation()} style={{ top: hpWidgetPosition.top - 135, left: (hpWidgetPosition.left - hpWidgetPosition.width*2.12), height: hpWidgetPosition.height*4}}>
                         <div className="hpContainerFlag"/>
                         <div className='hpChanges'>
                             <div className='extraHpContainer'>

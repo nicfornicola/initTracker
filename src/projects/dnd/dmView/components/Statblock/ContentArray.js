@@ -16,8 +16,6 @@ const ContentArray = ({label, contentArray, labelDesc = null, actions_count = un
     }
 
     let showActionTracker = !!actions_count && !!handleCheck
-    if(label === "LEGENDARY ACTIONS")
-        console.log("AA", showActionTracker)
     return (
         <>
             {/* This is for legendary actions since it goes next to the big title */}

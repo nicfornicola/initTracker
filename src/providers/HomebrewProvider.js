@@ -44,7 +44,6 @@ export const HomebrewProvider = ({ children }) => {
         }
 
         setHomebrewList(updatedCreatures)
-        console.log(newCreature.alignment)
         const url = `${backendUrl}/dmb_update_homebrew/${username}/${action}`;
         axios.post(url, newCreature, {
             headers: { 'Content-Type': 'application/json' },
@@ -65,7 +64,6 @@ export const HomebrewProvider = ({ children }) => {
         if (username !== 'Username') {
             const url = `${backendUrl}/dmb_get_homebrew/${username}`;
             axios.get(url).then((res) => {
-                console.log(res.data)
                 setHomebrewList(res.data);
             });
         } else {
