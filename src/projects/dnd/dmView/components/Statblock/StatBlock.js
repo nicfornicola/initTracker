@@ -12,6 +12,7 @@ import ActionTracker from './ActionTracker';
 import { useHomebrewProvider } from '../../../../../providers/HomebrewProvider';
 import { ThreeDots } from 'react-loader-spinner';
 import EditAvatar from './EditAvatar';
+import { BoldifyReplace } from './BoldifyReplace';
 
 function exists(value) {
     return value && value !== '0';
@@ -152,11 +153,12 @@ const CreatureInfo = ({creature}) => {
 }
 
 const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeStatBlock, loading=false, searchingFor=null, handleUploadMonsterImage, socket}) => {
+    
     // Creature can be null from SearchColumn but not from EncounterColumn, Statblock is not shown if from EncounterColumn
     const [creature, setCreature] = useState(currentEncounter?.creatures[selectedIndex])
     const {addToHomebrewList} = useHomebrewProvider();
     const [isEditMode, setIsEditMode] = useState(currentEncounter?.encounterName === "newhomebrew")
-    
+
     // If selectedIndex changes a new creature was clicked
     useEffect(() => {
         setCreature(selectedIndex !== null ? currentEncounter?.creatures[selectedIndex] : null)
@@ -392,6 +394,8 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
         addToHomebrewList({...homebrewCreature})
         setIsEditMode(false)
     }
+    console.log(creature.name)
+    console.log(creature)
 
     if(creature?.dnd_b_player_id) {
         return null;
@@ -617,9 +621,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                                                         {getSpells(getDesc(ability))}
                                                                     </>
                                                                 ) : (
-                                                                    <>
-                                                                        {getDesc(ability)}
-                                                                    </>
+                                                                    <BoldifyReplace desc={ability?.desc} />
                                                                 )}
                                                             </span>
                                                         </div>

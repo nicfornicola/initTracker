@@ -1,9 +1,6 @@
 import React from 'react';
 import ActionTracker from './ActionTracker';
-
-function getDesc(object) {
-    return object.desc || object.description || "No Description found :("
-}
+import { BoldifyReplace } from './BoldifyReplace.js';
 
 const ContentArray = ({label, contentArray, labelDesc = null, actions_count = undefined, handleCheck=undefined, cKey=undefined, nested=false}) => {
 
@@ -20,7 +17,7 @@ const ContentArray = ({label, contentArray, labelDesc = null, actions_count = un
         <>
             {/* This is for legendary actions since it goes next to the big title */}
             <div className={`actionToken-container`}>
-                <h1 className='infoTitle'>{label} </h1>
+                <h1 className='infoTitle'>{label}</h1>
                 {showActionTracker &&
                     <ActionTracker 
                         actions_count={actions_count}
@@ -40,7 +37,7 @@ const ContentArray = ({label, contentArray, labelDesc = null, actions_count = un
                 <div className='actionInfo' key={index + action.name}>
                     {action?.rechargeCount !== 0 && !isNaN(action?.rechargeCount) && handleCheck ? (
                         <div className={`actionToken-container`}>
-                            <strong>{action.name} </strong>
+                            <strong><BoldifyReplace name={action.name} /></strong>
                             <ActionTracker 
                                 actions_count={action.rechargeCount}
                                 cKey={cKey}
@@ -50,9 +47,11 @@ const ContentArray = ({label, contentArray, labelDesc = null, actions_count = un
                             />
                         </div>
                     ) : ( 
-                        <strong>{action.name}: </strong>
+                        <strong><BoldifyReplace name={action.name} /></strong>
                     )}
-                        <span className='infoDesc'>{getDesc(action)}</span>
+                    <BoldifyReplace desc={action?.desc} />
+                    {/* <hr/>
+                    <span className='infoDesc'> {action?.desc} </span> */}
                 </div>
             ))}
             {label ===  'Legendary Actions'}

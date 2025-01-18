@@ -1,4 +1,5 @@
 import legendaryGroups from '../monsterJsons/legendarygroups.json'
+import { legendaryDescDefault } from '../replacements.js'
 
 const legendaryDetails = legendaryGroups.legendaryGroup;
 
@@ -148,11 +149,43 @@ function addRechargeCount(objectsArr) {
         return null
 }
 
+const calcAC = (monster) => {
+    if(Array.isArray(monster?.ac)) {
+        if(monster.name === 'Othovir')
+            console.log("1")
+        if(monster.ac[0]?.ac) {
+            if(monster.name === 'Othovir')
+                console.log("2")
+            return monster.ac[0]?.ac
+        }
+        else if(typeof monster.ac[0] === 'number') {
+            if(monster.name === 'Othovir')
+                console.log("3")
+            let ac = monster.ac[0];
+            if(typeof monster.ac[1] === 'object') {
+                if(monster.name === 'Othovir')
+                    console.log("4")
+                ac = `${ac.toString()} (${monster.ac[1].ac.toString()} ${monster.ac[1].condition})`
+            }
+            
+            if(monster.name === 'Othovir')
+                console.log(ac)
+
+            return ac
+        }
+        else
+            return monster?.ac[0]?.special
+    }
+    if(monster.name === 'Othovir')
+        console.log("5")
+
+    return "NO AC"
+
+}
+
 export const t5eToDmBMapper = (monster, avatarUrl = null) => {
     let alignment = allyCheck(monster.alignment)
-    const armor_class = Array.isArray(monster?.ac) && monster.ac[0]?.ac 
-        ? monster.ac[0].ac 
-        : monster?.ac?.[0] || "NO AC";
+    const armor_class = calcAC(monster) 
     const armor_desc = Array.isArray(monster?.ac) && monster?.ac[0]?.from ? ("(" + (monster?.ac[0]?.from?.join("")) + ")") : "";
 
 
@@ -173,9 +206,9 @@ export const t5eToDmBMapper = (monster, avatarUrl = null) => {
         "creature_type": calcCreatureType(monster?.type),
         "subtype": capsFirstLetter(monster.type?.tags?.join(",") || '--'),
         "hit_points_formula": monster?.hp?.formula,
-        "hit_points_default": monster?.hp?.average,
-        "hit_points": monster?.hp?.average,
-        "hit_points_current": monster?.hp?.average,
+        "hit_points_default": monster?.hp?.average || monster?.hp?.special,
+        "hit_points": monster?.hp?.average || monster?.hp?.special,
+        "hit_points_current": monster?.hp?.average || monster?.hp?.special,
         "hit_points_temp": 0,
         "hit_points_override": 0,
         "hit_points_modifier": 0,
@@ -195,7 +228,7 @@ export const t5eToDmBMapper = (monster, avatarUrl = null) => {
         "bonus_actions": addRechargeCount(calcActionTypes(monster?.bonus) || null),
         "legendary_actions_count": monster?.legendary?.length > 0 ? 30 : 0,
         "legendary_actions": addRechargeCount(calcActionTypes(monster?.legendary)),
-        "legendary_desc": monster?.legendaryHeader?.join(" "),
+        "legendary_desc": monster?.legendary?.length ? (monster?.legendaryHeader?.join(" ") || legendaryDescDefault(monster.name)) : "NOTHIN",
         "lair_actions": [], //see legendaryDetails ^^^
         "inspiration": false,
         "hidden": false,

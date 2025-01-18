@@ -122,7 +122,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
                 const filtered = list.filter(item => {
                         let searchValue = searchTerm.toLowerCase()
                         return (selectedIndex === 0)
-                            ? [item?.name, item?.challenge_rating, item?.creature_type, item?.creature_alignment].map(x => (x || '').toLowerCase()).some(x => x.includes(searchValue))
+                            ? [item?.name, item?.challenge_rating, item?.creature_type, item?.subtype, item?.creature_alignment].map(x => (x || '').toLowerCase()).some(x => x.includes(searchValue))
                             : [item?.name, item?.type, item?.dnd_b_player_id].map(x => (x || '').toLowerCase()).some(x => x.includes(searchValue));
 
                     }).slice(0, numberOfListItems);
