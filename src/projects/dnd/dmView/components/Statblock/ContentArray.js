@@ -47,7 +47,7 @@ const ContentArray = ({label, contentArray, labelDesc = null, actions_count = un
                             />
                         </div>
                     ) : ( 
-                        <strong><BoldifyReplace name={action.name} /></strong>
+                        <strong><BoldifyReplace name={action.name} /> </strong>
                     )}
                     <BoldifyReplace desc={action?.desc} />
                     {/* <hr/>

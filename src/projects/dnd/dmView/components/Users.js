@@ -34,7 +34,7 @@ const Users = () => {
         <div className="background " style={{backgroundImage: `url(${defaultBackground})`}}>
             <div className=" firstLoadMenuContainer">
                 <div className="firstLoadMenu">
-                    <div className="homepageTopContent">
+                    <div className="userContainer">
                         <h1>Users: {users?.length}</h1>
                         <ol className="userGrid">
                             {users?.map((user, index) => (

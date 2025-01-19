@@ -395,7 +395,6 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
         setIsEditMode(false)
     }
     console.log(creature.name)
-    console.log(creature)
 
     if(creature?.dnd_b_player_id) {
         return null;
@@ -515,7 +514,6 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                     <button className='statblockX' onClick={closeStatBlock}>❌</button>
                                 </div>
                                 <div className='topInfo shadowBox'>
-                                    <h1 className='creatureName titleFontFamily'>{creature?.name}</h1>
                                     {creature.effects.length > 0 &&
                                         <div style={{backgroundColor: "black", width: 'fit-content', borderRadius: 5}}>
                                             {creature.effects.map((effect) => (
@@ -524,7 +522,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                         </div>
                                     }
                                     <img className="img" src={creature.avatarUrl} alt={"Creature Img"}/>
-
+                                    <h1 className='creatureName titleFontFamily'>{creature?.name}</h1>
                                     <div className='creatureType'>
                                         <hr className="lineSeperator" />
                                         <p className='source'>{creature.document__title}</p>
@@ -532,9 +530,10 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                     </div>
                                     <div className='stickyStatGrid textShadow' >
                                         <p className="stickyStatItem">
-                                            <strong className='titleColor'>AC</strong>&nbsp;{creature.armor_class} 
+                                            <strong className='titleColor'>AC&nbsp;</strong>
+                                            <BoldifyReplace desc={creature.armor_class} />
                                             {creature.armor_desc && creature.armor_desc !== "()" && 
-                                                <span className='extraInfo'> &nbsp; {creature.armor_desc} </span>
+                                                <>&nbsp;<BoldifyReplace desc={creature.armor_desc} /></>
                                             } 
                                         </p>
                                         <p className="stickyStatItem">

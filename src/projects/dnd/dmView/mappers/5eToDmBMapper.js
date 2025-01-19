@@ -59,6 +59,16 @@ const calcAlignment = (alignmentArray) => {
 }
 
 const calcSpeed = (speed) => {
+    
+    if(speed && Object.entries(speed).forEach(([key, value]) => {
+        if (typeof value === "object" && value !== null) {
+            speed[key] = `${value.number} ${value.condition}`.trim();
+        } else {
+            speed[key] = value;
+        }
+    }))
+
+
     if(speed?.fly?.number) {
         speed.fly = speed.fly.number
     }
@@ -80,26 +90,6 @@ const calcActionTypes = (actionJson) => {
     return actionJson;
 }
 
-const calcResists = (resists) => {
-    let resistString = ''
-    if(resists) {
-        return resists
-            .map((resist) => {
-                if (typeof resist === "string") {
-                    // Handle simple resistance (e.g., "cold", "fire")
-                    return resist;
-                } else if (typeof resist === "object" && resist.resist) {
-                    // Handle object resistance
-                    const resistList = resist.resist.join(", ");
-                    const note = resist.note ? ` ${resist.note}` : "";
-                    return `${resistList}${note}`;
-                }
-                return ""; 
-            }).filter(Boolean) .join("; ");
-    } 
-    return resistString
-}
-
 const calcCreatureType = (type) => {
     if(typeof type === 'string') {
        return type
@@ -109,6 +99,22 @@ const calcCreatureType = (type) => {
         return type.type.choose.map((t) => capsFirstLetter(t)).join(" or ")
     }
 }
+
+// For immunities and resistances
+const calcImmune = (defense, cKey) => {
+    if (!defense) return "";
+
+    const dString1 = defense
+        .filter(entry => typeof entry === "string")
+        .join(", ");
+
+    const dString2 = defense
+        .filter(entry => typeof entry === "object" && entry[cKey])
+        .map(entry => `${entry[cKey].join(", ")} ${entry?.note}`)
+        .join("; ");
+
+        return `${dString1}${dString2 ? `; ${dString2}` : ""}` 
+    };
 
 const allyCheck = (alignmentArray) => {
     if(alignmentArray)
@@ -149,45 +155,52 @@ function addRechargeCount(objectsArr) {
         return null
 }
 
+const calcSenses = (senses, passive) => {
+    let sensesString = ''
+    if(senses) {
+        sensesString = senses.join(", ")
+    }
+
+    if(passive)
+        sensesString += `${sensesString ? ',' : ''} Passive Perception ${passive}`
+
+    return sensesString
+}
+
+const calcCr = (monster) => {
+
+    let cr = monster?.cr?.cr || monster.cr
+    // if(monster?.cr?.lair)
+    //     cr += "Lair: " + monster?.cr?.lair
+    return cr
+}
+
 const calcAC = (monster) => {
     if(Array.isArray(monster?.ac)) {
-        if(monster.name === 'Othovir')
-            console.log("1")
         if(monster.ac[0]?.ac) {
-            if(monster.name === 'Othovir')
-                console.log("2")
             return monster.ac[0]?.ac
         }
+
         else if(typeof monster.ac[0] === 'number') {
-            if(monster.name === 'Othovir')
-                console.log("3")
             let ac = monster.ac[0];
             if(typeof monster.ac[1] === 'object') {
-                if(monster.name === 'Othovir')
-                    console.log("4")
                 ac = `${ac.toString()} (${monster.ac[1].ac.toString()} ${monster.ac[1].condition})`
             }
             
-            if(monster.name === 'Othovir')
-                console.log(ac)
-
             return ac
         }
         else
             return monster?.ac[0]?.special
     }
-    if(monster.name === 'Othovir')
-        console.log("5")
 
     return "NO AC"
-
 }
 
 export const t5eToDmBMapper = (monster, avatarUrl = null) => {
     let alignment = allyCheck(monster.alignment)
     const armor_class = calcAC(monster) 
     const armor_desc = Array.isArray(monster?.ac) && monster?.ac[0]?.from ? ("(" + (monster?.ac[0]?.from?.join("")) + ")") : "";
-
+    const cr = calcCr(monster)
 
     return {
         "name": monster.name,
@@ -215,14 +228,14 @@ export const t5eToDmBMapper = (monster, avatarUrl = null) => {
         "initiative": Math.floor((monster?.dex-10)/2) || 0,
         "effects": [],
         'damage_vulnerabilities': monster?.vulnerable?.join(', ') || "",
-        'damage_resistances': calcResists(monster?.resist) || "",
-        'damage_immunities': monster?.immune?.join(', ') || "",
+        'damage_resistances': calcImmune(monster?.resist, "resist") || "",
+        'damage_immunities': calcImmune(monster?.immune, "immune"),
         'condition_immunities': monster?.conditionImmune?.join(', ') || "",
         "skills": mapSkills(monster.skill),
-        "senses": monster.senses?.join(", ") || "",
+        "senses": calcSenses(monster?.senses, monster?.passive),
         'languages': monster?.languages?.join(', '),
-        "cr": monster?.cr?.cr || monster.cr,
-        "challenge_rating": monster?.cr?.cr || monster.cr,
+        "cr": cr,
+        "challenge_rating": cr,
         "special_abilities": addRechargeCount(calcActionTypes(monster?.trait || null)),
         "actions": addRechargeCount(calcActionTypes(monster?.action) || null),
         "bonus_actions": addRechargeCount(calcActionTypes(monster?.bonus) || null),

@@ -214,6 +214,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
         if(index !== selectedIndex) {
             setLoading(true); 
             setSelectedIndex(index)
+            setSearchTerm("")
         }
     }
 

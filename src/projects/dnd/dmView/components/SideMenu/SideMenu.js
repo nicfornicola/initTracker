@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Search from '../../pics/search.png'
 import LoginImage from '../../pics/icons/login.png'
 import questionMark from '../../pics/icons/questionMark.png'
+import Patreon from '../../pics/patreon_logo.png'
 import InputCharacterId from './InputCharacterId';
 import InputEncounterId from './InputEncounterId';
 import SignIn from '../SignIn';
@@ -46,10 +47,11 @@ function SideMenu({uploadLocalStorage, setCurrentEncounter, showSearchList, setS
             <button className="toggle-button" onClick={toggleMenu}>
                 {isOpen ? '<<' : '>>'}
             </button>
-            <ul className='menu'>
-                <li className='menuItem' onClick={() => setShowSearchList(!showSearchList)}>
+            <div className='menu'>
+                <div className='menuItem' onClick={() => setShowSearchList(!showSearchList)}>
                     <img className='menuIcon' alt='monsterSearch' src={Search}/> {showSearchList ? 'Hide' : 'Show'} Search
-                </li>
+                </div>
+                
                 {/* <li className='menuItem'>
                     <img className='menuIcon' alt='jsonDownload' src={Download} onClick={downloadLocalStorage} /> Download Saves
                 </li>
@@ -65,7 +67,7 @@ function SideMenu({uploadLocalStorage, setCurrentEncounter, showSearchList, setS
                 </li> */}
 
                 <hr/>
-                <li className='menuItem' >
+                <div className='menuItem' >
                     <div className='loginImageFlex'>
                         <img src={LoginImage} alt="Login" className="menuIcon" onClick={() => setIsOpen(!isOpen)} />
                         {isOpen && 
@@ -73,11 +75,21 @@ function SideMenu({uploadLocalStorage, setCurrentEncounter, showSearchList, setS
                         }
                     </div>
                     
-                </li>
-                <li className='menuItemLow'>
-                    <a className='menuHelpLink' href='/help'> <img src={questionMark} alt="Click to Upload" className="menuIcon" /> Help  Page</a>
-                </li>
-            </ul>
+                </div>                    
+                
+                <div className='menuItemLow'>
+                    <div>
+                        <a className='menuHelpLink' href='https://patreon.com/DmBuddy' target="_blank"> 
+                            <img src={Patreon} alt="Patreon" className="menuIcon" /> DmBuddy's Patreon
+                        </a>
+                    </div>
+                    <div >
+                        <a className='menuHelpLink' href='/help'> 
+                            <img src={questionMark} alt="Click to Upload" className="menuIcon" /> Help  Page
+                        </a>
+                    </div>
+                </div>
+            </div>
             
         </div>
     );

@@ -50,6 +50,9 @@ playerview
     do a little loading wheel to show next refresh on dnd_b mode
 
 
+Replacement items: 
+WOLFWERE ALPHA: immunites, speed
+
 BUGS 
 ----
 some of the stats still trigger SEND even onBlur with no change
