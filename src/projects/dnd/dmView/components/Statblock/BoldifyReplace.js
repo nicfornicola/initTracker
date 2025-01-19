@@ -35,7 +35,7 @@ export const BoldifyReplace = ({ name, desc }) => {
         if (key.startsWith("item ")) return <strong>{cleanPipes(key.slice(5))}</strong>;
         if (key.startsWith("dice ")) return <strong>{key.slice(5)}</strong>;
         if (key.startsWith("skill ")) return <strong>{key.slice(6)}</strong>;
-        if (key.startsWith("spell ")) return <strong>{key.slice(6)}</strong>;
+        if (key.startsWith("spell ")) return <strong>{cleanPipes(key.slice(6))}</strong>;
         if (key.startsWith("sense ")) return <strong>{key.slice(6)}</strong>;
         if (key.startsWith("status")) return <strong>{cleanPipes(key.slice(7))}</strong>;
         if (key.startsWith("damage ")) return <strong>{key.slice(7)}</strong>;

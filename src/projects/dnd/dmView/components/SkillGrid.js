@@ -5,7 +5,7 @@ const Titles = () => {
     return (
         <>
             <div className="skillGridHeader"/>
-            <div className="skillGridHeader titleFontFamily">Score</div>
+            <div className="skillGridHeader titleFontFamily"></div>
             <div className="skillGridHeader titleFontFamily">Mod</div>
             <div className="skillGridHeader titleFontFamily">Save</div>
         </>

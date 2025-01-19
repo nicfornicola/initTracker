@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import data from '../monsterJsons/5eCoreRules.json'; // Adjust the import path as necessary
-import {shuffledMonsterList, imagesAvailable, backendUrl, isDev, shuffleArray, sortedMonsterList, reversedMonsterList, homebrewTemplate, generateUniqueId} from '../../constants'
+import {shuffledMonsterList, backendUrl, isDev, shuffleArray, sortedMonsterList, reversedMonsterList, homebrewTemplate, generateUniqueId} from '../../constants'
 import axios from 'axios';
 import { InfinitySpin } from 'react-loader-spinner'
 import StatBlock from '../Statblock/StatBlock';
@@ -83,7 +83,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
 
     useEffect(() => {
         if(searchSelectedCreature) {
-            homebrewList.map(creature => {
+            homebrewList.forEach(creature => {
                 if (searchSelectedCreature.dmb_homebrew_guid === creature.dmb_homebrew_guid || searchSelectedCreature.creatureGuid === creature.creatureGuid) {
                     setSearchSelectedCreature(creature)
                 }
@@ -122,7 +122,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
                 const filtered = list.filter(item => {
                         let searchValue = searchTerm.toLowerCase()
                         return (selectedIndex === 0)
-                            ? [item?.name, item?.challenge_rating, item?.creature_type, item?.subtype, item?.creature_alignment].map(x => (x || '').toLowerCase()).some(x => x.includes(searchValue))
+                            ? [item?.name, item?.creature_type, item?.subtype, item?.creature_alignment].map(x => (x || '').toLowerCase()).some(x => x.includes(searchValue)) || item?.challenge_rating === searchValue
                             : [item?.name, item?.type, item?.dnd_b_player_id].map(x => (x || '').toLowerCase()).some(x => x.includes(searchValue));
 
                     }).slice(0, numberOfListItems);

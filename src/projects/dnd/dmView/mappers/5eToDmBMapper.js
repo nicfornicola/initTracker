@@ -113,7 +113,7 @@ const calcImmune = (defense, cKey) => {
         .map(entry => `${entry[cKey].join(", ")} ${entry?.note}`)
         .join("; ");
 
-        return `${dString1}${dString2 ? `; ${dString2}` : ""}` 
+        return `${dString1}${dString2 ? `${dString1 && ';' } ${dString2}` : ""}` 
     };
 
 const allyCheck = (alignmentArray) => {
@@ -225,7 +225,7 @@ export const t5eToDmBMapper = (monster, avatarUrl = null) => {
         "hit_points_temp": 0,
         "hit_points_override": 0,
         "hit_points_modifier": 0,
-        "initiative": Math.floor((monster?.dex-10)/2) || 0,
+        "initiative": 0 || 0,
         "effects": [],
         'damage_vulnerabilities': monster?.vulnerable?.join(', ') || "",
         'damage_resistances': calcImmune(monster?.resist, "resist") || "",
@@ -237,8 +237,10 @@ export const t5eToDmBMapper = (monster, avatarUrl = null) => {
         "cr": cr,
         "challenge_rating": cr,
         "special_abilities": addRechargeCount(calcActionTypes(monster?.trait || null)),
+        "spellcasting": monster?.spellcasting,
         "actions": addRechargeCount(calcActionTypes(monster?.action) || null),
         "bonus_actions": addRechargeCount(calcActionTypes(monster?.bonus) || null),
+        "reactions": addRechargeCount(calcActionTypes(monster?.reaction) || null),
         "legendary_actions_count": monster?.legendary?.length > 0 ? 30 : 0,
         "legendary_actions": addRechargeCount(calcActionTypes(monster?.legendary)),
         "legendary_desc": monster?.legendary?.length ? (monster?.legendaryHeader?.join(" ") || legendaryDescDefault(monster.name)) : "NOTHIN",
@@ -258,13 +260,14 @@ export const t5eToDmBMapper = (monster, avatarUrl = null) => {
         "charisma":  monster.cha ?? 0,
         "wisdom":  monster.wis ?? 0,
         "strength_save": monster.save?.str ?? 0,
-        "dexterity_save":  monster.save?.dex ?? 0,
+        "dexterity_save":  monster.save?.dex ?? Math.floor((monster.dex-10)/2) ?? 0,
         "constitution_save":  monster.save?.con ?? 0,
         "intelligence_save":  monster.save?.int ?? 0,
         "charisma_save":  monster.save?.cha ?? 0,
         "wisdom_save":  monster.save?.wis ?? 0,
         "dnd_b_player_id": null,
-        "sourceShort": monster.source,
+        "sourceShort": monster?.source,
+        "page": monster?.page,
 
     }
 };

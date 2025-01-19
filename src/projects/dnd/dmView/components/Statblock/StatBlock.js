@@ -13,6 +13,7 @@ import { useHomebrewProvider } from '../../../../../providers/HomebrewProvider';
 import { ThreeDots } from 'react-loader-spinner';
 import EditAvatar from './EditAvatar';
 import { BoldifyReplace } from './BoldifyReplace';
+import SpellCasting from './SpellList';
 
 function exists(value) {
     return value && value !== '0';
@@ -395,6 +396,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
         setIsEditMode(false)
     }
     console.log(creature.name)
+    console.log(creature)
 
     if(creature?.dnd_b_player_id) {
         return null;
@@ -522,10 +524,9 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                         </div>
                                     }
                                     <img className="img" src={creature.avatarUrl} alt={"Creature Img"}/>
-                                    <h1 className='creatureName titleFontFamily'>{creature?.name}</h1>
+                                    <h1 className='creatureName titleFontFamily'>{creature?.name}&nbsp;</h1>
                                     <div className='creatureType'>
                                         <hr className="lineSeperator" />
-                                        <p className='source'>{creature.document__title}</p>
                                         <CreatureInfo creature={creature}/>
                                     </div>
                                     <div className='stickyStatGrid textShadow' >
@@ -591,45 +592,48 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                                     }
                                                 </>
                                             ) : (
-                                                creature.special_abilities.map((ability, index) => {
-                                                    // Skip rendering if name is "None" and desc is "--"
-                                                    if (ability.name === "None" && ability.desc === "--") {
-                                                        return null;
-                                                    }
-                                            
-                                                    return (
-                                                        <div className='actionInfo' key={index + ability.name}>
-                                                            {ability.rechargeCount !== 0 ? (
-                                                                <div className={`actionToken-container`}>
-                                                                    <strong className='titleColor'>{ability.name} </strong>
-                                                                    <ActionTracker 
-                                                                        actions_count={ability.rechargeCount}
-                                                                        label={ability.name}
-                                                                        cKey={'special_abilities'}
-                                                                        nested={true}
-                                                                        handleCheck={handleRechargeCheck}
-                                                                        actionIndex={index}
-                                                                    />
-                                                                </div>
-                                                            ) : ( 
-                                                                <strong className='titleColor'>{ability.name}: </strong>
-                                                            )}
-                                                            <span className='infoDesc'>
-                                                                {ability.name === "Spellcasting" ? (
-                                                                    <>
-                                                                        {getSpells(getDesc(ability))}
-                                                                    </>
-                                                                ) : (
-                                                                    <BoldifyReplace desc={ability?.desc} />
+                                                <>
+                                                    {creature.special_abilities.map((ability, index) => {
+                                                        // Skip rendering if name is "None" and desc is "--"
+                                                        if (ability.name === "None" && ability.desc === "--") {
+                                                            return null;
+                                                        }
+                                                
+                                                        return (
+                                                            <div className='actionInfo' key={index + ability.name}>
+                                                                {ability.rechargeCount !== 0 ? (
+                                                                    <div className={`actionToken-container`}>
+                                                                        <strong className='titleColor'>{ability.name} </strong>
+                                                                        <ActionTracker 
+                                                                            actions_count={ability.rechargeCount}
+                                                                            label={ability.name}
+                                                                            cKey={'special_abilities'}
+                                                                            nested={true}
+                                                                            handleCheck={handleRechargeCheck}
+                                                                            actionIndex={index}
+                                                                        />
+                                                                    </div>
+                                                                ) : ( 
+                                                                    <strong className='titleColor'>{ability.name}: </strong>
                                                                 )}
-                                                            </span>
-                                                        </div>
-                                                    );
-                                                })
+                                                                <span className='infoDesc'>
+                                                                    {ability.name === "Spellcasting" ? (
+                                                                        <>
+                                                                            {getSpells(getDesc(ability))}
+                                                                        </>
+                                                                    ) : (
+                                                                        <BoldifyReplace desc={ability?.desc} />
+                                                                    )}
+                                                                </span>
+                                                            </div>
+                                                        );
+                                                    })}
+                                                    <SpellCasting creature={creature}/>
+                                                </>
+
                                             )}
                                         </>
                                     }
-                                    
 
                                     {creature.actions && 
                                         <>
@@ -642,7 +646,10 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                                     }
                                                 </>
                                             ) : (
-                                                <ContentArray label={'ACTIONS'} contentArray={creature.actions} cKey={'actions'} handleCheck={handleRechargeCheck} nested={true}/>
+                                                <>
+                                                    <ContentArray label={'ACTIONS'} contentArray={creature.actions} cKey={'actions'} handleCheck={handleRechargeCheck} nested={true}/>
+                                                    <SpellCasting creature={creature} displayAs='action'/>
+                                                </>
 
                                             )}
                                         </>
@@ -676,9 +683,12 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                         </div>
                                     )}
                                 </div>
+                                <hr className="lineSeperator" />
+                                <div>
+                                    <strong className='source'>Source: {creature.sourceShort}, page {creature.page}</strong>
+                                </div>
                             </>
                         )}
-                        
                         
                         <hr className="lineSeperator" />
                         {creature.from === 'dnd_b' && 

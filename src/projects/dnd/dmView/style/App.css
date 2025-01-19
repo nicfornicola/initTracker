@@ -1284,7 +1284,6 @@ input {
     color: black;
 }
 
-
 .topInfo {
     position: relative;
     background-color: #e0dab8;
@@ -1306,8 +1305,14 @@ input {
     border-radius: 8px;
 }
 
+.spellList {
+    margin: 0;
+    padding-left: 6%;
+    list-style-type: circle;
+}
+
 .source {
-    font-size: 11px;
+    font-size: .8em;
     color: black;
 }
 
