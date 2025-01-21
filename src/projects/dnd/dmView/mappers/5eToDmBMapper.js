@@ -144,6 +144,12 @@ function mapSkills(skills) {
         return ''
 }
 
+function calcSave(skill) {
+    if(!skill && skill !== 0) return 0
+
+    return Math.floor((skill-10)/2)
+}
+
 function addRechargeCount(objectsArr) {
     if(objectsArr) 
         return objectsArr.map(obj => {
@@ -196,11 +202,30 @@ const calcAC = (monster) => {
     return "NO AC"
 }
 
+const calcSpellCasting = (spellcasting) => {
+    if(!spellcasting) {
+        return []
+    }
+
+    return spellcasting.map((spellObj) => {
+        let headerEntry = spellObj?.headerEntries?.join(" ");
+        return {...spellObj, headerEntries: headerEntry}
+    })
+
+}
+
 export const t5eToDmBMapper = (monster, avatarUrl = null) => {
     let alignment = allyCheck(monster.alignment)
     const armor_class = calcAC(monster) 
     const armor_desc = Array.isArray(monster?.ac) && monster?.ac[0]?.from ? ("(" + (monster?.ac[0]?.from?.join("")) + ")") : "";
     const cr = calcCr(monster)
+
+    const str = monster.str ?? 0;
+    const dex = monster.dex ?? 0;
+    const con = monster.con ?? 0;
+    const int = monster.int ?? 0;
+    const cha = monster.cha ?? 0;
+    const wis = monster.wis ?? 0;
 
     return {
         "name": monster.name,
@@ -225,7 +250,7 @@ export const t5eToDmBMapper = (monster, avatarUrl = null) => {
         "hit_points_temp": 0,
         "hit_points_override": 0,
         "hit_points_modifier": 0,
-        "initiative": 0 || 0,
+        "initiative": 0,
         "effects": [],
         'damage_vulnerabilities': monster?.vulnerable?.join(', ') || "",
         'damage_resistances': calcImmune(monster?.resist, "resist") || "",
@@ -237,7 +262,7 @@ export const t5eToDmBMapper = (monster, avatarUrl = null) => {
         "cr": cr,
         "challenge_rating": cr,
         "special_abilities": addRechargeCount(calcActionTypes(monster?.trait || null)),
-        "spellcasting": monster?.spellcasting,
+        "spellcasting": calcSpellCasting(monster?.spellcasting),
         "actions": addRechargeCount(calcActionTypes(monster?.action) || null),
         "bonus_actions": addRechargeCount(calcActionTypes(monster?.bonus) || null),
         "reactions": addRechargeCount(calcActionTypes(monster?.reaction) || null),
@@ -253,18 +278,18 @@ export const t5eToDmBMapper = (monster, avatarUrl = null) => {
             "isStabilized": true
         },
         "environments": '',
-        "strength": monster.str ?? 0,
-        "dexterity":  monster.dex ?? 0,
-        "constitution":  monster.con ?? 0,
-        "intelligence":  monster.int ?? 0,
-        "charisma":  monster.cha ?? 0,
-        "wisdom":  monster.wis ?? 0,
-        "strength_save": monster.save?.str ?? 0,
-        "dexterity_save":  monster.save?.dex ?? Math.floor((monster.dex-10)/2) ?? 0,
-        "constitution_save":  monster.save?.con ?? 0,
-        "intelligence_save":  monster.save?.int ?? 0,
-        "charisma_save":  monster.save?.cha ?? 0,
-        "wisdom_save":  monster.save?.wis ?? 0,
+        "strength": str,
+        "dexterity": dex,
+        "constitution": con,
+        "intelligence": int,
+        "charisma": cha,
+        "wisdom": wis,
+        "strength_save": monster.save?.str ?? calcSave(str),
+        "dexterity_save":  monster.save?.dex ?? calcSave(dex),
+        "constitution_save":  monster.save?.con ?? calcSave(con),
+        "intelligence_save":  monster.save?.int ?? calcSave(int),
+        "charisma_save":  monster.save?.cha ?? calcSave(cha),
+        "wisdom_save":  monster.save?.wis ?? calcSave(wis),
         "dnd_b_player_id": null,
         "sourceShort": monster?.source,
         "page": monster?.page,

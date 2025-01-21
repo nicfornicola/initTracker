@@ -75,7 +75,7 @@ const getSpeed = (movements) => {
 
 //doesnt work on things you dont own
 export const DndBMonsterToDmBMapper = async (monsterRes, encounterMonsterRes, encounterGuid) => {
-
+    console.log("DndBMonsterToDmBMapper")
     const lvlObjsArray = Object.entries(levelData);
     const lvlKeys = Object.keys(levelData);
     let lvlObj = lvlObjsArray[monsterRes.challengeRatingId-2] || undefined
@@ -111,7 +111,7 @@ export const DndBMonsterToDmBMapper = async (monsterRes, encounterMonsterRes, en
         "inventory": [],
         "speed": getSpeed(monsterRes.movements),
         "skills": [removeHTMLTags(monsterRes.skillsHtml)],
-        "spell_list": [],
+        "spellcasting": [],
         "hidden": false,
         ...stats,
         "hit_dice": monsterRes.hitPointDice.diceString || '',

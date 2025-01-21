@@ -1,11 +1,14 @@
 import {generateUniqueId, COLOR_GREEN } from '../constants';
 
 export const DndBCharacterToDmBMapper = async (dndBeyondRes, encounterGuid, skillDetails=undefined) => {
+    console.log("YYYO")
 
     // Full info is available from dndB
     if(skillDetails) {
         let {maxHp, armorClass, inventory, skills_json_array} = skillDetails;
         let calculatedHp = dndBeyondRes.overrideHitPoints ? dndBeyondRes.overrideHitPoints : maxHp;
+
+        console.log("SKILLS:", skills_json_array)
 
         return {
             "name": dndBeyondRes.name,
@@ -36,8 +39,8 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, encounterGuid, skil
             "inspiration": dndBeyondRes.inspiration,
             "armor_class": armorClass || 0,
             "inventory": inventory,
-            "skills": skills_json_array || [],
-            "spell_list": [],
+            "skills": '',
+            "spellcasting": [],
             "hidden": false,
             "environments": '',
             "legendary_actions": [],
@@ -79,7 +82,7 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, encounterGuid, skil
             "armor_class": null,
             "inventory": null,
             "skills":  [],
-            "spell_list": [],   
+            "spellcasting": [],   
             "hidden": false,
             "environments": '',
             "legendary_actions": [],

@@ -100,7 +100,7 @@
                         "desc":"The a-mi-kuk’s body is covered in a layer of greasy, ice-cold slime that grants it the benefits of freedom of movement. In addition, a creature that touches the a-mi-kuk or hits it with a melee attack while within 5 feet of it takes 7 (2d6) cold damage from the freezing slime. A creature grappled by the a-mi-kuk takes this damage at the start of each of its turns."
                     }
                 ],
-                "spell_list":[],
+                "spellcasting":[],
                 "page_no": 15,
                 "environments": "",
                 "img_main":null,

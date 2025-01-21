@@ -894,6 +894,20 @@ hr {
     transition: opacity .4s ease-in-out;
 }
 
+.spellTrash {
+    opacity: 0;
+}
+
+.spellLi {
+    display: flex;
+}
+
+.spellTrash:hover,
+.spellLi:hover .spellTrash {
+    opacity: 1;
+    transition: opacity .2s ease-in-out;
+}
+
 .encounterTitleEditInput {
     width: 90%;
     margin: 0px;
@@ -1196,6 +1210,13 @@ input {
 .statBlockTopButtons {
     display: flex;
     justify-content: center;
+}
+
+.editSpellBlock {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4px;
+    gap: 5px;
 }
 
 .editBlock {

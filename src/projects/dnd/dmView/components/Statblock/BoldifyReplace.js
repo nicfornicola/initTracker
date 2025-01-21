@@ -43,6 +43,7 @@ export const BoldifyReplace = ({ name, desc }) => {
         if (key.startsWith("creature ")) return <strong>{cleanPipes(key.slice(9))}</strong>;
         if (key.startsWith("condition ")) return <strong>{cleanPipes(key.slice(10))}</strong>;
         if (key.startsWith("adventure ")) return <strong>{cleanPipes(key.slice(10))}</strong>;
+        if (key.startsWith("hitYourSpellAttack ")) return <strong>{cleanPipes(key.slice(18))}</strong>;
         if (key.startsWith("action opportunity attack")) return <strong>Opportunity Attack</strong>;
         if (key.startsWith("quickref difficult terrain||3")) return <strong>difficult terrain</strong>;
         if (key.startsWith("quickref Cover||3||total cover")) return <strong>total cover</strong>;

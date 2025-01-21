@@ -570,7 +570,7 @@ const sharedItems = {
     "charisma_save": null,
     "perception": null,
     "skills": [],
-    "spell_list": [],
+    "spellcasting": [],
     "bonus_actions": [],
     "reactions": [],
     "legendary_desc": "",

@@ -14,6 +14,7 @@ import { ThreeDots } from 'react-loader-spinner';
 import EditAvatar from './EditAvatar';
 import { BoldifyReplace } from './BoldifyReplace';
 import SpellCasting from './SpellList';
+import EditSpellCasting from './EditSpellCasting';
 
 function exists(value) {
     return value && value !== '0';
@@ -172,6 +173,106 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
         setIsEditMode(currentEncounter?.encounterName === "newhomebrew")
     // eslint-disable-next-line
     }, [currentEncounter?.creatures[selectedIndex]?.creatureGuid]);
+
+    const handleSpellChange = (e, cKey, path = undefined, index = undefined, send = false) => {
+        const { value } = e.target;
+
+        // From EditStatBig add and remove buttons for SpellCasting ensure path is only "spellcasting"
+        // console.table({value, cKey, path, index})
+
+        // onClickFunction={(e) => handleChange(e, 'add', `spells.0.spells`, objIndex)}
+
+
+        if(['add', 'remove'].includes(cKey)) {
+            // , maybe ability later
+            if(path.includes(".")) {
+                handleUserSpellActions(cKey, path, index)
+            } else {
+                // cKey is add or remove, adding or removing from total spellcasting [], path is spellcasting
+                handleUserArrayActions(cKey, path, index)
+            }
+        } else if(index !== undefined) {
+            //name, headerEntries
+            handleArrayChange(value, cKey, path, index, send)
+        }
+
+    }
+
+    const handleUserSpellActions = (cKey, path, index) => {
+
+        console.table({cKey, path, index})
+        let pathItems = path.split(".")
+        console.log(pathItems)
+
+        if(cKey === 'add') {
+            let spellType = pathItems[1]
+            if(pathItems[0] === 'spells') {
+                currentEncounter.creatures[selectedIndex].spellcasting[index].spells[spellType].spells.push('{@spell New Spell}')
+            } else if(pathItems[0] === 'daily') {
+                currentEncounter.creatures[selectedIndex].spellcasting[index].daily[spellType].push('{@spell New Spell}')
+            } else if(pathItems[0] === 'will') {
+                currentEncounter.creatures[selectedIndex].spellcasting[index].will.push('{@spell New Spell}')
+            }
+
+            setCurrentEncounter((prev) => {
+                const updatedCreatures = [...prev.creatures];
+    
+                updatedCreatures[selectedIndex] = {
+                    ...updatedCreatures[selectedIndex],
+                    spellcasting: [...currentEncounter.creatures[selectedIndex].spellcasting],
+                };
+    
+                return {
+                    ...prev,
+                    creatures: updatedCreatures,
+                };
+            });
+
+        } else if (cKey === 'remove') {
+            let pathItems = path.split(".")
+            let pathKey = pathItems[0]
+            let spellType = pathItems[1]
+            let spellIndex = parseInt(pathItems.at(-1))
+
+
+            let spellCastingList = currentEncounter.creatures[selectedIndex].spellcasting
+
+            console.table({pathKey, spellType, spellIndex})
+            console.log(spellCastingList[index])
+            if(pathKey === 'spells') {
+                spellCastingList[index].spells[spellType].spells = spellCastingList[index].spells[spellType].spells.filter((_, i) => i !== spellIndex)
+            } else if(pathKey === 'daily') {
+                spellCastingList[index].daily[spellType] = spellCastingList[index].daily[spellType].filter((_, i) => i !== spellIndex)
+            } else if(pathKey === 'will') {
+                let a = spellCastingList[index].will.filter((_, i) => i !== spellIndex)
+                console.log(a, "!!")
+                spellCastingList[index].will = a
+            }
+
+
+
+            console.log("REMOVED")
+            console.log(spellCastingList[index])
+
+            setCurrentEncounter((prev) => {
+                const updatedCreatures = [...prev.creatures];
+    
+                updatedCreatures[selectedIndex] = {
+                    ...updatedCreatures[selectedIndex],
+                    spellcasting: [...spellCastingList],
+                };
+    
+                return {
+                    ...prev,
+                    creatures: updatedCreatures,
+                };
+            });
+
+        }
+
+        // socket?.emit("statBlockEditArrayAction", path, index, currentEncounter.creatures[selectedIndex].creatureGuid, cKey)
+        
+    };
 
     const handleChange = (e, cKey, category = undefined, index = undefined, send = false) => {
         // From EditStatBig add and remove buttonns
@@ -352,8 +453,36 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
         let updatedArray = []
 
         if(cKey === 'add') {
+            let newObject = {name: 'None', desc: '--'}
+            if(category === 'spellcasting') {
+                newObject = {
+					"name": "Spellcasting",
+					"type": "spellcasting",
+					"headerEntries": [
+						`${creature.name} is a Xth-level spellcaster. Spellcasting ability is CHA|WIS|INT (spell save {@dc X}, {@hit X} to hit with spell attacks). They regain expended spell slots when they finish a short or long rest, and know the following spells:`
+					],
+					"will": [],
+					"daily": {
+						"2e": [],
+						"1e": []
+					},
+                    "spells": {
+						"1": {
+							"slots": 3,
+							"spells": []
+						},
+						"2": {
+							"slots": 2,
+							"spells": []
+						}
+					},
+					"ability": "int",
+					"displayAs": "trait"
+				}
+            }
+
             let actionsArray = currentEncounter.creatures[selectedIndex][category] || []
-            updatedArray = [...actionsArray, {name: 'None', desc: '--'}]
+            updatedArray = [...actionsArray, newObject]
         } else if (cKey === 'remove') {
             updatedArray = [...currentEncounter.creatures[selectedIndex][category].filter((_, i) => i !== index)]
         }
@@ -483,13 +612,14 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                 <hr className="editlineSeperator" />
                                     <EditStatBig label={"Traits"} content={creature?.special_abilities} category={'special_abilities'} handleChange={handleChange}/>
                                 <hr className="editlineSeperator" />
+                                    <EditSpellCasting label={"Spell Casting"} spellcasting={creature?.spellcasting} category={'spellcasting'} handleChange={handleSpellChange}/>
+                                <hr className="editlineSeperator" />
                                     <EditStatBig label={"Actions"} content={creature?.actions} category={'actions'} handleChange={handleChange}/>
                                 <hr className="editlineSeperator" />
                                     <EditStatBig label={"Bonus Actions"} content={creature?.bonus_actions} category={'bonus_actions'} handleChange={handleChange}/>
                                 <hr className="editlineSeperator" />
                                     <EditStatBig label={"Reactions"} content={creature?.reactions} category={'reactions'} handleChange={handleChange}/>
                                 <hr className="editlineSeperator" />
-
                                     <EditStatDropdown label={"Legendary Actions Count"} options={[0,1,2,3,4,5,6,7,8,9,10]} value={Math.floor(creature?.legendary_actions_count/10) || 0} cKey={'legendary_actions_count'} handleChange={handleChange}/>
                                     <EditStatBig label={"Legendary Actions"} content={creature?.legendary_actions} category={'legendary_actions'} handleChange={handleChange}/>
                                 <hr className="editlineSeperator" />
@@ -542,7 +672,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                             <span className='extraInfo'>&nbsp;({parseInt(creature.dexterity_save)+10 || 10})</span>
                                         </p>
                                         <p className="stickyStatItem stickyStatExtraWide">
-                                            <strong className='titleColor'>HP</strong>&nbsp;{creature.hit_points_current}/{creature.hit_points} 
+                                            <strong className='titleColor'>HP&nbsp;</strong>{creature.hit_points_current}/{creature.hit_points} 
                                             {creature.hit_points_temp !== 0 && (
                                                 <span className='tempHp'>&nbsp;(+{creature.hit_points_temp}) </span>
                                             )}

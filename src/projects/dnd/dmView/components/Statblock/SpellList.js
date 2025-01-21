@@ -2,7 +2,7 @@ import React from "react";
 import {BoldifyReplace} from "./BoldifyReplace";
 
 function numEnd(input) {
-    if(input && input !== '0') {
+    if(!input && input !== '0') {
         return ""
     }
     // Convert the input to a number
@@ -25,10 +25,10 @@ function numEnd(input) {
     return `${number}${suffix}`;
 }
 
-const SpellList = ({ spells }) => {
+const SpellList = ({ spellListObj }) => {
   	return (
 		<ul className="spellList">
-			{Object.entries(spells).map(([key, value]) => {
+			{Object.entries(spellListObj).map(([key, value]) => {
 				if (key === "will") {
 					return <li key={key}>At will: <BoldifyReplace desc={value.join(", ")} /></li>
 				}
@@ -65,18 +65,22 @@ const SpellList = ({ spells }) => {
 };
 
 const SpellCasting = ({ creature, displayAs="trait" }) => {
+
 	return (
 		<>
-			{creature?.spellcasting?.map((spell, index) => {
-				if ((spell.name === "None" && spell.desc === "--") || displayAs !== spell.displayAs) {
+			{creature?.spellcasting?.map((spellListObj, index) => {
+                
+                // this will be 'action' or 'undefined'
+                spellListObj.displayAs = spellListObj.displayAs ?? "trait"
+				if ((spellListObj.name === "None" && spellListObj.desc === "--") || displayAs !== spellListObj.displayAs) {
 					return null;
 				}
 
 				return (
-					<div className="actionInfo" key={index + spell.name}>
-						<strong className="titleColor"> {spell.name}: </strong>
-						<BoldifyReplace desc={spell.headerEntries.join("")} />
-						<SpellList spells={spell} />
+					<div className="actionInfo" key={index + spellListObj.name}>
+						<strong className="titleColor"> {spellListObj.name}: </strong>
+						<BoldifyReplace desc={spellListObj.headerEntries} />
+						<SpellList spellListObj={spellListObj} />
 					</div>
 				);
 			})}

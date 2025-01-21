@@ -19,5 +19,5 @@ export const actionsConsts =  {
 }
 
 export const legendaryDescDefault = (name) => {
-    return `Legendary Action Uses: 3. Immediately after another creature's turn, The ${name} can expend a use to take one of the following actions. The ${name} regains all expended uses at the start of each of its turns.`
+    return `Legendary Action Slots: 3. Immediately after another creature's turn, The ${name} can expend a use to take one of the following actions. The ${name} regains all expended uses at the start of each of their turns.`
 }
