@@ -1,14 +1,10 @@
 import {generateUniqueId, COLOR_GREEN } from '../constants';
 
 export const DndBCharacterToDmBMapper = async (dndBeyondRes, encounterGuid, skillDetails=undefined) => {
-    console.log("YYYO")
-
     // Full info is available from dndB
     if(skillDetails) {
         let {maxHp, armorClass, inventory, skills_json_array} = skillDetails;
         let calculatedHp = dndBeyondRes.overrideHitPoints ? dndBeyondRes.overrideHitPoints : maxHp;
-
-        console.log("SKILLS:", skills_json_array)
 
         return {
             "name": dndBeyondRes.name,

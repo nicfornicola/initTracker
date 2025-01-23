@@ -155,38 +155,38 @@ const CreatureInfo = ({creature}) => {
 }
 
 const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeStatBlock, loading=false, searchingFor=null, handleUploadMonsterImage, socket}) => {
-    
     // Creature can be null from SearchColumn but not from EncounterColumn, Statblock is not shown if from EncounterColumn
     const [creature, setCreature] = useState(currentEncounter?.creatures[selectedIndex])
+    const [creatureReset, setCreatureReset] = useState(currentEncounter?.creatures[selectedIndex])
     const {addToHomebrewList} = useHomebrewProvider();
-    const [isEditMode, setIsEditMode] = useState(currentEncounter?.encounterName === "newhomebrew")
-
+    const [isEditMode, setIsEditMode] = useState(currentEncounter?.encounterName === "dmbuddy_newhomebrew")
     // If selectedIndex changes a new creature was clicked
     useEffect(() => {
-        setCreature(selectedIndex !== null ? currentEncounter?.creatures[selectedIndex] : null)
+        let newCreature = selectedIndex !== null ? currentEncounter?.creatures[selectedIndex] : null
+        setCreature(newCreature)
+
+        //only change creatureReset if its actually since this useeffect trigger on cancel
+        if(newCreature.creatureGuid !== creatureReset.creatureGuid)
+            setCreatureReset(newCreature)
         
     // eslint-disable-next-line
     }, [currentEncounter?.creatures[selectedIndex], selectedIndex]);
 
     useEffect(() => {
-        // Auto set edit mode to tree if its a from scratch Homebrew
-        setIsEditMode(currentEncounter?.encounterName === "newhomebrew")
+        // Auto set edit mode to true if its a from scratch Homebrew
+        setIsEditMode(currentEncounter?.encounterName === "dmbuddy_newhomebrew")
     // eslint-disable-next-line
     }, [currentEncounter?.creatures[selectedIndex]?.creatureGuid]);
 
     const handleSpellChange = (e, cKey, path = undefined, index = undefined, send = false) => {
         const { value } = e.target;
-
         // From EditStatBig add and remove buttons for SpellCasting ensure path is only "spellcasting"
-        // console.table({value, cKey, path, index})
+        console.table({value, cKey, path, index})
+        if(['add', 'remove', 'change'].includes(cKey)) {
 
-        // onClickFunction={(e) => handleChange(e, 'add', `spells.0.spells`, objIndex)}
-
-
-        if(['add', 'remove'].includes(cKey)) {
             // , maybe ability later
             if(path.includes(".")) {
-                handleUserSpellActions(cKey, path, index)
+                handleUserSpellActions(cKey, path, index, value, send)
             } else {
                 // cKey is add or remove, adding or removing from total spellcasting [], path is spellcasting
                 handleUserArrayActions(cKey, path, index)
@@ -198,62 +198,90 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
 
     }
 
-    const handleUserSpellActions = (cKey, path, index) => {
+    const handleUserSpellActions = (cKey, path, index, newValue = undefined, send = false) => {
 
-        console.table({cKey, path, index})
         let pathItems = path.split(".")
+        let pathKey = pathItems[0]
+        let spellType = pathItems[1]
+        let spellIndex = parseInt(pathItems.at(-1))
+        let spellCastingList = creature.spellcasting
         console.log(pathItems)
+        console.table({pathKey, spellType, spellIndex})
 
         if(cKey === 'add') {
-            let spellType = pathItems[1]
+            let newSpell = '{@spell New Spell}'
             if(pathItems[0] === 'spells') {
-                currentEncounter.creatures[selectedIndex].spellcasting[index].spells[spellType].spells.push('{@spell New Spell}')
+                console.log("spell slots", newValue)
+                let spellObjTemplate = {
+                    [spellType]: {
+                        slots: newValue,
+                        spells: []
+                    }
+                }
+
+                if(!spellCastingList[index].spells) {
+                    spellCastingList[index].spells = spellObjTemplate
+                } else if(!spellCastingList[index].spells[spellType]) {
+                    spellCastingList[index].spells[spellType] = {...spellObjTemplate[spellType]}
+                }
+                spellCastingList[index].spells[spellType].spells.push(newSpell)
             } else if(pathItems[0] === 'daily') {
-                currentEncounter.creatures[selectedIndex].spellcasting[index].daily[spellType].push('{@spell New Spell}')
+
+                let spellObjTemplate = {
+                    [spellType]: []
+                }
+
+                if(!spellCastingList[index].daily) {
+                    spellCastingList[index].daily = spellObjTemplate
+                } else if(!spellCastingList[index].daily[spellType]) {
+                    spellCastingList[index].daily[spellType] = []
+                }
+
+                spellCastingList[index].daily[spellType].push(newSpell)
             } else if(pathItems[0] === 'will') {
-                currentEncounter.creatures[selectedIndex].spellcasting[index].will.push('{@spell New Spell}')
+
+                if(!spellCastingList[index].will) {
+                    spellCastingList[index].will = []
+                }
+                console.log(1, spellCastingList[index])
+                spellCastingList[index].will.push(newSpell)
+                console.log(2, spellCastingList[index])
             }
-
-            setCurrentEncounter((prev) => {
-                const updatedCreatures = [...prev.creatures];
-    
-                updatedCreatures[selectedIndex] = {
-                    ...updatedCreatures[selectedIndex],
-                    spellcasting: [...currentEncounter.creatures[selectedIndex].spellcasting],
-                };
-    
-                return {
-                    ...prev,
-                    creatures: updatedCreatures,
-                };
-            });
-
         } else if (cKey === 'remove') {
-            let pathItems = path.split(".")
-            let pathKey = pathItems[0]
-            let spellType = pathItems[1]
-            let spellIndex = parseInt(pathItems.at(-1))
-
-
-            let spellCastingList = currentEncounter.creatures[selectedIndex].spellcasting
-
-            console.table({pathKey, spellType, spellIndex})
-            console.log(spellCastingList[index])
             if(pathKey === 'spells') {
-                spellCastingList[index].spells[spellType].spells = spellCastingList[index].spells[spellType].spells.filter((_, i) => i !== spellIndex)
+
+                if(spellIndex)
+                    spellCastingList[index].spells[spellType].spells = spellCastingList[index].spells[spellType].spells.filter((_, i) => i !== spellIndex)
+                else {
+                    delete spellCastingList[index].spells[spellType]
+                }
+
             } else if(pathKey === 'daily') {
-                spellCastingList[index].daily[spellType] = spellCastingList[index].daily[spellType].filter((_, i) => i !== spellIndex)
+                if(spellIndex)
+                    spellCastingList[index].daily[spellType] = spellCastingList[index].daily[spellType].filter((_, i) => i !== spellIndex)
+                else {
+                    delete spellCastingList[index].daily[spellType]
+                }
+                console.log("REMOVE 2")
+
             } else if(pathKey === 'will') {
-                let a = spellCastingList[index].will.filter((_, i) => i !== spellIndex)
-                console.log(a, "!!")
-                spellCastingList[index].will = a
+                if(spellIndex)
+                    spellCastingList[index].will = spellCastingList[index].will.filter((_, i) => i !== spellIndex)
+                else {
+                    delete spellCastingList[index].will
+                }
             }
-
-
-
-            console.log("REMOVED")
-            console.log(spellCastingList[index])
-
+        }  else if (cKey === 'change') {
+            if(pathKey === 'spells') {
+                spellCastingList[index].spells[spellType].spells[spellIndex] = newValue
+            } else if(pathKey === 'daily') {
+                spellCastingList[index].daily[spellType][spellIndex] = newValue
+            } else if(pathKey === 'will') {
+                spellCastingList[index].will[spellIndex] = newValue
+            }
+        }
+        
+        if(send) {
             setCurrentEncounter((prev) => {
                 const updatedCreatures = [...prev.creatures];
     
@@ -267,11 +295,14 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                     creatures: updatedCreatures,
                 };
             });
-
+            //socket does not exist in search column statblock
+            socket?.emit("creatureSpellCastingChange", spellCastingList, currentEncounter.creatures[selectedIndex].creatureGuid)
+        } else {
+            setCreature((c) => ({
+                ...c,
+                spellcasting: [...spellCastingList]
+            }));
         }
-
-        // socket?.emit("statBlockEditArrayAction", path, index, currentEncounter.creatures[selectedIndex].creatureGuid, cKey)
-        
     };
 
     const handleChange = (e, cKey, category = undefined, index = undefined, send = false) => {
@@ -319,7 +350,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                 }));
 
                 // This is a weird check for the search selected creatures that have their skills (i.e. STR or STR_Save) edited
-                if(currentEncounter.encounterName === 'selected' && !isEditMode) {
+                if(currentEncounter.encounterName === 'dmbuddy_selected' && !isEditMode) {
                     handleAddToHomebrew(creature)
                 }
 
@@ -505,6 +536,13 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
     };
 
     const toggleEditMode = () => {
+        //reset creature on cancel when selected from search column
+        if(currentEncounter.encounterName === 'dmbuddy_selected' && isEditMode === true) {
+            setCurrentEncounter(prev => {
+                prev.creatures[selectedIndex] = creatureReset
+                return prev
+            })
+        }
         setIsEditMode(!isEditMode)
     }
 
@@ -524,8 +562,8 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
         addToHomebrewList({...homebrewCreature})
         setIsEditMode(false)
     }
+
     console.log(creature.name)
-    console.log(creature)
 
     if(creature?.dnd_b_player_id) {
         return null;
@@ -569,8 +607,6 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                     
                                     <div className='encounterCreatureLeftContainer' >
                                         <EditAvatar handleUploadMonsterImage={handleUploadMonsterImage} creature={creature}/>
-
-                                        
 
                                         <GridWrap columns={3}>
                                             <EditStat label={`Name ${!isProd ? creature?.creatureGuid : ''}`} value={creature?.name || ''} cKey={'name'} handleChange={handleChange} />

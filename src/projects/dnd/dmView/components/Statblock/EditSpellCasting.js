@@ -1,8 +1,10 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import OptionButton from '../EncounterColumn/OptionButton'
 import magPlus from '../../pics/icons/magPlus.PNG'
 import magMinus from '../../pics/icons/magMinus.PNG'
 import EditSpellDropdown from './EditSpellDropdown';
+import EditSpellInput from './EditSpellInput';
+import { generateUniqueId } from '../../constants';
 
 function numEnd(input) {
     if(!input && input !== '0') {
@@ -29,7 +31,6 @@ function numEnd(input) {
 }
 
 const EditSpellCasting = ({label, spellcasting = [], category, handleChange = undefined}) => {
-
     const textareaRefs = useRef([]);
     
     useEffect(() => {
@@ -47,13 +48,11 @@ const EditSpellCasting = ({label, spellcasting = [], category, handleChange = un
             e.target.select();
     }
 
-    console.log("==")
-    console.log(spellcasting)
     return (
         <div className='editBlock'>
             <i className='editBlockTitle'>{label}</i>
             {spellcasting?.map((spellListObj, objIndex) => (
-                <div key={label + objIndex} className='actionListItem'>
+                <div className='actionListItem'>
                     <div style={{display: 'flex'}}>
                         <input className="editBlockInput" type='text'
                             value={spellListObj.name}
@@ -73,59 +72,50 @@ const EditSpellCasting = ({label, spellcasting = [], category, handleChange = un
                         onBlur={(e) => handleChange(e, 'headerEntries', category, objIndex, true)} 
                         onFocus={handleFocus}
                     />    
-                    <EditSpellDropdown />
-                    {Object.entries(spellListObj).map(([key, value]) => {
+                    <EditSpellDropdown handleChange={handleChange} objIndex={objIndex}/>
+                    {Object.entries(spellListObj).map(([key, value], index) => {
                         if (key === "will") {
-                            return <>
-                                At will:
-                                <ul>
+                            return <span>
+                                <span className='spellTypeRemove'>
+                                    At will: 
+                                    <OptionButton wrapperClassName='spellTypeTrash' src={magMinus} message={`Remove: 'At Will'`}
+                                        onClickFunction={(e) => handleChange(e, 'remove', 'will.', objIndex, true)}
+                                    />
+                                </span>
+                                
+                                <ul className='spellUl'>
                                     {value.map((spellName, spellIndex) => {
-                                        return <li key={spellName} className='spellLi'>
-                                            <input className="editBlockInput" type='text'
-                                                value={spellName}
-                                                onChange={(e) => handleChange(e, 'name', category, objIndex)} 
-                                                onBlur={(e) => handleChange(e, 'name', category, objIndex, true)} 
-                                                size={spellName.length}
-                                                onFocus={handleFocus} 
-                                            />
-                                            <OptionButton src={magMinus} message={`Remove: ${spellName.replace(/{@spell|}/g, "")}`} wrapperClassName='spellTrash'
-                                                onClickFunction={(e) => handleChange(e, 'remove', `will.${spellIndex}`, objIndex, true)}
-                                            />
-
-                                        </li>
+                                        return (
+                                            <EditSpellInput spellName={spellName} path={`will.${spellIndex}`} objIndex={objIndex} handleChange={handleChange} />                                                
+                                        )
                                     })}
                                 </ul>
-                                <OptionButton src={magPlus} message={`Add spell to: 'At will:'`}
+                                <OptionButton src={magPlus} message={`Add spell to: 'At will'`}
                                     // will. period is here to get past path check
-                                    onClickFunction={(e) => handleChange(e, 'add', `will.`, objIndex)}
+                                    onClickFunction={(e) => handleChange(e, 'add', `will.`, objIndex, true)}
                                 />
 
-                            </>  
+                            </span>  
                         }
 
                         if (key === "daily") {
                             return Object.entries(value).map(([dailySpell, spells]) => (
                                 <>
-                                    {dailySpell.slice(0, 1)}/day each: 
-                                    <ul>
+                                    <span className='spellTypeRemove'>
+                                        {dailySpell.slice(0, 1)}/day each: 
+                                        <OptionButton wrapperClassName='spellTypeTrash' src={magMinus} message={`Remove: ${dailySpell.slice(0, 1)}/day'`}
+                                            onClickFunction={(e) => handleChange(e, 'remove', `daily.${dailySpell}.`, objIndex, true)}
+                                        />
+                                    </span>
+                                    <ul className='spellUl'>
                                         {spells.map((spellName, spellIndex)=>{
                                             return (
-                                                <li key={spellName} className='spellLi'>
-                                                    <input className="editBlockInput" type='text'
-                                                        value={spellName}
-                                                        onChange={(e) => handleChange(e, 'name', category, objIndex)} 
-                                                        onBlur={(e) => handleChange(e, 'name', category, objIndex, true)} 
-                                                        size={spellName.length}
-                                                        onFocus={handleFocus} />
-                                                        <OptionButton src={magMinus} message={`Remove: ${spellName.replace(/{@spell|}/g, "")}`} wrapperClassName='spellTrash'
-                                                            onClickFunction={(e) => handleChange(e, 'remove', `daily.${dailySpell}.${spellIndex}`, objIndex, true)}
-                                                        />
-                                                </li>
+                                                <EditSpellInput spellName={spellName} path={`daily.${dailySpell}.${spellIndex}`} objIndex={objIndex} handleChange={handleChange} />
                                             )
                                         })}
                                     </ul>
                                     <OptionButton src={magPlus} message={`Add spell to: '${dailySpell.slice(0, 1)}/day'`}
-                                        onClickFunction={(e) => handleChange(e, 'add', `daily.${dailySpell}`, objIndex)}
+                                        onClickFunction={(e) => handleChange(e, 'add', `daily.${dailySpell}`, objIndex, true)}
                                     />
 
                                 </>
@@ -135,60 +125,45 @@ const EditSpellCasting = ({label, spellcasting = [], category, handleChange = un
                         if (key === "spells") {
                             return Object.entries(value).map(([level, spellDetails]) => {
                                 if (level === "0") {
-                                    return <>
-                                        Cantrips (at will): 
-                                        <ul>
+                                    return <span>
+                                        <span className='spellTypeRemove'>
+                                            Cantrips (at will): 
+                                            <OptionButton wrapperClassName='spellTypeTrash' src={magMinus} message={`Remove: 'Cantrips'`}
+                                                onClickFunction={(e) => handleChange(e, 'remove', `spells.0.`, objIndex, true)}
+                                            />
+                                        </span>
+                                        <ul className='spellUl'>
                                             {spellDetails.spells.map((spellName, spellIndex) => {
                                                 return (
-                                                    <li key={spellName} className='spellLi'>
-                                                        <input className="editBlockInput" type='text'
-                                                            value={spellName}
-                                                            //(e, cKey, path = undefined, index = undefined, send = false) => {
-
-                                                            onChange={(e) => handleChange(e, 'spellcasting', `spells.0.spells.${spellIndex}`, objIndex)} 
-                                                            onBlur={(e) => handleChange(e, 'spellcasting', `spells.0.spells.${spellIndex}`, objIndex, true)} 
-                                                            size={spellName.length}
-                                                            onFocus={handleFocus} />
-                                                            <OptionButton src={magMinus} message={`Remove: ${spellName.replace(/{@spell|}/g, "")}`} wrapperClassName='spellTrash' 
-                                                                onClickFunction={(e) => handleChange(e, 'remove', `spells.0.spells.${spellIndex}`, objIndex)}
-                                                            />
-                                                    </li>
+                                                    <EditSpellInput spellName={spellName} path={`spells.0.spells.${spellIndex}`} objIndex={objIndex} handleChange={handleChange} />
                                                 )
-                                                
                                             })}
                                         </ul>
                                         <OptionButton src={magPlus} message={`Add Cantrip spell`} 
-                                            onClickFunction={(e) => handleChange(e, 'add', `spells.0.spells`, objIndex)}
+                                            onClickFunction={(e) => handleChange(e, 'add', `spells.0.spells`, objIndex, true)}
                                         />
-                                    </>
+                                    </span>
                                 }
         
                                 const { lower, slots, spells } = spellDetails;
-                                return <>
-                                    {lower && `${lower}-`}
-                                    {numEnd(level)} lvl: ({slots}{" "}
-                                    {lower && <i>{numEnd(level)}-level spell</i>} slots):&nbsp;
-                                    <ul>
-                                        {spells.map((spellName, spellIndex)=> {
-                                            return ( 
-                                                <li key={spellName} className='spellLi'>
-                                                    <input className="editBlockInput" type='text'
-                                                        value={spellName}
-                                                        onChange={(e) => handleChange(e, 'name', category, objIndex)} 
-                                                        onBlur={(e) => handleChange(e, 'name', category, objIndex, true)} 
-                                                        size={spellName.length}
-                                                        onFocus={handleFocus} />
-                                                        <OptionButton src={magMinus} message={`Remove ${spellName.replace(/{@spell|}/g, "")}`} wrapperClassName='spellTrash'
-                                                            onClickFunction={(e) => handleChange(e, 'remove', `spells.${level}.spells.${spellIndex}`, objIndex)}
-                                                        />
-                                                </li>
-                                            )
-                                        })}
-                                    </ul>
-                                    <OptionButton src={magPlus} message={`Add ${numEnd(level)}-lvl spell`} 
-                                        onClickFunction={(e) => handleChange(e, 'add', `spells.${level}.spells`, objIndex)}
-                                    />
-                                </>
+                                return <span>
+                                        <span className='spellTypeRemove'>
+                                            {lower && `${lower}-`}
+                                            {numEnd(level)} lvl: ({slots}{" "}
+                                            {lower && <i>{numEnd(level)}-level spell</i>} slots):&nbsp;
+                                            <OptionButton wrapperClassName='spellTypeTrash' src={magMinus} message={`Remove: '${numEnd(level)} lvl'`}
+                                                onClickFunction={(e) => handleChange(e, 'remove', `spells.${level}.`, objIndex, true)}
+                                            />
+                                        </span>
+                                        <ul className='spellUl'>
+                                            {spells.map((spellName, spellIndex)=> {
+                                                return <EditSpellInput spellName={spellName} path={`spells.${level}.spells.${spellIndex}`} objIndex={objIndex} handleChange={handleChange} />
+                                            })}
+                                        </ul>
+                                        <OptionButton src={magPlus} message={`Add ${numEnd(level)}-lvl spell`} 
+                                            onClickFunction={(e) => handleChange(e, 'add', `spells.${level}.spells`, objIndex, true)}
+                                        />
+                                    </span>
                             });
                         }
 

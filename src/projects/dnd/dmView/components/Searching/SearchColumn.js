@@ -93,7 +93,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
 
     useEffect(() => {
         if(searchSelectedCreature) {
-            let encounterName = searchSelectedCreature.name === 'Homebrew Template' ? 'newhomebrew' : 'selected'
+            let encounterName = searchSelectedCreature.name === 'Homebrew Template' ? 'dmbuddy_newhomebrew' : 'dmbuddy_selected'
             let searchEncounter = {encounterName: encounterName, creatures: [{...searchSelectedCreature, creatureGuid: searchSelectedCreature.creatureGuid ?? generateUniqueId()}]}
             setSearchSelectedEncounter(searchEncounter)
         } else {

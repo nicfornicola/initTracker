@@ -894,6 +894,16 @@ hr {
     transition: opacity .4s ease-in-out;
 }
 
+.spellUl {
+    margin: 0;
+}
+
+.spellTypeRemove {
+    display: flex;
+    align-items: center
+}
+
+.spellTypeTrash,
 .spellTrash {
     opacity: 0;
 }
@@ -902,6 +912,7 @@ hr {
     display: flex;
 }
 
+.spellTypeRemove:hover .spellTypeTrash,
 .spellTrash:hover,
 .spellLi:hover .spellTrash {
     opacity: 1;
