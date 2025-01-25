@@ -2,24 +2,26 @@ import axios from 'axios';
 import { getSkillDetails } from '../../playerView/api/getSkillDetails';
 import { backendUrl } from '../constants';
 import DndBCharacterToDmBMapper from '../mappers/DndBCharacterToDmBMapper'
-import { useImportedPlayers } from '../../../../providers/ImportedPlayersProvider';
 
 export const ImportDndBeyondCharacters = async (playerIds, encounterGuid, encounterPlayerData=undefined) => {
     
     console.log("Import Character-service in ImportDndBeyondCharacters");
     let i = 1;
     const baseUrl = `${backendUrl}/dndb_character_import`;
-    
     const promises = playerIds.map(async (playerId) => {
         try {
             const url = `${baseUrl}/${playerId}`;
 
             const response = await axios.get(url, {});
             const resData = response.data.data;
+            console.log("1?")
+            let skillDetails = getSkillDetails(resData)
+            console.log("2?")
+
+            let mappedCharacter = await DndBCharacterToDmBMapper(resData, encounterGuid, skillDetails)
             console.log(i.toString() + "/" + playerIds.length + " " + resData.name + " retrieved! (" + playerId +")");
             i++;
-            let skillDetails = getSkillDetails(resData)
-            return DndBCharacterToDmBMapper(resData, encounterGuid, skillDetails)
+            return mappedCharacter
         } catch (error) {
             console.log(i.toString() + "/" + playerIds.length + " failed! (" + playerId +")");
             i++;

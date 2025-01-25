@@ -15,61 +15,83 @@ function extractAc(jsonData) {
 
 export const getSkillDetails = (data) => {
 
-    // Bonushp is maxHP modifier 
-    if (data.overrideHitPoints) {
-        return data.overrideHitPoints
+    // ignore racial skill mods if background is from a newer source i.e. sourceId != 1
+    // new backgrounds give skill mods, new races dont 
+    // old backgrounds dont give skill mods, old races do
+    // dndb overrides with the new stuff if mixed.
+    let ignoreRace = false 
+    data?.background?.definition?.sources?.forEach(source => {
+        if(source?.sourceId !== 1)
+            ignoreRace = true
+
+    })
+    
+    let bonuses = {
+        "race": [0, 0, 0, 0, 0, 0],
+        "class": [0, 0, 0, 0, 0, 0],
+        "background": [0, 0, 0, 0, 0, 0],
+        "item": [0, 0, 0, 0, 0, 0],
+        "feat": [0, 0, 0, 0, 0, 0],
     }
-    
 
-    let skill_race = [0, 0, 0, 0, 0, 0];
-    let skill_AI = [0, 0, 0, 0, 0, 0];
-    
-    // Modifiers and proficiencies and racial resists
-    data["modifiers"]["race"].forEach(mod => {    
-        if (mod["type"] === "bonus") {
-            for (let i = 0; i < 6; i++) {
-                if (mod["friendlySubtypeName"] === skills_long[i]) {
-                    skill_race[i] += mod["fixedValue"];
-                }
-            }
-        } 
-    });
-
-
-    for (let choiceDef of data.choices.class) {
-        if(choiceDef.label === "Choose an Ability Score") {
-            for (let i = 0; i < 6; i++) {
-                if (choiceDef.optionValue === skill_codes[i]) {
-                    skill_AI[i]++;
-                }
-            }
+    Object.entries(data.modifiers).forEach(([key, arr]) => {
+        //skip race
+        if(ignoreRace && key === 'race') {
+            console.log("Ignoring Old Racial Mods (if present) since there is a 2024 background being used...")
+            return
         }
-    }
+
+        arr.forEach(mod => {
+            if (mod["type"] === "bonus") {
+                let indexOfMatch = skills_long.indexOf(mod["friendlySubtypeName"])
+                if(indexOfMatch !== -1) {
+                    bonuses[key][indexOfMatch] += mod["fixedValue"]
+                }
+            } 
+        })
+    })
 
     let skills_json_array = [];
-
     for (let i = 0; i < 6; i++) {
         let skill = {
             skill: skills_short[i],
             base: data["stats"][i]["value"],
-            "racial bonus": skill_race[i],
-            "ability score": skill_AI[i]
+            "race":       bonuses['race'][i],
+            "class":      bonuses['class'][i],
+            "background": bonuses['background'][i],
+            "item":       bonuses['item'][i],
+            "feat":       bonuses['feat'][i]
         };
 
-        skill["total score"] = skill["base"] + skill["racial bonus"] + skill["ability score"];
+        skill["total score"] = 
+            skill["base"] +
+            skill["race"] +
+            skill["class"] +
+            skill["background"] +
+            skill["item"] +
+            skill["feat"];
+
         skill["modifier"] = Math.floor((skill["total score"] - 10) / 2);
         skills_json_array.push(skill);
     }
 
     let total_lvl = 0;
-
+    let draconicResilienceHp = 0
     data["classes"].forEach(classDND => {
         total_lvl += classDND["level"];
+        if(classDND?.subclassDefinition?.classFeatures) {
+            let classFeatures = classDND.subclassDefinition.classFeatures
+            classFeatures.forEach(classFeature => {
+                if(classFeature.name === "Draconic Resilience") {
+                    draconicResilienceHp = 1
+                }
+            });
+        }
     });
 
     let hasTough = false;
     let toughHp = 0;
-    
+    // tough componentID 1789206
     data.feats.forEach(feat => {
         if (feat.definition.name === "Tough") {
             hasTough = true;
@@ -79,9 +101,17 @@ export const getSkillDetails = (data) => {
     if (hasTough) {
         toughHp = total_lvl * 2;
     }
+    if(draconicResilienceHp) {
+        draconicResilienceHp = total_lvl
+    }
 
+    // Hyron gets an extra con from hermit
     let baseHp = data["baseHitPoints"];
-    let maxHp = skills_json_array[2]["modifier"] * total_lvl + baseHp + toughHp;
+    let maxHp = (skills_json_array[2]["modifier"] * total_lvl) + baseHp + toughHp + draconicResilienceHp;
+
+    if (data.overrideHitPoints) {
+        maxHp = data.overrideHitPoints
+    }
 
     // Bonushp is maxHP modifier 
     if (data.bonusHitPoints) {

@@ -227,7 +227,6 @@ export const sortCreatureArray = (array) => {
 
 export const generateUniqueId = () => {
     let num = Math.random().toString(36).substring(2, 12).toUpperCase();
-    console.log(num)
     return num
 }
 

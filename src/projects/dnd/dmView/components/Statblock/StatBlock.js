@@ -205,13 +205,11 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
         let spellType = pathItems[1]
         let spellIndex = parseInt(pathItems.at(-1))
         let spellCastingList = creature.spellcasting
-        console.log(pathItems)
         console.table({pathKey, spellType, spellIndex})
 
         if(cKey === 'add') {
             let newSpell = '{@spell New Spell}'
             if(pathItems[0] === 'spells') {
-                console.log("spell slots", newValue)
                 let spellObjTemplate = {
                     [spellType]: {
                         slots: newValue,
@@ -243,9 +241,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                 if(!spellCastingList[index].will) {
                     spellCastingList[index].will = []
                 }
-                console.log(1, spellCastingList[index])
                 spellCastingList[index].will.push(newSpell)
-                console.log(2, spellCastingList[index])
             }
         } else if (cKey === 'remove') {
             if(pathKey === 'spells') {
@@ -262,7 +258,6 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                 else {
                     delete spellCastingList[index].daily[spellType]
                 }
-                console.log("REMOVE 2")
 
             } else if(pathKey === 'will') {
                 if(spellIndex)
@@ -563,7 +558,6 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
         setIsEditMode(false)
     }
 
-    console.log(creature.name)
 
     if(creature?.dnd_b_player_id) {
         return null;
