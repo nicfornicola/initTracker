@@ -1,118 +1,3 @@
-// import CoreRules from './import aatm_B from './monsterJsons/open5e/5eCoreRules.json';
-// import CreatureCodex from './import aatm_B from './monsterJsons/open5e/CreatureCodex.json';
-// import CriticalRole from './import aatm_B from './monsterJsons/open5e/CriticalRole.json';
-// import Menagerie from './import aatm_B from './monsterJsons/open5e/Menagerie.json';
-// import TomeOfBeasts1 from './import aatm_B from './monsterJsons/open5e/TomeOfBeasts1.json';
-// import TomeOfBeasts2 from './import aatm_B from './monsterJsons/open5e/TomeOfBeasts2.json';
-// import TomeOfBeasts3 from './import aatm_B from './monsterJsons/open5e/TomeOfBeasts3.json';
-// import TomeOfBeasts2023 from './import aatm_B from './monsterJsons/open5e/TomeOfBeasts2023.json';
-
-import aatm_B from './monsterJsons/5e/bestiary-aatm.json';
-// import ai from './monsterJsons/5e/bestiary-ai.json';
-// import aitfr-dn from './monsterJsons/5e/bestiary-aitfr-dn.json';
-// import aitfr-fcd from './monsterJsons/5e/bestiary-aitfr-fcd.json';
-// import aatm_B from './monsterJsons/5e/bestiary-aitfr-isf.json';
-// import aatm_B from './monsterJsons/5e/bestiary-aitfr-thp.json';
-// import aatm_B from './monsterJsons/5e/bestiary-awm.json';
-// import aatm_B from './monsterJsons/5e/bestiary-bam.json';
-// import aatm_B from './monsterJsons/5e/bestiary-bgdia.json';
-// import aatm_B from './monsterJsons/5e/bestiary-bgg.json';
-// import aatm_B from './monsterJsons/5e/bestiary-bmt.json';
-// import aatm_B from './monsterJsons/5e/bestiary-cm.json';
-// import aatm_B from './monsterJsons/5e/bestiary-coa.json';
-// import aatm_B from './monsterJsons/5e/bestiary-cos.json';
-// import aatm_B from './monsterJsons/5e/bestiary-crcotn.json';
-// import aatm_B from './monsterJsons/5e/bestiary-dc.json';
-// import aatm_B from './monsterJsons/5e/bestiary-dip.json';
-// import aatm_B from './monsterJsons/5e/bestiary-ditlcot.json';
-// import aatm_B from './monsterJsons/5e/bestiary-dmg.json';
-// import aatm_B from './monsterJsons/5e/bestiary-dod.json';
-// import aatm_B from './monsterJsons/5e/bestiary-dodk.json';
-// import aatm_B from './monsterJsons/5e/bestiary-dosi.json';
-// import aatm_B from './monsterJsons/5e/bestiary-dsotdq.json';
-// import aatm_B from './monsterJsons/5e/bestiary-egw.json';
-// import aatm_B from './monsterJsons/5e/bestiary-erlw.json';
-// import aatm_B from './monsterJsons/5e/bestiary-esk.json';
-// import aatm_B from './monsterJsons/5e/bestiary-ftd.json';
-// import aatm_B from './monsterJsons/5e/bestiary-ggr.json';
-// import aatm_B from './monsterJsons/5e/bestiary-ghloe.json';
-// import aatm_B from './monsterJsons/5e/bestiary-gos.json';
-// import aatm_B from './monsterJsons/5e/bestiary-gotsf.json';
-// import aatm_B from './monsterJsons/5e/bestiary-hat-tg.json';
-// import aatm_B from './monsterJsons/5e/bestiary-hftt.json';
-// import aatm_B from './monsterJsons/5e/bestiary-hol.json';
-// import aatm_B from './monsterJsons/5e/bestiary-hotdq.json';
-// import aatm_B from './monsterJsons/5e/bestiary-hwcs.json';
-// import aatm_B from './monsterJsons/5e/bestiary-idrotf.json';
-// import aatm_B from './monsterJsons/5e/bestiary-imr.json';
-// import aatm_B from './monsterJsons/5e/bestiary-jttrc.json';
-// import aatm_B from './monsterJsons/5e/bestiary-kftgv.json';
-// import aatm_B from './monsterJsons/5e/bestiary-kkw.json';
-// import aatm_B from './monsterJsons/5e/bestiary-llk.json';
-// import aatm_B from './monsterJsons/5e/bestiary-lmop.json';
-// import aatm_B from './monsterJsons/5e/bestiary-lox.json';
-// import aatm_B from './monsterJsons/5e/bestiary-lr.json';
-// import aatm_B from './monsterJsons/5e/bestiary-lrdt.json';
-// import aatm_B from './monsterJsons/5e/bestiary-mabjov.json';
-// import aatm_B from './monsterJsons/5e/bestiary-mcv1sc.json';
-// import aatm_B from './monsterJsons/5e/bestiary-mcv2dc.json';
-// import aatm_B from './monsterJsons/5e/bestiary-mcv3mc.json';
-// import aatm_B from './monsterJsons/5e/bestiary-mcv4ec.json';
-// import aatm_B from './monsterJsons/5e/bestiary-mff.json';
-// import aatm_B from './monsterJsons/5e/bestiary-mgelft.json';
-// import aatm_B from './monsterJsons/5e/bestiary-mismv1.json';
-// import aatm_B from './monsterJsons/5e/bestiary-mm.json';
-// import aatm_B from './monsterJsons/5e/bestiary-mot.json';
-// import aatm_B from './monsterJsons/5e/bestiary-mpmm.json';
-// import aatm_B from './monsterJsons/5e/bestiary-mpp.json';
-// import aatm_B from './monsterJsons/5e/bestiary-mtf.json';
-// import aatm_B from './monsterJsons/5e/bestiary-nrh-ass.json';
-// import aatm_B from './monsterJsons/5e/bestiary-nrh-at.json';
-// import aatm_B from './monsterJsons/5e/bestiary-nrh-avitw.json';
-// import aatm_B from './monsterJsons/5e/bestiary-nrh-awol.json';
-// import aatm_B from './monsterJsons/5e/bestiary-nrh-coi.json';
-// import aatm_B from './monsterJsons/5e/bestiary-nrh-tcmc.json';
-// import aatm_B from './monsterJsons/5e/bestiary-nrh-tlt.json';
-// import aatm_B from './monsterJsons/5e/bestiary-oota.json';
-// import aatm_B from './monsterJsons/5e/bestiary-oow.json';
-// import aatm_B from './monsterJsons/5e/bestiary-pabtso.json';
-// import aatm_B from './monsterJsons/5e/bestiary-phb.json';
-// import aatm_B from './monsterJsons/5e/bestiary-pota.json';
-// import aatm_B from './monsterJsons/5e/bestiary-ps-a.json';
-// import aatm_B from './monsterJsons/5e/bestiary-ps-d.json';
-// import aatm_B from './monsterJsons/5e/bestiary-ps-i.json';
-// import aatm_B from './monsterJsons/5e/bestiary-ps-k.json';
-// import aatm_B from './monsterJsons/5e/bestiary-ps-x.json';
-// import aatm_B from './monsterJsons/5e/bestiary-ps-z.json';
-// import aatm_B from './monsterJsons/5e/bestiary-qftis.json';
-// import aatm_B from './monsterJsons/5e/bestiary-rmbre.json';
-// import aatm_B from './monsterJsons/5e/bestiary-rot.json';
-// import aatm_B from './monsterJsons/5e/bestiary-rtg.json';
-// import aatm_B from './monsterJsons/5e/bestiary-sads.json';
-// import aatm_B from './monsterJsons/5e/bestiary-scc.json';
-// import aatm_B from './monsterJsons/5e/bestiary-sdw.json';
-// import aatm_B from './monsterJsons/5e/bestiary-skt.json';
-// import aatm_B from './monsterJsons/5e/bestiary-slw.json';
-// import aatm_B from './monsterJsons/5e/bestiary-tce.json';
-// import aatm_B from './monsterJsons/5e/bestiary-tdcsr.json';
-// import aatm_B from './monsterJsons/5e/bestiary-tftyp.json';
-// import toa from './monsterJsons/5e/bestiary-toa.json';
-// import tob1 from './monsterJsons/5e/bestiary-tob1-2023.json';
-// import tofw from './monsterJsons/5e/bestiary-tofw.json';
-// import ttp from './monsterJsons/5e/bestiary-ttp.json';
-// import vd from './monsterJsons/5e/bestiary-vd.json';
-// import veor from './monsterJsons/5e/bestiary-veor.json';
-// import vgm from './monsterJsons/5e/bestiary-vgm.json';
-// import vrgr from './monsterJsons/5e/bestiary-vrgr.json';
-// import wbtw from './monsterJsons/5e/bestiary-wbtw.json';
-// import wdh from './monsterJsons/5e/bestiary-wdh.json';
-// import wdmm from './monsterJsons/5e/bestiary-wdmm.json';
-// import xdmg from './monsterJsons/5e/bestiary-xdmg.json';
-// import xge from './monsterJsons/5e/bestiary-xge.json';
-// import xmm from './monsterJsons/5e/bestiary-xmm.json';
-// import xphb from './monsterJsons/5e/bestiary-xphb.json';
-
-
 
 import t5eToDmBMapper from './mappers/5eToDmBMapper';
 
@@ -168,7 +53,7 @@ import background22 from "./pics/backgrounds/church.gif"
 import background23 from "./pics/backgrounds/adventureTime.gif"
 import background24 from "./pics/backgrounds/fire.gif"
 
-const jsonModules = require.context('./monsterJsons/5e', false, /\.json$/);
+const jsonModules = require.context('./monsterJsons/5eCreatures', false, /\.json$/);
 
 // Load all JSONs into an object
 const allJsonData = jsonModules.keys().map(key => jsonModules(key).monster);
@@ -257,6 +142,23 @@ export function shuffleArray(array) {
 export const getLevelData = (key) => {
     return key in levelData ? levelData[key]['xp'] : '--';
 }
+
+export const cleanPipes = (key) => {
+    if(key.includes("||")) { // {@status name||textToBeShown}
+        return key.split('||')[1]; 
+    }else if(key.includes("|")) {
+        return key.split('|')[0]; 
+    }
+
+    return key
+}
+
+export const titleCase = (str) => {
+    return str
+      .split(' ') // Split the string into an array of words
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
+      .join(' '); // Join the words back into a single string
+};
 
 export const isProd = window.location.href.includes("dmbuddy.com") 
 export const cheaterMode = window.location.href.includes("/cheater")

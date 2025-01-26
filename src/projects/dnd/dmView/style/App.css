@@ -377,6 +377,18 @@ hr {
     font-size: xx-large;
 }
 
+.hoverPopup {
+    position: relative;
+    border-radius: 5px;
+    border: 1px solid #000000;
+    background-color: #e0d9b7;
+    box-shadow: 1px 1px 10px #000000;
+    width: 30vw;
+    padding: 5px;
+    overflow: hidden;
+    z-index: 2;
+}
+
 .effectsBarContainer {
     position: fixed;
     border-radius: 5px;
@@ -1067,7 +1079,6 @@ input {
     width: 96.6%;
     margin-top: 10px;
     box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.5);
-    z-index: 1;
     background-color: #e0d8b2;
     border-radius: 10px 10px 0px 0px;
     padding: 10px 0px 0px 10px;
@@ -1144,6 +1155,34 @@ input {
 }
 
 
+.spellBlockContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 5px 5px 5px;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box; /* Include border and padding in the element's total width and height */
+    background-color: #f8f2d3d7;
+    border-radius: 5px;
+}
+
+.topSpellInfo {
+    display: flex;
+    background-color: #e0dab8;
+    width: fit-content;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 2px;
+    margin-right: 5px;
+}
+
+.spellStatGrid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    color: #3c3c3c;
+}
+
 .infoContainer {
     display: flex;
     flex-direction: column;
@@ -1191,15 +1230,32 @@ input {
 .statblockOptionsFlex {
     display: flex;
     position: absolute;
-    height: 30px;
+    height: 8%;
     width: 95%;
     align-items: center;
+    visibility: visible;
+}
+
+.statblockOptionsFlexLeft,
+.statblockOptionsFlexRight {
+    height: 100%;
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.statblockEditInfo {
+    cursor: pointer;
+    z-index: 1;
+    text-wrap: nowrap;
+    border: 1px solid #575757;
+    border-radius: 100%;
+    margin: 2px;
 }
 
 .statblockEdit,
 .statblockX {
     cursor: pointer;
-    visibility: hidden;
     z-index: 1;
     margin: 0px 3px 3px 3px;
     text-wrap: nowrap;
@@ -1208,8 +1264,7 @@ input {
     border-radius: 4px;
 }
 
-.statBlock:hover .statblockEdit,
-.statBlock:hover .statblockX {
+.statBlock:hover .statblockOptionsFlex {
     visibility: visible;
 }
 
@@ -1314,6 +1369,11 @@ input {
 
 .infoDesc {
     color: black;
+    word-wrap: break-word;
+}
+
+.triggerButton {
+    all: unset;
 }
 
 .topInfo {
@@ -1321,9 +1381,10 @@ input {
     background-color: #e0dab8;
     border-radius: 8px;
     padding: 8px;
+    height: 26%;
 }
 
-.img {
+.behindImage {
     position: absolute; /* Position absolutely to fill the container */
     top: 50%; /* Center image vertically */
     left: 50%; /* Center image horizontally */
@@ -1337,10 +1398,24 @@ input {
     border-radius: 8px;
 }
 
+.clearImage {
+    position: relative; /* Position absolutely to fill the container */
+    top: 50%; /* Center image vertically */
+    left: 50%; /* Center image horizontally */
+    transform: translate(-50%, -50%); /* Offset to center the image */
+    width: 25vh;
+    opacity: 1;
+    border-radius: 10px;
+}
+
 .spellList {
-    margin: 0;
+    margin: 5px;
     padding-left: 6%;
     list-style-type: circle;
+}
+
+.spellList li {
+    padding: 2px
 }
 
 .source {

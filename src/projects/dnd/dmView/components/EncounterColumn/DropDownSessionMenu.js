@@ -104,7 +104,7 @@ const DropDownSessionMenu = ({savedEncounters, socket}) => {
         socket.emit("iconSizeChange", sizeType, streamingEncounter.encounterGuid)
     };
 
-    let buttonString = streamingEncounter.encounterGuid === null ? `Not Streaming...` : "Streaming "
+    let buttonString = streamingEncounter.encounterGuid === null ? `Stream Player View...` : "Streaming "
     if(username === 'Username') {
         buttonString = "Sign in to stream"
     }

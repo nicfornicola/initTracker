@@ -2,7 +2,6 @@ import React from 'react';
 // import data from '../monsterJsons/5eCoreRules.json'; // Adjust the import path as necessary
 import { generateUniqueId, INIT_ENCOUNTER_NAME, backendUrl, COLOR_GREEN, COLOR_RED} from '../../constants'
 import axios from 'axios';
-import Open5eToDmBMapper from '../../mappers/Open5eToDmBMapper'
 import { ThreeDots } from 'react-loader-spinner'
 import { useImportedPlayers } from '../../../../../providers/ImportedPlayersProvider';
 import { useHomebrewProvider } from '../../../../../providers/HomebrewProvider';
@@ -65,18 +64,6 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
                 setLoadingPack(loadingPackage)
                 handleSelectCreature(creature, action)                
             }
-        } else {
-            setLoadingPack(loadingPackage)
-            axios.get(`${backendUrl}/open5e_monster_import/`, {
-                params: { link: creature.link } // Include the link in query parameters
-            }).then(response => {
-                return Open5eToDmBMapper(response.data, creature.avatarUrl); 
-            }).then(mappedCreature => {
-                handleSelectCreature(mappedCreature, action);
-            }).catch(error => {
-                console.warn(`Error loading creature: ${creature.id}`, error);
-            });
-
         }
     };
 

@@ -40,7 +40,6 @@ function HowTo() {
                 <details style={{ whiteSpace: 'pre-wrap' }}>
                     <summary><strong>Search Tab</strong></summary>
                     <hr/>
-                    <p>All monster data comes from open5e.com or if imported from DndBeyond</p>
                     <div className='demoFlex'>
                         <img src={tabsSearch} alt={'help'} style={{width: '30%'}}/>
                         <ul>

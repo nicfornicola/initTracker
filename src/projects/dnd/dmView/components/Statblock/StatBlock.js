@@ -160,6 +160,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
     const [creatureReset, setCreatureReset] = useState(currentEncounter?.creatures[selectedIndex])
     const {addToHomebrewList} = useHomebrewProvider();
     const [isEditMode, setIsEditMode] = useState(currentEncounter?.encounterName === "dmbuddy_newhomebrew")
+    const [showFullImage, setShowFullImage] = useState(false)
     // If selectedIndex changes a new creature was clicked
     useEffect(() => {
         let newCreature = selectedIndex !== null ? currentEncounter?.creatures[selectedIndex] : null
@@ -199,17 +200,17 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
     }
 
     const handleUserSpellActions = (cKey, path, index, newValue = undefined, send = false) => {
-
+        console.log(path)
         let pathItems = path.split(".")
         let pathKey = pathItems[0]
         let spellType = pathItems[1]
         let spellIndex = parseInt(pathItems.at(-1))
         let spellCastingList = creature.spellcasting
-        console.table({pathKey, spellType, spellIndex})
+        console.table({pathKey, spellType, spellIndex, newValue})
 
         if(cKey === 'add') {
-            let newSpell = '{@spell New Spell}'
-            if(pathItems[0] === 'spells') {
+            let newSpell = spellType > 0 ? '{@spell New Spell}' : '{@spell New Cantrip}'
+            if(pathKey === 'spells') {
                 let spellObjTemplate = {
                     [spellType]: {
                         slots: newValue,
@@ -223,20 +224,22 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                     spellCastingList[index].spells[spellType] = {...spellObjTemplate[spellType]}
                 }
                 spellCastingList[index].spells[spellType].spells.push(newSpell)
-            } else if(pathItems[0] === 'daily') {
+            } else if(pathKey === 'daily' || pathKey === "week" || pathKey === "lr" || pathKey === "sr") {
+
+                const timeFrame = pathKey 
 
                 let spellObjTemplate = {
                     [spellType]: []
                 }
 
-                if(!spellCastingList[index].daily) {
-                    spellCastingList[index].daily = spellObjTemplate
-                } else if(!spellCastingList[index].daily[spellType]) {
-                    spellCastingList[index].daily[spellType] = []
+                if(!spellCastingList[index][timeFrame]) {
+                    spellCastingList[index][timeFrame] = spellObjTemplate
+                } else if(!spellCastingList[index][timeFrame][spellType]) {
+                    spellCastingList[index][timeFrame][spellType] = []
                 }
 
-                spellCastingList[index].daily[spellType].push(newSpell)
-            } else if(pathItems[0] === 'will') {
+                spellCastingList[index][timeFrame][spellType].push(newSpell)
+            } else if(pathKey === 'will') {
 
                 if(!spellCastingList[index].will) {
                     spellCastingList[index].will = []
@@ -252,11 +255,13 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                     delete spellCastingList[index].spells[spellType]
                 }
 
-            } else if(pathKey === 'daily') {
+            } else if(pathKey === 'daily' || pathKey === "week" || pathKey === "lr" || pathKey === "sr") {
+                const timeFrame = pathKey 
+
                 if(spellIndex)
-                    spellCastingList[index].daily[spellType] = spellCastingList[index].daily[spellType].filter((_, i) => i !== spellIndex)
+                    spellCastingList[index][timeFrame][spellType] = spellCastingList[index][timeFrame][spellType].filter((_, i) => i !== spellIndex)
                 else {
-                    delete spellCastingList[index].daily[spellType]
+                    delete spellCastingList[index][timeFrame][spellType]
                 }
 
             } else if(pathKey === 'will') {
@@ -269,8 +274,8 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
         }  else if (cKey === 'change') {
             if(pathKey === 'spells') {
                 spellCastingList[index].spells[spellType].spells[spellIndex] = newValue
-            } else if(pathKey === 'daily') {
-                spellCastingList[index].daily[spellType][spellIndex] = newValue
+            } else if(pathKey === 'daily' || pathKey === "week" || pathKey === "lr" || pathKey === "sr") {
+                spellCastingList[index][pathKey][spellType][spellIndex] = newValue
             } else if(pathKey === 'will') {
                 spellCastingList[index].will[spellIndex] = newValue
             }
@@ -487,22 +492,16 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
 					"headerEntries": [
 						`${creature.name} is a Xth-level spellcaster. Spellcasting ability is CHA|WIS|INT (spell save {@dc X}, {@hit X} to hit with spell attacks). They regain expended spell slots when they finish a short or long rest, and know the following spells:`
 					],
-					"will": [],
-					"daily": {
-						"2e": [],
-						"1e": []
-					},
                     "spells": {
+                        "0": {
+							"slots": 0,
+							"spells": ['{@spell New Cantrip}']
+						},
 						"1": {
 							"slots": 3,
-							"spells": []
-						},
-						"2": {
-							"slots": 2,
-							"spells": []
+							"spells": ['{@spell New Spell}']
 						}
 					},
-					"ability": "int",
 					"displayAs": "trait"
 				}
             }
@@ -665,16 +664,25 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                 <hr className="lineSeperator" />
                             </div>
                         ) : (
-                            <>
-                                <div className='statblockOptionsFlex' style={{justifyContent: 'flex-end', top: ''}}>
-                                    <button className="statblockEdit" onClick={toggleEditMode}>
-                                        {(currentEncounter.encounterGuid || creature?.dmb_homebrew_guid)
-                                            ? "Edit"
-                                            : "Use as Homebrew Template"
+                            <>  
+                                
+                                    <div className='statblockOptionsFlex'>
+                                        <div className='statblockOptionsFlexLeft'>
+                                            <button className="statblockEditInfo" onClick={() => setShowFullImage(!showFullImage)}>i</button>
+                                        </div>
+                                        {!showFullImage && 
+                                            <div className='statblockOptionsFlexRight' style={{justifyContent: 'flex-end', top: ''}}>
+                                                <button className="statblockEdit" onClick={toggleEditMode}>
+                                                    {(currentEncounter.encounterGuid || creature?.dmb_homebrew_guid)
+                                                        ? "Edit"
+                                                        : "Use as Homebrew Template"
+                                                    }
+                                                </button>
+                                                <button className='statblockX' onClick={closeStatBlock}>❌</button>
+                                            </div>
                                         }
-                                    </button>
-                                    <button className='statblockX' onClick={closeStatBlock}>❌</button>
-                                </div>
+                                    </div>
+
                                 <div className='topInfo shadowBox'>
                                     {creature.effects.length > 0 &&
                                         <div style={{backgroundColor: "black", width: 'fit-content', borderRadius: 5}}>
@@ -683,42 +691,47 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                             ))}
                                         </div>
                                     }
-                                    <img className="img" src={creature.avatarUrl} alt={"Creature Img"}/>
-                                    <h1 className='creatureName titleFontFamily'>{creature?.name}&nbsp;</h1>
-                                    <div className='creatureType'>
-                                        <hr className="lineSeperator" />
-                                        <CreatureInfo creature={creature}/>
-                                    </div>
-                                    <div className='stickyStatGrid textShadow' >
-                                        <p className="stickyStatItem">
-                                            <strong className='titleColor'>AC&nbsp;</strong>
-                                            <BoldifyReplace desc={creature.armor_class} />
-                                            {creature.armor_desc && creature.armor_desc !== "()" && 
-                                                <>&nbsp;<BoldifyReplace desc={creature.armor_desc} /></>
-                                            } 
-                                        </p>
-                                        <p className="stickyStatItem">
-                                            <strong className='titleColor'>Initiative</strong>&nbsp;{addSign(creature.dexterity_save)} 
-                                            <span className='extraInfo'>&nbsp;({parseInt(creature.dexterity_save)+10 || 10})</span>
-                                        </p>
-                                        <p className="stickyStatItem stickyStatExtraWide">
-                                            <strong className='titleColor'>HP&nbsp;</strong>{creature.hit_points_current}/{creature.hit_points} 
-                                            {creature.hit_points_temp !== 0 && (
-                                                <span className='tempHp'>&nbsp;(+{creature.hit_points_temp}) </span>
-                                            )}
-                                            {creature.hit_dice && (
-                                                <span className='extraInfo'>&nbsp;({creature.hit_dice})</span>
-                                            )}
-                                            
-                                        </p>
-                                        <p className="stickyStatItem"></p>
-                                        <p className="stickyStatItem stickyStatExtraWide">
-                                            <strong className='titleColor'>Speed</strong>&nbsp;
-                                            {formatSpeed(creature.speed)}
-                                        </p>
-                                        <p className="stickyStatItem"></p>
-                                    </div>
-                                    <SkillGrid creature={creature} handleChange={handleChange}/>
+                                    <img className={showFullImage ? "clearImage" : "behindImage"} src={creature.avatarUrl} alt={"Creature Img"} />
+                                    {!showFullImage && 
+                                        <>
+                                            <h1 className='creatureName titleFontFamily'>{creature?.name}&nbsp;</h1>
+                                            <div className='creatureType'>
+                                                <hr className="lineSeperator" />
+                                                <CreatureInfo creature={creature}/>
+                                            </div>
+                                            <div className='stickyStatGrid textShadow' >
+                                                <p className="stickyStatItem">
+                                                    <strong className='titleColor'>AC&nbsp;</strong>
+                                                    <BoldifyReplace desc={creature.armor_class} />
+                                                    {creature.armor_desc && creature.armor_desc !== "()" && 
+                                                        <>&nbsp;<BoldifyReplace desc={creature.armor_desc} /></>
+                                                    } 
+                                                </p>
+                                                <p className="stickyStatItem">
+                                                    <strong className='titleColor'>Initiative</strong>&nbsp;{addSign(creature.dexterity_save)} 
+                                                    <span className='extraInfo'>&nbsp;({parseInt(creature.dexterity_save)+10 || 10})</span>
+                                                </p>
+                                                <p className="stickyStatItem stickyStatExtraWide">
+                                                    <strong className='titleColor'>HP&nbsp;</strong>{creature.hit_points_current}/{creature.hit_points} 
+                                                    {creature.hit_points_temp !== 0 && (
+                                                        <span className='tempHp'>&nbsp;(+{creature.hit_points_temp}) </span>
+                                                    )}
+                                                    {creature.hit_dice && (
+                                                        <span className='extraInfo'>&nbsp;({creature.hit_dice})</span>
+                                                    )}
+                                                    
+                                                </p>
+                                                <p className="stickyStatItem"></p>
+                                                <p className="stickyStatItem stickyStatExtraWide">
+                                                    <strong className='titleColor'>Speed</strong>&nbsp;
+                                                    {formatSpeed(creature.speed)}
+                                                </p>
+                                                <p className="stickyStatItem"></p>
+                                            </div>
+                                            <SkillGrid creature={creature} handleChange={handleChange}/>
+                                        </>
+                                    }
+
                                 </div>
                                     
                                 <div className="statBlockScroll">
@@ -747,6 +760,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                             <hr className="lineSeperator" />
                                             {creature.from === "dnd_b" ? (
                                                 <>
+                                                    
                                                     {creature.special_abilities &&
                                                         <div className='actionInfo' dangerouslySetInnerHTML={{ __html: creature.special_abilities }} />
                                                     }
@@ -788,12 +802,13 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                                             </div>
                                                         );
                                                     })}
-                                                    <SpellCasting creature={creature}/>
                                                 </>
 
                                             )}
                                         </>
                                     }
+                                    
+                                    <SpellCasting creature={creature}/>
 
                                     {creature.actions && 
                                         <>
@@ -808,7 +823,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                             ) : (
                                                 <>
                                                     <ContentArray label={'ACTIONS'} contentArray={creature.actions} cKey={'actions'} handleCheck={handleRechargeCheck} nested={true}/>
-                                                    <SpellCasting creature={creature} displayAs='action'/>
+                                                    {/* <SpellCasting creature={creature} displayAs='action'/> */}
                                                 </>
 
                                             )}

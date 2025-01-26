@@ -1,5 +1,8 @@
 import {actionsConsts} from '../../replacements.js';
-
+import { Popover } from '@base-ui-components/react/popover';
+import spellsPhb from '../../monsterJsons/spells/spells-phb.json'
+import InfoBlock from './InfoBlock.js';
+import { cleanPipes, titleCase } from '../../constants.js';
 const getRecharge = (str) => {
     if(str === '')
         return 6
@@ -7,14 +10,34 @@ const getRecharge = (str) => {
     return str+'-6'
 }
 
-const cleanPipes = (key) => {
-    if(key.includes("||")) { // {@status name||textToBeShown}
-        return key.split('||')[1]; 
-    }else if(key.includes("|")) {
-        return key.split('|')[0]; 
+const getFormattedObj = (key, findKey, cleanPipes = false, tCase = true, bold = true) => {
+
+    let sliceCount = findKey.length
+    let element;
+    let valueName;
+    if(key.startsWith(findKey)) {
+        element = key.slice(sliceCount)
+        valueName = element
     }
 
-    return key
+    if(element) {
+        if(cleanPipes)
+            element = cleanPipes(element)
+
+        if(tCase)
+            element = titleCase(element)
+
+        if(bold) {
+            element = <strong>{element}</strong>
+        }
+    } else {
+        return null
+    }
+
+    return {
+        name: valueName,
+        element: element
+    }
 }
 
 // Usage in a React Component
@@ -27,35 +50,55 @@ export const BoldifyReplace = ({ name, desc }) => {
         if (part.startsWith("{@hit ")) return <strong>+{part.slice(6).replace("}", "")}</strong>;
 
         const match = part.match(/^\{@(.*?)\}$/);
+
         if (!match) return <span>{part}</span>;
 
         const key = match[1];
-        if (key.startsWith("dc ")) return <strong>DC {key.slice(3)}</strong>;
-        if (key.startsWith("hit ")) return <strong>+{key.slice(4)}</strong>;
-        if (key.startsWith("item ")) return <strong>{cleanPipes(key.slice(5))}</strong>;
-        if (key.startsWith("dice ")) return <strong>{key.slice(5)}</strong>;
-        if (key.startsWith("skill ")) return <strong>{key.slice(6)}</strong>;
-        if (key.startsWith("spell ")) return <strong>{cleanPipes(key.slice(6))}</strong>;
-        if (key.startsWith("sense ")) return <strong>{key.slice(6)}</strong>;
-        if (key.startsWith("status")) return <strong>{cleanPipes(key.slice(7))}</strong>;
-        if (key.startsWith("damage ")) return <strong>{key.slice(7)}</strong>;
-        if (key.startsWith("recharge")) return <strong>(Recharge {getRecharge(key.slice(8))})</strong>;
-        if (key.startsWith("creature ")) return <strong>{cleanPipes(key.slice(9))}</strong>;
-        if (key.startsWith("condition ")) return <strong>{cleanPipes(key.slice(10))}</strong>;
-        if (key.startsWith("adventure ")) return <strong>{cleanPipes(key.slice(10))}</strong>;
-        if (key.startsWith("hitYourSpellAttack ")) return <strong>{cleanPipes(key.slice(18))}</strong>;
-        if (key.startsWith("action opportunity attack")) return <strong>Opportunity Attack</strong>;
-        if (key.startsWith("quickref difficult terrain||3")) return <strong>difficult terrain</strong>;
-        if (key.startsWith("quickref Cover||3||total cover")) return <strong>total cover</strong>;
-        if (key.startsWith("quickref saving throws|PHB|2|1|saving throw")) return <strong>saving throw</strong>;
+        if (key.startsWith("condition ")) return <strong>{titleCase(cleanPipes(key.slice(10)))}</strong>;
+        else if (key.startsWith("status ")) return <strong>{cleanPipes(key.slice(7))}</strong>;        
+        else if (key.startsWith("dc ")) return <strong>DC {key.slice(3)}</strong>;
+        else if (key.startsWith("hit ")) return <strong>+{key.slice(4)}</strong>;
+        else if (key.startsWith("item ")) return <strong>{cleanPipes(key.slice(5))}</strong>;
+        else if (key.startsWith("dice ")) return <strong>{key.slice(5)}</strong>;
+        else if (key.startsWith("skill ")) return <strong>{key.slice(6)}</strong>;
+        else if (key.startsWith("sense ")) return <strong>{key.slice(6)}</strong>;
+        else if (key.startsWith("damage ")) return <strong>{key.slice(7)}</strong>;
+        else if (key.startsWith("recharge")) return <strong>(Recharge {getRecharge(key.slice(8))})</strong>;
+        else if (key.startsWith("creature ")) return <strong>{cleanPipes(key.slice(9))}</strong>;
+        else if (key.startsWith("adventure ")) return <strong>{cleanPipes(key.slice(10))}</strong>;
+        else if (key.startsWith("hitYourSpellAttack ")) return <strong>{cleanPipes(key.slice(18))}</strong>;
+        else if (key.startsWith("action opportunity attack")) return <strong>Opportunity Attack</strong>;
+        else if (key.startsWith("quickref difficult terrain||3")) return <strong>difficult terrain</strong>;
+        else if (key.startsWith("quickref Cover||3||total cover")) return <strong>total cover</strong>;
+        else if (key.startsWith("quickref saving throws|PHB|2|1|saving throw")) return <strong>saving throw</strong>;
+        else if (key in actionsConsts) return <span>{actionsConsts[key]}</span>;
 
-        if (key in actionsConsts) return <span>{actionsConsts[key]}</span>;
+        let elementObj = getFormattedObj(key, "spell ")
+        if(elementObj) {
+            const spell = spellsPhb.spell.find(spell => spell.name.toLowerCase() === elementObj.name);
+            return <Popover.Root openOnHover={true} delay={500}>
+                    <Popover.Trigger className='triggerButton'>{elementObj.element}</Popover.Trigger>
+                    <Popover.Portal >
+                        <Popover.Positioner align={'end'} sticky={true}>
+                            <Popover.Popup className='hoverPopup'>
+                                <Popover.Description style={{all: 'unset'}}>
+                                    <InfoBlock spell={spell}/>
+                                </Popover.Description>
+                            </Popover.Popup>
+                        </Popover.Positioner>
+                    </Popover.Portal>
+            </Popover.Root>;
+        }
 
-        return part;
+        
     };
 
     const formattedString = str.split(/(\{@h\}\d+ |\{@hit \d+\} to hit|{@.*?\})/)
-        .map((part, index) => <span key={"highlighted" + index}>{formatPart(part)}</span>);
+        .map((part, index) => <span key={"highlighted" + index}>
+                {formatPart(part)}
+            </span>
+        );
 
     return <span className={desc ? 'infoDesc' : ''}>{formattedString}</span>;
+           
 };

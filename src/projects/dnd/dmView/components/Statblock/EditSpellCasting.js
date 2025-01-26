@@ -4,7 +4,6 @@ import magPlus from '../../pics/icons/magPlus.PNG'
 import magMinus from '../../pics/icons/magMinus.PNG'
 import EditSpellDropdown from './EditSpellDropdown';
 import EditSpellInput from './EditSpellInput';
-import { generateUniqueId } from '../../constants';
 
 function numEnd(input) {
     if(!input && input !== '0') {
@@ -28,6 +27,13 @@ function numEnd(input) {
     const lastDigit = number % 10;
     const suffix = suffixes[lastDigit] || "th";
     return `${number}${suffix}`;
+}
+
+const timeFrameKeys = {
+    "daily": "Day",
+    "week": "Week",
+    "lr": "Long Rest",
+    "sr": "Short Rest"
 }
 
 const EditSpellCasting = ({label, spellcasting = [], category, handleChange = undefined}) => {
@@ -98,11 +104,11 @@ const EditSpellCasting = ({label, spellcasting = [], category, handleChange = un
                             </span>  
                         }
 
-                        if (key === "daily") {
+                        if (key === "daily" || key === "week" || key === "lr" || key === "sr") {
                             return Object.entries(value).map(([dailySpell, spells]) => (
                                 <>
                                     <span className='spellTypeRemove'>
-                                        {dailySpell.slice(0, 1)}/day each: 
+                                        {dailySpell.slice(0, 1)}/{timeFrameKeys[key]} each: 
                                         <OptionButton wrapperClassName='spellTypeTrash' src={magMinus} message={`Remove: ${dailySpell.slice(0, 1)}/day'`}
                                             onClickFunction={(e) => handleChange(e, 'remove', `daily.${dailySpell}.`, objIndex, true)}
                                         />

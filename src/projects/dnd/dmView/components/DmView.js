@@ -7,7 +7,6 @@ import SideMenu from './SideMenu/SideMenu.js';
 import { backendUrl, generateUniqueId, INIT_ENCOUNTER, isDev, SHORT_REFRESH, sortCreatureArray} from '../constants';
 import YouTubeEmbed from './EncounterColumn/YouTubeEmbed.js';
 import io from 'socket.io-client';
-import { refreshMonsterProfiles } from '../refresh/refresh';
 import { ImportDndBeyondCharacters } from '../api/ImportDndBeyondCharacters'
 import ReactGA from "react-ga4";
 import { useLocation } from 'react-router-dom';
@@ -244,21 +243,12 @@ const DmView = () => {
 
 
     const handleRefresh = () => {
-        console.log("Refresh Player/Monsters", autoRefresh)
+        console.log("Refresh Players", autoRefresh)
         setRefreshLoading(true)
 
-        if (autoRefreshDndbPlayers && autoRefreshDndbMonsters) {
-            console.log("==============")
-            console.log("Refreshing All")
-            console.log("==============")
-            refreshPlayerProfiles().then(passedCreatures => refreshMonsterProfiles(passedCreatures))
-        } else if (autoRefreshDndbPlayers) {
+        if (autoRefreshDndbPlayers) {
             refreshPlayerProfiles();
-        }
-        else if (autoRefreshDndbMonsters) {
-            refreshMonsterProfiles();
-        }
-        else {
+        } else {
             console.error("You should not be seeing that button if both are false...")
         }
 

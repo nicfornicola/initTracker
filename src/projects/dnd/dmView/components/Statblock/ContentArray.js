@@ -50,8 +50,6 @@ const ContentArray = ({label, contentArray, labelDesc = null, actions_count = un
                         <strong><BoldifyReplace name={action.name} /> </strong>
                     )}
                     <BoldifyReplace desc={action?.desc} />
-                    {/* <hr/>
-                    <span className='infoDesc'> {action?.desc} </span> */}
                 </div>
             ))}
             {label ===  'Legendary Actions'}

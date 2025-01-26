@@ -5,9 +5,10 @@ import { generateUniqueId } from '../../constants';
 
 const EditSpellInput = ({spellName, path, objIndex, handleChange = undefined}) => {
     const [value, setValue] = useState(spellName)
-    
+    const [key] = useState(generateUniqueId())
+
     return (
-        <li key={generateUniqueId()} className='spellLi'>
+        <li key={key} className='spellLi'>
             <input className="editBlockInput" type='text'
                 value={value}
                 onChange={(e) => setValue(e.target.value)} 

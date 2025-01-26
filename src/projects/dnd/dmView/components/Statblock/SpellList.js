@@ -30,12 +30,12 @@ const SpellList = ({ spellListObj }) => {
 		<ul className="spellList">
 			{Object.entries(spellListObj).map(([key, value]) => {
 				if (key === "will") {
-					return <li key={key}>At will: <BoldifyReplace desc={value.join(", ")} /></li>
+					return <li key={key}><b>At will</b>: <BoldifyReplace desc={value.join(", ")} /></li>
 				}
 
-				if (key === "daily") {
+				if (key === "daily" || key === "week" || key === "lr" || key === "sr") {
 					return Object.entries(value).map(([dailySpell, spells]) => (
-						<li key={dailySpell}>{dailySpell.slice(0, 1)}/day each: <BoldifyReplace desc={spells.join(", ")} /></li>
+						<li key={dailySpell}><b>{dailySpell.slice(0, 1)}/day each:</b> <BoldifyReplace desc={spells.join(", ")} /></li>
 					));
 				}
 
@@ -43,16 +43,15 @@ const SpellList = ({ spellListObj }) => {
 					return Object.entries(value).map(([level, spellDetails]) => {
 						if (level === "0") {
 							return (
-								<li key={level}>Cantrips (at will): <BoldifyReplace desc={spellDetails.spells.join(", ")} /></li>
+								<li key={level}><b>Cantrips:</b> <BoldifyReplace desc={spellDetails.spells.join(", ")} /></li>
 							);
 						}
 
 						const { lower, slots, spells } = spellDetails;
 						return (
 							<li key={level}>
-								{lower && `${numEnd(lower)}-`}
-								{numEnd(level)} lvl: ({slots}{" "}
-								{lower && <i>{numEnd(level)}-level spell</i>} slots):&nbsp;
+                                <b>{lower && `${numEnd(lower)}-`}{numEnd(level)} lvl</b>:
+                                ({slots}{" "}{lower && <i>{numEnd(level)}-level spell</i>} slots):&nbsp;
 								<BoldifyReplace desc={spells.join(", ")} />
 							</li>
 						);
@@ -64,28 +63,28 @@ const SpellList = ({ spellListObj }) => {
   	);
 };
 
-const SpellCasting = ({ creature, displayAs="trait" }) => {
+const SpellCasting = ({ creature}) => {
+    console.log(creature)
+	return creature?.spellcasting.length > 0 &&
+            <>
+                <h1 className='infoTitle'>Spells</h1>
+                <hr className="lineSeperator" />
+                {creature?.spellcasting?.map((spellListObj, index) => {
+                    // this will be 'action' or 'undefined'
+                    spellListObj.displayAs = spellListObj.displayAs ?? "trait"
+                    if ((spellListObj.name === "None" && spellListObj.desc === "--")) {
+                        return null;
+                    }
 
-	return (
-		<>
-			{creature?.spellcasting?.map((spellListObj, index) => {
-                
-                // this will be 'action' or 'undefined'
-                spellListObj.displayAs = spellListObj.displayAs ?? "trait"
-				if ((spellListObj.name === "None" && spellListObj.desc === "--") || displayAs !== spellListObj.displayAs) {
-					return null;
-				}
-
-				return (
-					<div className="actionInfo" key={index + spellListObj.name}>
-						<strong className="titleColor"> {spellListObj.name}: </strong>
-						<BoldifyReplace desc={spellListObj.headerEntries} />
-						<SpellList spellListObj={spellListObj} />
-					</div>
-				);
-			})}
-		</>
-	);
+                    return (
+                        <div className="actionInfo" key={index + spellListObj.name}>
+                            <strong className="titleColor"> {spellListObj.name}: </strong>
+                            <BoldifyReplace desc={spellListObj.headerEntries} />
+                            <SpellList spellListObj={spellListObj} />
+                        </div>
+                    );
+                })}
+            </>
 };
 
 export default SpellCasting;

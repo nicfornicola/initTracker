@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { useUser } from './UserProvider.js';
 import {backendUrl, generateUniqueId} from '../projects/dnd/dmView/constants.js'
-import FakeImport from '../projects/dnd/dmView/monsterJsons/FakeImport.json'
 import axios from 'axios';
 
 // Create a Context
