@@ -13,8 +13,30 @@ const calcCastingTime = (spell) => {
     if(spell.time[0].number !== 1) 
         unit += 's'
 
+    if(spell?.meta?.ritual)
+        unit += ' or ritual'
+
     return unit
 
+}
+
+const calcComponents = (spell) => {
+
+    let components = Object.entries(spell.components).map(([key, value]) => {
+        let component = null
+        if(value) {
+            component = key.toUpperCase()
+            if(typeof value === 'string') {
+                component += " (" + value + ")"
+            } else if(typeof value === 'object') {
+                component += " (" + value.text + ")"
+            }
+        }
+
+        return component
+    }).join(", ")
+
+    return components
 }
 
 // Usage in a React Component
@@ -36,12 +58,17 @@ export const SpellBoldifyReplace = ({ name, desc }) => {
         else if (key.startsWith("status ")) return <strong>{cleanPipes(key.slice(7))}</strong>;        
         else if (key.startsWith("dc ")) return <strong>DC {key.slice(3)}</strong>;
         else if (key.startsWith("hit ")) return <strong>+{key.slice(4)}</strong>;
+        else if (key.startsWith("skill ")) return <strong>{cleanPipes(key.slice(6))}</strong>;
         else if (key.startsWith("dice ")) return <strong>{key.slice(5)}</strong>;
         else if (key.startsWith("damage ")) return <strong>{key.slice(7)}</strong>;
+        else if (key.startsWith("chance ")) return <strong>{cleanPipes(key.slice(7))}%</strong>;
         else if (key.startsWith("hitYourSpellAttack ")) return <strong>{cleanPipes(key.slice(18))}</strong>;
         else if (key.startsWith("quickref difficult terrain||3")) return <strong>difficult terrain</strong>;
         else if (key.startsWith("quickref Vision and Light")) return <strong>{cleanPipes(key.slice(25))}</strong>;
         else if (key.startsWith("scaledamage ")) return <strong>{key.slice(12).split('|').at(-1)}</strong>;
+        else if (key.startsWith("variantrule ")) return <strong>{cleanPipes(key.slice(12))}</strong>;
+        else if (key.startsWith("creature ")) return <strong>{cleanPipes(key.slice(9))}</strong>;
+        else if (key.startsWith("action ")) return <strong>{cleanPipes(key.slice(7))}</strong>;
         else if (key in actionsConsts) return <span>{actionsConsts[key]}</span>;
     };
 
@@ -69,30 +96,30 @@ const InfoBlock = ({spell}) => {
             <div className='spellStatGrid' >
                 <span><strong>Casting Time:</strong> {calcCastingTime(spell)}</span>
                 <span><strong>Range:</strong> {spell.range.distance.amount} {titleCase(spell.range.distance.type)}</span>
-                <span><strong>Components:</strong> {Object.entries(spell.components).map(([key, value]) => {
-                    return value ? key.toUpperCase() : null 
-                }).join(", ")}</span>
+                <span><strong>Components:</strong> {calcComponents(spell)}</span>
                 <span><strong>Duration:</strong> {spell?.duration[0]?.concentration && "Concentration, "} {spell.duration[0].type === 'timed' ? spell.duration[0].duration.amount + ' ' + spell.duration[0].duration.type + 's' : vocab[spell.duration[0].type]}</span>
             </div>
             <hr className="lineSeperator" />
-            {spell.entries.map(desc => {
+            {spell.entries.map(entry => {
 
-                if(typeof desc === 'string')
-                    return <span style={{padding: '4px'}}><SpellBoldifyReplace desc={desc}/> </span>
-                else if(typeof desc === 'object') {
-                    return <ul className='spellList'>
-                                {desc.entries.map(extraEntry => {
-                                    return <span><strong>{desc.name}: </strong><SpellBoldifyReplace desc={extraEntry}/> </span>
-                                })}
-                            </ul>
+                if(typeof entry === 'string')
+                    return <span style={{padding: '4px'}}><SpellBoldifyReplace desc={entry}/> </span>
+                else if(typeof entry === 'object') {
+                    if(entry?.items) {
+                        return  <ul className='spellList'>
+                                    {entry.items.map(item => {
+                                        return <li><strong>{item.name}: </strong><SpellBoldifyReplace desc={item.entries.join(" ")}/> </li>
+                                    })}
+                                </ul>
+                    } else {
+                        return <span style={{padding: '4px'}}><strong>{entry.name}: </strong><SpellBoldifyReplace desc={entry.entries.join(" ")}/> </span>
+                               
+                    }
                         
-                    
-                    
-
                 }
             })}
             {spell?.entriesHigherLevel?.map(lvlObj => {
-                return <span style={{padding: '4px'}}><strong>{lvlObj.name}</strong>
+                return <span style={{padding: '4px'}}><strong>{lvlObj.name}: </strong>
                 {lvlObj.entries.map(desc => {
                     return <SpellBoldifyReplace desc={desc}/> 
                 })}

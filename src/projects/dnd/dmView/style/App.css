@@ -1374,6 +1374,7 @@ input {
 
 .triggerButton {
     all: unset;
+    cursor: pointer;
 }
 
 .topInfo {
@@ -1381,7 +1382,6 @@ input {
     background-color: #e0dab8;
     border-radius: 8px;
     padding: 8px;
-    height: 26%;
 }
 
 .behindImage {

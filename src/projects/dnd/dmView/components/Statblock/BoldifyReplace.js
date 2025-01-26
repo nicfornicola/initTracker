@@ -1,8 +1,7 @@
 import {actionsConsts} from '../../replacements.js';
 import { Popover } from '@base-ui-components/react/popover';
-import spellsPhb from '../../monsterJsons/spells/spells-phb.json'
 import InfoBlock from './InfoBlock.js';
-import { cleanPipes, titleCase } from '../../constants.js';
+import { cleanPipes, titleCase, exportSpells } from '../../constants.js';
 const getRecharge = (str) => {
     if(str === '')
         return 6
@@ -75,7 +74,8 @@ export const BoldifyReplace = ({ name, desc }) => {
 
         let elementObj = getFormattedObj(key, "spell ")
         if(elementObj) {
-            const spell = spellsPhb.spell.find(spell => spell.name.toLowerCase() === elementObj.name);
+            console.log(exportSpells)
+            const spell = exportSpells.find(spell => spell.name.toLowerCase() === elementObj.name);
             return <Popover.Root openOnHover={true} delay={500}>
                     <Popover.Trigger className='triggerButton'>{elementObj.element}</Popover.Trigger>
                     <Popover.Portal >

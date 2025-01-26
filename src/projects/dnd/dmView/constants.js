@@ -54,9 +54,24 @@ import background23 from "./pics/backgrounds/adventureTime.gif"
 import background24 from "./pics/backgrounds/fire.gif"
 
 const jsonModules = require.context('./monsterJsons/5eCreatures', false, /\.json$/);
+const spellModules = require.context('./monsterJsons/spells', false, /xphb.json$/);
 
 // Load all JSONs into an object
 const allJsonData = jsonModules.keys().map(key => jsonModules(key).monster);
+
+console.log(spellModules.keys())
+console.log(spellModules('./spells-xphb.json').spell)
+
+export const allSpells = spellModules.keys().map(key => spellModules(key).spell);
+
+let spells = []
+allSpells.forEach(spellList => {
+    spells.push(...spellList)
+});
+
+export const exportSpells = spells
+
+console.log(exportSpells)
 
 export const COLOR_RED = "#D44E3B"
 export const COLOR_GREEN = "#68AA33"
@@ -144,9 +159,11 @@ export const getLevelData = (key) => {
 }
 
 export const cleanPipes = (key) => {
-    if(key.includes("||")) { // {@status name||textToBeShown}
+    if(key.includes("|||")) { // {@status name||textToBeShown}
+        return key.split('|||')[0]; 
+    } else if(key.includes("||")) { // {@status name||textToBeShown}
         return key.split('||')[1]; 
-    }else if(key.includes("|")) {
+    } else if(key.includes("|")) {
         return key.split('|')[0]; 
     }
 
