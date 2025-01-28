@@ -64,8 +64,9 @@ const SpellList = ({ spellListObj }) => {
 };
 
 const SpellCasting = ({ creature}) => {
-    console.log(creature)
-	return creature?.spellcasting.length > 0 &&
+    if(!creature?.spellcasting)
+        return null
+	return creature?.spellcasting?.length > 0 &&
             <>
                 <h1 className='infoTitle'>Spells</h1>
                 <hr className="lineSeperator" />

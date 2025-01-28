@@ -14,9 +14,7 @@ export const ImportDndBeyondCharacters = async (playerIds, encounterGuid, encoun
 
             const response = await axios.get(url, {});
             const resData = response.data.data;
-            console.log("1?")
             let skillDetails = getSkillDetails(resData)
-            console.log("2?")
 
             let mappedCharacter = await DndBCharacterToDmBMapper(resData, encounterGuid, skillDetails)
             console.log(i.toString() + "/" + playerIds.length + " " + resData.name + " retrieved! (" + playerId +")");

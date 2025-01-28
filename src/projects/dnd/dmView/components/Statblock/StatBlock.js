@@ -200,7 +200,6 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
     }
 
     const handleUserSpellActions = (cKey, path, index, newValue = undefined, send = false) => {
-        console.log(path)
         let pathItems = path.split(".")
         let pathKey = pathItems[0]
         let spellType = pathItems[1]
@@ -859,9 +858,12 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                     )}
                                 </div>
                                 <hr className="lineSeperator" />
-                                <div>
-                                    <strong className='source'>Source: {creature.sourceShort}, page {creature.page}</strong>
-                                </div>
+                                {creature.sourceShort && 
+                                    <div>
+                                        <strong className='source'>Source: {creature.sourceShort}, page {creature.page}</strong>
+                                    </div>
+                                }
+                                
                             </>
                         )}
                         

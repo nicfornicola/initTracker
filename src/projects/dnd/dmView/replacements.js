@@ -1,21 +1,21 @@
 export const actionsConsts =  {
-    "atk mw": "melee weapon attack: ",
-    "atk rw": "ranged weapon attack: ",
-    "atk m": "melee attack:", 
-    "atk r": "ranged attack:", 
+    "atk mw": "Melee weapon attack: ",
+    "atk rw": "Ranged weapon attack: ",
+    "atk m": "Melee attack:", 
+    "atk r": "Ranged attack:", 
     "atk a": "area attack:", 
     "atk aw": "area weapon attack:", 
-    "atk ms": "melee spell attack:", 
-    "atk mw,rw": "melee or ranged weapon attack:", 
-    "atk rs": "ranged spell attack:", 
-    "atk ms,rs": "melee or ranged spell attack:", 
-    "atk m,r": "melee or ranged attack:", 
-    "atk mp": "melee power attack:", 
-    "atk rp": "ranged power attack:", 
-    "atk mp,rp": "melee or ranged power attack:", 
-    "atkr m": "melee attack roll:", 
-    "atkr r": "ranged attack roll:", 
-    "atkr m,r": "melee or ranged attack roll:", 
+    "atk ms": "Melee spell attack:", 
+    "atk mw,rw": "Melee or Ranged weapon attack:", 
+    "atk rs": "Ranged spell attack:", 
+    "atk ms,rs": "Melee or Ranged spell attack:", 
+    "atk m,r": "Melee or Ranged attack:", 
+    "atk mp": "Melee power attack:", 
+    "atk rp": "Ranged power attack:", 
+    "atk mp,rp": "Melee or Ranged power attack:", 
+    "atkr m": "Melee attack roll:", 
+    "atkr r": "Ranged attack roll:", 
+    "atkr m,r": "Melee or Ranged attack roll:", 
 }
 
 export const legendaryDescDefault = (name) => {
@@ -40,3 +40,69 @@ export const schoolOfSpell = {
     'D': 'Divination',
 }
 
+export const skillsReplace = {
+    'str': 'Strength',
+    'dex': 'Dexterity',
+    'con': 'Constitution',
+    'int': 'Intelligence',
+    'wis': 'Wisdom',
+    'cha': 'Charisma',
+}
+
+export const cleanPipes = (key) => {
+    if(key.includes("|||")) { // {@status textToBeShown|||info}
+        return key.split('|||')[0]; 
+    } else if(key.includes("||")) { // {@status name||textToBeShown}
+        return key.split('||')[1]; 
+    } else if(key.includes("|")) {
+        return key.split('|')[0]; 
+    }
+
+    return key
+}
+
+export const titleCase = (str) => {
+    return str
+      .split(' ') // Split the string into an array of words
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
+      .join(' '); // Join the words back into a single string
+};
+
+const getRecharge = (str) => {
+    if(str === '')
+        return 6
+
+    return str+'-6'
+}
+
+export const replace = (key) => {
+    if (key.startsWith("condition ")) return <strong>{titleCase(cleanPipes(key.slice(10)))}</strong>;
+    else if (key.startsWith("status ")) return <strong>{cleanPipes(key.slice(7))}</strong>;        
+    else if (key.startsWith("dc ")) return <strong>DC {key.slice(3)}</strong>;
+    else if (key.startsWith("d20 ")) return <strong>{key.slice(4)}</strong>;
+    else if (key.startsWith("hit ")) return <strong>+{key.slice(4)}</strong>;
+    else if (key.startsWith("item ")) return <strong>{cleanPipes(key.slice(5))}</strong>;
+    else if (key.startsWith("dice ")) return <strong>{key.slice(5)}</strong>;
+    else if (key.startsWith("skill ")) return <strong>{cleanPipes(key.slice(6))}</strong>;
+    else if (key.startsWith("sense ")) return <strong>{key.slice(6)}</strong>;
+    else if (key.startsWith("damage ")) return <strong>{key.slice(7)}</strong>;
+    else if (key.startsWith("actSave ")) return <strong>{skillsReplace[key.slice(8)]} Saving Throw</strong>;
+    else if (key.startsWith("actSaveSuccessOrFail")) return <strong>Fail or Success:</strong>;
+    else if (key.startsWith("actSaveFail")) return <strong>On Fail:</strong>;
+    else if (key.startsWith("actSaveSuccess")) return <strong>On Success:</strong>;
+    else if (key.startsWith("recharge")) return <strong>(Recharge {getRecharge(key.slice(8))})</strong>;
+    else if (key.startsWith("creature ")) return <strong>{cleanPipes(key.slice(9))}</strong>;
+    else if (key.startsWith("adventure ")) return <strong>{cleanPipes(key.slice(10))}</strong>;
+    else if (key.startsWith("hitYourSpellAttack ")) return <strong>{cleanPipes(key.slice(18))}</strong>;
+    else if (key.startsWith("action opportunity attack")) return <strong>Opportunity Attack</strong>;
+    else if (key.startsWith("quickref difficult terrain||3")) return <strong>difficult terrain</strong>;
+    else if (key.startsWith("quickref Cover||3||total cover")) return <strong>total cover</strong>;
+    else if (key.startsWith("quickref saving throws|PHB|2|1|saving throw")) return <strong>saving throw</strong>;
+    else if (key.startsWith("chance ")) return <strong>{cleanPipes(key.slice(7))}%</strong>;
+    else if (key.startsWith("quickref Vision and Light")) return <strong>{cleanPipes(key.slice(25))}</strong>;
+    else if (key.startsWith("scaledamage ")) return <strong>{key.slice(12).split('|').at(-1)}</strong>;
+    else if (key.startsWith("variantrule ")) return <strong>{cleanPipes(key.slice(12))}</strong>;
+    else if (key.startsWith("action ")) return <strong>{cleanPipes(key.slice(7))}</strong>;
+    else if (key in actionsConsts) return <span>{actionsConsts[key]}</span>;
+    return null
+}

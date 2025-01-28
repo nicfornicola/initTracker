@@ -385,8 +385,9 @@ hr {
     box-shadow: 1px 1px 10px #000000;
     width: 30vw;
     padding: 5px;
-    overflow: hidden;
     z-index: 2;
+    max-height: 70vh;
+    overflow-y: scroll;
 }
 
 .effectsBarContainer {
@@ -1375,6 +1376,10 @@ input {
 .triggerButton {
     all: unset;
     cursor: pointer;
+}
+
+.triggerButton:hover {
+    text-decoration: underline;
 }
 
 .topInfo {

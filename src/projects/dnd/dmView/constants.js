@@ -53,25 +53,34 @@ import background22 from "./pics/backgrounds/church.gif"
 import background23 from "./pics/backgrounds/adventureTime.gif"
 import background24 from "./pics/backgrounds/fire.gif"
 
-const jsonModules = require.context('./monsterJsons/5eCreatures', false, /\.json$/);
-const spellModules = require.context('./monsterJsons/spells', false, /xphb.json$/);
 
 // Load all JSONs into an object
+const jsonModules = require.context('./monsterJsons/5eCreatures', false, /\.json$/);
 const allJsonData = jsonModules.keys().map(key => jsonModules(key).monster);
 
-console.log(spellModules.keys())
-console.log(spellModules('./spells-xphb.json').spell)
-
-export const allSpells = spellModules.keys().map(key => spellModules(key).spell);
+const spellModules = require.context('./monsterJsons/spells', false, /\.json$/);
+const allSpells = spellModules.keys().map(key => spellModules(key).spell);
 
 let spells = []
 allSpells.forEach(spellList => {
     spells.push(...spellList)
 });
 
+// Sort the spells
+spells.sort((a, b) => {
+    // Move 'XPHB' sources to the top
+    if (a.source === 'XPHB' && b.source !== 'XPHB') {
+        return -1; // a comes first
+    }
+    if (a.source !== 'XPHB' && b.source === 'XPHB') {
+        return 1; // b comes first
+    }
+    // If sources are the same or neither is 'XPHB', sort alphabetically by name
+    return a.name.localeCompare(b.name);
+});
+
 export const exportSpells = spells
 
-console.log(exportSpells)
 
 export const COLOR_RED = "#D44E3B"
 export const COLOR_GREEN = "#68AA33"
@@ -157,25 +166,6 @@ export function shuffleArray(array) {
 export const getLevelData = (key) => {
     return key in levelData ? levelData[key]['xp'] : '--';
 }
-
-export const cleanPipes = (key) => {
-    if(key.includes("|||")) { // {@status name||textToBeShown}
-        return key.split('|||')[0]; 
-    } else if(key.includes("||")) { // {@status name||textToBeShown}
-        return key.split('||')[1]; 
-    } else if(key.includes("|")) {
-        return key.split('|')[0]; 
-    }
-
-    return key
-}
-
-export const titleCase = (str) => {
-    return str
-      .split(' ') // Split the string into an array of words
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
-      .join(' '); // Join the words back into a single string
-};
 
 export const isProd = window.location.href.includes("dmbuddy.com") 
 export const cheaterMode = window.location.href.includes("/cheater")
