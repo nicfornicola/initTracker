@@ -4,7 +4,7 @@ import SearchColumn from './Searching/SearchColumn.js';
 import Home from './Home.js';
 import EncounterColumn from './EncounterColumn/EncounterColumn';
 import SideMenu from './SideMenu/SideMenu.js';
-import { backendUrl, generateUniqueId, INIT_ENCOUNTER, isDev, SHORT_REFRESH, sortCreatureArray} from '../constants';
+import { backendUrl, generateUniqueId, INIT_ENCOUNTER, isDev, SHORT_REFRESH, sortCreatureArray, sortEncounters} from '../constants';
 import YouTubeEmbed from './EncounterColumn/YouTubeEmbed.js';
 import io from 'socket.io-client';
 import { ImportDndBeyondCharacters } from '../api/ImportDndBeyondCharacters'
@@ -83,20 +83,20 @@ function addRechargeCountToSpecialAbilities(data) {
     const abilityKeys = ["special_abilities", "actions", "bonus_actions"];
 
     return data.map(obj => {
-    if (obj.creatures && Array.isArray(obj.creatures)) {
-        obj.creatures.forEach(creature => {
-            abilityKeys.forEach(key => {
-                if (creature[key] && Array.isArray(creature[key])) {
-                    creature[key] = creature[key].map(ability => {
-                        const match = ability.name.match(/\((\d+)\/[^)]+\)/); // Match (X/any text) pattern
-                        ability.rechargeCount = match ? parseInt(match[1]) * 10 : 0; // Add rechargeCount or set to 0
-                        return ability;
-                    });
-                }
+        if (obj.creatures && Array.isArray(obj.creatures)) {
+            obj.creatures.forEach(creature => {
+                abilityKeys.forEach(key => {
+                    if (creature[key] && Array.isArray(creature[key])) {
+                        creature[key] = creature[key].map(ability => {
+                            const match = ability.name.match(/\((\d+)\/[^)]+\)/); // Match (X/any text) pattern
+                            ability.rechargeCount = match ? parseInt(match[1]) * 10 : 0; // Add rechargeCount or set to 0
+                            return ability;
+                        });
+                    }
+                });
             });
-        });
-    }
-    return obj;
+        }
+        return obj;
     });
 }
 
@@ -155,6 +155,7 @@ const DmView = () => {
             });
 
             socket.on('sendSavedEncounters', (encountersResponse) => {
+                sortEncounters(encountersResponse)                
                 setSavedEncounters(encountersResponse)
             });
 
@@ -197,7 +198,6 @@ const DmView = () => {
             // Iterate over the first array using a for loop
             let updatedDifCreatures = [] 
             const updatedCreatures = currentEncounter.creatures.map(creature => {
-
                 const refreshedPlayer = refreshedData.find(data => { 
                     return data.dnd_b_player_id === creature.dnd_b_player_id
                 });
@@ -215,7 +215,7 @@ const DmView = () => {
 
                     for (const key of 
                         ["hit_points", "hit_points_current", "hit_points_default", "hit_points_modifier",
-                        "hit_points_override", "hit_points_temp", "initiative", "avatarUrl", "deathSaves", "exhaustionLvl"]) {
+                        "hit_points_override", "hit_points_temp", "avatarUrl", "deathSaves", "exhaustionLvl"]) {
                             if (key in differences) {
                                 console.log(key)
                                 updatedDifCreatures.push(creature)
@@ -275,29 +275,25 @@ const DmView = () => {
         // Check current encounter to see if we need to auto refresh from DNB_B
         if(currentEncounter.creatures) {
             let foundPlayer = false;
-            let foundMonster = false;
 
             currentEncounter.creatures.forEach(creature => {
-                if(creature.from === "dnd_b") {
+                if(creature.from === "dnd_b" && creature.type === "player") {
                     foundPlayer = true;
-                } else if(creature.from === "dnd_b_monster") { // current wil never trigger, not sure, not sure if i want it to or not
-                    foundMonster = true;
                 }
             });
             
             setAutoRefreshDndbPlayers(foundPlayer)
-            setAutoRefreshDndbMonsters(foundMonster)
-            setAutoRefresh(foundPlayer || foundMonster)
+            setAutoRefresh(foundPlayer)
         }
 
         let intervalId = 0
         // Refresh every 1 or 5 minutes
-        if (autoRefreshDndbPlayers || autoRefreshDndbMonsters) {
+        if (autoRefreshDndbPlayers) {
             let refreshTimer = SHORT_REFRESH;
             console.log("Auto Refresh in Minutes", refreshTimer)
 
             intervalId = setInterval(() => {
-                if(autoRefreshDndbPlayers || autoRefreshDndbMonsters) {
+                if(autoRefreshDndbPlayers) {
                     handleRefresh();
                     console.log("🔄AUTO-REFRESH DND_B PLAYERS🔄")
                 }

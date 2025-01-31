@@ -79,6 +79,12 @@ spells.sort((a, b) => {
     return a.name.localeCompare(b.name);
 });
 
+export const sortEncounters = (encounters) => {
+    encounters.sort((a, b) => {
+        return a.encounterName.localeCompare(b.encounterName);
+    });
+}
+
 export const exportSpells = spells
 
 
