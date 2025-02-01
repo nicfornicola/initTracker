@@ -1,7 +1,5 @@
 import React from 'react';
-// import data from '../monsterJsons/5eCoreRules.json'; // Adjust the import path as necessary
-import { generateUniqueId, INIT_ENCOUNTER_NAME, backendUrl, COLOR_GREEN, COLOR_RED} from '../../constants'
-import axios from 'axios';
+import { generateUniqueId, INIT_ENCOUNTER_NAME, COLOR_GREEN, COLOR_RED} from '../../constants'
 import { ThreeDots } from 'react-loader-spinner'
 import { useImportedPlayers } from '../../../../../providers/ImportedPlayersProvider';
 import { useHomebrewProvider } from '../../../../../providers/HomebrewProvider';

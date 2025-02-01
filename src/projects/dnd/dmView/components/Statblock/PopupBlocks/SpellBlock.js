@@ -1,6 +1,6 @@
-import '../../../dmView/style/App.css';
+import '../../../../dmView/style/App.css';
 import React from 'react';
-import {actionsConsts, vocab, schoolOfSpell, replace, titleCase} from '../../replacements.js';
+import {vocab, schoolOfSpell, replace, titleCase} from '../../../replacements.js';
 
 
 const calcCastingTime = (spell) => {
@@ -39,7 +39,7 @@ const calcComponents = (spell) => {
 }
 
 // Usage in a React Component
-export const SpellBoldifyReplace = ({ name, desc }) => {
+const SpellBoldifyReplace = ({ name, desc }) => {
     const str = (name || desc).toString();
 
     const formatPart = (part) => {
@@ -62,7 +62,7 @@ export const SpellBoldifyReplace = ({ name, desc }) => {
     return <span className={desc ? 'infoDesc' : ''}>{formattedString}</span>;
 };
 
-const InfoBlock = ({spell}) => {
+const SpellBlock = ({spell}) => {
     if(!spell) {
         return null;
     } else return (
@@ -98,10 +98,8 @@ const InfoBlock = ({spell}) => {
                                     </ul>
                         } else {
                             return <ul className='spellList' style={{paddingTop: '0', paddingBottom: '0', marginTop: '0', marginBottom: '0'}}><li style={{padding: '4px'}}><strong>{entry.name}: </strong><SpellBoldifyReplace desc={entry.entries.join(" ")}/> </li></ul>
-                                
                         }
-                            
-                    }
+                    } else return null
                 })}
                 {spell?.entriesHigherLevel?.map(lvlObj => {
                     return <div key={lvlObj.name} style={{padding: '4px 4px 4px 0px'}}><strong>{lvlObj.name}: </strong>
@@ -116,4 +114,4 @@ const InfoBlock = ({spell}) => {
     );
 }
 
-export default InfoBlock;
+export default SpellBlock;

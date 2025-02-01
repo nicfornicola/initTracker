@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import data from '../monsterJsons/5eCoreRules.json'; // Adjust the import path as necessary
 import {shuffledMonsterList, backendUrl, isDev, shuffleArray, sortedMonsterList, reversedMonsterList, homebrewTemplate, generateUniqueId} from '../../constants'
 import axios from 'axios';
 import { InfinitySpin } from 'react-loader-spinner'

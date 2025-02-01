@@ -1,4 +1,4 @@
-import legendaryGroups from '../monsterJsons/legendarygroups.json'
+import legendaryGroups from '../jsons/legendarygroups.json'
 import { legendaryDescDefault } from '../replacements.js'
 
 const legendaryDetails = legendaryGroups.legendaryGroup;

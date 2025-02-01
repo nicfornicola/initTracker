@@ -53,40 +53,48 @@ import background22 from "./pics/backgrounds/church.gif"
 import background23 from "./pics/backgrounds/adventureTime.gif"
 import background24 from "./pics/backgrounds/fire.gif"
 
-
-// Load all JSONs into an object
-const jsonModules = require.context('./monsterJsons/5eCreatures', false, /\.json$/);
-const allJsonData = jsonModules.keys().map(key => jsonModules(key).monster);
-
-const spellModules = require.context('./monsterJsons/spells', false, /\.json$/);
-const allSpells = spellModules.keys().map(key => spellModules(key).spell);
-
-let spells = []
-allSpells.forEach(spellList => {
-    spells.push(...spellList)
-});
-
-// Sort the spells
-spells.sort((a, b) => {
-    // Move 'XPHB' sources to the top
-    if (a.source === 'XPHB' && b.source !== 'XPHB') {
-        return -1; // a comes first
-    }
-    if (a.source !== 'XPHB' && b.source === 'XPHB') {
-        return 1; // b comes first
-    }
-    // If sources are the same or neither is 'XPHB', sort alphabetically by name
-    return a.name.localeCompare(b.name);
-});
+import conditionsJson from "./jsons/conditions/conditions.json"
 
 export const sortEncounters = (encounters) => {
     encounters.sort((a, b) => {
         return a.encounterName.localeCompare(b.encounterName);
     });
 }
+// Load all JSONs into an object
+const jsonModules = require.context('./jsons/5eCreatures', false, /\.json$/);
+const allJsonData = jsonModules.keys().map(key => jsonModules(key).monster);
+
+const spellModules = require.context('./jsons/spells', false, /\.json$/);
+const allSpells = spellModules.keys().map(key => spellModules(key).spell);
+
+const sortBySource = (arr) => {
+    arr.sort((a, b) => {
+        // Move 'XPHB' sources to the top
+        if (a.source === 'XPHB' && b.source !== 'XPHB') {
+            return -1; // a comes first
+        }
+        if (a.source !== 'XPHB' && b.source === 'XPHB') {
+            return 1; // b comes first
+        }
+        // If sources are the same or neither is 'XPHB', sort alphabetically by name
+        return a.name.localeCompare(b.name);
+    });
+}
+
+let spells = []
+allSpells.forEach(spellList => {
+    spells.push(...spellList)
+});
+
+sortBySource(spells)
+sortBySource(conditionsJson.condition)
+sortBySource(conditionsJson.disease)
+sortBySource(conditionsJson.status)
 
 export const exportSpells = spells
-
+export const conditionsExport = conditionsJson.condition
+export const diseasesExport = conditionsJson.disease
+export const statusExport = conditionsJson.status
 
 export const COLOR_RED = "#D44E3B"
 export const COLOR_GREEN = "#68AA33"

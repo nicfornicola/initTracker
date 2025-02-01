@@ -76,8 +76,7 @@ const getRecharge = (str) => {
 }
 
 export const replace = (key) => {
-    if (key.startsWith("condition ")) return <strong>{titleCase(cleanPipes(key.slice(10)))}</strong>;
-    else if (key.startsWith("status ")) return <strong>{cleanPipes(key.slice(7))}</strong>;        
+    if (key.startsWith("status ")) return <strong>{cleanPipes(key.slice(7))}</strong>;        
     else if (key.startsWith("dc ")) return <strong>DC {key.slice(3)}</strong>;
     else if (key.startsWith("d20 ")) return <strong>{key.slice(4)}</strong>;
     else if (key.startsWith("hit ")) return <strong>+{key.slice(4)}</strong>;
