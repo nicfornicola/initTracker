@@ -157,6 +157,7 @@ const CreatureInfo = ({creature}) => {
 const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeStatBlock, loading=false, searchingFor=null, handleUploadMonsterImage, socket}) => {
     // Creature can be null from SearchColumn but not from EncounterColumn, Statblock is not shown if from EncounterColumn
     const [creature, setCreature] = useState(currentEncounter?.creatures[selectedIndex])
+
     const [creatureReset, setCreatureReset] = useState(currentEncounter?.creatures[selectedIndex])
     const {addToHomebrewList} = useHomebrewProvider();
     const [isEditMode, setIsEditMode] = useState(currentEncounter?.encounterName === "dmbuddy_newhomebrew")
@@ -776,7 +777,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                                             <div className='actionInfo' key={index + ability.name}>
                                                                 {ability.rechargeCount !== 0 ? (
                                                                     <div className={`actionToken-container`}>
-                                                                        <strong className='titleColor'>{ability.name} </strong>
+                                                                        <strong className='titleColor'><BoldifyReplace name={ability.name} /> </strong>
                                                                         <ActionTracker 
                                                                             actions_count={ability.rechargeCount}
                                                                             label={ability.name}
@@ -787,7 +788,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                                                         />
                                                                     </div>
                                                                 ) : ( 
-                                                                    <strong className='titleColor'>{ability.name}: </strong>
+                                                                    <strong className='titleColor'><BoldifyReplace name={ability.name} /> </strong>
                                                                 )}
                                                                 <span className='infoDesc'>
                                                                     {ability.name === "Spellcasting" ? (
@@ -820,11 +821,7 @@ const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeS
                                                     }
                                                 </>
                                             ) : (
-                                                <>
-                                                    <ContentArray label={'ACTIONS'} contentArray={creature.actions} cKey={'actions'} handleCheck={handleRechargeCheck} nested={true}/>
-                                                    {/* <SpellCasting creature={creature} displayAs='action'/> */}
-                                                </>
-
+                                                <ContentArray label={'ACTIONS'} contentArray={creature.actions} cKey={'actions'} handleCheck={handleRechargeCheck} nested={true}/>
                                             )}
                                         </>
                                     }

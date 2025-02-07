@@ -2,6 +2,8 @@
 offline mod
 -----
 
+    see Apprentice from HOL and figure out how to to Mapach Tinkerer object in mapper iguess
+
     dmview 
     --
         add team color, team and isPet to homebrew search view

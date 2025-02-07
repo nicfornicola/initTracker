@@ -7,6 +7,10 @@ const EditSpellInput = ({spellName, path, objIndex, handleChange = undefined}) =
     const [value, setValue] = useState(spellName)
     const [key] = useState(generateUniqueId())
 
+    if(typeof spellName !== 'string') {
+        return null
+    }
+
     return (
         <li key={key} className='spellLi'>
             <input className="editBlockInput" type='text'

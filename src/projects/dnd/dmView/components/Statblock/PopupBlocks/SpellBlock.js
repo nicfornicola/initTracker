@@ -1,10 +1,9 @@
 import '../../../../dmView/style/App.css';
 import React from 'react';
 import {vocab, schoolOfSpell, replace, titleCase} from '../../../replacements.js';
-
+import { BoldifyReplace } from '../BoldifyReplace.js';
 
 const calcCastingTime = (spell) => {
-
     let unit = vocab[spell.time[0].unit]
     if(unit !== 'Action' && unit !== 'Bonus action')
         unit = `${spell.time[0].number} ${unit}` 
@@ -38,30 +37,6 @@ const calcComponents = (spell) => {
     return components
 }
 
-// Usage in a React Component
-const SpellBoldifyReplace = ({ name, desc }) => {
-    const str = (name || desc).toString();
-
-    const formatPart = (part) => {
-        // This is not in replace() becuase they are special
-        if (part.startsWith("{@h}")) return <strong>Hit: {part.slice(4)}</strong>;
-        if (part.startsWith("{@hit ")) return <strong>+{part.slice(6).replace("}", "")}</strong>;
-
-        const match = part.match(/^\{@(.*?)\}$/);
-        if (!match) return <span>{part}</span>;
-        const key = match[1];
-        return replace(key)
-    };
-
-    const formattedString = str.split(/(\{@h\}\d+ |\{@hit \d+\} to hit|{@.*?\})/)
-        .map((part, index) => <span key={"highlighted" + index}>
-                {formatPart(part)}
-            </span>
-        );
-
-    return <span className={desc ? 'infoDesc' : ''}>{formattedString}</span>;
-};
-
 const SpellBlock = ({spell}) => {
     if(!spell) {
         return null;
@@ -84,32 +59,69 @@ const SpellBlock = ({spell}) => {
             <span>
                 {spell.entries.map(entry => {
                     if(typeof entry === 'string')
-                        return <span key={entry} style={{padding: '4px 4px 4px 0px'}}><SpellBoldifyReplace desc={entry}/></span>
+                        return <ul className='spellList2'><li key={entry} style={{padding: '0', margin: '8px 0px 0px 0px'}}><BoldifyReplace desc={entry}/></li></ul>
                     else if(typeof entry === 'object') {
-                        if(entry?.items) {
+                        if(entry.type === "table") {
+                            return <table className='spellTable'>
+                                        <tr>
+                                            {entry.colLabels.map((label) => {
+                                                return <th><BoldifyReplace desc={label} /></th>
+                                            })}
+                                        </tr>
+                                        {entry.rows.map((row) => {
+                                            return <tr>
+                                                        {row.map((rowData, index) => {
+                                                            if(typeof rowData === 'object') {
+                                                                if(rowData.roll?.exact)
+                                                                    return <td className='spellTableDice'>{rowData.roll.exact}</td>
+                                                                else 
+                                                                    return <td className='spellTableDice'>{rowData.roll.min} - {rowData.roll.max}</td>
+                                                            } else {
+                                                                return <td className={index ? "" : "spellTableDice"}><BoldifyReplace desc={rowData}/></td>
+                                                            }
+                                                        })}
+                                                    </tr>
+                                        })}
+                                    </table>
+                        } else if(entry?.type === 'quote') {
+                            return  <div className='quote'>
+                                        <ul className='quoteList'>
+                                            {entry.entries.map(quote => {
+                                                return <li key={entry?.by}><i>"<BoldifyReplace desc={quote}/>"</i></li>
+                                            })}
+                                        </ul>
+                                        <span className='quoteBy'>- {entry?.by}</span>
+                                    </div>
+                        } else if(entry?.items) {
                             return  <ul className='spellList'>
                                         {entry.items.map(item => {
                                             if(item?.entries)
-                                                return <li key={item.name}><strong>{item.name}: </strong><SpellBoldifyReplace desc={item.entries.join(" ")}/> </li>
+                                                return <li key={item.name}><strong>{item.name}: </strong><BoldifyReplace desc={item.entries.join(" ")}/> </li>
                                             else 
-                                                return <li key={item}><SpellBoldifyReplace desc={item}/></li>
+                                                return <li key={item}><BoldifyReplace desc={item}/></li>
 
                                         })}
                                     </ul>
                         } else {
-                            return <ul className='spellList' style={{paddingTop: '0', paddingBottom: '0', marginTop: '0', marginBottom: '0'}}><li style={{padding: '4px'}}><strong>{entry.name}: </strong><SpellBoldifyReplace desc={entry.entries.join(" ")}/> </li></ul>
+                            return <ul className='spellList' style={{paddingTop: '0', paddingBottom: '0', marginTop: '0', marginBottom: '0'}}>
+                                    <li style={{padding: '4px'}}>
+                                        <strong>{entry.name}: </strong>
+                                        <BoldifyReplace desc={entry.entries.join(" ")}/> 
+                                    </li>
+                                </ul>
                         }
                     } else return null
                 })}
                 {spell?.entriesHigherLevel?.map(lvlObj => {
                     return <div key={lvlObj.name} style={{padding: '4px 4px 4px 0px'}}><strong>{lvlObj.name}: </strong>
                         {lvlObj.entries.map(desc => {
-                            return <SpellBoldifyReplace key={lvlObj.name} desc={desc}/> 
+                            return <BoldifyReplace key={lvlObj.name} desc={desc}/> 
                         })}
                     </div>
                 })}
             </span>
-
+            <hr className="lineSeperator" />
+            <span><strong>{spell?.source}</strong> - {spell?.page}</span>
         </div>
     );
 }

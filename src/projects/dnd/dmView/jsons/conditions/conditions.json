@@ -441,7 +441,7 @@
 							"type": "entries",
 							"name": "No Concentration",
 							"entries": [
-								"Your {@status Concentration|XPHB} is broken."
+								"Your {@status concentration|XPHB} is broken."
 							]
 						},
 						{

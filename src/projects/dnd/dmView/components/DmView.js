@@ -159,6 +159,10 @@ const DmView = () => {
                 setSavedEncounters(encountersResponse)
             });
 
+            socket.on('dmViewPing', () => {
+                socket.emit("dmViewPong")
+            });
+
         }
 
         // Clean up the socket connection on component unmount
@@ -217,7 +221,6 @@ const DmView = () => {
                         ["hit_points", "hit_points_current", "hit_points_default", "hit_points_modifier",
                         "hit_points_override", "hit_points_temp", "avatarUrl", "deathSaves", "exhaustionLvl"]) {
                             if (key in differences) {
-                                console.log(key)
                                 updatedDifCreatures.push(creature)
                                 break;
                             }
@@ -340,8 +343,6 @@ const DmView = () => {
     };  
      
     const handleUploadMonsterImage = (event, creature) => {
-        console.log("handleUploadMonsterImage")
-
         event.stopPropagation()
         setUploadIconMenu(true)
         setUploadIconCreature(creature)

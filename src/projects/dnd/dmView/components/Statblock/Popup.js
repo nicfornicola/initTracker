@@ -30,7 +30,11 @@ export const Popup = ({ items, elementObj }) => {
                                         {items.map((item) => (
                                             <TabPanel key={item.source}>
                                                 {elementObj.valueType === 'spell' && <SpellBlock spell={item} />}
-                                                {elementObj.valueType === 'condition' && <ConditionBlock condition={item}/>}
+                                                {(elementObj.valueType === 'condition' ||
+                                                  elementObj.valueType === 'status' ||
+                                                  elementObj.valueType === 'disease') &&
+                                                    <ConditionBlock condition={item}/>
+                                                }
                                             </TabPanel>
                                         ))}
                                 </Tabs>

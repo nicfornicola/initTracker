@@ -30,12 +30,12 @@ const SpellList = ({ spellListObj }) => {
 		<ul className="spellList">
 			{Object.entries(spellListObj).map(([key, value]) => {
 				if (key === "will") {
-					return <li key={key}><b>At will</b>: <BoldifyReplace desc={value.join(", ")} /></li>
-				}
+                    return <li key={key}><b>At will</b>: <BoldifyReplace desc={value.filter(item => typeof item !== "object").join(", ")} /></li>
+                }
 
 				if (key === "daily" || key === "week" || key === "lr" || key === "sr") {
 					return Object.entries(value).map(([dailySpell, spells]) => (
-						<li key={dailySpell}><b>{dailySpell.slice(0, 1)}/day each:</b> <BoldifyReplace desc={spells.join(", ")} /></li>
+						<li key={dailySpell}><b>{dailySpell.slice(0, 1)}/day each:</b> <BoldifyReplace desc={spells.filter(item => typeof item !== "object").join(", ")} /></li>
 					));
 				}
 

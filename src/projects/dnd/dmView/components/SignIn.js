@@ -12,6 +12,8 @@ const SignIn = ({socket}) => {
     const [openCreateAccount, setOpenCreateAccount] = useState(false)
     const [loggedIn, setLoggedIn] = useState(false)
     const [loading, setLoading] = useState(null)
+    const [backendReady, setBackendReady] = useState(false)
+    const [loginTried, setLoginTried] = useState(false)
     const [error, setError] = useState('')
 
     const goodLogin = (emitUsername) => {
@@ -19,13 +21,13 @@ const SignIn = ({socket}) => {
         setUsername(emitUsername);
         setLoggedIn(true)
         setError('')
+        setLoginTried(false)
     }
 
     useEffect(() => {
         if(isDev && !loggedIn) {
             goodLogin("nicdev")
         }
-
 
         if(socket) {
             socket.on('badLogin', (errorCode) => {
@@ -44,9 +46,20 @@ const SignIn = ({socket}) => {
             socket.on('goodLogin', (emitUsername) => {
                 goodLogin(emitUsername)
             });
+
+            socket.on('backendready', () => {
+                console.log("Backend Ready")
+                setBackendReady(true)
+            });
         }
     }, [socket])
 
+    useEffect(() => {
+        if(loginTried && !loggedIn) {
+            setTimeout(() => submitLogin(), 100)
+        }
+            
+    }, [backendReady])
 
     let validUsernameLength = loginUsername.length >= 8 
     let validPasswordLength = password.length >= 8 
@@ -59,17 +72,19 @@ const SignIn = ({socket}) => {
     let usernameStyle = openCreateAccount ? {outline: `2px solid ${validUsernameLength ? 'rgb(0, 255, 0)' : 'rgb(255, 0, 0)'}`} : {}
     let passwordStyle = openCreateAccount ? {outline: `2px solid ${validPasswordLength ? 'rgb(0, 255, 0)' : 'rgb(255, 0, 0)'}`} : {}
 
-
     const submitLogin = () => {
         setLoading(true)
-        if(loginEnabled)
+        if(loginEnabled) {
             socket.emit("login", loginUsername, password)
+            setLoginTried(true)
+        }
     }
 
     const submitNewAccount = () => {
         setLoading(true)
-        if(createAccountEnabled)
+        if(createAccountEnabled) {
             socket.emit("newAccount", loginUsername, password)
+        }
     }
 
     const signOut = () => {
@@ -79,6 +94,8 @@ const SignIn = ({socket}) => {
         setUsername('Username')
         setLoginUsername('')
         setOpenCreateAccount(false)
+        setLoginTried(false)
+
     }
 
     return (

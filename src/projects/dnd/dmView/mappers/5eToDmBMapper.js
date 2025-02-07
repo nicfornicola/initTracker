@@ -59,7 +59,10 @@ const calcAlignment = (alignmentArray) => {
 }
 
 const calcSpeed = (speed) => {
-    
+    if(!speed) {
+        return {'walk': 0}
+    }
+
     if(speed && Object.entries(speed).forEach(([key, value]) => {
         if (typeof value === "object" && value !== null) {
             speed[key] = `${value.number} ${value.condition}`.trim();
@@ -82,8 +85,17 @@ const calcSpeed = (speed) => {
 
 const calcActionTypes = (actionJson) => {
     if(actionJson) {
-        actionJson.forEach(a => {
-            a.desc = a.entries.join(" ")
+        actionJson.forEach(action => {
+            action.desc = " "
+            action.entries.forEach(entry => {
+                if(typeof entry === 'string')
+                    action.desc += entry + " "
+                else if(typeof entry === 'object') {
+                    if(entry.entries)
+                        actionJson.push({name: entry.name, desc: " " + entry.entries.join(" ")})
+                }
+            })
+           
         });
     }
 
@@ -267,7 +279,7 @@ export const t5eToDmBMapper = (monster, avatarUrl = null) => {
         "bonus_actions": addRechargeCount(calcActionTypes(monster?.bonus) || null),
         "reactions": addRechargeCount(calcActionTypes(monster?.reaction) || null),
         "legendary_actions_count": monster?.legendary?.length > 0 ? 30 : 0,
-        "legendary_actions": addRechargeCount(calcActionTypes(monster?.legendary)),
+        "legendary_actions": addRechargeCount(calcActionTypes(monster?.legendary) || null),
         "legendary_desc": monster?.legendary?.length ? (monster?.legendaryHeader?.join(" ") || legendaryDescDefault(monster.name)) : "NOTHIN",
         "lair_actions": [], //see legendaryDetails ^^^
         "inspiration": false,

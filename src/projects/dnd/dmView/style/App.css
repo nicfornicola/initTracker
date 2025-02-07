@@ -1177,6 +1177,32 @@ input {
     margin-right: 5px;
 }
 
+.spellTable {
+    margin: 10px 0px 10px 0px;
+    padding: 5px;
+    box-shadow: inset 0px 0px 2px 2px rgb(99, 99, 99);
+    width: 100%;
+}
+
+.spellTableDice {
+    background-color: #e0dab8;
+    white-space: nowrap;
+    font-weight: bold;
+    width: 15%;
+    text-align: center;
+    vertical-align: middle;
+
+}
+
+.spellTable td, th {
+    border-bottom: 1px solid #b5b5b5;
+    border-right: 1px solid #b5b5b5;
+} 
+
+.spellTable th {
+    background-color: #e0dab8;
+} 
+
 .spellStatGrid {
     position: relative;
     display: grid;
@@ -1413,9 +1439,35 @@ input {
     border-radius: 10px;
 }
 
+.quote {
+    border-bottom: 1px solid #323232;
+    background-color: #b5b5b55d;
+    display: flex; 
+    flex-direction: column; 
+    align-items: flex-end;
+    margin: 5px;
+}
+
+.quoteList {
+    margin: 1px;
+    list-style: none;
+    padding: 2px;
+}
+
+.quoteBy {
+    position: relative;
+    top: -10px;
+    right: 50px;
+}
+
 .spellList {
     margin: 5px;
     padding-left: 6%;
+}
+
+.spellList2 {
+    margin: 5px;
+    padding-left: 3%;
     list-style-type: circle;
 }
 
