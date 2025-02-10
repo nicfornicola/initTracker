@@ -22,7 +22,7 @@ const ConditionBlock = ({condition}) => {
                             return  <ul className='spellList'>
                                         {entry.items.map(item => {
                                             if(item?.entries)
-                                                return <li key={item.name}><strong>{item.name}: </strong><BoldifyReplace desc={item.entries.join(" ")}/> </li>
+                                                return <li key={item.name}><strong className='titleColor'>{item.name}: </strong><BoldifyReplace desc={item.entries.join(" ")}/> </li>
                                             else 
                                                 return <li key={item}><BoldifyReplace desc={item}/></li>
                                         })}
@@ -31,19 +31,22 @@ const ConditionBlock = ({condition}) => {
                             return  <ul className='spellList'>
                                 {entry?.entries.map(entry2 => {
                                     if(entry2?.entries)
-                                        return <li key={entry2.name}><strong>{entry2.name}: </strong><BoldifyReplace desc={entry2.entries.join(" ")}/> </li>
+                                        return <li key={entry2.name}><strong className='titleColor'>{entry2.name}: </strong><BoldifyReplace desc={entry2.entries.join(" ")}/> </li>
                                     else return <>null entry</>
                                 })}
                             </ul>
                         } else {
-                            return <ul className='spellList' style={{paddingTop: '0', paddingBottom: '0', marginTop: '0', marginBottom: '0'}}><li style={{padding: '4px'}}><strong>{entry.name}: </strong><BoldifyReplace desc={entry.entries.join(" ")}/> </li></ul>
+                            return <ul className='spellList' style={{paddingTop: '0', paddingBottom: '0', marginTop: '0', marginBottom: '0'}}>
+                                    <li style={{padding: '4px'}}>
+                                        <strong className='titleColor'>{entry.name}: </strong><BoldifyReplace desc={entry.entries.join(" ")}/> 
+                                    </li>
+                                </ul>
                         }
                     } else return null
                 })}
             </span>
             <hr className="lineSeperator" />
-            <span><strong>{condition?.source}</strong> - {condition?.page}</span>
- 
+            <span>{condition?.source} - {condition?.page}</span>
         </div>
     );
 }

@@ -50,10 +50,10 @@ const SpellBlock = ({spell}) => {
             </div>
             <hr className="lineSeperator" />
             <div className='spellStatGrid' >
-                <span><strong>Casting Time:</strong> {calcCastingTime(spell)}</span>
-                <span><strong>Range:</strong> {spell.range.distance.amount} {titleCase(spell.range.distance.type)}</span>
-                <span><strong>Components:</strong> {calcComponents(spell)}</span>
-                <span><strong>Duration:</strong> {spell?.duration[0]?.concentration && "Concentration, "} {spell.duration[0].type === 'timed' ? spell.duration[0].duration.amount + ' ' + spell.duration[0].duration.type + 's' : vocab[spell.duration[0].type]}</span>
+                <span><strong className='titleColor'>Casting Time:</strong> {calcCastingTime(spell)}</span>
+                <span><strong className='titleColor'>Range:</strong> {spell.range.distance.amount} {titleCase(spell.range.distance.type)}</span>
+                <span><strong className='titleColor'>Components:</strong> {calcComponents(spell)}</span>
+                <span><strong className='titleColor'>Duration:</strong> {spell?.duration[0]?.concentration && "Concentration, "} {spell.duration[0].type === 'timed' ? spell.duration[0].duration.amount + ' ' + spell.duration[0].duration.type + 's' : vocab[spell.duration[0].type]}</span>
             </div>
             <hr className="lineSeperator" />
             <span>
@@ -96,7 +96,7 @@ const SpellBlock = ({spell}) => {
                             return  <ul className='spellList'>
                                         {entry.items.map(item => {
                                             if(item?.entries)
-                                                return <li key={item.name}><strong>{item.name}: </strong><BoldifyReplace desc={item.entries.join(" ")}/> </li>
+                                                return <li key={item.name}><strong className='titleColor'>{item.name}: </strong><BoldifyReplace desc={item.entries.join(" ")}/> </li>
                                             else 
                                                 return <li key={item}><BoldifyReplace desc={item}/></li>
 
@@ -105,7 +105,7 @@ const SpellBlock = ({spell}) => {
                         } else {
                             return <ul className='spellList' style={{paddingTop: '0', paddingBottom: '0', marginTop: '0', marginBottom: '0'}}>
                                     <li style={{padding: '4px'}}>
-                                        <strong>{entry.name}: </strong>
+                                        <strong className='titleColor'>{entry.name}: </strong>
                                         <BoldifyReplace desc={entry.entries.join(" ")}/> 
                                     </li>
                                 </ul>
@@ -113,7 +113,7 @@ const SpellBlock = ({spell}) => {
                     } else return null
                 })}
                 {spell?.entriesHigherLevel?.map(lvlObj => {
-                    return <div key={lvlObj.name} style={{padding: '4px 4px 4px 0px'}}><strong>{lvlObj.name}: </strong>
+                    return <div key={lvlObj.name} style={{padding: '4px 4px 4px 0px'}}><strong className='titleColor'>{lvlObj.name}: </strong>
                         {lvlObj.entries.map(desc => {
                             return <BoldifyReplace key={lvlObj.name} desc={desc}/> 
                         })}
@@ -121,7 +121,7 @@ const SpellBlock = ({spell}) => {
                 })}
             </span>
             <hr className="lineSeperator" />
-            <span><strong>{spell?.source}</strong> - {spell?.page}</span>
+            <span>{spell?.source} - {spell?.page}</span>
         </div>
     );
 }

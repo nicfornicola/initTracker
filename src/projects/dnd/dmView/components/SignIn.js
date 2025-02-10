@@ -5,28 +5,30 @@ import { ThreeDots } from 'react-loader-spinner'
 import { isDev } from '../constants.js';
 
 const SignIn = ({socket}) => {
-    const { username, setUsername } = useUser();
+    const { username, setUsername, password, setPassword } = useUser();
     const [loginUsername, setLoginUsername] = useState('')
-    const [password, setPassword] = useState('')
+    const [password1, setPassword1] = useState('')
     const [password2, setPassword2] = useState('')
     const [openCreateAccount, setOpenCreateAccount] = useState(false)
-    const [loggedIn, setLoggedIn] = useState(false)
+    const [loggedIn, setLoggedIn] = useState(username !== 'Username' && password !== '')
     const [loading, setLoading] = useState(null)
     const [backendReady, setBackendReady] = useState(false)
     const [loginTried, setLoginTried] = useState(false)
     const [error, setError] = useState('')
-
-    const goodLogin = (emitUsername) => {
+    
+    const goodLogin = (emitUsername, emitPassword) => {
         setLoading(false)
         setUsername(emitUsername);
+        setPassword(emitPassword);
         setLoggedIn(true)
         setError('')
         setLoginTried(false)
+        setBackendReady(false)
     }
 
     useEffect(() => {
         if(isDev && !loggedIn) {
-            goodLogin("nicdev")
+            goodLogin("nicdev", 'devpass')
         }
 
         if(socket) {
@@ -43,29 +45,27 @@ const SignIn = ({socket}) => {
             });
     
             //get this when login or successful account creation
-            socket.on('goodLogin', (emitUsername) => {
-                goodLogin(emitUsername)
+            socket.on('goodLogin', async (userData) => {
+                goodLogin(userData.emitUsername, userData.emitPassword)
             });
 
             socket.on('backendready', () => {
-                console.log("Backend Ready")
                 setBackendReady(true)
             });
         }
     }, [socket])
 
     useEffect(() => {
-        if(loginTried && !loggedIn) {
-            setTimeout(() => submitLogin(), 100)
+        if(backendReady && ((loginTried && !loggedIn) || loggedIn)) {
+            setTimeout(() => reLogin(), 100)
         }
-            
     }, [backendReady])
 
     let validUsernameLength = loginUsername.length >= 8 
-    let validPasswordLength = password.length >= 8 
+    let validPasswordLength = password1.length >= 8 
 
     let loginEnabled = validUsernameLength && validPasswordLength
-    let passwordMatch = validPasswordLength && password === password2
+    let passwordMatch = validPasswordLength && password1 === password2
 
     let createAccountEnabled = loginEnabled && passwordMatch
 
@@ -75,21 +75,29 @@ const SignIn = ({socket}) => {
     const submitLogin = () => {
         setLoading(true)
         if(loginEnabled) {
-            socket.emit("login", loginUsername, password)
+            socket.emit("login", loginUsername, password1)
             setLoginTried(true)
+        }
+    }
+
+    const reLogin = () => {
+        if(username !== 'Username' && password !== '') {
+            socket.emit("login", username, password)
+        } else {
+            submitLogin()
         }
     }
 
     const submitNewAccount = () => {
         setLoading(true)
         if(createAccountEnabled) {
-            socket.emit("newAccount", loginUsername, password)
+            socket.emit("newAccount", loginUsername, password1)
         }
     }
 
     const signOut = () => {
         setLoggedIn(false)
-        setPassword('')
+        setPassword1('')
         setPassword2('')
         setUsername('Username')
         setLoginUsername('')
@@ -120,8 +128,8 @@ const SignIn = ({socket}) => {
                         style={passwordStyle}
                         type="password"
                         placeholder='Password'
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={password1}
+                        onChange={(e) => setPassword1(e.target.value)}
                     />
                     {openCreateAccount ? (
                         <div className=''>

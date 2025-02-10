@@ -117,6 +117,8 @@ export const replace = (key) => {
     else if (key.startsWith("variantrule ")) return <strong>{cleanPipes(key.slice(12)).textToBeShown}</strong>;
     else if (key.startsWith("action ")) return <strong>{cleanPipes(key.slice(7)).textToBeShown}</strong>;
     else if (key.startsWith("scaledice ")) return <strong>{cleanPipes(key.slice(10)).textToBeShown}</strong>;
+    else if (key.startsWith("book ")) return <strong>{cleanPipes(key.slice(5)).textToBeShown}</strong>;
+    else if (key.startsWith("hazard ")) return <strong>{cleanPipes(key.slice(7)).textToBeShown}</strong>;
     else if (key.startsWith("i ")) return <i>'{cleanPipes(key.slice(2)).textToBeShown}'</i>;
     else if (key in actionsConsts) return <span>{actionsConsts[key]}</span>;
     return null

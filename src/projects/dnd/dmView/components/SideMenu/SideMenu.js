@@ -70,9 +70,7 @@ function SideMenu({uploadLocalStorage, setCurrentEncounter, showSearchList, setS
                 <div className='menuItem' >
                     <div className='loginImageFlex'>
                         <img src={LoginImage} alt="Login" className="menuIcon" onClick={() => setIsOpen(!isOpen)} />
-                        {isOpen && 
-                            <SignIn socket={socket}/>
-                        }
+                        <SignIn socket={socket}/>
                     </div>
                     
                 </div>                    

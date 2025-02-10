@@ -160,6 +160,7 @@ const DmView = () => {
             });
 
             socket.on('dmViewPing', () => {
+                console.log("PING")
                 socket.emit("dmViewPong")
             });
 

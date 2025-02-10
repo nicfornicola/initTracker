@@ -11,9 +11,10 @@ export const useUser = () => {
 // Provider component
 export const UserProvider = ({ children }) => {
     const [username, setUsername] = useState('Username');
+    const [password, setPassword] = useState('');
 
     return (
-        <UserContext.Provider value={{ username, setUsername }}>
+        <UserContext.Provider value={{ username, setUsername, password, setPassword }}>
             {children}
         </UserContext.Provider>
     );
