@@ -1,19 +1,21 @@
 import React from 'react';
 
 const EnemyBloodiedMessage = ({enemyBloodToggle}) => {
-    let sArray = ["None\n", "Bloodied\n", "Blood & HP\n"]         
+    let optionArr = ["None", "Bloodied", "Blood & HP"]         
 
-    sArray.forEach((str, index) => {
+    optionArr.forEach((str, index) => {
         if(enemyBloodToggle === index) {
-            sArray[index] = ">" + str
+            optionArr[index] = <strong>{">" + str}</strong>
             
         }
     });
 
     return (
-        <div className="dropdown">
-            {sArray}
-        </div>
+        <>
+            {optionArr.map((s) => {
+                return <span className='tooltiptext'>{s}</span>
+            })}
+        </>
     );
 };
 

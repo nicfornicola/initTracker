@@ -120,6 +120,8 @@ export const replace = (key) => {
     else if (key.startsWith("book ")) return <strong>{cleanPipes(key.slice(5)).textToBeShown}</strong>;
     else if (key.startsWith("hazard ")) return <strong>{cleanPipes(key.slice(7)).textToBeShown}</strong>;
     else if (key.startsWith("i ")) return <i>'{cleanPipes(key.slice(2)).textToBeShown}'</i>;
+    else if (key.startsWith("actTrigger")) return <i>When: </i>;
+    else if (key.startsWith("actResponse")) return <i>Then: </i>;
     else if (key in actionsConsts) return <span>{actionsConsts[key]}</span>;
     return null
 }

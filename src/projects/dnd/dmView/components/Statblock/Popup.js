@@ -17,7 +17,7 @@ const calcSourceTitle = (title) => {
 export const Popup = ({ items, elementObj }) => {
     return  <Popover.Root openOnHover={true} delay={500}>
                 <Popover.Trigger className='triggerButton'>{elementObj.element}</Popover.Trigger>
-                <Popover.Portal >
+                <Popover.Portal>
                     <Popover.Positioner align={'end'} sticky={true}>
                         <Popover.Popup className='hoverPopup'>
                             <Popover.Description key={elementObj.name} style={{all: 'unset'}} render={<div />}>

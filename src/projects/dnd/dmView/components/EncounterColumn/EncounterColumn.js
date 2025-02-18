@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import StatBlock from '../Statblock/StatBlock.js';
-import { generateUniqueId, dummyDefault, envObject, sortCreatureArray, INIT_ENCOUNTER_NAME, COLOR_RED, COLOR_GREEN } from '../../constants';
+import { generateUniqueId, dummyDefault, envObject, sortCreatureArray, COLOR_RED, COLOR_GREEN } from '../../constants';
 import EncounterListTopInfo from './EncounterListTopInfo'
 import DropdownMenu from './DropdownMenu';
 import EncounterControls from './EncounterControls'
@@ -29,10 +29,6 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
     const [roundNum, setRoundNum] = useState(currentEncounter.roundNum);
     const [turnNum, setTurnNum] = useState(currentEncounter.turnNum);
     const [selectedIndex, setSelectedIndex] = useState(null);
-    const [showSaveMessage, setShowSaveMessage] = useState(false);
-    const [saveMessageColor, setSaveMessageColor] = useState("");
-    const [isSaveDisabled, setIsSaveDisabled] = useState(currentEncounter.creatures.length === 0);
-
     const [nameChange, setNameChange] = useState(false)
 
     useEffect(() => {
@@ -44,7 +40,11 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
     }, [nameChange]);
 
     useEffect(() => {
-        setIsSaveDisabled(currentEncounter.creatures?.length === 0)
+        let noCreatures = currentEncounter.creatures?.length === 0
+        if(noCreatures) {
+            setSelectedIndex(null)
+        }
+
     }, [currentEncounter.creatures]);
 
     // When changing encounters watch the turnNum and roundNum to rerender the turn controller
@@ -77,38 +77,27 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
     // This is mostly for handling ui, not saving to the database
     // Since database changes happen on a lower level to avoid bloat
     const handleSaveEncounter = () => {
-        if(currentEncounter.encounterName !== INIT_ENCOUNTER_NAME) {
-            let newEncounter = {
-                encounterName: currentEncounter.encounterName,
-                encounterGuid: currentEncounter.encounterGuid || generateUniqueId(),
-                roundNum: roundNum,
-                turnNum: turnNum,
-                creatures: currentEncounter.creatures,
-                backgroundGuid: currentEncounter.backgroundGuid,
-                enemyBloodToggle: currentEncounter.enemyBloodToggle,
-                hideDeadEnemies: currentEncounter.hideDeadEnemies,
-                hideEnemies: currentEncounter.hideEnemies
-            }
-
-            if(newEncounter.encounterGuid !== currentEncounter.encounterGuid) {
-                setEncounterGuid(newEncounter.encounterGuid) 
-            }
-
-            // Overwrites if exists, appends if new
-            const updatedSavedEncountersList = updateSavedEncounters(savedEncounters, newEncounter);
-            // Setting this list to update the encounter list
-            setSavedEncounters(updatedSavedEncountersList)
-            setShowSaveMessage(true);
-            setTimeout(() => {
-                setShowSaveMessage(false);
-            }, 800); // Hide the message after 5 seconds
+        let newEncounter = {
+            encounterName: currentEncounter.encounterName,
+            encounterGuid: currentEncounter.encounterGuid || generateUniqueId(),
+            roundNum: roundNum,
+            turnNum: turnNum,
+            creatures: currentEncounter.creatures,
+            backgroundGuid: currentEncounter.backgroundGuid,
+            enemyBloodToggle: currentEncounter.enemyBloodToggle,
+            hideDeadEnemies: currentEncounter.hideDeadEnemies,
+            hideEnemies: currentEncounter.hideEnemies
         }
-        
-    };
 
-    useEffect(() => {
-        setSaveMessageColor(showSaveMessage ? "2px solid #08d82b" : "")
-    }, [showSaveMessage]);
+        if(newEncounter.encounterGuid !== currentEncounter.encounterGuid) {
+            setEncounterGuid(newEncounter.encounterGuid) 
+        }
+
+        // Overwrites if exists, appends if new
+        const updatedSavedEncountersList = updateSavedEncounters(savedEncounters, newEncounter);
+        // Setting this list to update the encounter list
+        setSavedEncounters(updatedSavedEncountersList)
+    };
 
     const handleAddExtra = (type) => {
         let newDummy = {}
@@ -224,7 +213,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         <>
             <div className='column' style={{width: widthType}}>
                 <div className='infoContainer'>
-                    <EncounterListTopInfo savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} setSavedEncounters={setSavedEncounters} handleSaveEncounter={handleSaveEncounter} handleNewEncounter={handleNewEncounter} saveMessageColor={saveMessageColor} showSaveMessage={showSaveMessage} isSaveDisabled={isSaveDisabled} socket={socket}/>
+                    <EncounterListTopInfo savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} setSavedEncounters={setSavedEncounters} handleNewEncounter={handleNewEncounter} socket={socket}/>
                     <EncounterControls setNameChange={setNameChange} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} handleTurnNums={handleTurnNums} handleRefresh={handleRefresh} refreshCheck={refreshCheck} autoRefresh={autoRefresh} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleAutoRollInitiative={handleAutoRollInitiative} socket={socket}/>
                     {currentEncounter.creatures.length ? (
                         <EncounterList currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleSaveEncounter={handleSaveEncounter} turnNum={turnNum} handleUploadMonsterImage={handleUploadMonsterImage} setSelectedIndex={setSelectedIndex} clickEncounterCreatureX={clickEncounterCreatureX} socket={socket}/>
@@ -252,13 +241,9 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                     </div>
                 </div>
             </div>
-            {selectedIndex !== null && (
+            {(selectedIndex !== null && currentEncounter.creatures[selectedIndex] !== null) && (
                 <div className={`column animated-column ${showSearchList ? '' : 'expand'}`}>
-                    {selectedIndex !== null ? (
-                        <StatBlock selectedIndex={selectedIndex} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} closeStatBlock={() => setSelectedIndex(null)} handleUploadMonsterImage={handleUploadMonsterImage} socket={socket}/>
-                    ) : (
-                        <>No Encounter Creature Selected</>
-                    )}
+                    <StatBlock selectedIndex={selectedIndex} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} closeStatBlock={() => setSelectedIndex(null)} handleUploadMonsterImage={handleUploadMonsterImage} socket={socket}/>
                 </div>
             )}
         </>

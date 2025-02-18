@@ -30,7 +30,7 @@ const ContentArray = ({label, contentArray, labelDesc = null, actions_count = un
             <hr className="lineSeperator" />
             {labelDesc && // check boxes to track "legendary actions"
                 <div className='actionInfo'>
-                    {labelDesc}      
+                    {labelDesc} 
                 </div>
             }
             {filteredContent.map((action, index) => (
@@ -47,7 +47,7 @@ const ContentArray = ({label, contentArray, labelDesc = null, actions_count = un
                             />
                         </div>
                     ) : ( 
-                        <strong><BoldifyReplace name={action.name} /></strong>
+                        <strong><BoldifyReplace name={action.name} /> </strong> 
                     )}
                     <BoldifyReplace desc={action?.desc} />
                 </div>

@@ -106,7 +106,6 @@ const DmView = () => {
     const [onFirstLoad, setOnFirstLoad] = useState(true);
     const [refreshLoading, setRefreshLoading] = useState(false);
     const [autoRefreshDndbPlayers, setAutoRefreshDndbPlayers] = useState(false);
-    const [autoRefreshDndbMonsters, setAutoRefreshDndbMonsters] = useState(false);
     const [autoRefresh, setAutoRefresh] = useState(false);
     const [refreshCheck, setRefreshCheck] = useState(false);
     const [showSearchList, setShowSearchList] = useState(true);
@@ -132,7 +131,6 @@ const DmView = () => {
             setCurrentEncounter(INIT_ENCOUNTER)
             setOnFirstLoad(true)
             setAutoRefreshDndbPlayers(false)
-            setAutoRefreshDndbMonsters(false)
             setAutoRefresh(false)
             setRefreshCheck(false)
             setEncounterGuid('')
@@ -160,7 +158,6 @@ const DmView = () => {
             });
 
             socket.on('dmViewPing', () => {
-                console.log("PING")
                 socket.emit("dmViewPong")
             });
 

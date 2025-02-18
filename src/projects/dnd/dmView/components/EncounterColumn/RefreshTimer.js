@@ -29,9 +29,9 @@ const RefreshTimer = ({refresh}) => {
     }, [refresh]);
 
     return (
-        <div>
-            Auto Refresh in {secondsToMinutes(seconds)}
-        </div>
+        <>
+            Next Auto Refresh: {secondsToMinutes(seconds)}
+        </>
     );
 };
 

@@ -100,10 +100,11 @@ const SignIn = ({socket}) => {
         setPassword1('')
         setPassword2('')
         setUsername('Username')
+        setPassword('')
         setLoginUsername('')
         setOpenCreateAccount(false)
         setLoginTried(false)
-
+        setBackendReady(false)
     }
 
     return (
