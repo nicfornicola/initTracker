@@ -63,8 +63,12 @@ export const cleanPipes = (key) => {
         textToBeShown = keys[1]
     } else if(key.includes("|")) {
         let keys = key.split('|')
+            
         name = keys[0]; 
-        textToBeShown = keys.length > 2 ? keys.at(-1) : name; 
+        if(name.startsWith("filter"))
+            textToBeShown = name.slice(6)
+        else 
+            textToBeShown = keys.length > 2 ? keys.at(-1) : name; 
 
     } else {
         name = key; 
@@ -122,6 +126,8 @@ export const replace = (key) => {
     else if (key.startsWith("i ")) return <i>'{cleanPipes(key.slice(2)).textToBeShown}'</i>;
     else if (key.startsWith("actTrigger")) return <i>When: </i>;
     else if (key.startsWith("actResponse")) return <i>Then: </i>;
+    else if (key.startsWith("filter ")) return <strong>{cleanPipes(key).textToBeShown}</strong>;
+    else if (key.startsWith("book ")) return <strong>{cleanPipes(key.slice(5)).textToBeShown}</strong>;
     else if (key in actionsConsts) return <span>{actionsConsts[key]}</span>;
     return null
 }

@@ -15,7 +15,7 @@ const handleOpenSession = (sessionID) => {
     window.open(`${url}playerView/${sessionID}`, '_blank');
 };
 
-const DropDownSessionMenu = ({savedEncounters, socket}) => {
+const DropDownSessionMenu = ({adminView, savedEncounters, socket}) => {
     const [streamingEncounter, setStreamingEncounter] = useState({encounterName: null, encounterGuid: null})
     const [sessionID, setSessionID] = useState(null)
     const [isOpen, setIsOpen] = useState(false);
@@ -128,21 +128,10 @@ const DropDownSessionMenu = ({savedEncounters, socket}) => {
                     <ul className="dropdownMenu">
                         {username !== "Username" &&
                             <>
-                                {savedEncounters.map((encounter, index) => (
-                                    <li
-                                        key={encounter.encounterName + index}
-                                        onClick={(event) => handleDropDownOptionClicked(event, encounter)}
-                                        className="dropdown-item"
-                                    >
-                                        {encounter.encounterName} {encounter.encounterGuid === streamingEncounter.encounterGuid && 
-                                            <img alt='streaming' className='streamingGif' src={streaming} />
-                                        }
-                                    </li>
-                                ))}
-                                {streamingEncounter.encounterGuid !== null &&
+                            {streamingEncounter.encounterGuid !== null &&
                                     <> 
                                         {sessionID &&
-                                            <li className='dropdown-item' style={{borderTop: '1px solid black'}} 
+                                            <li className='dropdown-item' style={{}} 
                                                 onClick={() => {
                                                     handleOpenSession(sessionID)
                                                     setIsOpen(false)
@@ -156,12 +145,26 @@ const DropDownSessionMenu = ({savedEncounters, socket}) => {
                                                 handleDropDownOptionClicked(event, null)
                                                 setIsOpen(false)
                                             }}
-                                            style={{textDecoration: 'underline', textDecorationThickness: '2px', textDecorationColor: 'red'}}
+                                            style={{textDecoration: 'underline', textDecorationThickness: '2px', textDecorationColor: 'red', borderBottom: '2px solid black'}}
                                         >
                                             Stop Streaming
                                         </li>
                                     </>
                                 }
+                                {savedEncounters.map((encounter, index) => (
+                                    <li
+                                        key={encounter.encounterName + index}
+                                        onClick={(event) => handleDropDownOptionClicked(event, encounter)}
+                                        className="dropdown-item"
+                                    >
+                                        {encounter.encounterName || <i style={{fontSize: "small"}}>No Title</i>} 
+                                        {adminView && <strong>{encounter.username}</strong>}
+                                        {encounter.encounterGuid === streamingEncounter.encounterGuid && 
+                                            <img alt='streaming' className='streamingGif' src={streaming} />
+                                        }
+                                    </li>
+                                ))}
+                                
                             </>
                         }
                     </ul>

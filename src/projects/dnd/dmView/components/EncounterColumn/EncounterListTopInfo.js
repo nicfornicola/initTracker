@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DropdownMenu from './DropdownMenu';
 import NewEncounterButton from './NewEncounterButton';
 import DropDownSessionMenu from './DropDownSessionMenu';
@@ -7,6 +7,41 @@ import { useUser } from '../../../../../providers/UserProvider';
 
 const EncounterListTopInfo = ({savedEncounters, setSavedEncounters, handleLoadEncounter, currentEncounter, setCurrentEncounter, handleNewEncounter, socket}) => {
     const { username } = useUser();
+    const [adminView, setAdminView] = useState(null);
+    const [regEncounters, setRegEncounters] = useState([]);
+    const [adminEncounters, setAdminEncounters] = useState([]);
+
+    useEffect(() => {
+            if(socket) {
+                socket.on('sendAdminEncounters', (encountersResponse) => {
+                    encountersResponse.sort((a, b) => a.username.localeCompare(b.username));
+                    setRegEncounters(savedEncounters)           
+                    setAdminEncounters(encountersResponse)
+                    setSavedEncounters(encountersResponse)
+                });
+            }
+    
+            // Clean up the socket connection on component unmount
+            return () => {
+                if(socket) socket.disconnect();
+            };
+    }, [socket]);
+
+    const handleClick = (event) => {
+
+        // if adminView null then get data for first adminLoad
+        if(adminView === null) {
+            socket.emit('getAdminEncounter')
+        // if adminView true or false then data is already loaded just show it
+        } else if(event.target.checked) {
+            setRegEncounters(savedEncounters)
+            setSavedEncounters(adminEncounters)
+        } else {
+            setSavedEncounters(regEncounters)
+        }
+
+        setAdminView(event.target.checked)
+    }
 
     return (
         <div className='creatEncounterTopInfo'>
@@ -22,9 +57,10 @@ const EncounterListTopInfo = ({savedEncounters, setSavedEncounters, handleLoadEn
                 </div>
             }
             <div className='dmViewButtonContainer'>
-                <DropdownMenu savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters} setCurrentEncounter={setCurrentEncounter} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} socket={socket}/>
+                <DropdownMenu adminView={adminView} savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters} setCurrentEncounter={setCurrentEncounter} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} socket={socket}/>
                 <NewEncounterButton handleNewEncounter={handleNewEncounter} />
-                <DropDownSessionMenu savedEncounters={savedEncounters} socket={socket}/>
+                <DropDownSessionMenu adminView={adminView} savedEncounters={savedEncounters} socket={socket}/>
+                {username === 'nicadmin' && <input type='checkbox' onClick={(event) => handleClick(event)}/>}
             </div>
         </div>
     );

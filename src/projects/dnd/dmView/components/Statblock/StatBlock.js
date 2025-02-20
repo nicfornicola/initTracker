@@ -157,7 +157,6 @@ const CreatureInfo = ({creature}) => {
 const StatBlock = ({selectedIndex, currentEncounter, setCurrentEncounter, closeStatBlock, loading=false, searchingFor=null, handleUploadMonsterImage, socket}) => {
     // Creature can be null from SearchColumn but not from EncounterColumn, Statblock is not shown if from EncounterColumn
     const [creature, setCreature] = useState(currentEncounter?.creatures[selectedIndex])
-
     const [creatureReset, setCreatureReset] = useState(currentEncounter?.creatures[selectedIndex])
     const {addToHomebrewList} = useHomebrewProvider();
     const [isEditMode, setIsEditMode] = useState(currentEncounter?.encounterName === "dmbuddy_newhomebrew")

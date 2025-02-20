@@ -86,7 +86,8 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
             backgroundGuid: currentEncounter.backgroundGuid,
             enemyBloodToggle: currentEncounter.enemyBloodToggle,
             hideDeadEnemies: currentEncounter.hideDeadEnemies,
-            hideEnemies: currentEncounter.hideEnemies
+            hideEnemies: currentEncounter.hideEnemies,
+            username: currentEncounter?.username
         }
 
         if(newEncounter.encounterGuid !== currentEncounter.encounterGuid) {
@@ -241,7 +242,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                     </div>
                 </div>
             </div>
-            {(selectedIndex !== null && currentEncounter.creatures[selectedIndex] !== null) && (
+            {(selectedIndex !== null && currentEncounter.creatures[selectedIndex]) && (
                 <div className={`column animated-column ${showSearchList ? '' : 'expand'}`}>
                     <StatBlock selectedIndex={selectedIndex} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} closeStatBlock={() => setSelectedIndex(null)} handleUploadMonsterImage={handleUploadMonsterImage} socket={socket}/>
                 </div>

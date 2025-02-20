@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { INIT_ENCOUNTER_NAME, INIT_ENCOUNTER } from '../../constants';
 
-const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter, currentEncounter, setCurrentEncounter, socket}) => {
+const DropdownMenu = ({ adminView, savedEncounters, setSavedEncounters, handleLoadEncounter, currentEncounter, setCurrentEncounter, socket}) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -56,10 +56,14 @@ const DropdownMenu = ({ savedEncounters, setSavedEncounters, handleLoadEncounter
                         onClick={() => handleDropDownOptionClicked(encounter)}
                         className="dropdown-item"
                     >
-                        {encounter.encounterName}
-                        <button className='encounterDropdownX' onClick={(event) => clickEncounterDropdownMenuX(event, encounter)}>
-                            X
-                        </button>
+                        <span>{encounter.encounterName || <i style={{fontSize: 'small'}}>No Title</i>}</span>
+                        {adminView && <strong>{encounter.username}</strong>}
+                        {(!adminView || encounter.username === 'Username') && 
+                            <button className='encounterDropdownX' onClick={(event) => clickEncounterDropdownMenuX(event, encounter)}>
+                                X
+                            </button>
+                        }
+
                     </li>
                 ))}
             </ul>
