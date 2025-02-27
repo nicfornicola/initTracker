@@ -339,8 +339,12 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
                             <div className='middleStatsContainer'>
                                 <label htmlFor='ac' className='middleStatsLabel'>AC</label>
                                 <input id='ac' className='middleStatsInput' onFocus={handleHighlight} type='numeric' value={creature.armor_class} onChange={handleArmorClassChange} onBlur={(e) => handleArmorClassChange(e, true)} onClick={(event) => event.stopPropagation()}/>
-                                <label htmlFor='init' className='middleStatsLabel'>Init</label>
-                                <input id='init'className='middleStatsInput' onFocus={handleHighlight} type='numeric' value={addSign(creature.dexterity_save)} onChange={handleInitiativeBonusChange} onBlur={(e) => handleInitiativeBonusChange(e, true)} onClick={(event) => event.stopPropagation()}/>
+                                {creature.type !== 'player' && 
+                                    <>
+                                        <label htmlFor='init' className='middleStatsLabel'>Init</label>
+                                        <input id='init'className='middleStatsInput' onFocus={handleHighlight} type='numeric' value={addSign(creature.dexterity_save)} onChange={handleInitiativeBonusChange} onBlur={(e) => handleInitiativeBonusChange(e, true)} onClick={(event) => event.stopPropagation()}/>
+                                    </>
+                                }
                             </div>
                             
                         </div>
@@ -351,19 +355,18 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
                             <OptionButton src={hidden ? eyeClosed : eyeOpen}  message={(hidden ? "Hidden" : "Visible")} onClickFunction={handleHideEnemy} imgClassName={'option-no-margin'} />
                         </div>
                         <div>
-                        <WidgetPopUp 
-                            onOpenChange={handleTeamChangeWidget} 
-                            trigger={
-                                <FlagPole flagColor={borderColor} teamColor={teamColor} isWidgetOpen={openTeamWidget} />
-                            }
-                            popUp={
-                                <TeamWidgetPopup borderColor={borderColor} handleTeamColorChange={handleTeamColorChange} handleAlignmentChange={handleAlignmentChange} isPlayer={isPlayer} handleCheckboxChange={handleCheckboxChange} isPet={isPet} handlePetCheckboxChange={handlePetCheckboxChange} alignment={alignment}/>
-                            }
-                            popOverClass={'editTeamContainer'}
-                            alignOffset={-4}
-                            sideOffset={8}
-                        />
-
+                            <WidgetPopUp 
+                                onOpenChange={handleTeamChangeWidget} 
+                                trigger={
+                                    <FlagPole flagColor={borderColor} teamColor={teamColor} isWidgetOpen={openTeamWidget} />
+                                }
+                                popUp={
+                                    <TeamWidgetPopup borderColor={borderColor} handleTeamColorChange={handleTeamColorChange} handleAlignmentChange={handleAlignmentChange} isPlayer={isPlayer} handleCheckboxChange={handleCheckboxChange} isPet={isPet} handlePetCheckboxChange={handlePetCheckboxChange} alignment={alignment}/>
+                                }
+                                popOverClass={'editTeamContainer'}
+                                alignOffset={-4}
+                                sideOffset={8}
+                            />
                         </div>
                         <div style={{position:"relative"}}>
                             {effectsCount &&

@@ -138,7 +138,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         let initatives = []
         currentEncounter.creatures.forEach(creature => {
             if(creature.type !== "player") {
-                let initBonus = parseInt(creature.dexterity ?? 0)
+                let initBonus = parseInt(creature.dexterity_save ?? 0)
                 let newInit = Math.floor(Math.random() * 20) + 1 + initBonus
                 creature.initiative = newInit
                 initatives.push({creatureGuid: creature.creatureGuid, initiative: newInit})

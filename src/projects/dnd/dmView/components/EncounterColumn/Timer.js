@@ -44,7 +44,7 @@ const Timer = () => {
                 
                 <div className='timerControls editHpGrow'>
                     <OptionButton src={restart} message={"Restart"}onClickFunction={() => setReset(true)} />
-                    <OptionButton src={pause ? play : pauseButton}  message={pause ?  "Play" : "Pause"} onClickFunction={() => setPause(!pause)} />
+                    <OptionButton src={pause ? play : pauseButton}  message={pause ?  "Start" : "Stop"} onClickFunction={() => setPause(!pause)} />
                     <div className='timer'>
                         {secondsToMinutes(seconds)}
                     </div>

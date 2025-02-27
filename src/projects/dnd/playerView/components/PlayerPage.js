@@ -132,7 +132,9 @@ function PlayerPage() {
 
         // Clean up the socket connection on component unmount
         return () => {
-            if(socket) socket.disconnect();
+            if(socket) {
+                socket.disconnect();
+            } 
         };
     }, [socket]);
 
