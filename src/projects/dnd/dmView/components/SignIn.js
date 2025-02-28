@@ -110,10 +110,10 @@ const SignIn = ({socket}) => {
     return (
         <>
             {loggedIn || username !== 'Username' ? (
-                <>
+                <div className='loginGreeting'>
                     <div>Hey, {username}!</div>
                     <button className='loginButtons' onClick={signOut}>Sign out</button>
-                </>
+                </div>
             ) : (
                 <div className="loginContainer growImage">
                     <input

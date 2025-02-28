@@ -86,6 +86,7 @@ function PlayerPage() {
 
             // Recieve messages from backend
             socket.on('sendPlayerViewCreatures', (encounterCreatures) => {
+                console.log(encounterCreatures)
                 if(encounterCreatures.length === 0) {
                     console.log("No Encounter found for", sessionID)
                 }

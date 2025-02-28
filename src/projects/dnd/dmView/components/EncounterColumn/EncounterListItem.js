@@ -307,8 +307,28 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
     return (
             <li className='listItem'
                 onClick={() => { 
-                    if(creature?.dnd_b_player_id === null) 
-                        setSelectedIndex(index)
+                    if(creature?.dnd_b_player_id === null) {
+                        setSelectedIndex(prev => { 
+                            let newArr = [...prev]
+                            let indexOf = newArr.indexOf(index)
+                            // if clicked creature does not exist, add it on the end
+                            if(indexOf === -1) {
+
+                                //only allow max 3 stats open
+                                if(newArr.length === 3) {
+                                    newArr.splice(0, 1)
+                                }
+
+                                newArr.push(index)
+                                    
+                            } else if(newArr.at(-1) !== index) {
+                                newArr.splice(indexOf, 1)
+                                newArr.push(index);
+                            }
+
+                            return [...newArr]
+                        })
+                    }
                 }}
                 style={{
                         border: isTurn ? '2px solid rgba(0, 122, 130)' : '',
@@ -368,7 +388,7 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
                                 sideOffset={8}
                             />
                         </div>
-                        <div style={{position:"relative"}}>
+                        <div>
                             {effectsCount &&
                                 <div className='effectsCounter'>{effectsCount}</div>
                             }

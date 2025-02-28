@@ -28,7 +28,7 @@ function updateSavedEncounters(jsonArray, newEncounter) {
 const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, savedEncounters, setSavedEncounters, handleRefresh, refreshCheck, autoRefresh, showSearchList, handleNewEncounter, setEncounterGuid, handleUploadMonsterImage, socket}) => {
     const [roundNum, setRoundNum] = useState(currentEncounter.roundNum);
     const [turnNum, setTurnNum] = useState(currentEncounter.turnNum);
-    const [selectedIndex, setSelectedIndex] = useState(null);
+    const [selectedIndex, setSelectedIndex] = useState([]);
     const [nameChange, setNameChange] = useState(false)
 
     useEffect(() => {
@@ -42,7 +42,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
     useEffect(() => {
         let noCreatures = currentEncounter.creatures?.length === 0
         if(noCreatures) {
-            setSelectedIndex(null)
+            setSelectedIndex([])
         }
 
     }, [currentEncounter.creatures]);
@@ -53,22 +53,28 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         setTurnNum(currentEncounter.turnNum)
     }, [currentEncounter.roundNum, currentEncounter.turnNum]);
 
-    const clickEncounterCreatureX = (event, xCreature, index) => {
+    const clickEncounterCreatureX = (event, xCreature, xIndex) => {
         event.stopPropagation(); 
 
-        if(selectedIndex !== null) {
-            // if deleting the creature currently selected unselect it
-            if(xCreature?.creatureGuid === currentEncounter.creatures[selectedIndex]?.creatureGuid)
-                setSelectedIndex(null)
-            else if(index < selectedIndex) {
-                // if deleting a creature of lower index then selectedIndex move selectedIndex down by 1 to follow the selected creatures object
-                setSelectedIndex(selectedIndex - 1)
+        if(selectedIndex.length > 0) {
+            let foundIndex = selectedIndex.indexOf(xIndex)
+            if(foundIndex > -1) {
+                // if deleting the creature currently selected unselect it
+                let newArr = selectedIndex
+                newArr.splice(foundIndex, 1)
+
             }
+                // if deleting a creature of lower index then selectedIndex move selectedIndex down by 1 to follow the selected creatures object
+                let newArr = [...selectedIndex]
+                newArr.forEach((sIndex, i) => {
+                    if(xIndex < sIndex) {
+                        newArr[i] = sIndex - 1
+                    }
+                });
+            setSelectedIndex([...newArr])
         }
 
-        
-
-        let newArray = currentEncounter.creatures.filter((_, i) => i !== index)
+        let newArray = currentEncounter.creatures.filter((_, i) => i !== xIndex)
         setCurrentEncounter(prev => ({...prev, creatures: [...newArray]}));
 
         socket.emit("removeCreatureFromEncounter", xCreature.creatureGuid)
@@ -150,6 +156,12 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         setCurrentEncounter(prev => ({...prev, creatures: [...sortCreatureArray(currentEncounter.creatures)]}));
     }   
     
+    const handleRemoveFromSelectedIndex = (xIndex) => {
+        let newArr = selectedIndex
+        newArr.splice(xIndex, 1)
+        setSelectedIndex([...newArr])
+    }
+
     const handleTurnNums = (action = null, e = null) => {
         let encounterLength = currentEncounter.creatures.length
         if(e) e.stopPropagation();
@@ -242,11 +254,13 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                     </div>
                 </div>
             </div>
-            {(selectedIndex !== null && currentEncounter.creatures[selectedIndex]) && (
-                <div className={`column animated-column ${showSearchList ? '' : 'expand'}`}>
-                    <StatBlock selectedIndex={selectedIndex} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} closeStatBlock={() => setSelectedIndex(null)} handleUploadMonsterImage={handleUploadMonsterImage} socket={socket}/>
-                </div>
-            )}
+            {selectedIndex.map((sIndex, xIndex) => {
+                return <div className={`column animated-column ${showSearchList ? '' : 'expand'}`}>
+                            {currentEncounter.creatures[sIndex] &&
+                                <StatBlock selectedIndex={sIndex} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} closeStatBlock={() => handleRemoveFromSelectedIndex(xIndex)} handleUploadMonsterImage={handleUploadMonsterImage} socket={socket}/>
+                            }
+                        </div>
+            })}
         </>
   );
 }

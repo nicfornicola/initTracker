@@ -561,13 +561,12 @@ hr {
     flex: 1;
     position: relative;
     width: 24%;
-    height: 97vh;
+    height: 99vh;
     border: 2px solid #7f7977;
     border-radius: 10px;
-    margin: 10px;
+    margin: 5px;
     box-sizing: border-box; /* Include border and padding in the element's total width and height */
     color: #822000;
-    transition: width 0.3s ease-in-out; /* Smoothly adjust width */
 }
 
 .playerViewAdds {
@@ -846,6 +845,7 @@ hr {
 .monsterSearchAdd {
     position: relative;
     width: 50px;
+    margin-right: 4%;
     opacity: 0;
     height: 100%;
 }
@@ -1253,7 +1253,7 @@ input {
     height: 8%;
     width: 95%;
     align-items: center;
-    visibility: visible;
+    visibility: hidden;
 }
 
 .statblockOptionsFlexLeft,
@@ -1760,8 +1760,7 @@ input {
 }
 
 .listItemOptions {
-    align-items: baseline;
-    box-shadow: none;
+    align-items: start;
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* 2 columns */
     grid-gap: 1px; /* gap between items */
@@ -2218,14 +2217,12 @@ input {
 }
  
 .encounterCreatureX {
-    display: flex;
-    position: relative;
-    opacity: 0;
     background: none;
     border: none;
     color: red;
     font-weight: bolder;
     cursor: pointer;
+    height: 100%;
 }
 
 .searchCreatureX {
@@ -2258,7 +2255,7 @@ input {
 
 /* Width when the menu is open */
 .side-menu.open {
-    width: 255px;
+    width: 10%;
 }
 
 /* Style for the toggle button */
@@ -2288,6 +2285,11 @@ input {
     width: 100%;
     height: fit-content;
     
+}
+
+.loginGreeting {
+    display: flex;
+    flex-direction: column;
 }
 
 .loginImageFlex {
@@ -2326,28 +2328,25 @@ input {
     opacity: 0.8; /* Add a hover effect */
 }
 
+.listItemOptionsBottom {
+    display: flex;
+    width: 150%;
+}
+
 .flagpole-container {
     background-color: white;
     border-radius: 10px;
     overflow: hidden;
-}
-
-.listItemOptionsBottom {
-    display: flex;
-    width: 150%;
 }
   
 .flagpole {
     position: relative;
     left: 6%;
     top: 2px;
-    width: 1px; 
-    height: 13px;
+    width: 2px; 
+    height: 12px;
     background-color: rgb(241, 236, 79);
     border: solid 2px rgb(92, 92, 92);
-    border-top-right-radius: 2px;
-    border-top-left-radius: 2px;
-    perspective: 400px; /* Define a perspective to create depth */
 
 }
   

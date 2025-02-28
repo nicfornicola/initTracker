@@ -55,6 +55,7 @@ BUGS
 ----
 some of the stats still trigger SEND even onBlur with no change
 AC off from dmb
+Undead Spirit is crazy hp and ac
 
 
 things to do before merge: 

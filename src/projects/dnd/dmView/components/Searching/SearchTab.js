@@ -49,7 +49,7 @@ function highlightSubstring(substring, fullString) {
 const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTerm, setSearchSelectedCreature, loadingPack, setLoadingPack, socket}) => {    
     const {removeFromImportList} = useImportedPlayers();
     const {removeFromHomebrewList} = useHomebrewProvider();
-
+    
     // Set the selected creature in search bar on left and gets the data from open5e
     const handleSearchSelectCreature = async (creature, action, event, index) => {
         event.stopPropagation();
