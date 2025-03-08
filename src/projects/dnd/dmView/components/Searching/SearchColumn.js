@@ -239,7 +239,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
                         {selectedIndex === 2 && 
                             <div className='importInputs editHpGrow'>
                                 <InputCharacterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket} />
-                                <InputEncounterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket} />
+                                {/* <InputEncounterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket} /> */}
                             </div>
                         }
                         
@@ -285,7 +285,9 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
             </div>
             {showStatBlock && 
                 <div className='column grow'>
-                    <StatBlock selectedIndex={0} currentEncounter={searchSelectedEncounter} setCurrentEncounter={setSearchSelectedEncounter} closeStatBlock={() => setSearchSelectedCreature(null)} loading={!isNaN(loadingPack.index) && loadingPack.action === 'select'} searchingFor={loadingPack.searchingFor} handleUploadMonsterImage={handleUploadMonsterImage}/>
+                    <div className='statBlock'>
+                        <StatBlock selectedIndex={0} currentEncounter={searchSelectedEncounter} setCurrentEncounter={setSearchSelectedEncounter} closeStatBlock={() => setSearchSelectedCreature(null)} loading={!isNaN(loadingPack.index) && loadingPack.action === 'select'} searchingFor={loadingPack.searchingFor} handleUploadMonsterImage={handleUploadMonsterImage}/>
+                    </div>
                 </div>
             }
         </>

@@ -12,7 +12,14 @@ import EditAvatar from '../Statblock/EditAvatar.js';
 import WidgetPopUp from './WidgetPopUp.js';
 import TeamWidgetPopup from './FlagWidget/TeamWidgetPopup.js';
 
-const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter, handleUploadMonsterImage, setSelectedIndex, clickEncounterCreatureX, resort, socket}) => {
+const colors = {
+    0: "green",
+    1: "pink",
+    2: "brown",
+}
+
+
+const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter, handleUploadMonsterImage, selectedIndex, handleRemoveFromSelectedIndex, clickEncounterCreatureX, resort, socket}) => {
     const [hidden, setHidden] = useState(creatureListItem.hidden);
     const [creature, setCreature] = useState(creatureListItem)
     const [isHovered, setIsHovered] = useState(false);
@@ -30,6 +37,15 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
     const [alignment, setAlignment] = useState(creature.alignment);
     const [borderColor, setBorderColor] = useState(creature.border);
     const [effects, setEffects] = useState(creature.effects);
+    const [selected, setSelected] = useState(false)
+    const [selectedPlace, setSelectedPlace] = useState(-1)
+
+    useEffect(() => {
+        const selectedIndexOf = selectedIndex.findIndex(obj => obj.index === index);
+
+        setSelectedPlace(selectedIndexOf)
+        setSelected(selectedIndexOf !== -1)
+    }, [selectedIndex])
 
     useEffect(() => {
         setCreature(creatureListItem)
@@ -268,7 +284,7 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
         e.target.select();
     };
 
-    const updateCreatureEffects = (event, effect, send = false) => {
+    const updateCreatureEffects = (event, effect) => {
         event.stopPropagation(); 
         const alreadyExists = effects.some(e => e === effect);
         let updatedEffects = []
@@ -289,6 +305,12 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
         socket.emit('creatureEffectChange', effect, alreadyExists ? "remove" : "add", creature.creatureGuid, "dm");
     };
 
+    const handleClick = (index) => {
+        if(!creatureListItem?.dnd_b_player_id)
+            handleRemoveFromSelectedIndex(index, true); // Remove last column
+    };
+
+
     let isDead = creature.hit_points_current <= 0
     let isBloodied = creature.hit_points_current/creature.hit_points < .55
     let color = "rgb(62, 172, 74)"
@@ -306,30 +328,7 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
 
     return (
             <li className='listItem'
-                onClick={() => { 
-                    if(creature?.dnd_b_player_id === null) {
-                        setSelectedIndex(prev => { 
-                            let newArr = [...prev]
-                            let indexOf = newArr.indexOf(index)
-                            // if clicked creature does not exist, add it on the end
-                            if(indexOf === -1) {
-
-                                //only allow max 3 stats open
-                                if(newArr.length === 3) {
-                                    newArr.splice(0, 1)
-                                }
-
-                                newArr.push(index)
-                                    
-                            } else if(newArr.at(-1) !== index) {
-                                newArr.splice(indexOf, 1)
-                                newArr.push(index);
-                            }
-
-                            return [...newArr]
-                        })
-                    }
-                }}
+                onClick={() => handleClick(index)}
                 style={{
                         border: isTurn ? '2px solid rgba(0, 122, 130)' : '',
                         animation: isTurn ? 'shadowPulseTurn 2s ease-in-out infinite' : ''
@@ -389,6 +388,11 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
                             />
                         </div>
                         <div>
+                            <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature, index)}>
+                                X
+                            </button>
+                        </div>
+                        <div>
                             {effectsCount &&
                                 <div className='effectsCounter'>{effectsCount}</div>
                             }
@@ -416,11 +420,6 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
                                 alignOffset={-4}
                                 sideOffset={8}
                             />
-                        </div>
-                        <div>
-                            <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature, index)}>
-                                X
-                            </button>
                         </div>
                     </div>
                     {maxHp !== null  ? 
@@ -485,7 +484,9 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
                     :
                         <div className='encounterCreaturesHp'/>
                     }
+                    {selected && <div className='selectedIndicater' style={{backgroundColor: colors[selectedPlace]}}/>}
                 </div>
+                
             </li>
            
   );

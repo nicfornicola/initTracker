@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getSkillDetails } from '../../playerView/api/getSkillDetails';
-import { backendUrl } from '../constants';
+import { backendUrl, dummyDefault, COLOR_GREEN, generateUniqueId } from '../constants';
 import DndBCharacterToDmBMapper from '../mappers/DndBCharacterToDmBMapper'
 
 export const ImportDndBeyondCharacters = async (playerIds, encounterGuid, encounterPlayerData=undefined) => {
@@ -9,33 +9,53 @@ export const ImportDndBeyondCharacters = async (playerIds, encounterGuid, encoun
     let i = 1;
     const baseUrl = `${backendUrl}/dndb_character_import`;
     const promises = playerIds.map(async (playerId) => {
-        try {
-            const url = `${baseUrl}/${playerId}`;
-
-            const response = await axios.get(url, {});
-            const resData = response.data.data;
-            let skillDetails = getSkillDetails(resData)
-
-            let mappedCharacter = await DndBCharacterToDmBMapper(resData, encounterGuid, skillDetails)
-            console.log(i.toString() + "/" + playerIds.length + " " + resData.name + " retrieved! (" + playerId +")");
-            i++;
-            return mappedCharacter
-        } catch (error) {
-            console.log(i.toString() + "/" + playerIds.length + " failed! (" + playerId +")");
-            i++;
-            if (error?.response.status === 404) {
-                alert(`Could not find ID: '${playerId}' \n\nDnd Beyond Error: ${error.response.status}`);
-            } else if (error.response.status === 403 || error.response.status === 500) {
-                if(encounterPlayerData) {
-                    const encounterPlayerInfo = encounterPlayerData.find(player => player.id === playerId);
-                    return DndBCharacterToDmBMapper(encounterPlayerInfo);
-                } else {
-                    return {name: 'name_not_found', dnd_b_player_id: playerId, status: 500};
-                }
+        if(playerId.startsWith("preset")) {
+            let newDummy = {
+                ...dummyDefault,
+                avatarUrl:  "https://www.dndbeyond.com/Content/Skins/Waterdeep/images/icons/monsters/humanoid.jpg",
+                name: "Preset Player",
+                alignment: "ally",
+                border: COLOR_GREEN,
+                type: "player",
+                deathSaves: {
+                    "failCount": 0,
+                    "successCount": 0,
+                    "isStabilized": true
+                },
+                creatureGuid: generateUniqueId(),
+                encounterGuid: encounterGuid,
             }
-
-            return null
+            return newDummy
+        } else {
+            try {
+                const url = `${baseUrl}/${playerId}`;
+    
+                const response = await axios.get(url, {});
+                const resData = response.data.data;
+                let skillDetails = getSkillDetails(resData)
+    
+                let mappedCharacter = await DndBCharacterToDmBMapper(resData, encounterGuid, skillDetails)
+                console.log(i.toString() + "/" + playerIds.length + " " + resData.name + " retrieved! (" + playerId +")");
+                i++;
+                return mappedCharacter
+            } catch (error) {
+                console.log(i.toString() + "/" + playerIds.length + " failed! (" + playerId +")");
+                i++;
+                if (error?.response.status === 404) {
+                    alert(`Could not find ID: '${playerId}' \n\nDnd Beyond Error: ${error.response.status}`);
+                } else if (error.response.status === 403 || error.response.status === 500) {
+                    if(encounterPlayerData) {
+                        const encounterPlayerInfo = encounterPlayerData.find(player => player.id === playerId);
+                        return DndBCharacterToDmBMapper(encounterPlayerInfo);
+                    } else {
+                        return {name: 'name_not_found', dnd_b_player_id: playerId, status: 500};
+                    }
+                }
+    
+                return null
+            }
         }
+        
     });
    
 

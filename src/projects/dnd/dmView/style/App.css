@@ -553,8 +553,13 @@ hr {
     background-image: url('../pics/dmViewPaperBack.jpg');
     background-size: cover;
     background-position: center; 
-    background-repeat: no-repeat; 
-    overflow: hidden;
+    justify-content: flex-start;
+    transition: transform 0.5s ease;
+}
+
+.columnsContainer {
+    display: flex;
+    width: 100%;
 }
 
 .column {
@@ -567,6 +572,57 @@ hr {
     margin: 5px;
     box-sizing: border-box; /* Include border and padding in the element's total width and height */
     color: #822000;
+    transition: width 0.5s ease, opacity 0.5s ease, transform 0.5s ease;
+}
+
+.existing-slide {
+    transform: translateX(100%); /* Start off-screen left */
+    animation: slide-in 0.5s ease forwards;
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes growIn {
+    from {
+        opacity: .5;
+        transform: scale(50%);
+    }
+    to {
+        opacity: 1;
+        transform: scale(100%);
+    }
+}
+
+@keyframes alreadySelectedGrow {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    50% { transform: translateX(4px); }
+    75% { transform: translateX(-2px); }
+    100% { transform: translateX(0); }
+}
+
+.alreadySelected {
+    animation: alreadySelectedGrow .5s ease forwards;
+}
+
+.newly-added {
+    animation: growIn 0.5s ease forwards;
+}
+
+.removing {
+    opacity: 0;
+    transform: scale(.8);
+}
+
+.statContainers {
+    display: flex;
 }
 
 .playerViewAdds {
@@ -970,14 +1026,66 @@ hr {
     }
 }
 
+@keyframes newSlideRight {
+    0% {
+        height: 0;
+        transform: translateX(-50%);
+        opacity: 0;
+    }
+    100% {
+        height: 99%;
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideRight {
+    0% {
+        width: inherit;
+        transform: translateX(-50%);
+    }
+    100% {
+        width: auto;
+        transform: translateX(0);
+    }
+}
+
+.animated-old-column {
+    animation: slideRight 0.7s ease-out forwards;
+}
+
+.animated-new-column {
+    animation: newSlideRight 0.7s ease-out forwards;
+}
+
+
+
 .animated-box {
     animation: slideUp 0.5s ease-out forwards;
     /* Initial position for the slide up effect */
     transform: translateY(200%);
 }
 
-.animated-column {
-    animation: slideLeft 0.4s ease-out forwards;
+.selectedIndicater {
+    width: 6px;
+    height: 6px;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    background-color: #000;
+    border-radius: 10px;
+    animation: imageGrow 0.7s ease-out forwards;
+}
+
+.selectedIndicaterStatBlock {
+    width: 6px;
+    height: 6px;
+    position: absolute;
+    background-color: #000;
+    border-radius: 10px;
+    animation: imageGrow 0.7s ease-out forwards;
+    right: 5px;
+    top: 40%;
 }
   
 @keyframes imageDrop {
@@ -1137,7 +1245,9 @@ input {
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    height: 100%
+    height: 100%;
+    width: auto;
+    transition: width 0.5s ease, opacity 0.5s ease, transform 0.5s ease;
 }
 
 .statBlock p, h1, h5 {
@@ -1147,7 +1257,6 @@ input {
 .textShadow {
     text-shadow: -.5px .5px 0px #000000;
 }
-
 
 .spellBlockContainer {
     display: flex;
@@ -1206,7 +1315,7 @@ input {
 .infoContainer {
     display: flex;
     flex-direction: column;
-    padding: 5px 10px 5px 10px;
+    padding: 5px 5px 5px 5px;
     height: 100%;
     width: 100%;
     box-sizing: border-box; /* Include border and padding in the element's total width and height */
@@ -1763,7 +1872,8 @@ input {
     align-items: start;
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* 2 columns */
-    grid-gap: 1px; /* gap between items */
+    grid-gap: 2px; /* gap between items */
+    margin-right: 5px;
 }
 
 .effectsCounter {
@@ -2223,6 +2333,7 @@ input {
     font-weight: bolder;
     cursor: pointer;
     height: 100%;
+    opacity: 0;
 }
 
 .searchCreatureX {
