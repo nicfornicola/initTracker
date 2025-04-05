@@ -156,7 +156,7 @@ const CreatureInfo = ({creature}) => {
 
 const colors = {
     0: "green",
-    1: "pink",
+    1: "orange",
     2: "brown",
 }
 
@@ -401,9 +401,20 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
 
     const handleArrayChange = (value, cKey, category, index, send = false) => {
         if (send) {
+            
             if(value !== "None" && value !== "--" && value !== currentEncounter.creatures[selectedIndex]?.[category]?.[index]?.[cKey]) {
-                socket?.emit('statBlockEditArrayUpdate', value, category, index, cKey, currentEncounter.creatures[selectedIndex].creatureGuid);
 
+                const abilityKeys = ["special_abilities", "actions", "bonus_actions", "reactions"];
+                let updateSlots = 0
+                if(cKey === 'name' && abilityKeys.includes(category)) {
+                    const match = value.match(/\((\d+)\/[^)]+\)/); // Match (X/any text) pattern
+                    if(match) {
+                        updateSlots = parseInt(match[1]) * 10
+                    }
+                }
+
+                socket?.emit('statBlockEditArrayUpdate', value, category, index, cKey, currentEncounter.creatures[selectedIndex].creatureGuid);
+                
                 setCurrentEncounter((prev) => {
                     const updatedCreatures = [...prev.creatures];
                     const updatedCategoryArray = updatedCreatures[selectedIndex][category] !== null ? [...updatedCreatures[selectedIndex][category]] : [{name: '', desc: ''}];
@@ -412,6 +423,13 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
                         ...updatedCategoryArray[index],
                         [cKey]: value,
                     };
+
+                    if(updateSlots) {
+                        updatedCategoryArray[index].rechargeCount = updateSlots
+                        console.table({updateSlots, category, index, cKey: 'rechargeCount'});
+
+                        socket?.emit('statBlockEditArrayUpdate', updateSlots, category, index, "rechargeCount", currentEncounter.creatures[selectedIndex].creatureGuid);
+                    }
 
                     updatedCreatures[selectedIndex] = {
                         ...updatedCreatures[selectedIndex],
@@ -442,6 +460,7 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
     };
 
     const handleRechargeCheck = (addCheck, cKey, nested, actionIndex) => {
+        // If actions bonus action...
         if(nested) {
             setCurrentEncounter((prev) => {
                 const updatedCreatures = [...prev.creatures];
@@ -455,17 +474,20 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
                     rechargeCount: newCount
                 }
 
+                socket?.emit("statBlockEditArrayUpdate", newCount, cKey, actionIndex, 'rechargeCount', currentEncounter.creatures[selectedIndex].creatureGuid)
+
                 updatedCreatures[selectedIndex] = {
                     ...updatedCreatures[selectedIndex],
                     [cKey]: [...updatedAction],
                 };
-    
+                
                 return {
                     ...prev,
                     creatures: updatedCreatures,
                 };
             });
         } else {
+            // If legendary actions
             setCurrentEncounter((prev) => {
                 const updatedCreatures = [...prev.creatures];
                 let newCount = updatedCreatures[selectedIndex][cKey];
@@ -562,7 +584,6 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
         setIsEditMode(false)
     }
 
-
     if(creature?.dnd_b_player_id) {
         return null;
     } else return (
@@ -658,9 +679,9 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
                             <hr className="editlineSeperator" />
                                 <EditStatBig label={"Lair Actions"} content={creature?.lair_actions} category={'lair_actions'} handleChange={handleChange}/>
                             <hr className="editlineSeperator" />
-                            <GridWrap>
+                            <GridWrap columns={2}>
                                 <EditStat label={"Languages"} value={creature.languages} cKey={'languages'} handleChange={handleChange} />
-                                <EditStat label={"Environments"} value={creature.environments} cKey={'environments'} handleChange={handleChange} />
+                                {/* <EditStat label={"Environments"} value={creature.environments} cKey={'environments'} handleChange={handleChange} /> */}
                                 <div style={{display: 'flex'}}>
                                     <EditStat label={"CR"} value={creature.challenge_rating} cKey={'challenge_rating'} handleChange={handleChange} type='number'/>
                                 </div>
@@ -670,20 +691,18 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
                     ) : (
                         <>  
                             <div className='statblockOptionsFlex'>
-                                <div className='statblockOptionsFlexLeft'>
+                                <div>
                                     <button className="statblockEditInfo" onClick={() => setShowFullImage(!showFullImage)}>i</button>
                                 </div>
-                                {!showFullImage && 
-                                    <div className='statblockOptionsFlexRight' style={{justifyContent: 'flex-end', top: ''}}>
-                                        <button className="statblockEdit" onClick={toggleEditMode}>
-                                            {(currentEncounter.encounterGuid || creature?.dmb_homebrew_guid)
-                                                ? "Edit"
-                                                : "Use as Homebrew Template"
-                                            }
-                                        </button>
-                                        <button className='statblockX' onClick={closeStatBlock}>❌</button>
-                                    </div>
-                                }
+                                <div className='statblockOptionsRight'>
+                                    <button className="statblockEdit" onClick={toggleEditMode}>
+                                        {(currentEncounter.encounterGuid || creature?.dmb_homebrew_guid)
+                                            ? "Edit"
+                                            : "Use as Homebrew Template"
+                                        }
+                                    </button>
+                                    <button className='statblockX' onClick={closeStatBlock}><span style={{fontSize: '11px'}}>❌</span></button>
+                                </div>
                             </div>
 
                             <div className='topInfo shadowBox'>
@@ -695,11 +714,13 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
                                         
                                         <div className='creatureType'>
                                             <hr className="lineSeperator" />
-                
-                                            <CreatureInfo creature={creature}/><div className='selectedIndicaterStatBlock' style={{backgroundColor: colors[indexOf]}}/>
+                                            <CreatureInfo creature={creature}/>
+                                            {(currentEncounter.encounterName !== 'dmbuddy_selected' && currentEncounter.encounterName !== 'dmbuddy_newhomebrew') && 
+                                                <div className='selectedIndicater siStatBlock' style={{backgroundColor: colors[indexOf]}}> {indexOf+1}</div>
+                                            }    
                                         </div>
                                         {creature.effects.length > 0 &&
-                                            <div style={{backgroundColor: "black", width: 'fit-content', borderRadius: 5}}>
+                                            <div style={{backgroundColor: "black", width: 'fit-content', height: '42px', borderRadius: 5}}>
                                                 {creature.effects.map((effect) => (
                                                     <img alt='effect' className='effect growImage' src={effectImgMap[effect]}/>
                                                 ))}
@@ -723,7 +744,7 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
                                                     <span className='tempHp'>&nbsp;(+{creature.hit_points_temp}) </span>
                                                 )}
                                                 {creature.hit_dice && (
-                                                    <span className='extraInfo'>&nbsp;({creature.hit_dice})</span>
+                                                    <span className='extraInfo'>&nbsp;({creature?.hit_dice})</span>
                                                 )}
                                                 
                                             </p>
@@ -741,13 +762,7 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
                             </div>
                                 
                             <div className="statBlockScroll">
-                                {creature.skills && (
-                                    <p>
-                                        <strong>Skills </strong>
-                                        <span className='infoDesc'>{creature.skills}</span>
-                                    </p>
-                                )}
-
+                                <ContentString label={'Skills'} contentString={creature.skills} />
                                 <ContentString label={'Vulnerabilities'} contentString={creature.damage_vulnerabilities} />
                                 <ContentString label={'Resistances'} contentString={creature.damage_resistances} />
                                 <ContentString label={'Immunities'} contentString={creature.damage_immunities} />
@@ -756,109 +771,63 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
                                 <ContentString label={'Languages'} contentString={creature.languages} />
                                 <ContentString label={'CR'} contentString={creature.challenge_rating} italics={`(${getLevelData(creature.challenge_rating)} XP)`}/>
                             
-                                {creature.from === "dnd_b" && !creature.isReleased &&
-                                    <div style={{border: '1px solid red', wordWrap: 'break-word'}}><strong>Alert!</strong> This creature comes from a paid source on DndB so only minimal data is available :( Try searching for it on DmBuddy :)<a href={creature.link}>{creature.link}</a></div>
-                                }
-
-                                {creature.special_abilities && 
+                                {(creature.special_abilities && creature.special_abilities.length > 0) && 
                                     <>
                                         <h1 className='infoTitle'>TRAITS</h1>
                                         <hr className="lineSeperator" />
-                                        {creature.from === "dnd_b" ? (
-                                            <>
-                                                
-                                                {creature.special_abilities &&
-                                                    <div className='actionInfo' dangerouslySetInnerHTML={{ __html: creature.special_abilities }} />
+                                            {creature.special_abilities.map((ability, index) => {
+                                                // Skip rendering if name is "None" and desc is "--"
+                                                if (ability.name === "None" && ability.desc === "--") {
+                                                    return null;
                                                 }
-                                            </>
-                                        ) : (
-                                            <>
-                                                {creature.special_abilities.map((ability, index) => {
-                                                    // Skip rendering if name is "None" and desc is "--"
-                                                    if (ability.name === "None" && ability.desc === "--") {
-                                                        return null;
-                                                    }
-                                            
-                                                    return (
-                                                        <div className='actionInfo' key={index + ability.name}>
-                                                            {ability.rechargeCount !== 0 ? (
-                                                                <div className={`actionToken-container`}>
-                                                                    <strong className='titleColor'><BoldifyReplace name={ability.name} /> </strong>
-                                                                    <ActionTracker 
-                                                                        actions_count={ability.rechargeCount}
-                                                                        label={ability.name}
-                                                                        cKey={'special_abilities'}
-                                                                        nested={true}
-                                                                        handleCheck={handleRechargeCheck}
-                                                                        actionIndex={index}
-                                                                    />
-                                                                </div>
-                                                            ) : ( 
+                                        
+                                                return (
+                                                    <div className='actionInfo' key={index + ability.name}>
+                                                        {ability.rechargeCount !== 0 ? (
+                                                            <div className={`actionToken-container`}>
                                                                 <strong className='titleColor'><BoldifyReplace name={ability.name} /> </strong>
+                                                                <ActionTracker 
+                                                                    actions_count={ability.rechargeCount}
+                                                                    label={ability.name}
+                                                                    cKey={'special_abilities'}
+                                                                    nested={true}
+                                                                    handleCheck={handleRechargeCheck}
+                                                                    actionIndex={index}
+                                                                />
+                                                            </div>
+                                                        ) : ( 
+                                                            <strong className='titleColor'><BoldifyReplace name={ability.name} /> </strong>
+                                                        )}
+                                                        <span className='infoDesc'>
+                                                            {ability.name === "Spellcasting" ? (
+                                                                <>
+                                                                    {getSpells(getDesc(ability))}
+                                                                </>
+                                                            ) : (
+                                                                <BoldifyReplace desc={ability?.desc} />
                                                             )}
-                                                            <span className='infoDesc'>
-                                                                {ability.name === "Spellcasting" ? (
-                                                                    <>
-                                                                        {getSpells(getDesc(ability))}
-                                                                    </>
-                                                                ) : (
-                                                                    <BoldifyReplace desc={ability?.desc} />
-                                                                )}
-                                                            </span>
-                                                        </div>
-                                                    );
-                                                })}
-                                            </>
-
-                                        )}
+                                                        </span>
+                                                    </div>
+                                                );
+                                        })}
                                     </>
                                 }
                                 
                                 <SpellCasting creature={creature}/>
 
-                                {creature.actions && 
-                                    <>
-                                        {creature.from === "dnd_b" ? (
-                                            <>
-                                                <h1 className='infoTitle'>ACTIONS</h1>
-                                                <hr className="lineSeperator" />
-                                                {creature.actions &&
-                                                    <div className='actionInfo' dangerouslySetInnerHTML={{ __html: creature.actions }} />
-                                                }
-                                            </>
-                                        ) : (
-                                            <ContentArray label={'ACTIONS'} contentArray={creature.actions} cKey={'actions'} handleCheck={handleRechargeCheck} nested={true}/>
-                                        )}
-                                    </>
-                                }
-                                
+                                <ContentArray label={'ACTIONS'} contentArray={creature.actions} cKey={'actions'} handleCheck={handleRechargeCheck} nested={true}/>
                                 <ContentArray label={'BONUS ACTIONS'} contentArray={creature.bonus_actions} cKey={'bonus_actions'} handleCheck={handleRechargeCheck} nested={true}/>
                                 <ContentArray label={'REACTIONS'} contentArray={creature.reactions} cKey={'reactions'} handleCheck={handleRechargeCheck} nested={true}/>
+                                <ContentArray label={'LEGENDARY ACTIONS'} contentArray={creature.legendary_actions} labelDesc={creature.legendary_desc} actions_count={creature.legendary_actions_count} handleCheck={handleRechargeCheck} cKey={'legendary_actions_count'}/>
+                                <ContentArray label={'LAIR ACTIONS'} contentArray={creature.lair_actions} labelDesc={creature.legendary_desc} actions_count={creature.legendary_actions_count} handleCheck={handleRechargeCheck} cKey={'legendary_actions_count'}/>
                                 
-                                {creature.legendary_actions && 
-                                    <>
-                                        
-                                        {creature.from === "dnd_b" ? (
-                                            <>
-                                                <h1 className='infoTitle'>LEGENDARY ACTIONS</h1>
-                                                <hr className="lineSeperator" />
-                                                {creature.actions &&
-                                                    <div className='actionInfo' dangerouslySetInnerHTML={{ __html: creature.legendary_actions }} />
-                                                }
-                                            </>
-                                        ) : (
-                                            <ContentArray label={'LEGENDARY ACTIONS'} contentArray={creature.legendary_actions} labelDesc={creature.legendary_desc} actions_count={creature.legendary_actions_count} handleCheck={handleRechargeCheck} cKey={'legendary_actions_count'}/>
-                                        )}
-                                    </>
-                                }
-                                
-                                {creature.environments && (
+                                {/* {creature.environments && (
                                     <div className='extraInfo'>
                                         <hr className="lineSeperator" />
                                         <strong>Environments: </strong>
                                         <span> {creature.environments}</span>
                                     </div>
-                                )}
+                                )} */}
                             </div>
                             <hr className="lineSeperator" />
                             {creature.sourceShort && 
@@ -869,11 +838,7 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
                             
                         </>
                     )}
-                    
                     <hr className="lineSeperator" />
-                    {creature.from === 'dnd_b' && 
-                        <a href={creature.link}>DndB StatBlock</a>
-                    }
                 </>
             )}
             

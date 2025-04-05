@@ -7,6 +7,8 @@ import OptionButton from '../EncounterColumn/OptionButton';
 import Refresh from '../../pics/icons/refresh.png'
 import Asort from '../../pics/icons/Asort.PNG'
 import Zsort from '../../pics/icons/Zsort.PNG'
+import UrlSnippet from '../../../pics/demo/urlSnippet.png'
+import UrlSnippetPlayer from '../../../pics/demo/urlSnippetPlayer.png'
 import SearchTab from './SearchTab';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -74,6 +76,16 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
     const [loading, setLoading] = useState(true);
     const [loadingPack, setLoadingPack] = useState({index: null, action: null, searchingFor: null});
 
+    const [error, setError] = useState(0);
+
+    useEffect(() => {
+        if(error !== 0) {
+            setTimeout(() => {
+                setError(0)
+            }, 30000)
+        }
+    }, [error]);
+
     useEffect(() => {
         if(uploadIconCreature) {
             setSearchSelectedCreature(uploadIconCreature)
@@ -115,7 +127,12 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
                 } else if (selectedIndex === 1) {
                     list = homebrewList;
                 } else if (selectedIndex === 2) {
-                    list = importedPlayers;
+                    const sortedByCampaign = importedPlayers.sort((a, b) => {
+                        const campaignA = a.campaign || ""; // Default to empty string if null/undefined
+                        const campaignB = b.campaign || ""; // Default to empty string if null/undefined
+                        return campaignA.localeCompare(campaignB);
+                    });
+                    list = sortedByCampaign;
                 }
 
                 const filtered = list.filter(item => {
@@ -237,9 +254,23 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
                         </TabList>
                         <h3 className='titleFontFamily' style={{borderBottom: '1px solid #822000'}}>{titles[selectedIndex]}</h3>
                         {selectedIndex === 2 && 
-                            <div className='importInputs editHpGrow'>
-                                <InputCharacterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket} />
-                                {/* <InputEncounterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} socket={socket} /> */}
+                            <div className='importInputsContainer'>
+                                <div className='importInputs editHpGrow'>
+                                    <InputCharacterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} setError={setError} socket={socket} />
+                                    <InputEncounterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} setError={setError} socket={socket} />
+                                </div>
+                                <details >
+                                    <summary>Import Help</summary>
+                                    <div className='importErrorContainer'>
+                                        <ul className='howToImportList'>
+                                            <img className='importErrorImg' alt='error url' src={UrlSnippetPlayer} />
+                                            <img className='importErrorImg' alt='error url' src={UrlSnippet} />
+                                            <li className='importErrorMsg'><i>Import multiple players with a comma seperated list i.e.</i> 12345678,9817263,19203912</li>
+                                            <li className='importErrorMsg'><i>DnD Beyond will only import players. Try adding monsters/or NPC's from the search list</i></li>
+                                        </ul>
+                                        
+                                    </div>
+                                </details>
                             </div>
                         }
                         
@@ -270,7 +301,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
                                 ))}
                             </>
                         ) : ( 
-                            <div className='monsterSearch' onScroll={handleScroll}>
+                            <div className='monsterSearch' style={{height: selectedIndex === 2 ? '72.4%' : '81%' }} onScroll={handleScroll}>
                                 <ul className='monsterSearchList'>
                                     {panels.map((_, index) => (
                                         <TabPanel key={titles[index]}>

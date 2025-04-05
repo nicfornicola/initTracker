@@ -73,7 +73,6 @@ const Icon = ({creature, isTurn, hideDeadEnemies, enemyBloodToggle, iconSize}) =
                     >
                         <div className='image-container'>
                             <img className="image" src={creature.avatarUrl} alt={name} />
-                            <div className="imageSmoke"/>                            
                             {isDead ? (
                                 <>
                                     <img className="image overlay-skull" src={skullpng} alt="" />

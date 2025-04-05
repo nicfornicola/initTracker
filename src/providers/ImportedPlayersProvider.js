@@ -16,7 +16,7 @@ export const ImportedPlayersProvider = ({ children }) => {
     const { username } = useUser();
     const [importedPlayers, setImportedPlayers] = useState([]);
 
-    const addImportedPlayer = (newPlayers) => {
+    const addImportedPlayers = (newPlayers) => {
         const updatedPlayers = [...importedPlayers];
 
         newPlayers.forEach((newPlayer) => {
@@ -60,14 +60,19 @@ export const ImportedPlayersProvider = ({ children }) => {
             const url = `${backendUrl}/dmb_get_imports/${username}`;
         
             axios.get(url).then((res) => {
-                setImportedPlayers(res.data);
+                const sortedData = res.data.sort((a, b) => {
+                    const campaignA = a.campaign || ""; // Default to empty string if null/undefined
+                    const campaignB = b.campaign || ""; // Default to empty string if null/undefined
+                    return campaignA.localeCompare(campaignB);
+                });
+                setImportedPlayers(sortedData);
             });
         } else {
             setImportedPlayers([]); // Clear the players if no username
         }
     }, [username]);
 
-    const value = useMemo(() => ({ importedPlayers, setImportedPlayers, addImportedPlayer, removeFromImportList }), [importedPlayers]);
+    const value = useMemo(() => ({ importedPlayers, setImportedPlayers, addImportedPlayers, removeFromImportList }), [importedPlayers]);
 
     return (
         <ImportedPlayerContext.Provider value={value}>

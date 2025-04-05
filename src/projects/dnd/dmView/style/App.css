@@ -330,6 +330,18 @@ hr {
     border-top-right-radius: calc(.275 * var(--iconWidth));
 }
 
+.image-container::after {
+    content: "";
+    position: absolute;
+    width: 90%;
+    height: 100%;
+    border-bottom-left-radius: calc(.15 * var(--iconWidth));
+    border-bottom-right-radius: calc(.15 * var(--iconWidth));
+    border-top-left-radius: calc(.275 * var(--iconWidth));
+    border-top-right-radius: calc(.275 * var(--iconWidth));
+    box-shadow: inset 2px -20px 20px 0px rgba(0, 0, 0, 0.5);
+}
+
 .image-container .image {
     position: absolute;
     display: block;
@@ -341,20 +353,13 @@ hr {
     border-bottom-right-radius: inherit;
 }
 
-.image-container .imageSmoke {
-    position: absolute;
-    width: 90%;
-    height: 100%;
-    border-top-left-radius: inherit;
-    border-top-right-radius: inherit;
-    border-bottom-left-radius: inherit;
-    border-bottom-right-radius: inherit;
-    background: linear-gradient(to top, #0000009c, #00000000);
-}
-
 .avatarEffectsBar {
     position: absolute;
     bottom: 0%;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+    width: 90%;
+    z-index: 99;
 }
 
 .option:hover + .tooltiptext,
@@ -427,6 +432,7 @@ hr {
     height: calc(.25 * var(--iconWidth)); 
     top: 50%;
     margin: 1px;
+    animation: growIn 0.5s ease forwards;
 }
 
 .effect {
@@ -479,7 +485,6 @@ hr {
 }
 
 .optionWrapper .tooltiptext,
-.avatarEffectsBar .tooltiptext,
 .effectWrapper .tooltiptext {
     bottom: 110%;
     width: 90px;
@@ -555,6 +560,7 @@ hr {
     background-position: center; 
     justify-content: flex-start;
     transition: transform 0.5s ease;
+    overflow: hidden;
 }
 
 .columnsContainer {
@@ -874,7 +880,7 @@ hr {
     overflow-y: scroll; 
     width: 100%;
     border-bottom: 2px solid #822000;
-
+    overflow-x: hidden;
 }
 
 .monsterSearchList {
@@ -1066,25 +1072,29 @@ hr {
     transform: translateY(200%);
 }
 
+
+
 .selectedIndicater {
-    width: 6px;
-    height: 6px;
-    position: absolute;
-    right: 3px;
-    top: 3px;
-    background-color: #000;
-    border-radius: 10px;
+    width: 10px;
+    height: 12px;
+    right: 5px;
+    border: 1px solid black;
+    border-radius: 3px;
     animation: imageGrow 0.7s ease-out forwards;
+    color: white;
+    font-size: x-small;
+    font-weight: bolder;
+    text-align: center;
 }
 
-.selectedIndicaterStatBlock {
-    width: 6px;
-    height: 6px;
+.siListItem {
+    position: relative;
+    top: 3px;
+    width: 12px;
+}
+
+.siStatBlock {
     position: absolute;
-    background-color: #000;
-    border-radius: 10px;
-    animation: imageGrow 0.7s ease-out forwards;
-    right: 5px;
     top: 40%;
 }
   
@@ -1360,35 +1370,33 @@ input {
     display: flex;
     position: absolute;
     height: 8%;
-    width: 95%;
-    align-items: center;
+    width: 99%;
+    justify-content: space-between;
+    margin-top: 2px;
     visibility: hidden;
 }
 
-.statblockOptionsFlexLeft,
-.statblockOptionsFlexRight {
-    height: 100%;
-    display: flex;
-    width: 100%;
-    align-items: flex-start;
+.statblockOptionsRight {
+    margin-right: 4px;
 }
 
 .statblockEditInfo {
+    position: relative;
     cursor: pointer;
     z-index: 1;
     text-wrap: nowrap;
     border: 1px solid #575757;
     border-radius: 100%;
-    margin: 2px;
+    margin-left: 4px;
 }
 
 .statblockEdit,
 .statblockX {
+    position: relative;
     cursor: pointer;
     z-index: 1;
     margin: 0px 3px 3px 3px;
-    text-wrap: nowrap;
-    padding: 3px;
+    padding: 5px;
     border: 1px solid #575757;
     border-radius: 4px;
 }
@@ -1417,7 +1425,7 @@ input {
 .editBlock {
     display: flex;
     flex-direction: column;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
 .editBlockTitle {
@@ -1435,22 +1443,24 @@ input {
     width: fit-content;
     font-family: 'Bitter', serif;
     font-size: 1em;
-    background-color: #ffffff6d;
+    background-color: #ebe9e2;
     border: none;
     margin: 0;
-    border-bottom: 3px dotted #919191;
+    border-bottom: 2px dotted #919191;
     border-radius: 5px;
+    height: 100%;
 }
 
 .editBlockBigInput {
     width: 100%;
     font-family: 'Bitter', serif;
     font-size: 1em;
-    background-color: #ffffff6d;
+    background-color: #e0dfd7;
     border: none;
     margin: 0px 0px 10px 0px;
-    border-bottom: 3px dotted #919191;
+    border-bottom: 2px dotted #919191;
     border-radius: 5px;
+    height: 120px;
 }
 
 .lineSeperator {
@@ -1672,6 +1682,7 @@ input {
 .actionInfo {
     margin-top: 8px;
     margin-bottom: 8px;
+    word-wrap: break-word;
 }
 
 .shadowBox {
@@ -1681,8 +1692,8 @@ input {
 
   /* Style the scrollbar track */
 ::-webkit-scrollbar {
-    width: 12px; /* Width of the scrollbar */
-    height: 12px; /* Height of the horizontal scrollbar */
+    width: 6px; /* Width of the scrollbar */
+    height: 6px; /* Height of the horizontal scrollbar */
 }
 
 ::-webkit-scrollbar-thumb {
@@ -1902,28 +1913,69 @@ input {
     display: flex;
 }
 
+.searchCreatureCampaignContainer {
+    width: 175px;
+}
+
+.searchCreatureSmallDetailsPlayerFlex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+
+}
+
 .searchListCreatureContainer:hover .searchCreatureX,
 .searchListCreatureContainer:hover .monsterSearchAdd {
     opacity: 1;
 }
 
-.importInputs {
+.importInputsContainer {
     display: flex;
+    flex-direction: column;
     width: 96.6%;
     margin-top: 2%;
-    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 5px rgb(0, 0, 0, 0.5);
     background-color: #e0d8b2;
     border-radius: 10px 10px 10px 10px;
     padding: 10px 0px 10px 10px;
 }
 
-.dndBImportContainer {
+.howToImportList {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.importErrorContainer {
+    margin-top: 5px;
+    margin-left: 5px;
+    width: 90%;
     display: flex;
-    height: 30px;
+    flex-direction: column;
+    border-left: 1px solid #822000;
+    border-bottom: 1px solid #822000;
 }
 
 .menuIconImports {
     height: inherit;
+}
+
+.importErrorMsg {
+   margin: 5px;
+}
+
+.importErrorImg {
+    width: 85%;
+    height: 50px;
+}
+
+.importInputs {
+    display: flex;
+}
+
+.dndBImportContainer {
+    display: flex;
+    height: 30px;
 }
 
 .dndBImportButtons {
@@ -1946,8 +1998,8 @@ input {
 
 .dndbInputButtonSearch {
     position: absolute; 
-    right: 6%;
-    top: 15%;
+    right: 8%;
+    top: 14%;
     border: none; 
     background: none; 
     cursor: pointer;
@@ -1973,6 +2025,7 @@ input {
     display: flex;
     flex-direction: column;
     width: 100%;
+    opacity: 1;
 }
 
 .nameInputContainer {

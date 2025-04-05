@@ -1,6 +1,6 @@
 import {generateUniqueId, COLOR_GREEN } from '../constants';
 
-export const DndBCharacterToDmBMapper = async (dndBeyondRes, encounterGuid, skillDetails=undefined) => {
+export const DndBCharacterToDmBMapper = (dndBeyondRes, encounterGuid, skillDetails=undefined) => {
     // Full info is available from dndB
     if(skillDetails) {
         let {maxHp, armorClass, inventory, skills_json_array} = skillDetails;
@@ -12,7 +12,7 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, encounterGuid, skil
             "from": "dnd_b",
             "creatureGuid": generateUniqueId(),
             "encounterGuid": encounterGuid,
-            "status": dndBeyondRes.status,
+            "status": dndBeyondRes.status === 0 ? 200 : dndBeyondRes.status,
             "dnd_b_player_id": dndBeyondRes.id.toString(),
             "link": dndBeyondRes.link,
             "avatarUrl": dndBeyondRes.decorations.avatarUrl || 'https://www.dndbeyond.com/Content/Skins/Waterdeep/images/icons/monsters/humanoid.jpg',
@@ -25,7 +25,7 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, encounterGuid, skil
             "initiative": 0,
             "last_damage":null,
             "deathSaves": dndBeyondRes.deathSaves,
-            "exhaustionLvl": dndBeyondRes.conditions.find(obj => obj.id === 4) || 0,
+            "exhaustionLvl": dndBeyondRes.conditions.find(obj => obj.id === 4)?.level || 0,
             "path": "",
             "type": "player",
             "alignment": "ally",
@@ -40,8 +40,10 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, encounterGuid, skil
             "hidden": false,
             "environments": '',
             "legendary_actions": [],
-            "lair_actions": []
+            "lair_actions": [],
+            "campaign": dndBeyondRes.campaign.name
         }
+
     } else {
         return {
             "name": dndBeyondRes.name,
@@ -60,7 +62,7 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, encounterGuid, skil
             "hit_points_temp": 0,
             "hit_points_override": 0, 
             "hit_points_modifier": 0, 
-            "initiative": dndBeyondRes.initiative,
+            "initiative": 0,
             "last_damage": null,
             "deathSaves": {
                 "failCount": 0,
@@ -75,14 +77,16 @@ export const DndBCharacterToDmBMapper = async (dndBeyondRes, encounterGuid, skil
             "effects": [],
             "creature_type": dndBeyondRes.race,
             "inspiration": false,
-            "armor_class": null,
+            "armor_class": 10,
             "inventory": null,
             "skills":  [],
             "spellcasting": [],   
             "hidden": false,
             "environments": '',
             "legendary_actions": [],
-            "lair_actions": []
+            "lair_actions": [],
+            "campaign": null
+
         }
     }
 };

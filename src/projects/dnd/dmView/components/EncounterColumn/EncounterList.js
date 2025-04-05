@@ -2,28 +2,59 @@ import React, { useState, useEffect } from 'react';
 import EncounterListItem from './EncounterListItem'
 import {sortCreatureArray} from '../../constants'
 
-const EncounterList = ({currentEncounter, setCurrentEncounter, handleSaveEncounter, turnNum, handleUploadMonsterImage, selectedIndex, handleRemoveFromSelectedIndex, clickEncounterCreatureX, socket}) => {
+function findCreatureIndexes(currentEncounterCreatures, reassignSelected) {
+    return reassignSelected.map(guid =>
+        currentEncounterCreatures.findIndex(c => c.creatureGuid === guid)
+    ).filter(index => index !== -1); // Filter out any not found
+}
+
+const EncounterList = ({currentEncounter, setCurrentEncounter, handleSaveEncounter, turnNum, handleUploadMonsterImage, selectedIndex, setSelectedIndex, handleRemoveFromSelectedIndex, clickEncounterCreatureX, socket}) => {
     const [currentEncounterCreatures, setCurrentEncounterCreatures] = useState(currentEncounter.creatures);
 
     useEffect(() => {
         setCurrentEncounterCreatures([...currentEncounter.creatures])
     }, [currentEncounter.creatures])
 
+    useEffect(() => {
+        setPlayerViewOnCreatureChange()
+        // eslint-disable-next-line
+    }, [currentEncounterCreatures])
+
     const resort = (c) => {
+
+        let reassignSelected = []
+        if(selectedIndex.length !== 0) {
+            selectedIndex.forEach(indexObj => {
+                reassignSelected.push(currentEncounter.creatures[indexObj.index].creatureGuid)
+            });
+        }
+        console.log("reassignSelected", reassignSelected)
+
         const updatedCreatures = currentEncounterCreatures.map(creature =>
             creature.creatureGuid === c.creatureGuid ? c : creature
         );
-        setCurrentEncounter(prev => ({...prev, creatures: [...sortCreatureArray(updatedCreatures)]}));
+
+        const sortedCreatures = sortCreatureArray(updatedCreatures)
+        setCurrentEncounter(prev => ({...prev, creatures: [...sortedCreatures]}));
+        
+        // This handles open statblocks while the index of creatures change
+        const postSortedIndices = findCreatureIndexes(sortedCreatures, reassignSelected);
+        console.log("postSortedIndices", postSortedIndices)
+
+        setSelectedIndex((prev) => {
+            prev.forEach((indexObj, i) => {
+                indexObj.index = postSortedIndices[i]
+            })
+            return prev
+        })
+
+
+    
     }
 
     const setPlayerViewOnCreatureChange = () => {
         handleSaveEncounter()
     }
-
-    useEffect(() => {
-        setPlayerViewOnCreatureChange()
-        // eslint-disable-next-line
-    }, [currentEncounterCreatures])
 
     return (
         <div className='encounterCreaturesList'>

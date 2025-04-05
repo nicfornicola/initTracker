@@ -121,7 +121,6 @@ const DmView = () => {
     useEffect(() => {
         if(isDev && username === "nicdev") {
             console.log("MOCK ENCOUNTERS", mockEncounters)
-
             setSavedEncounters(addRechargeCountToSpecialAbilities(mockEncounters))
         }
 
@@ -193,9 +192,14 @@ const DmView = () => {
             console.log("----------------")
             // Get player stats for HP for players from dnd beyond
             // Keep isPlayer check so dms can import character without auto refresh
-            const filteredPlayers = currentEncounter.creatures.filter(creature => creature.dnd_b_player_id && creature.type === 'player');
+            const filteredPlayers = currentEncounter.creatures.filter(creature => 
+                creature.type === 'player' &&
+                creature.dnd_b_player_id &&
+                creature.dnd_b_player_id !== 'preset');
+
             const playerIds = filteredPlayers.map(player => player.dnd_b_player_id.toString()); // Map to get the ids as strings
-            const refreshedData = await ImportDndBeyondCharacters(playerIds, currentEncounter.encounterGuid);
+            const playerNames = filteredPlayers.map(player => player.name); // Map to get the ids as strings
+            const refreshedData = await ImportDndBeyondCharacters(playerIds, currentEncounter.encounterGuid, undefined, username, playerNames);
 
             // Iterate over the first array using a for loop
             let updatedDifCreatures = [] 
@@ -232,6 +236,7 @@ const DmView = () => {
                 socket.emit("updateDndBPlayers", updatedDifCreatures)
             } else { console.log("No updates to send...") }
 
+            
             setCurrentEncounter(prev => ({...prev, creatures: sortCreatureArray([...updatedCreatures])}));
             console.log("Players Refreshed!")
             console.log("----------------")
@@ -249,8 +254,6 @@ const DmView = () => {
 
         if (autoRefreshDndbPlayers) {
             refreshPlayerProfiles();
-        } else {
-            console.error("You should not be seeing that button if both are false...")
         }
 
         // Set this for a minimum animation spin of 1 seconds

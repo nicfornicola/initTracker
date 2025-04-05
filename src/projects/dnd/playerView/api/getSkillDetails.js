@@ -1,4 +1,4 @@
-import { skill_codes, skills_long, skills_short } from '../../dmView/constants.js';
+import {skills_long, skills_short } from '../../dmView/constants.js';
 
 
 function extractAc(jsonData) {
@@ -26,6 +26,7 @@ export const getSkillDetails = (data) => {
 
     })
     
+    let bonusAc = 0
     let bonuses = {
         "race": [0, 0, 0, 0, 0, 0],
         "class": [0, 0, 0, 0, 0, 0],
@@ -35,17 +36,22 @@ export const getSkillDetails = (data) => {
     }
 
     Object.entries(data.modifiers).forEach(([key, arr]) => {
-        //skip race
+        // Skip race
         if(ignoreRace && key === 'race') {
             console.log("Ignoring Old Racial Mods (if present) since there is a 2024 background being used...")
             return
         }
 
         arr.forEach(mod => {
-            if (mod["type"] === "bonus") {
-                let indexOfMatch = skills_long.indexOf(mod["friendlySubtypeName"])
+            if(mod["type"] === "bonus") {
+                let typeName = mod["friendlySubtypeName"]
+                let indexOfMatch = skills_long.indexOf(typeName)
+
                 if(indexOfMatch !== -1) {
                     bonuses[key][indexOfMatch] += mod["fixedValue"]
+                } else if(typeName === 'Armored Armor Class' || typeName === 'Armor Class') {
+                    // Get AC bonus from feats, class...
+                    bonusAc += mod["fixedValue"]
                 }
             } 
         })
@@ -98,12 +104,9 @@ export const getSkillDetails = (data) => {
         }
     });
     
-    if (hasTough) {
-        toughHp = total_lvl * 2;
-    }
-    if(draconicResilienceHp) {
-        draconicResilienceHp = total_lvl
-    }
+    if (hasTough) toughHp = total_lvl * 2;
+    if(draconicResilienceHp) draconicResilienceHp = total_lvl
+ 
 
     // Hyron gets an extra con from hermit
     let baseHp = data["baseHitPoints"];
@@ -120,8 +123,7 @@ export const getSkillDetails = (data) => {
 
     // =================
     // let nakedArmorClass = 10 + skills_json_array[1].modifier;
-    let armorClass = 0;
-
+    let armorClass = bonusAc; // Start with AC from modifiers and DEX
     let shieldAcOnDexSaves = { shieldAc: 0, active: false, restrictions: [] };
     data.modifiers.feat.forEach(mod => {
         if (mod.type === "bonus") {
@@ -138,6 +140,13 @@ export const getSkillDetails = (data) => {
     let armor = false;
     let inventory = [];
     let modsFromItems = [];
+    const armorTypeKey = {
+        0: "none",
+        1: "light",
+        2: "medium",
+        3: "heavy",
+    }
+    let armorType = "none"
 
     data.inventory.forEach(item => {
         let itemDef = item.definition;
@@ -184,12 +193,15 @@ export const getSkillDetails = (data) => {
             if (!shield && item.definition.baseArmorName === "Shield") {
                 shield = true;
                 armorClass += item.definition.armorClass;
+                // AC from sheild
                 if (shieldAcOnDexSaves.active) {
                     shieldAcOnDexSaves.shieldAc = item.definition.armorClass;
                 }
             } else if (!armor && item.definition.filterType.toLowerCase().includes("armor")) {
                 armor = true;
+                // AC from armor
                 armorClass += item.definition.armorClass;
+                armorType = armorTypeKey[item.definition.armorTypeId]
             }
 
             if (itemDictionary.grantedModifiers.length > 0) {
@@ -199,6 +211,14 @@ export const getSkillDetails = (data) => {
 
         inventory.push(itemDictionary);
     });
+
+    // Only add dex mod to ac is not wearing heavy armor
+    if(armorType !== "heavy") {
+        armorClass += skills_json_array[1].modifier
+        // Add the default 10 if no armor
+        if(armorType === "none") 
+            armorClass += 10
+    } 
 
     return {maxHp, armorClass, inventory, skills_json_array};
 };

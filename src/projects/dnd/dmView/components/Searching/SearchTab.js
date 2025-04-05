@@ -27,9 +27,13 @@ function getKey(c) {
     return c.name + keyExtra;
 }
 
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escape special characters
+}
+
 function highlightSubstring(substring, fullString) {
     if (!substring) return fullString;
-    const parts = fullString.split(new RegExp(`(${substring})`, 'gi')); // Split on the substring, keeping it in the result
+    const parts = fullString.split(new RegExp(`(${escapeRegExp(substring)})`, 'gi')); // Split on the substring, keeping it in the result
 
     return (
         <span>
@@ -119,12 +123,14 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
                             <img className="monsterSearchIcon" src={creature.avatarUrl} alt={"list Icon"} />
                         </div>
                         <div className='searchListCreatureDetails'>
-                        <strong>{highlightSubstring(searchTerm, creature.name)}</strong>
+                            <span>
+                                <strong>{highlightSubstring(searchTerm, creature.name)}</strong>  
+                            </span>
                             <div className='searchCreatureSmallDetails'>
                                 {creature?.from === 'dnd_b' ? (
                                     <>
-                                        <span className='monsterSearchDetailText'>{highlightSubstring(searchTerm, creature.type)}</span>
-                                        <span className='monsterSearchDetailText'> - {highlightSubstring(searchTerm, creature.dnd_b_player_id)}</span>
+                                        <span className='monsterSearchDetailText'>{creature?.campaign && <b>{creature.campaign} - </b>}</span>
+                                        <span className='monsterSearchDetailText'>{highlightSubstring(searchTerm, creature.dnd_b_player_id)}</span>
                                     </>
                                 ) : (
                                     <>

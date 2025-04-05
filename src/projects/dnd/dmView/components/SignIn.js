@@ -77,6 +77,9 @@ const SignIn = ({socket}) => {
         if(loginEnabled) {
             socket.emit("login", loginUsername, password1)
             setLoginTried(true)
+        } else {
+            setError("Nat 1 history: Username or Password Incorrect")
+            setLoading(false)
         }
     }
 
@@ -123,6 +126,11 @@ const SignIn = ({socket}) => {
                         placeholder='Username'
                         value={loginUsername}
                         onChange={(e) => setLoginUsername(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                submitLogin();
+                            }
+                        }}
                     />
                     <input
                         className='loginInput'
@@ -131,6 +139,11 @@ const SignIn = ({socket}) => {
                         placeholder='Password'
                         value={password1}
                         onChange={(e) => setPassword1(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                submitLogin();
+                            }
+                        }}
                     />
                     {openCreateAccount ? (
                         <div className=''>

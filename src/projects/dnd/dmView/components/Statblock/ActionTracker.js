@@ -21,6 +21,7 @@ const ActionTracker = ({ actions_count, cKey, handleCheck, nested=false, actionI
         }
         //This detemine adding or subtracting from rechargeCount
         let addCheck = index >= filledCircles
+        console.table({addCheck, cKey, nested, actionIndex})
         handleCheck(addCheck, cKey, nested, actionIndex);
     };
 

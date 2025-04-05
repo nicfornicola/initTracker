@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const EditStat = ({label, value, cKey, category = undefined, handleChange = undefined, type = 'text'}) => {
+const EditStat = ({label, value, cKey, category = undefined, index = undefined, handleChange = undefined, type = 'text', showLabel = true}) => {
+    const [content, setContent] = useState(value)
+
 
     let w = label === 'Name' ? '100%' : '95%'
     let h, alignItems, textAlign = ''
@@ -13,22 +15,35 @@ const EditStat = ({label, value, cKey, category = undefined, handleChange = unde
         h = '15px'
     }
 
-    const validate = (e, cKey, category, send = false) => {
-        if((type === 'number' && !isNaN(e.target.value)) || type === 'text' || type === 'checkbox') {
-            handleChange(e, cKey, category, undefined, send)
+    const validate = (e, cKey, category, index, send = false) => {
+        const { value, checked, type } = e.target;
+        if((type === 'number' && !isNaN(value)) || type === 'text' || type === 'checkbox') {
+            if(send) {
+                handleChange(e, cKey, category, index, send)
+            } else if(type === 'number'  || type === 'text') {
+                setContent(value)
+            } else {
+                setContent(checked)
+            }
         }
+    }
+
+    const handleFocus = (e) => { 
+        if(e.target.value === 'None' || e.target.value === '--') 
+            e.target.select();
     }
 
     return (
         <div className='editBlock' style={{alignItems}}>
-            <i className='editBlockTitle'>{label}</i>
+            {showLabel && <i className='editBlockTitle'>{label}</i>}
             <input className="editBlockInput" style={{width: w, height: h, textAlign: textAlign}}
                 type={type === 'checkbox' ? type : 'text'}
-                value={value}
-                checked={value}
-                onChange={(e) => validate(e, cKey, category)} 
-                onBlur={(e) => validate(e, cKey, category, true)} 
-                onFocus={(e) => {e.target.select()}}
+                value={content}
+                checked={content}
+                onChange={(e) => validate(e, cKey, category, index)} 
+                onBlur={(e) => validate(e, cKey, category, index, true)} 
+                size={index !== undefined && content.length}
+                onFocus={handleFocus}
             />
         </div>
     )

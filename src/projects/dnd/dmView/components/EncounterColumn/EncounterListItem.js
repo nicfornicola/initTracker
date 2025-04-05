@@ -14,7 +14,7 @@ import TeamWidgetPopup from './FlagWidget/TeamWidgetPopup.js';
 
 const colors = {
     0: "green",
-    1: "pink",
+    1: "orange",
     2: "brown",
 }
 
@@ -42,7 +42,6 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
 
     useEffect(() => {
         const selectedIndexOf = selectedIndex.findIndex(obj => obj.index === index);
-
         setSelectedPlace(selectedIndexOf)
         setSelected(selectedIndexOf !== -1)
     }, [selectedIndex])
@@ -63,7 +62,7 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
 
     // This useeffect is for checking changes from the statblock edit
     useEffect(() => {
-        if(creatureListItem.hit_points !== creature.hit_points) {
+        if(creatureListItem.hit_points !== creature.hit_points || creatureListItem.hit_points_current !== creature.hit_points_current) {
             setMaxHp(creatureListItem.hit_points)
             setCurrentHp(creatureListItem.hit_points_current)
         }
@@ -330,8 +329,9 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
             <li className='listItem'
                 onClick={() => handleClick(index)}
                 style={{
-                        border: isTurn ? '2px solid rgba(0, 122, 130)' : '',
-                        animation: isTurn ? 'shadowPulseTurn 2s ease-in-out infinite' : ''
+                    border: isTurn ? '2px solid rgba(0, 122, 130)' : '',
+                    animation: isTurn ? 'shadowPulseTurn 2s ease-in-out infinite' : '',
+                    opacity: hidden ? '.5' : '1'
                 }}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
@@ -368,6 +368,7 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
                             
                         </div>
                     </div>
+                    {selected && <div className='selectedIndicater siListItem' style={{backgroundColor: colors[selectedPlace]}}>{selectedPlace+1}</div>}
 
                     <div className='listItemOptions'>
                         <div>
@@ -422,8 +423,9 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
                             />
                         </div>
                     </div>
-                    {maxHp !== null  ? 
+                    {maxHp !== null ? 
                         <WidgetPopUp 
+                            disabled={creature.dnd_b_player_id}
                             triggerClass={'hpButtonTrigger'}
                             trigger={
                                 <div className='encounterCreaturesHpContainer'>
@@ -484,9 +486,7 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
                     :
                         <div className='encounterCreaturesHp'/>
                     }
-                    {selected && <div className='selectedIndicater' style={{backgroundColor: colors[selectedPlace]}}/>}
                 </div>
-                
             </li>
            
   );

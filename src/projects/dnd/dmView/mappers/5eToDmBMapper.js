@@ -280,7 +280,7 @@ export const t5eToDmBMapper = (monster, avatarUrl = null) => {
         "reactions": addRechargeCount(calcActionTypes(monster?.reaction) || null),
         "legendary_actions_count": monster?.legendary?.length > 0 ? 30 : 0,
         "legendary_actions": addRechargeCount(calcActionTypes(monster?.legendary) || null),
-        "legendary_desc": monster?.legendary?.length ? (monster?.legendaryHeader?.join(" ") || legendaryDescDefault(monster.name)) : "NOTHIN",
+        "legendary_desc": monster?.legendary?.length ? (monster?.legendaryHeader?.join(" ") || legendaryDescDefault(monster.name)) : "",
         "lair_actions": [], //see legendaryDetails ^^^
         "inspiration": false,
         "hidden": false,

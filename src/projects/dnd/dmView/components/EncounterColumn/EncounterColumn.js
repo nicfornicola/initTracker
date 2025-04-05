@@ -75,24 +75,28 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         setTurnNum(currentEncounter.turnNum)
     }, [currentEncounter.roundNum, currentEncounter.turnNum]);
 
+    useEffect(() => {
+        setSelectedIndex([])
+    }, [currentEncounter.encounterGuid]);
+
     const clickEncounterCreatureX = (event, xCreature, xIndex) => {
         event.stopPropagation(); 
 
         if(selectedIndex.length > 0) {
-            let foundIndex = selectedIndex.indexOf(xIndex)
+            let foundIndex = selectedIndex.findIndex(obj => obj.index === xIndex);
             if(foundIndex > -1) {
                 // if deleting the creature currently selected unselect it
                 let newArr = selectedIndex
                 newArr.splice(foundIndex, 1)
-
             }
-                // if deleting a creature of lower index then selectedIndex move selectedIndex down by 1 to follow the selected creatures object
-                let newArr = [...selectedIndex]
-                newArr.forEach((sIndex, i) => {
-                    if(xIndex < sIndex) {
-                        newArr[i] = sIndex - 1
-                    }
-                });
+
+            // if deleting a creature of lower index then selectedIndex move selectedIndex down by 1 to follow the selected creatures object
+            let newArr = [...selectedIndex]
+            newArr.forEach((sIndex, i) => {
+                if(xIndex < sIndex.index) {
+                    newArr[i].index = sIndex.index - 1
+                } 
+            });
             setSelectedIndex([...newArr])
         }
 
@@ -282,8 +286,8 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
 
         return {"roundNum": roundNum, "turnNum": turnNum}
     }
-
-    let flex = selectedIndex.length
+    
+    let flex = selectedIndex?.length
     if(flex > 2)
         flex = 2
 
@@ -294,7 +298,7 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                     <EncounterListTopInfo savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} setSavedEncounters={setSavedEncounters} handleNewEncounter={handleNewEncounter} socket={socket}/>
                     <EncounterControls setNameChange={setNameChange} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} handleTurnNums={handleTurnNums} handleRefresh={handleRefresh} refreshCheck={refreshCheck} autoRefresh={autoRefresh} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleAutoRollInitiative={handleAutoRollInitiative} socket={socket}/>
                     {currentEncounter.creatures.length ? (
-                        <EncounterList currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleSaveEncounter={handleSaveEncounter} turnNum={turnNum} handleUploadMonsterImage={handleUploadMonsterImage} selectedIndex={selectedIndex} handleRemoveFromSelectedIndex={handleRemoveFromSelectedIndex} clickEncounterCreatureX={clickEncounterCreatureX} socket={socket}/>
+                        <EncounterList currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleSaveEncounter={handleSaveEncounter} turnNum={turnNum} handleUploadMonsterImage={handleUploadMonsterImage} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} handleRemoveFromSelectedIndex={handleRemoveFromSelectedIndex} clickEncounterCreatureX={clickEncounterCreatureX} socket={socket}/>
                     ) : (
                         <div className='encounterCreaturesNoItemsContainer'> 
                             <div className='encounterCreaturesNoItems'>

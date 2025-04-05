@@ -2,9 +2,9 @@ import React from 'react';
 import '../../style/App.css';
 import { Popover } from '@base-ui-components/react/popover';
 
-const WidgetPopUp = ({trigger, popUp, onOpenChange, popOverClass, popOverClassContainer, alignOffset, sideOffset, triggerClass, align='end', side='bottom'}) => {
+const WidgetPopUp = ({trigger, popUp, onOpenChange, popOverClass, popOverClassContainer, alignOffset, sideOffset, triggerClass, align='end', side='bottom', disabled=false}) => {
     return <Popover.Root onOpenChange={onOpenChange}>
-                <Popover.Trigger className={`widgetPopupTrigger ${triggerClass}`} onClick={(event) => event.stopPropagation()}>
+                <Popover.Trigger className={`widgetPopupTrigger ${triggerClass}`} onClick={(event) => event.stopPropagation()} disabled={disabled}>
                     {trigger}
                 </Popover.Trigger>
                 <Popover.Portal>
