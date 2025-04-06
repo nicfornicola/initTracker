@@ -1,9 +1,15 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { generateUniqueId, INIT_ENCOUNTER_NAME, COLOR_GREEN, COLOR_RED} from '../../constants'
 import { ThreeDots } from 'react-loader-spinner'
 import { useImportedPlayers } from '../../../../../providers/ImportedPlayersProvider';
 import { useHomebrewProvider } from '../../../../../providers/HomebrewProvider';
 import 'react-tabs/style/react-tabs.css';
+import greenCheck from '../../pics/icons/check.png'
+import refresh from '../../pics/icons/refresh.png'
+import OptionButton from '../EncounterColumn/OptionButton';
+import { useUser } from '../../../../../providers/UserProvider';
+import { ImportDndBeyondCharacters } from '../../api/ImportDndBeyondCharacters'
+import SearchImportRefresh from './SearchImportRefresh';
 
 const alignmentOptions = [
     'good', 'evil', 'neutral',
@@ -53,7 +59,7 @@ function highlightSubstring(substring, fullString) {
 const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTerm, setSearchSelectedCreature, loadingPack, setLoadingPack, socket}) => {    
     const {removeFromImportList} = useImportedPlayers();
     const {removeFromHomebrewList} = useHomebrewProvider();
-    
+
     // Set the selected creature in search bar on left and gets the data from open5e
     const handleSearchSelectCreature = async (creature, action, event, index) => {
         event.stopPropagation();
@@ -94,8 +100,6 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
                 let newGuid = generateUniqueId();
                 setSearchSelectedCreature({...creature, creatureGuid: newGuid});
             }
-
-            
         }
 
         setLoadingPack({index: null, action: null, searchingFor: null})
@@ -175,8 +179,11 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
                                     event.stopPropagation()
                                     creature?.dnd_b_player_id ? removeFromImportList(creature, index) : removeFromHomebrewList(creature, index)
                                 }}>
-                                    X
+                                    ❌
                                 </button>
+                            }
+                            {(creature?.dnd_b_player_id) &&
+                                <SearchImportRefresh creature={creature} encounterGuid={encounterGuid}/>
                             }
                             <button className='monsterSearchAdd' onClick={(e) => handleSearchSelectCreature(creature, "add", e, index)}>
                                 ➕

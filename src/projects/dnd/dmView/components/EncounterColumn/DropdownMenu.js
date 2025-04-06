@@ -60,7 +60,7 @@ const DropdownMenu = ({ adminView, savedEncounters, setSavedEncounters, handleLo
                         {adminView && <strong>{encounter.username}</strong>}
                         {(!adminView || encounter.username === 'Username') && 
                             <button className='encounterDropdownX' onClick={(event) => clickEncounterDropdownMenuX(event, encounter)}>
-                                X
+                                ❌
                             </button>
                         }
 

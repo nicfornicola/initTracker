@@ -199,7 +199,7 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
     
     const handleInitiativeCheck = () => {
         socket.emit('creatureInitiativeChange', creature.initiative, creature.creatureGuid, "dm");
-        resort(creature)
+        resort()
     }    
     
     const handleHideEnemy = (event) => {
@@ -371,7 +371,7 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
                     {selected && <div className='selectedIndicater siListItem' style={{backgroundColor: colors[selectedPlace]}}>{selectedPlace+1}</div>}
 
                     <div className='listItemOptions'>
-                        <div>
+                        <div className='eyeball'>
                             <OptionButton src={hidden ? eyeClosed : eyeOpen}  message={(hidden ? "Hidden" : "Visible")} onClickFunction={handleHideEnemy} imgClassName={'option-no-margin'} />
                         </div>
                         <div>
@@ -390,7 +390,7 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
                         </div>
                         <div>
                             <button className='encounterCreatureX' onClick={(event) => clickEncounterCreatureX(event, creature, index)}>
-                                X
+                            ❌
                             </button>
                         </div>
                         <div>

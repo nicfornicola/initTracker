@@ -1,7 +1,7 @@
-import legendaryGroups from '../jsons/legendarygroups.json'
+// import legendaryGroups from '../jsons/legendarygroups.json'
 import { legendaryDescDefault } from '../replacements.js'
 
-const legendaryDetails = legendaryGroups.legendaryGroup;
+// const legendaryDetails = legendaryGroups.legendaryGroup;
 
 const COLOR_RED = "#D44E3B"
 const COLOR_GREEN = "#68AA33"

@@ -266,6 +266,10 @@ hr {
     border-radius: 10px;
 }
 
+.refreshListOption {
+    opacity: 0;
+}
+
 .option-no-margin {
     margin: 0px
 }
@@ -377,9 +381,23 @@ hr {
     opacity: .8; 
 }
 
-.loading {
+.noStreamingContainer {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    
+}
+
+.noStreamingTitle {
+    top: 0px;
     color: white;
     font-size: xx-large;
+}
+
+.noStreamingDesc {
+    color: white;
+    font-size: xx-large;
+    margin: 125px 20px 175px 20px;
 }
 
 .hoverPopup {
@@ -908,8 +926,8 @@ hr {
     position: relative;
     width: 50px;
     margin-right: 4%;
-    opacity: 0;
     height: 100%;
+    opacity: 0;
 }
 
 .monsterSearchDetailText {
@@ -1173,6 +1191,11 @@ input {
 
 .spinningImage {
     animation: spin 1.5s linear infinite; /* Spin for 3 seconds, infinite loops */
+}
+
+.refreshListOptionMargin {
+    margin-bottom: 0px; 
+    margin-right: 10px; 
 }
 
 .statBlockSpinner {
@@ -1516,6 +1539,12 @@ input {
     cursor: pointer;
 }
 
+.eyeball {
+    padding-top: 1.2px;
+    padding-left: 1.2px;
+    height: 20px;
+}
+
 .widgetPopupTrigger {
     all: unset;
     cursor: pointer;
@@ -1838,7 +1867,7 @@ input {
 }
 
 .encounterDropdownX {
-    opacity: 1;
+    opacity: 0;
     position: relative;
     right: 0px;
     background: none;
@@ -1849,8 +1878,7 @@ input {
 }
 
 .encounterDropdownX:hover {
-    border: 1px dotted #ae2626;
-
+    transform: scale(1.2);
 }
 
 .dropdown-item:hover .encounterDropdownX{
@@ -1925,6 +1953,7 @@ input {
 
 }
 
+.searchListCreatureContainer:hover .refreshListOption,
 .searchListCreatureContainer:hover .searchCreatureX,
 .searchListCreatureContainer:hover .monsterSearchAdd {
     opacity: 1;
@@ -1954,6 +1983,8 @@ input {
     flex-direction: column;
     border-left: 1px solid #822000;
     border-bottom: 1px solid #822000;
+    color: black;
+
 }
 
 .menuIconImports {
@@ -1963,6 +1994,12 @@ input {
 .importErrorMsg {
    margin: 5px;
 }
+
+.importErrorMsgLink {
+    font-size: small;
+}
+
+
 
 .importErrorImg {
     width: 85%;
@@ -2383,20 +2420,29 @@ input {
     background: none;
     border: none;
     color: red;
-    font-weight: bolder;
     cursor: pointer;
     height: 100%;
     opacity: 0;
+    padding-left: 2px;
+    padding-right: 3px;
+}
+
+.encounterCreatureX:hover {
+   transform: scale(1.2);
 }
 
 .searchCreatureX {
-    opacity: 0;
     background: none;
     border: none;
     color: red;
-    font-weight: bolder;
     cursor: pointer;
-    padding-right: 30px;
+    padding-right: 10px;
+    height: fit-content;
+    opacity: 0;
+}
+
+.searchCreatureX:hover {
+    transform: scale(1.3);
 }
 
 .searchListButtonContainer{
@@ -2404,6 +2450,7 @@ input {
     justify-content: flex-end;
     width: 30%;
     height: 100%;
+    align-items: center;
 }
 
 .side-menu {

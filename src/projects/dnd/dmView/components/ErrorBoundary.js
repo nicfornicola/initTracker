@@ -56,6 +56,8 @@ class ErrorBoundary extends React.Component {
                                     {this.state.errorInfo?.componentStack}
                                 </details>
                             </div>
+                            
+                            <a className='helpLink' href='/help'>DmBuddy.com/help</a>
                         </div>
                     </div>
                 </div>

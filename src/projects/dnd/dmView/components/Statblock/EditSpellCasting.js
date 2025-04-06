@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import OptionButton from '../EncounterColumn/OptionButton'
 import magPlus from '../../pics/icons/magPlus.PNG'
 import magMinus from '../../pics/icons/magMinus.PNG'

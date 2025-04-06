@@ -1,6 +1,6 @@
 import '../../../../dmView/style/App.css';
 import React from 'react';
-import {vocab, schoolOfSpell, replace, titleCase} from '../../../replacements.js';
+import {vocab, schoolOfSpell, titleCase} from '../../../replacements.js';
 import { BoldifyReplace } from '../BoldifyReplace.js';
 
 const calcCastingTime = (spell) => {

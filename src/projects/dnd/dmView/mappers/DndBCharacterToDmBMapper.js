@@ -41,14 +41,14 @@ export const DndBCharacterToDmBMapper = (dndBeyondRes, encounterGuid, skillDetai
             "environments": '',
             "legendary_actions": [],
             "lair_actions": [],
-            "campaign": dndBeyondRes.campaign.name
+            "campaign": dndBeyondRes?.campaign?.name
         }
 
     } else {
         return {
             "name": dndBeyondRes.name,
-            "name_default": dndBeyondRes.name,
-            "level": dndBeyondRes.level,
+            "name_default": dndBeyondRes.name || '',
+            "level": dndBeyondRes.level || 0,
             "from": "dnd_b",
             "creatureGuid": generateUniqueId(),
             "encounterGuid": encounterGuid,
@@ -56,9 +56,9 @@ export const DndBCharacterToDmBMapper = (dndBeyondRes, encounterGuid, skillDetai
             "dnd_b_player_id": dndBeyondRes.id,
             "link": "",
             "avatarUrl": 'https://www.dndbeyond.com/Content/Skins/Waterdeep/images/icons/monsters/humanoid.jpg',
-            "hit_points": 1,
+            "hit_points": 10,
             "hit_points_default": 1,
-            "hit_points_current": 1,
+            "hit_points_current": 10,
             "hit_points_temp": 0,
             "hit_points_override": 0, 
             "hit_points_modifier": 0, 
@@ -75,7 +75,7 @@ export const DndBCharacterToDmBMapper = (dndBeyondRes, encounterGuid, skillDetai
             "alignment": "ally",
             "border": COLOR_GREEN,
             "effects": [],
-            "creature_type": dndBeyondRes.race,
+            "creature_type": dndBeyondRes.race || '',
             "inspiration": false,
             "armor_class": 10,
             "inventory": null,

@@ -3,8 +3,8 @@ import Search from '../../pics/search.png'
 import LoginImage from '../../pics/icons/login.png'
 import questionMark from '../../pics/icons/questionMark.png'
 import Patreon from '../../pics/patreon_logo.png'
-import InputCharacterId from './InputCharacterId';
-import InputEncounterId from './InputEncounterId';
+// import InputCharacterId from './InputCharacterId';
+// import InputEncounterId from './InputEncounterId';
 import SignIn from '../SignIn';
 
 function downloadLocalStorage() {

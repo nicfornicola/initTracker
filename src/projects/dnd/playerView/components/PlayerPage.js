@@ -56,7 +56,7 @@ const showIcon = (creature, hideEnemies) => {
 
 function PlayerPage() {
     const [playerViewBackground, setPlayerViewBackground] = useState({type: "image", src: defaultBackground});
-    const [creatures, setCreatures] = useState([]);
+    const [creatures, setCreatures] = useState(null);
     const [turnNum, setTurnNum] = useState(0);
     const [roundNum, setRoundNum] = useState(0);
     const [hideEnemies, setHideEnemies] = useState(true);
@@ -86,6 +86,7 @@ function PlayerPage() {
 
             // Recieve messages from backend
             socket.on('sendPlayerViewCreatures', (encounterCreatures) => {
+                console.log("sendPlayerViewCreatures", encounterCreatures)
                 if(encounterCreatures.length === 0) {
                     console.log("No Encounter found for", sessionID)
                 }
@@ -106,20 +107,22 @@ function PlayerPage() {
                 let h = 240 + (24 * encounterRes.iconsize)
                 setIconSize({width: w, height: h})
 
-                if(encounterRes.backgroundGuid === 'default') {
-                    setPlayerViewBackground({type: "image", src: defaultBackground})
+                if(encounterRes.backgroundGuid === 'defaultError') {
                     console.log("Image not found setting to default")
+                    setPlayerViewBackground({type: "image", src: defaultBackground})
+                } else if(encounterRes.backgroundGuid === 'default') {
+                    setPlayerViewBackground({type: "image", src: defaultBackground})
                 } else {
                     setPlayerViewBackground(
                         encounterRes.backgroundGuid.includes('youtube.com')
-                        ? getVideoLink(encounterRes.backgroundGuid)
-                        : {type: 'image', src: encounterRes.backgroundGuid}
+                            ? getVideoLink(encounterRes.backgroundGuid)
+                            : {type: 'image', src: encounterRes.backgroundGuid}
                     )
                 }
             });
 
             socket.on('stopStreaming', () => {
-                setCreatures([])
+                setCreatures(null)
                 setTurnNum(0);
                 setRoundNum(0);
                 setHideEnemies(true);
@@ -151,18 +154,28 @@ function PlayerPage() {
                 </div>
             }
             
-            <div className="cardContainer" style={cardContainerStyle}>
-                {creatures.length === 0 ? (
-                    <div className='loading'>Dm not streaming... get it together man..</div>
-                ) : (
-                    creatures.map((creature, index) => { 
-                        return showIcon(creature, hideEnemies) 
-                        ? <Icon key={creature.creatureGuid} isTurn={turnNum === index+1} creature={creature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggle={enemyBloodToggle} iconSize={iconSize}/>
-                        : null
+                {creatures === null ? (
+                    <div className=" firstLoadMenuContainer">
+                        <div className="firstLoadMenu">
+                            <div className="homepageTopContent">
+                                <h1>DmBuddy.com</h1>
+                                <span>Home Brew Focused Encounter Builder and Player View</span>
+                                <span className='firstLoadExtra'>(with Dnd Beyond Importing)</span>
+                                <div className='noStreamingDesc'>Dm not streaming... get it together man...</div>
+                            </div>
+                            <a className='helpLink' href='/help'>DmBuddy.com/help</a>
+                        </div>
+                    </div>
 
-                    })
+                ) : (
+                    <div className="cardContainer" style={cardContainerStyle}>
+                        {creatures.map((creature, index) => { 
+                            return showIcon(creature, hideEnemies) 
+                                ? <Icon key={creature.creatureGuid} isTurn={turnNum === index+1} creature={creature} hideDeadEnemies={hideDeadEnemies} enemyBloodToggle={enemyBloodToggle} iconSize={iconSize}/>
+                                : null
+                        })}
+                    </div>
                 )}
-            </div>
         </div> 
     );
 }

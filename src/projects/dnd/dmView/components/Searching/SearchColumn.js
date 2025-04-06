@@ -7,8 +7,6 @@ import OptionButton from '../EncounterColumn/OptionButton';
 import Refresh from '../../pics/icons/refresh.png'
 import Asort from '../../pics/icons/Asort.PNG'
 import Zsort from '../../pics/icons/Zsort.PNG'
-import UrlSnippet from '../../../pics/demo/urlSnippet.png'
-import UrlSnippetPlayer from '../../../pics/demo/urlSnippetPlayer.png'
 import SearchTab from './SearchTab';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -263,10 +261,14 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
                                     <summary>Import Help</summary>
                                     <div className='importErrorContainer'>
                                         <ul className='howToImportList'>
-                                            <img className='importErrorImg' alt='error url' src={UrlSnippetPlayer} />
-                                            <img className='importErrorImg' alt='error url' src={UrlSnippet} />
-                                            <li className='importErrorMsg'><i>Import multiple players with a comma seperated list i.e.</i> 12345678,9817263,19203912</li>
-                                            <li className='importErrorMsg'><i>DnD Beyond will only import players. Try adding monsters/or NPC's from the search list</i></li>
+                                            <li className='importErrorMsg'>Character and Encounters ID's can be found in your DndBeyond Url i.e.</li>
+                                            <ul>
+                                                <li className='importErrorMsgLink'>Character ID - <i>https://www.dndbeyond.com/characters/</i><b>44429861</b></li>
+                                                <li className='importErrorMsgLink'>Encounter ID - <i>https://www.dndbeyond.com/encounters/</i><b>ed9784fc-5aba-473a-9ae9-166fed396e8e</b></li>
+                                            </ul>
+                                            <li className='importErrorMsg'>DmBuddy will try to import all PC's in the same campaign as the imported players</li>
+                                            <li className='importErrorMsg'>Import multiple players with a comma seperated list i.e. <b>12345678,9817263,19203912</b></li>
+                                            <li className='importErrorMsg'>Importing Encounters will only get the players. Try adding monsters/NPC's from the search list</li>
                                         </ul>
                                         
                                     </div>

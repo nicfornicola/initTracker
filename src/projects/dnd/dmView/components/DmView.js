@@ -30,6 +30,12 @@ function getLocalStorageSize() {
     console.log(`Approximate size: ${sizeInMB.toFixed(2)} MB`);
 }
 
+function findCreatureIndexes(currentEncounterCreatures, reassignSelected) {
+    return reassignSelected.map(guid =>
+        currentEncounterCreatures.findIndex(c => c.creatureGuid === guid)
+    ).filter(index => index !== -1); // Filter out any not found
+}
+
 function getVideoLink(thumbnailLink) {
     const videoId = thumbnailLink.split("vi/")[1].split('/max')[0];
     if (videoId) {
@@ -113,6 +119,8 @@ const DmView = () => {
     const [savedEncounters, setSavedEncounters] = useState([]);
     const [uploadIconMenu, setUploadIconMenu] = useState(false); 
     const [uploadIconCreature, setUploadIconCreature] = useState(null);
+    const [selectedIndex, setSelectedIndex] = useState([]);
+    
     const { username } = useUser();
 
     const socketRef = useRef(null)
@@ -199,7 +207,7 @@ const DmView = () => {
 
             const playerIds = filteredPlayers.map(player => player.dnd_b_player_id.toString()); // Map to get the ids as strings
             const playerNames = filteredPlayers.map(player => player.name); // Map to get the ids as strings
-            const refreshedData = await ImportDndBeyondCharacters(playerIds, currentEncounter.encounterGuid, undefined, username, playerNames);
+            const refreshedData = await ImportDndBeyondCharacters(playerIds, currentEncounter.encounterGuid, undefined, username, playerNames, false);
 
             // Iterate over the first array using a for loop
             let updatedDifCreatures = [] 
@@ -236,8 +244,8 @@ const DmView = () => {
                 socket.emit("updateDndBPlayers", updatedDifCreatures)
             } else { console.log("No updates to send...") }
 
-            
-            setCurrentEncounter(prev => ({...prev, creatures: sortCreatureArray([...updatedCreatures])}));
+
+            resort()
             console.log("Players Refreshed!")
             console.log("----------------")
 
@@ -246,6 +254,27 @@ const DmView = () => {
             console.warn(error)
         }  
     };
+
+    const resort = () => {
+        let reassignSelected = []
+        if(selectedIndex.length !== 0) {
+            selectedIndex.forEach(indexObj => {
+                reassignSelected.push(currentEncounter.creatures[indexObj.index].creatureGuid)
+            });
+        }
+        const sortedCreatures = sortCreatureArray(currentEncounter.creatures)
+        setCurrentEncounter(prev => ({...prev, creatures: [...sortedCreatures]}));
+        
+        // This handles open statblocks while the index of creatures change
+        const postSortedIndices = findCreatureIndexes(sortedCreatures, reassignSelected);
+
+        setSelectedIndex((prev) => {
+            prev.forEach((indexObj, i) => {
+                indexObj.index = postSortedIndices[i]
+            })
+            return prev
+        })
+    }
 
 
     const handleRefresh = () => {
@@ -380,7 +409,7 @@ const DmView = () => {
                     {showSearchList &&  
                         <SearchColumn setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} handleUploadMonsterImage={handleUploadMonsterImage} uploadIconCreature={uploadIconCreature} socket={socket}/>
                     }
-                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} setSavedEncounters={setSavedEncounters} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} setEncounterGuid={setEncounterGuid} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter} setUploadIconMenu={setUploadIconMenu} setUploadIconCreature={setUploadIconCreature} handleUploadMonsterImage={handleUploadMonsterImage} socket={socket}/>
+                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} setSavedEncounters={setSavedEncounters} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} setEncounterGuid={setEncounterGuid} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter} setUploadIconMenu={setUploadIconMenu} setUploadIconCreature={setUploadIconCreature} handleUploadMonsterImage={handleUploadMonsterImage} resort={resort} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} socket={socket}/>
                 </>
             )}
             <UploadMonsterImage setCurrentEncounter={setCurrentEncounter} uploadIconMenu={uploadIconMenu} setUploadIconCreature={setUploadIconCreature} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} socket={socket}/>

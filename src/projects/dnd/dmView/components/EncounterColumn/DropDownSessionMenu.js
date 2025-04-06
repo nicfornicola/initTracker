@@ -101,7 +101,7 @@ const DropDownSessionMenu = ({adminView, savedEncounters, socket}) => {
     };
     
     const iconSizeChange = (sizeType) => {
-        socket.emit("iconSizeChange", sizeType, streamingEncounter.encounterGuid)
+        socket.emit("iconSizeChange", sizeType, streamingEncounter.encounterGuid, username)
     };
 
     let buttonString = streamingEncounter.encounterGuid === null ? `Stream Player View...` : "Streaming "
@@ -128,29 +128,34 @@ const DropDownSessionMenu = ({adminView, savedEncounters, socket}) => {
                     <ul className="dropdownMenu">
                         {username !== "Username" &&
                             <>
-                            {streamingEncounter.encounterGuid !== null &&
-                                    <> 
-                                        {sessionID &&
-                                            <li className='dropdown-item' style={{}} 
-                                                onClick={() => {
-                                                    handleOpenSession(sessionID)
-                                                    setIsOpen(false)
-                                                }}
-                                            >
-                                                <strong>Open Player View</strong> 📺
-                                            </li>
-                                        }
-                                        <li className="dropdown-item" 
-                                            onClick={(event) => {
-                                                handleDropDownOptionClicked(event, null)
+                           
+                            {streamingEncounter.encounterGuid !== null ? (
+                                <> 
+                                    {sessionID &&
+                                        <li className='dropdown-item' style={{}} 
+                                            onClick={() => {
+                                                handleOpenSession(sessionID)
                                                 setIsOpen(false)
                                             }}
-                                            style={{textDecoration: 'underline', textDecorationThickness: '2px', textDecorationColor: 'red', borderBottom: '2px solid black'}}
                                         >
-                                            Stop Streaming
+                                            <strong>Open Player View</strong> 📺
                                         </li>
-                                    </>
-                                }
+                                    }
+                                    <li className="dropdown-item" 
+                                        onClick={(event) => {
+                                            handleDropDownOptionClicked(event, null)
+                                            setIsOpen(false)
+                                        }}
+                                        style={{textDecoration: 'underline', textDecorationThickness: '2px', textDecorationColor: 'red', borderBottom: '2px solid black'}}
+                                    >
+                                        Stop Streaming
+                                    </li>
+                                </>
+                            ) : (
+                                <li className='dropdown-item'>
+                                    <strong>Select An Encounter To Stream</strong>
+                                </li>
+                            )}
                                 {savedEncounters.map((encounter, index) => (
                                     <li
                                         key={encounter.encounterName + index}
