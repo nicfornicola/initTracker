@@ -632,6 +632,25 @@ hr {
     100% { transform: translateX(0); }
 }
 
+@keyframes ballBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    25% {
+        transform: translateY(-6px);
+    }
+    50% {
+        transform: translateY(0);
+    }
+    70% {
+        transform: translateY(-3px);
+    }
+}
+
+.hiddenShake {
+    animation: ballBounce .5s ease forwards;
+}
+
 .alreadySelected {
     animation: alreadySelectedGrow .5s ease forwards;
 }
@@ -2070,7 +2089,7 @@ input {
 }
 
 .nameInput {
-    width: 100%;
+    width: 60%;
     position: relative;
     font-family: 'Bitter', serif;
     font-weight: bold;

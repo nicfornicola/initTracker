@@ -85,7 +85,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
     }, [error]);
 
     useEffect(() => {
-        if(uploadIconCreature) {
+        if(uploadIconCreature && uploadIconCreature.column === 'search') {
             setSearchSelectedCreature(uploadIconCreature)
         }
     }, [uploadIconCreature]);

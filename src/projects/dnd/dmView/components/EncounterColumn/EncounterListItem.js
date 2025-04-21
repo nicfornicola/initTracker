@@ -19,7 +19,8 @@ const colors = {
 }
 
 
-const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter, handleUploadMonsterImage, selectedIndex, handleRemoveFromSelectedIndex, clickEncounterCreatureX, resort, socket}) => {
+const EncounterListItem = ({index, currentEncounter, creatureListItem, isTurn, setCurrentEncounter, handleUploadMonsterImage, selectedIndex, handleRemoveFromSelectedIndex, clickEncounterCreatureX, resort, socket}) => {
+    
     const [hidden, setHidden] = useState(creatureListItem.hidden);
     const [creature, setCreature] = useState(creatureListItem)
     const [isHovered, setIsHovered] = useState(false);
@@ -275,6 +276,7 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
             setCreature({...creature, dexterity_save: event.target.value});
             if(send) {
                 handleCreatureChange()
+                socket?.emit('statBlockEdit', creature.creatureGuid, 'dexterity_save', event.target.value);
             }
         }
     }
@@ -331,7 +333,7 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
                 style={{
                     border: isTurn ? '2px solid rgba(0, 122, 130)' : '',
                     animation: isTurn ? 'shadowPulseTurn 2s ease-in-out infinite' : '',
-                    opacity: hidden ? '.5' : '1'
+                    opacity:  ((hidden || currentEncounter.hideEnemies) && creature.type === "monster") ? '.5' : '1'
                 }}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
@@ -350,7 +352,7 @@ const EncounterListItem = ({index, creatureListItem, isTurn, setCurrentEncounter
                         <div className='initiativeInputContainer'>
                             <input style={{borderLeft: `6px solid ${teamColor}`}} className='inputButton' onFocus={handleHighlight} onBlur={handleInitiativeCheck} type='text' value={creature.initiative} onChange={handleInitiativeChange} onClick={(event) => event.stopPropagation()}/>
                         </div>
-                        <EditAvatar handleUploadMonsterImage={handleUploadMonsterImage} creature={creature}/>
+                        <EditAvatar handleUploadMonsterImage={handleUploadMonsterImage} creature={creature} column={"encounter"}/>
                         <div className='listItemMiddleStats'>
                             <div className='nameInputContainer'>
                                 <input className='nameInput' type='text' value={creature.name} onChange={handleChangeName} onBlur={(e) => handleChangeName(e, true)} onClick={(event) => event.stopPropagation()}/>

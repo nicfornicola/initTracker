@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 const EditStat = ({label, value, cKey, category = undefined, index = undefined, handleChange = undefined, type = 'text', showLabel = true}) => {
     const [content, setContent] = useState(value)
 
-
     let w = label === 'Name' ? '100%' : '95%'
     let h, alignItems, textAlign = ''
     if(type === 'number') {

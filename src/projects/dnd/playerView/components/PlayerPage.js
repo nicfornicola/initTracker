@@ -72,16 +72,33 @@ function PlayerPage() {
 
     useEffect(() => {
         if (!socketRef.current) {
-            socketRef.current = io(backendUrl); // Create socket connection
-            setSocket(socketRef.current)
+            const newSocket = io(backendUrl);
+    
+            socketRef.current = newSocket;
+            setSocket(newSocket);
         }
-    }, [socketRef]);
+
+        return () => {
+            if (socketRef.current) {
+                console.log(`Disconnecting socket: ${socketRef.current.id}`);
+                socketRef.current.disconnect();
+            }
+        };
+    }, []); // 👈 empty deps means this runs only once, on mount
 
     useEffect(() => {
         if(socket) {
             socket.on('connect', () => {
                 console.log(`Connected to Playerview - ${socket.id}`);
                 socket.emit('connectPlayerview', sessionID);
+            });
+
+            socket.on('pvPing', () => {
+                socket.emit("pvPong")
+            });
+
+            socket.on('disconnect', reason => {
+                console.log('Socket disconnected:', reason);
             });
 
             // Recieve messages from backend
@@ -122,6 +139,7 @@ function PlayerPage() {
             });
 
             socket.on('stopStreaming', () => {
+                console.log(`stopStreaming - ${socket.id}`);
                 setCreatures(null)
                 setTurnNum(0);
                 setRoundNum(0);
@@ -136,6 +154,7 @@ function PlayerPage() {
         // Clean up the socket connection on component unmount
         return () => {
             if(socket) {
+                console.log(`Disconnecting from Playerview - ${socket.id}`);
                 socket.disconnect();
             } 
         };

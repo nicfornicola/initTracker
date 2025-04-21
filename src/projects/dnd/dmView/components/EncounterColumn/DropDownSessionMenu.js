@@ -7,7 +7,7 @@ import streaming from '../../pics/icons/streaming.gif';
 
 const handleOpenSession = (sessionID) => {
     if(!sessionID) {
-        alert("Start a session first")
+        alert("Start a session first :)")
     }
     let url = window.location.href;
     // Add '/' if needed
@@ -15,11 +15,9 @@ const handleOpenSession = (sessionID) => {
     window.open(`${url}playerView/${sessionID}`, '_blank');
 };
 
-const DropDownSessionMenu = ({adminView, savedEncounters, socket}) => {
-    const [streamingEncounter, setStreamingEncounter] = useState({encounterName: null, encounterGuid: null})
-    const [sessionID, setSessionID] = useState(null)
+const DropDownSessionMenu = ({streamingEncounter, setStreamingEncounter, adminView, savedEncounters, socket}) => {
     const [isOpen, setIsOpen] = useState(false);
-    const { username } = useUser();
+    const { username, sessionID, setSessionID } = useUser();
 
     const dropdownRef = useRef(null);
 
@@ -30,12 +28,9 @@ const DropDownSessionMenu = ({adminView, savedEncounters, socket}) => {
     };
 
     useEffect(() => {
-        //session will hold sessionid and encounter for this user
-        if(sessionID === null && username !== 'Username') {
+        if(username !== 'Username') {
             socket.emit("getCurrentSession");
-        }
-
-        if(username === 'Username') {
+        } else {
             setStreamingEncounter({encounterName: null, encounterGuid: null})
             setSessionID(null)
             setIsOpen(false)
@@ -48,7 +43,6 @@ const DropDownSessionMenu = ({adminView, savedEncounters, socket}) => {
     }, [username]);
 
     useEffect(() => {
-        
         if(savedEncounters.length === 0) { setStreamingEncounter({encounterName: null, encounterGuid: null}) }
         else if(sessionID && streamingEncounter.encounterName === '') {
             savedEncounters.forEach(e => {
@@ -65,22 +59,15 @@ const DropDownSessionMenu = ({adminView, savedEncounters, socket}) => {
         if(socket) {
             // Recieve messages from backend
             socket.on('sendSession', (sessionInfo) => {
-                setSessionID(sessionInfo.sessionID)
-                if(sessionInfo.streamingEncounterGuid !== '' && savedEncounters.length === 0) {
-                    console.log("No saved encounters yet since no savedEncounters ")
-                    setStreamingEncounter({encounterGuid: sessionInfo.streamingEncounterGuid, encounterName: ''})
-                } else {
-                    // streamingEncounterGuid can be empty if nothing is found in the backend
-                    let log = "No Stream found..."
-                    savedEncounters.forEach(e => {
-                        if(e.encounterGuid === sessionInfo.streamingEncounterGuid) {
-                            setStreamingEncounter({encounterGuid: e.encounterGuid, encounterName: e.encounterName})
-                            log = `Found stream: ${e.encounterName} - (${e.encounterGuid})`
-                        }
-                    });
-                    console.log(log)
-                }
-                
+                // streamingEncounterGuid can be empty if nothing is found in the backend
+                let log = "No Stream found..."
+                savedEncounters.forEach(e => {
+                    if(e.encounterGuid === sessionInfo.streamingEncounterGuid) {
+                        setStreamingEncounter({encounterGuid: e.encounterGuid, encounterName: e.encounterName})
+                        log = `Found stream: ${e.encounterName} - (eGuid: ${e.encounterGuid})`
+                    }
+                });
+                console.log(log)
             });
         }
     }, [socket]);
@@ -115,14 +102,13 @@ const DropDownSessionMenu = ({adminView, savedEncounters, socket}) => {
                 <button className="dmViewButton" style={{borderRight: 0, paddingTop: '0px', paddingRight: '10px'}} disabled={username === 'Username'} onClick={() => setIsOpen(!isOpen)}>
                     <i>{buttonString}</i> 
                     {streamingEncounter.encounterName !== null && 
-                        <img alt='streaming' className='streamingGif' src={streaming} />
+                        <>
+                            <img alt='streaming' className='streamingGif' src={streaming} />
+                            <p style={{margin: 0, textAlign: 'left', textWrap: 'nowrap'}}>
+                                <b>{streamingEncounter.encounterName}</b>
+                            </p>
+                        </>
                     }
-                    {streamingEncounter.encounterName !== null && 
-                        <p style={{margin: 0, textAlign: 'left', textWrap: 'nowrap'}}>
-                            {streamingEncounter.encounterName} 
-                        </p>
-                    }
-                    
                 </button>
                 {isOpen && savedEncounters.length !== 0 && (
                     <ul className="dropdownMenu">
@@ -132,12 +118,7 @@ const DropDownSessionMenu = ({adminView, savedEncounters, socket}) => {
                             {streamingEncounter.encounterGuid !== null ? (
                                 <> 
                                     {sessionID &&
-                                        <li className='dropdown-item' style={{}} 
-                                            onClick={() => {
-                                                handleOpenSession(sessionID)
-                                                setIsOpen(false)
-                                            }}
-                                        >
+                                        <li className='dropdown-item' style={{}} onClick={() => { handleOpenSession(sessionID); setIsOpen(false)}}>
                                             <strong>Open Player View</strong> 📺
                                         </li>
                                     }
@@ -152,7 +133,7 @@ const DropDownSessionMenu = ({adminView, savedEncounters, socket}) => {
                                     </li>
                                 </>
                             ) : (
-                                <li className='dropdown-item'>
+                                <li className='dropdown-item' style={{borderBottom: '2px solid black'}}>
                                     <strong>Select An Encounter To Stream</strong>
                                 </li>
                             )}

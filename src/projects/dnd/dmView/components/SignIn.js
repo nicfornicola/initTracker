@@ -5,7 +5,7 @@ import { ThreeDots } from 'react-loader-spinner'
 import { isDev } from '../constants.js';
 
 const SignIn = ({socket}) => {
-    const { username, setUsername, password, setPassword } = useUser();
+    const { username, setUsername, password, setPassword, sessionID, setSessionID } = useUser();
     const [loginUsername, setLoginUsername] = useState('')
     const [password1, setPassword1] = useState('')
     const [password2, setPassword2] = useState('')
@@ -16,10 +16,11 @@ const SignIn = ({socket}) => {
     const [loginTried, setLoginTried] = useState(false)
     const [error, setError] = useState('')
     
-    const goodLogin = (emitUsername, emitPassword) => {
+    const goodLogin = (emitUsername, emitPassword, emitSessionID) => {
         setLoading(false)
         setUsername(emitUsername);
         setPassword(emitPassword);
+        setSessionID(emitSessionID);
         setLoggedIn(true)
         setError('')
         setLoginTried(false)
@@ -28,7 +29,7 @@ const SignIn = ({socket}) => {
 
     useEffect(() => {
         if(isDev && !loggedIn) {
-            goodLogin("nicdev", 'devpass')
+            goodLogin("nicdev", 'devpass', 'devsession')
         }
 
         if(socket) {
@@ -40,13 +41,13 @@ const SignIn = ({socket}) => {
                 } else if(errorCode === "passwordIncorrect") {
                     setError("Nat 1 history: Username or Password Incorrect")
                 } else if(errorCode === "usernameTaken") {
-                    setError("No a 4 does not hit: username already taken")
+                    setError("No... a 4 does not hit: Username already taken")
                 }
             });
     
             //get this when login or successful account creation
             socket.on('goodLogin', async (userData) => {
-                goodLogin(userData.emitUsername, userData.emitPassword)
+                goodLogin(userData.emitUsername, userData.emitPassword, userData.emitSessionID)
             });
 
             socket.on('backendready', () => {

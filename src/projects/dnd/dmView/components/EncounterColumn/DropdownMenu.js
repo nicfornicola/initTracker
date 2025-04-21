@@ -44,7 +44,7 @@ const DropdownMenu = ({ adminView, savedEncounters, setSavedEncounters, handleLo
                 {buttonString}
                 {currentEncounter && currentEncounter.encounterName !== INIT_ENCOUNTER_NAME &&
                     <p style={{margin: 0, textWrap: 'nowrap'}}>
-                        {currentEncounter.encounterName}
+                        <b>{currentEncounter.encounterName}</b>
                     </p>
                 }
             </button>

@@ -313,6 +313,7 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
     const handleChange = (e, cKey, category = undefined, index = undefined, send = false) => {
         // From EditStatBig add and remove buttonns
         const { value, checked, type } = e.target;
+
         if(['add', 'remove'].includes(cKey)) {
             handleUserArrayActions(cKey, category, index)
         } else if(index !== undefined) {
@@ -339,32 +340,27 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
                 value *= 10
         }
 
-        setCreature((prev) => ({
-            ...prev,
-            ...hpCurrent,
-            [cKey]: value
-        }));
+        const updatedCreature = { ...creature, ...hpCurrent, [cKey]: value};
+        setCreature({...updatedCreature});
 
         if (send) {
-            if(parseInt(value) !== parseInt(currentEncounter.creatures[selectedIndex][cKey])) {
-                setCurrentEncounter((prev) => ({
-                    ...prev,
-                    creatures: prev.creatures.map((oldCreature, i) =>
-                        i === selectedIndex ? { ...creature } : oldCreature
-                    ),
-                }));
 
-                // This is a weird check for the search selected creatures that have their skills (i.e. STR or STR_Save) edited
-                if(currentEncounter.encounterName === 'dmbuddy_selected' && !isEditMode) {
-                    handleAddToHomebrew(creature)
-                }
+            setCurrentEncounter((prev) => ({
+                ...prev,
+                creatures: prev.creatures.map((oldCreature, i) =>
+                    i === selectedIndex ? { ...updatedCreature } : oldCreature
+                ),
+            }));
 
-                if(cKey === 'hit_points' && parseInt(creature.hit_points) === parseInt(creature.hit_points_current)) {
-                    socket?.emit('playerHpChange', {hit_points: value, hit_points_current: value}, creature.creatureGuid, "dm");
-                } else {
-                    socket?.emit('statBlockEdit', currentEncounter.creatures[selectedIndex].creatureGuid, cKey, value);
-                }
-                
+            // This is a weird check for the search selected creatures that have their skills (i.e. STR or STR_Save) edited
+            if(currentEncounter.encounterName === 'dmbuddy_selected' && !isEditMode) {
+                handleAddToHomebrew(creature)
+            }
+
+            if(cKey === 'hit_points' && parseInt(creature.hit_points) === parseInt(creature.hit_points_current)) {
+                socket?.emit('playerHpChange', {hit_points: value, hit_points_current: value}, creature.creatureGuid, "dm");
+            } else {
+                socket?.emit('statBlockEdit', currentEncounter.creatures[selectedIndex].creatureGuid, cKey, value);
             }
         }
     };

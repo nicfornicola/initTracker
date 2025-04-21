@@ -240,12 +240,12 @@ const DmView = () => {
             });
 
             if(updatedDifCreatures.length > 0) { 
-                console.log("updateFound", updatedDifCreatures); 
+                console.log("Update Found: ", updatedDifCreatures); 
+                console.log("Updated Creatures", updatedCreatures)
                 socket.emit("updateDndBPlayers", updatedDifCreatures)
-            } else { console.log("No updates to send...") }
+            } else { console.log("No updates found...") }
 
 
-            resort()
             console.log("Players Refreshed!")
             console.log("----------------")
 
@@ -255,14 +255,15 @@ const DmView = () => {
         }  
     };
 
-    const resort = () => {
+    const resort = (refreshedCreatures=undefined) => {
+        const sortCreatures = refreshedCreatures || currentEncounter.creatures
         let reassignSelected = []
         if(selectedIndex.length !== 0) {
             selectedIndex.forEach(indexObj => {
-                reassignSelected.push(currentEncounter.creatures[indexObj.index].creatureGuid)
+                reassignSelected.push(sortCreatures[indexObj.index].creatureGuid)
             });
         }
-        const sortedCreatures = sortCreatureArray(currentEncounter.creatures)
+        const sortedCreatures = sortCreatureArray(sortCreatures)
         setCurrentEncounter(prev => ({...prev, creatures: [...sortedCreatures]}));
         
         // This handles open statblocks while the index of creatures change
@@ -277,12 +278,13 @@ const DmView = () => {
     }
 
 
-    const handleRefresh = () => {
+    const handleRefresh = async () => {
         console.log("Refresh Players", autoRefresh)
         setRefreshLoading(true)
 
         if (autoRefreshDndbPlayers) {
-            refreshPlayerProfiles();
+            const refreshed = await refreshPlayerProfiles()
+            resort(refreshed)
         }
 
         // Set this for a minimum animation spin of 1 seconds
@@ -372,10 +374,11 @@ const DmView = () => {
         setPlayerViewBackground({type: 'image', src: defaultBackground})
     };  
      
-    const handleUploadMonsterImage = (event, creature) => {
+    const handleUploadMonsterImage = (event, creature, column = "search") => {
         event.stopPropagation()
         setUploadIconMenu(true)
-        setUploadIconCreature(creature)
+        //add coulmn to the creature so we know where to upload the image
+        setUploadIconCreature({...creature, column: column})
     }
 
     const handleLoadEncounter = (encounter) => {
@@ -413,7 +416,7 @@ const DmView = () => {
                 </>
             )}
             <UploadMonsterImage setCurrentEncounter={setCurrentEncounter} uploadIconMenu={uploadIconMenu} setUploadIconCreature={setUploadIconCreature} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} socket={socket}/>
-            </div>
+        </div>
     );
 };
 

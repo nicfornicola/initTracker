@@ -17,6 +17,11 @@ import Timer from './/Timer';
 import RefreshTimer from './RefreshTimer';
 import OptionButton from './OptionButton';
 import EnemyBloodiedMessage from './EnemyBloodiedMessage';
+import streamingGif from '../../pics/icons/streaming.gif';
+import streamingImg from '../../pics/icons/streamingImg.png';
+import useShakeAnimation from '../../Hooks/useShakeAnimation';
+
+import { useUser } from '../../../../../providers/UserProvider';
 
 function getBloodImage(type) {
     let newImage;
@@ -26,7 +31,7 @@ function getBloodImage(type) {
     return newImage
 }
 
-const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange, socket}) => {
+const EncounterControls = ({streamingEncounter, setStreamingEncounter, handleTurnNums, currentEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange, socket}) => {
     const [arrowButton, setArrowButton] = useState(upArrow);
     const [arrowToggleType, setArrowToggleType] = useState(0);
     const [showRefreshButton, setShowRefreshButton] = useState(autoRefresh);
@@ -36,6 +41,10 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
     const [hideEnemies, setHideEnemies] = useState(currentEncounter.hideEnemies);
     const [enemyBloodToggle, setEnemyBloodToggle] = useState(currentEncounter.enemyBloodToggle);
     const [hideDeadEnemies, setHideDeadEnemies] = useState(currentEncounter.hideDeadEnemies);
+    const [anyEnemyVisible, setAnyEnemyVisible] = useState(currentEncounter.creatures.filter(creature => !creature.hidden && creature.type !== "player").length);
+    const {sessionID} = useUser()
+
+    const shakeRef = useShakeAnimation(anyEnemyVisible);
 
     useEffect(() => {
         setEncounterName(currentEncounter.encounterName)
@@ -43,6 +52,8 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
         setEnemyBloodToggle(currentEncounter.enemyBloodToggle)
         setEnemyBloodToggleImage(getBloodImage(currentEncounter.enemyBloodToggle))
         setHideDeadEnemies(currentEncounter.hideDeadEnemies)
+        setAnyEnemyVisible(currentEncounter.creatures.filter(creature => !creature.hidden && creature.type !== "player").length);
+
         // eslint-disable-next-line
     }, [currentEncounter]);
 
@@ -51,7 +62,8 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
             { ...currentEncounter,
                 hideEnemies: hideEnemies, 
                 enemyBloodToggle: enemyBloodToggle, 
-                hideDeadEnemies: hideDeadEnemies });
+                hideDeadEnemies: hideDeadEnemies 
+            });
         // eslint-disable-next-line
     }, [hideEnemies, enemyBloodToggle, hideDeadEnemies]);
 
@@ -131,6 +143,17 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
         }
     };
 
+    const handleStartStream = () => { 
+        const isStreaming = streamingEncounter?.encounterGuid === currentEncounter?.encounterGuid
+        if(isStreaming) {
+            socket.emit("stopStreaming", sessionID)
+            setStreamingEncounter({encounterName: null, encounterGuid: null})
+        } else {
+            socket.emit("startStreaming", currentEncounter.encounterGuid, sessionID)
+        }
+    }
+
+    const isStreaming = streamingEncounter?.encounterGuid === currentEncounter.encounterGuid
     return (
         <div className='encounterControlsContainer'>
             <div>
@@ -143,6 +166,9 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
                         <button className='dmViewButton' onClick={handleAutoRollInitiative}>Roll Init.</button>
                     </div>
                     <div className='dmLowOptions'>
+                        {sessionID !== null &&
+                            <OptionButton imgStyle={{border: `2px solid ${isStreaming ? 'green' : 'red'}`, backgroundColor: 'white'}} imgClassName='streamingGif' src={isStreaming ? streamingGif : streamingImg} message={isStreaming ? 'Stop Streaming'  : `Stream Encounter: '${currentEncounter.encounterName}'`} onClickFunction={handleStartStream}/>
+                        }
                         {/* <OptionButton src={arrowButton} message={"Player View Icon Position"} onClickFunction={handleMovePortraits}/> */}
                         <ImagePopup setPlayerViewBackground={setPlayerViewBackground} encounterGuid={currentEncounter.encounterGuid} socket={socket}/>                    
                         {showRefreshButton &&
@@ -163,7 +189,7 @@ const EncounterControls = ({handleTurnNums, currentEncounter, refreshLoading, se
                             </div>
 
                             <div className='dmLowOptions'>
-                                <OptionButton src={hideEnemies ? eyeClosed : eyeOpen} message={"Enemies " + (hideEnemies ? "Hidden" : "Visible")} onClickFunction={handleHideEnemies}/>
+                                <OptionButton src={hideEnemies ? eyeClosed : eyeOpen} message={"Enemies " + (hideEnemies ? "Hidden" : "Visible")} onClickFunction={handleHideEnemies} imgRef={hideEnemies ? shakeRef : null}/>
                                 <OptionButton src={hideDeadEnemies ? skullButtonNot : skullButton} message={"Dead Enemies: " + (hideDeadEnemies ? "Hidden" : "Visible")} onClickFunction={handleHideDeadEnemies}/>
                                 <OptionButton src={enemyBloodToggleImage} message={<EnemyBloodiedMessage enemyBloodToggle={enemyBloodToggle}/>} onClickFunction={handleEnemyBlood}/>
                             </div>

@@ -283,7 +283,7 @@ export const t5eToDmBMapper = (monster, avatarUrl = null) => {
         "legendary_desc": monster?.legendary?.length ? (monster?.legendaryHeader?.join(" ") || legendaryDescDefault(monster.name)) : "",
         "lair_actions": [], //see legendaryDetails ^^^
         "inspiration": false,
-        "hidden": false,
+        "hidden": true,
         "deathSaves": {
             "failCount": 0,
             "successCount": 0,

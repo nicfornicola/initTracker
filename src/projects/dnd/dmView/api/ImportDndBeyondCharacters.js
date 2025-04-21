@@ -66,9 +66,9 @@ export const ImportDndBeyondCharacters = async (playerIds, encounterGuid, player
                 results.push(mappedCharacter);
             } catch (error) {
                 console.log(`${(i+1).toString()}/${playerIds.length} failed! (${playerId}) [Trying to create dummy]`);
-                if (error.response.status === 404) {
+                if (error?.response?.status === 404) {
                     alert(`Could not find ID: '${playerId}' \n\nDnd Beyond Error: ${error.response.status}`);
-                } else if (error.response.status === 403 || error.response.status === 500) {
+                } else if (error?.response?.status === 403 || error?.response?.status === 500) {
                     // This data is from an encounter so we can still create them as a dummy for refresh later
                     if (players) {
                         console.log("Create failed dummy: encounter");
@@ -79,7 +79,7 @@ export const ImportDndBeyondCharacters = async (playerIds, encounterGuid, player
                         results.push(DndBCharacterToDmBMapper({name: importedPlayerNames[playerId], id: playerId, status: 403}, encounterGuid));
                     } else {
                         console.log("Create failed dummy: playerNames");
-                        let name = "name_not_found";
+                        let name = "DndB-" + playerId || "name_not_found";
                         if (playerNames) {
                             name = playerNames[i];
                         }
@@ -108,7 +108,7 @@ export const ImportDndBeyondCharacters = async (playerIds, encounterGuid, player
             resultString +
             '===========================\n' +
             'HOW TO FIX: [Dnd_Beyond] -> [Go To Character] -> [Edit] -> [⚙️Home tab] -> [Character Privacy] -> [Privacy: Public]\n\n' +
-            '(This message shows every auto refresh (1 minute) while a Private DndBeyond character is present)');
+            '(This message shows every auto refresh (1 minute) while a Private DndBeyond character is in the current encounter)');
     }
 
     const successfulResponses = results.map(result => ({ ...result, campaign: campaignName }));

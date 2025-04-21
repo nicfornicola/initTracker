@@ -2,15 +2,7 @@ import {skills_long, skills_short } from '../../dmView/constants.js';
 
 
 function extractAc(jsonData) {
-    try {
-        if (jsonData.definition.armorClass) {
-            return jsonData.definition.armorClass;
-        } else {
-            return 0;
-        }
-    } catch (error) {
-        return 0;
-    }
+    return jsonData?.definition?.armorClass || 0;
 }
 
 export const getSkillDetails = (data) => {
@@ -25,8 +17,12 @@ export const getSkillDetails = (data) => {
             ignoreRace = true
 
     })
+
+    console.log("ignoreRace", ignoreRace)
+    console.log("data", data)
     
     let bonusAc = 0
+    let bonusHpPerLevel = 0
     let bonuses = {
         "race": [0, 0, 0, 0, 0, 0],
         "class": [0, 0, 0, 0, 0, 0],
@@ -52,6 +48,8 @@ export const getSkillDetails = (data) => {
                 } else if(typeName === 'Armored Armor Class' || typeName === 'Armor Class') {
                     // Get AC bonus from feats, class...
                     bonusAc += mod["fixedValue"]
+                } else if(typeName === 'Hit Points per Level') {
+                    bonusHpPerLevel += mod["fixedValue"]
                 }
             } 
         })
@@ -82,35 +80,15 @@ export const getSkillDetails = (data) => {
     }
 
     let total_lvl = 0;
-    let draconicResilienceHp = 0
     data["classes"].forEach(classDND => {
         total_lvl += classDND["level"];
-        if(classDND?.subclassDefinition?.classFeatures) {
-            let classFeatures = classDND.subclassDefinition.classFeatures
-            classFeatures.forEach(classFeature => {
-                if(classFeature.name === "Draconic Resilience") {
-                    draconicResilienceHp = 1
-                }
-            });
-        }
-    });
-
-    let hasTough = false;
-    let toughHp = 0;
-    // tough componentID 1789206
-    data.feats.forEach(feat => {
-        if (feat.definition.name === "Tough") {
-            hasTough = true;
-        }
     });
     
-    if (hasTough) toughHp = total_lvl * 2;
-    if(draconicResilienceHp) draconicResilienceHp = total_lvl
- 
-
+    // BonushpPerLevel comes from races, mods, and other sources with the "Hit Points per Level" friendlySubtypeName
+    let bonusHp = bonusHpPerLevel * total_lvl;
     // Hyron gets an extra con from hermit
     let baseHp = data["baseHitPoints"];
-    let maxHp = (skills_json_array[2]["modifier"] * total_lvl) + baseHp + toughHp + draconicResilienceHp;
+    let maxHp = (skills_json_array[2]["modifier"] * total_lvl) + baseHp + bonusHp;
 
     if (data.overrideHitPoints) {
         maxHp = data.overrideHitPoints
