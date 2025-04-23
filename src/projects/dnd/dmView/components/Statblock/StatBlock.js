@@ -824,20 +824,22 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
                                         <span> {creature.environments}</span>
                                     </div>
                                 )} */}
+                                {/* <div className='endShadowContainer'>
+                                    <div className='endShadow'/>
+                                </div> */}
+                                <hr className="lineSeperator lineSeperatorLast" />
                             </div>
-                            <hr className="lineSeperator" />
                             {creature.sourceShort && 
                                 <div>
+                                    <hr className="lineSeperator" />
                                     <strong className='source'>Source: {creature.sourceShort}, page {creature.page}</strong>
                                 </div>
                             }
-                            
                         </>
                     )}
-                    <hr className="lineSeperator" />
+                    <hr className="lineSeperator lineSeperatorEnd" />
                 </>
             )}
-            
         </div>
     );
 }

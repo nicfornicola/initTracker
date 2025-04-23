@@ -256,6 +256,7 @@ const DmView = () => {
     };
 
     const resort = (refreshedCreatures=undefined) => {
+        
         const sortCreatures = refreshedCreatures || currentEncounter.creatures
         let reassignSelected = []
         if(selectedIndex.length !== 0) {

@@ -18,9 +18,6 @@ export const getSkillDetails = (data) => {
 
     })
 
-    console.log("ignoreRace", ignoreRace)
-    console.log("data", data)
-    
     let bonusAc = 0
     let bonusHpPerLevel = 0
     let bonuses = {
@@ -34,7 +31,7 @@ export const getSkillDetails = (data) => {
     Object.entries(data.modifiers).forEach(([key, arr]) => {
         // Skip race
         if(ignoreRace && key === 'race') {
-            console.log("Ignoring Old Racial Mods (if present) since there is a 2024 background being used...")
+            console.log("2024 background found... Ignoring Old Racial Mods (if present)")
             return
         }
 

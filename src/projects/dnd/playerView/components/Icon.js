@@ -28,7 +28,7 @@ const Icon = ({creature, isTurn, hideDeadEnemies, enemyBloodToggle, iconSize}) =
     const isPlayer = creature.type === "player";
     const isAlly = creature.alignment === "pet" || creature.type === "player";
     const effectsFound = creature.effects.length > 0
-    const showInitiativeBox = creature.initiative !== null;
+    const showInitiativeBox = creature.initiative !== null && creature.initiative !== undefined && creature.initiative !== 0;
     const isExhausted = creature.exhaustionLvl > 0
     const lowHpBoxColor =  {boxShadow: '1px 1px 8px 5px rgba(150, 40, 27, 1)'};
     const mediumHpBoxColor = {boxShadow: '1px 1px 8px 5px rgba(242, 177, 35, 1)'};

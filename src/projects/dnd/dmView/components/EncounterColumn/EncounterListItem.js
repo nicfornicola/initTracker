@@ -162,7 +162,8 @@ const EncounterListItem = ({index, currentEncounter, creatureListItem, isTurn, s
 
         if(send) {
             socket.emit("creatureNameChange", newName, creature.creatureGuid, "dm")
-            handleCreatureChange()
+            currentEncounter.creatures[index].name = newName
+            resort()
         }
     }
 
@@ -200,6 +201,7 @@ const EncounterListItem = ({index, currentEncounter, creatureListItem, isTurn, s
     
     const handleInitiativeCheck = () => {
         socket.emit('creatureInitiativeChange', creature.initiative, creature.creatureGuid, "dm");
+        currentEncounter.creatures[index].initiative = creature.initiative
         resort()
     }    
     
@@ -327,13 +329,22 @@ const EncounterListItem = ({index, currentEncounter, creatureListItem, isTurn, s
     if (alignment === "enemy") teamColor = COLOR_RED
     else if (alignment === "neutral") teamColor = '#999999'
 
+    let invis = false;
+    if(creature.type !== "player") {
+        if(creature.alignment === "ally" || creature.alignment === "pet") {
+            invis = hidden
+        } else {
+            invis = hidden || currentEncounter.hideEnemies;
+        }
+    }
+
     return (
             <li className='listItem'
                 onClick={() => handleClick(index)}
                 style={{
                     border: isTurn ? '2px solid rgba(0, 122, 130)' : '',
                     animation: isTurn ? 'shadowPulseTurn 2s ease-in-out infinite' : '',
-                    opacity:  ((hidden || currentEncounter.hideEnemies) && creature.type === "monster") ? '.5' : '1'
+                    opacity: invis ? '.5' : '1'
                 }}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}

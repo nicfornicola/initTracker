@@ -1306,6 +1306,21 @@ input {
     margin: 3px;
 }
 
+.endShadowContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.endShadow {
+    align-self: center;
+    position: relative;
+    border-radius: 10px;
+    width: 95%;
+    box-shadow: 2px 0px 6px 6px rgb(94, 94, 94);
+}
+
 .textShadow {
     text-shadow: -.5px .5px 0px #000000;
 }
@@ -1511,6 +1526,14 @@ input {
     border-top: 2px solid #822000; /* Change color and thickness */
     width: 100%; /* Set the width to 50% of the parent container */
     margin: 0px;
+}
+
+.lineSeperatorEnd {
+    width: 98.7%; /* Set the width to 50% of the parent container */
+}
+
+.lineSeperatorLast {
+    border-top: 4px solid #822000; /* Change color and thickness */
 }
 
 .editlineSeperator {
@@ -2089,7 +2112,7 @@ input {
 }
 
 .nameInput {
-    width: 60%;
+    width: 90%;
     position: relative;
     font-family: 'Bitter', serif;
     font-weight: bold;
