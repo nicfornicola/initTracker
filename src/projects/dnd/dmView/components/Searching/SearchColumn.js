@@ -57,14 +57,14 @@ const getDefaultImages = (creature) => {
 const titles = ["Monster Search", "Homebrew", "Imports"]
 const panels = Array(3).fill(null); // Creates an array with 3 elements
 
-const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterImage, uploadIconCreature, socket}) => {
+const SearchColumn = ({encounterGuid, handleUploadMonsterImage, uploadIconCreature, socket}) => {
     const defaultDisplayNumber = 20;
     const {importedPlayers} = useImportedPlayers();
-    const {homebrewList} = useHomebrewProvider();
+    const {homebrewList} = useHomebrewProvider();    
     
     const [searchTerm, setSearchTerm] = useState('');
     const [sortType, setSortType] = useState('shuffle');
-    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [selectedTabIndex, setSelectedTabIndex] = useState(0);
     const [searchSelectedCreature, setSearchSelectedCreature] = useState(null);
     const [searchSelectedEncounter, setSearchSelectedEncounter] = useState({encounterName: "search", creatures: []});
 
@@ -114,7 +114,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
         if(!isDev) {
             async function fetchData() {
                 let list;
-                if(selectedIndex === 0) {
+                if(selectedTabIndex === 0) {
                     if(sortType === "shuffle" || sortType === "reshuffle") {
                         list = shuffledMonsterList
                     } else if(sortType === 'A') {
@@ -122,9 +122,9 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
                     } else if(sortType === 'Z') {
                         list = reversedMonsterList
                     }
-                } else if (selectedIndex === 1) {
+                } else if (selectedTabIndex === 1) {
                     list = homebrewList;
-                } else if (selectedIndex === 2) {
+                } else if (selectedTabIndex === 2) {
                     const sortedByCampaign = importedPlayers.sort((a, b) => {
                         const campaignA = a.campaign || ""; // Default to empty string if null/undefined
                         const campaignB = b.campaign || ""; // Default to empty string if null/undefined
@@ -135,14 +135,14 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
 
                 const filtered = list.filter(item => {
                         let searchValue = searchTerm.toLowerCase()
-                        return (selectedIndex === 0)
+                        return (selectedTabIndex === 0)
                             ? [item?.name, item?.creature_type, item?.subtype, item?.creature_alignment].map(x => (x || '').toLowerCase()).some(x => x.includes(searchValue)) || item?.challenge_rating === searchValue
                             : [item?.name, item?.type, item?.dnd_b_player_id].map(x => (x || '').toLowerCase()).some(x => x.includes(searchValue));
 
                     }).slice(0, numberOfListItems);
 
                 // Homebrew and Import do not need avatarUrls because they come from the Dmb database
-                if(selectedIndex === 0) {
+                if(selectedTabIndex === 0) {
                     const promises = filtered.map(async creature => {
                         if (creature.avatarUrl !== null ) {
                             return creature
@@ -169,7 +169,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
 
             return () => clearTimeout(timeoutId); // Cleanup timeout
         }
-    }, [searchTerm, numberOfListItems, sortType, selectedIndex, importedPlayers, homebrewList]);
+    }, [searchTerm, numberOfListItems, sortType, selectedTabIndex, importedPlayers, homebrewList]);
 
     const addNewHomebrew = () => {
         let newHomebrew = {...homebrewTemplate, creatureGuid: generateUniqueId()}
@@ -225,9 +225,9 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
     };
 
     const handleTabSelect = (index) => {
-        if(index !== selectedIndex) {
+        if(index !== selectedTabIndex) {
             setLoading(true); 
-            setSelectedIndex(index)
+            setSelectedTabIndex(index)
             setSearchTerm("")
         }
     }
@@ -250,12 +250,12 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
                             <Tab>Homebrew</Tab>
                             <Tab>DndBeyond Imports</Tab>
                         </TabList>
-                        <h3 className='titleFontFamily' style={{borderBottom: '1px solid #822000'}}>{titles[selectedIndex]}</h3>
-                        {selectedIndex === 2 && 
+                        <h3 className='titleFontFamily' style={{borderBottom: '1px solid #822000'}}>{titles[selectedTabIndex]}</h3>
+                        {selectedTabIndex === 2 && 
                             <div className='importInputsContainer'>
                                 <div className='importInputs editHpGrow'>
-                                    <InputCharacterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} setError={setError} socket={socket} />
-                                    <InputEncounterId setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} setError={setError} socket={socket} />
+                                    <InputCharacterId encounterGuid={encounterGuid} setError={setError} socket={socket} />
+                                    <InputEncounterId encounterGuid={encounterGuid} setError={setError} socket={socket} />
                                 </div>
                                 <details >
                                     <summary>Import Help</summary>
@@ -285,7 +285,7 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
                                     value={searchTerm}
                                     onChange={(e) => handleSetSearchTerm(e.target.value)}
                                 />
-                                {selectedIndex !== 2 && 
+                                {selectedTabIndex !== 2 && 
                                     <OptionButton src={magPlus} message={'Create New Homebrew'} onClickFunction={addNewHomebrew} wrapperClassName='searchListOption'/>
                                 }
 
@@ -303,11 +303,11 @@ const SearchColumn = ({setCurrentEncounter, encounterGuid, handleUploadMonsterIm
                                 ))}
                             </>
                         ) : ( 
-                            <div className='monsterSearch' style={{height: selectedIndex === 2 ? '72.4%' : '81%' }} onScroll={handleScroll}>
+                            <div className='monsterSearch' style={{height: selectedTabIndex === 2 ? '72.4%' : '81%' }} onScroll={handleScroll}>
                                 <ul className='monsterSearchList'>
                                     {panels.map((_, index) => (
                                         <TabPanel key={titles[index]}>
-                                            <SearchTab displayedItems={displayedItems} setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} searchTerm={searchTerm} setSearchSelectedCreature={setSearchSelectedCreature} loadingPack={loadingPack} setLoadingPack={setLoadingPack} socket={socket} />
+                                            <SearchTab displayedItems={displayedItems} encounterGuid={encounterGuid} searchTerm={searchTerm} setSearchSelectedCreature={setSearchSelectedCreature} loadingPack={loadingPack} setLoadingPack={setLoadingPack} socket={socket} />
                                         </TabPanel>
                                     ))}
                                 </ul>

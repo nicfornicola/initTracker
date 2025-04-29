@@ -15,6 +15,7 @@ import EditAvatar from './EditAvatar';
 import { BoldifyReplace } from './BoldifyReplace';
 import SpellCasting from './SpellList';
 import EditSpellCasting from './EditSpellCasting';
+import { useEncounter } from '../../../../../providers/EncounterProvider';
 
 function exists(value) {
     return value && value !== '0';
@@ -160,13 +161,21 @@ const colors = {
     2: "brown",
 }
 
-const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounter, closeStatBlock, loading=false, searchingFor=null, handleUploadMonsterImage, socket}) => {
+const StatBlock = ({selectedIndex, indexOf, closeStatBlock, loading=false, searchingFor=null, handleUploadMonsterImage, socket}) => {
     // Creature can be null from SearchColumn but not from EncounterColumn, Statblock is not shown if from EncounterColumn
+   
+    const {currentEncounter, dispatchEncounter} = useEncounter();
+
     const [creature, setCreature] = useState(currentEncounter?.creatures[selectedIndex])
     const [creatureReset, setCreatureReset] = useState(currentEncounter?.creatures[selectedIndex])
     const {addToHomebrewList} = useHomebrewProvider();
+
+    
     const [isEditMode, setIsEditMode] = useState(currentEncounter?.encounterName === "dmbuddy_newhomebrew")
     const [showFullImage, setShowFullImage] = useState(false)
+
+    console.log("StatBlock", {selectedIndex, creature})
+
     // If selectedIndex changes a new creature was clicked
     useEffect(() => {
         let newCreature = selectedIndex !== null ? currentEncounter?.creatures[selectedIndex] : null
@@ -287,19 +296,18 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
         }
         
         if(send) {
-            setCurrentEncounter((prev) => {
-                const updatedCreatures = [...prev.creatures];
-    
-                updatedCreatures[selectedIndex] = {
-                    ...updatedCreatures[selectedIndex],
-                    spellcasting: [...spellCastingList],
-                };
-    
-                return {
-                    ...prev,
-                    creatures: updatedCreatures,
-                };
+            console.log('creatureSpellCastingChange')
+            dispatchEncounter({
+                type: 'REPLACE_CREATURE',
+                payload: {
+                    creatureGuid: currentEncounter.creatures[selectedIndex].creatureGuid,
+                    newCreature: {
+                        ...currentEncounter.creatures[selectedIndex],
+                        spellcasting: [...spellCastingList],
+                    },
+                },
             });
+
             //socket does not exist in search column statblock
             socket?.emit("creatureSpellCastingChange", spellCastingList, currentEncounter.creatures[selectedIndex].creatureGuid)
         } else {
@@ -344,13 +352,14 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
         setCreature({...updatedCreature});
 
         if (send) {
-
-            setCurrentEncounter((prev) => ({
-                ...prev,
-                creatures: prev.creatures.map((oldCreature, i) =>
-                    i === selectedIndex ? { ...updatedCreature } : oldCreature
-                ),
-            }));
+            console.log('handleValueChange')
+            dispatchEncounter({
+                type: 'REPLACE_CREATURE',
+                payload: {
+                    creatureGuid: currentEncounter.creatures[selectedIndex].creatureGuid,
+                    newCreature: updatedCreature,
+                },
+            });
 
             // This is a weird check for the search selected creatures that have their skills (i.e. STR or STR_Save) edited
             if(currentEncounter.encounterName === 'dmbuddy_selected' && !isEditMode) {
@@ -369,19 +378,19 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
         if (send || cKey === 'hover') {
             if(value !== currentEncounter.creatures[selectedIndex]?.[category]?.[cKey]) {
                 socket?.emit('statBlockEditNestedObject', currentEncounter.creatures[selectedIndex].creatureGuid, category, cKey, value);
-                setCurrentEncounter((prev) => {
-                    const updatedCreatures = [...prev.creatures];
-                    updatedCreatures[selectedIndex] = {
-                        ...updatedCreatures[selectedIndex],
-                        [category]: {
-                            ...updatedCreatures[selectedIndex][category],
-                            [cKey]: value,
+                console.log('statBlockEditNestedObject')
+                dispatchEncounter({
+                    type: 'REPLACE_CREATURE',
+                    payload: {
+                        creatureGuid: currentEncounter.creatures[selectedIndex].creatureGuid,
+                        newCreature: {
+                            ...currentEncounter.creatures[selectedIndex],
+                            [category]: {
+                                ...currentEncounter.creatures[selectedIndex][category],
+                                [cKey]: value,
+                            },
                         },
-                    };
-                    return {
-                        ...prev,
-                        creatures: updatedCreatures,
-                    };
+                    },
                 });
             }
         } else {
@@ -410,96 +419,73 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
                 }
 
                 socket?.emit('statBlockEditArrayUpdate', value, category, index, cKey, currentEncounter.creatures[selectedIndex].creatureGuid);
-                
-                setCurrentEncounter((prev) => {
-                    const updatedCreatures = [...prev.creatures];
-                    const updatedCategoryArray = updatedCreatures[selectedIndex][category] !== null ? [...updatedCreatures[selectedIndex][category]] : [{name: '', desc: ''}];
+                if(updateSlots) {
+                    socket?.emit('statBlockEditArrayUpdate', updateSlots, category, index, "rechargeCount", currentEncounter.creatures[selectedIndex].creatureGuid);
+                }
 
-                    updatedCategoryArray[index] = {
-                        ...updatedCategoryArray[index],
-                        [cKey]: value,
-                    };
-
-                    if(updateSlots) {
-                        updatedCategoryArray[index].rechargeCount = updateSlots
-                        console.table({updateSlots, category, index, cKey: 'rechargeCount'});
-
-                        socket?.emit('statBlockEditArrayUpdate', updateSlots, category, index, "rechargeCount", currentEncounter.creatures[selectedIndex].creatureGuid);
-                    }
-
-                    updatedCreatures[selectedIndex] = {
-                        ...updatedCreatures[selectedIndex],
-                        [category]: updatedCategoryArray,
-                    };
-
-                    return {
-                        ...prev,
-                        creatures: updatedCreatures,
-                    };
+                console.log('statBlockEditArrayUpdate')
+                dispatchEncounter({
+                    type: 'REPLACE_CREATURE',
+                    payload: {
+                        creatureGuid: currentEncounter.creatures[selectedIndex].creatureGuid,
+                        newCreature: {
+                            ...currentEncounter.creatures[selectedIndex],
+                            [category]: currentEncounter.creatures[selectedIndex][category].map((item, i) =>
+                                i === index
+                                    ? {
+                                          ...item,
+                                          [cKey]: value,
+                                          ...(updateSlots ? { rechargeCount: updateSlots } : {}),
+                                      }
+                                    : item
+                            ),
+                        },
+                    },
                 });
             }
-                
-        } else {
-            setCreature(prev => {
-                // this catches the array object being empty i.e. [{}] instead of [{name: '', desc: ''}]
-                const updatedArray = prev[category] !== null ? [...prev[category]] : [{name: '', desc: ''}]; // Copy the whole actions array
-                updatedArray[index] = {
-                    ...updatedArray[index], // Unwrap the old one  
-                    [cKey]: value, // Then update the specific field of that index
-                };
-                return {
-                    ...prev,
-                    [category]: updatedArray, // Set the updated actions array for the creature
-                };
-            });
         }
     };
 
     const handleRechargeCheck = (addCheck, cKey, nested, actionIndex) => {
         // If actions bonus action...
         if(nested) {
-            setCurrentEncounter((prev) => {
-                const updatedCreatures = [...prev.creatures];
-                const updatedAction = updatedCreatures[selectedIndex][cKey];
-
-                let newCount = updatedAction[actionIndex].rechargeCount;
-                addCheck ? newCount++ : newCount--
-
-                updatedAction[actionIndex] = {
-                    ...updatedAction[actionIndex],
-                    rechargeCount: newCount
-                }
-
-                socket?.emit("statBlockEditArrayUpdate", newCount, cKey, actionIndex, 'rechargeCount', currentEncounter.creatures[selectedIndex].creatureGuid)
-
-                updatedCreatures[selectedIndex] = {
-                    ...updatedCreatures[selectedIndex],
-                    [cKey]: [...updatedAction],
-                };
-                
-                return {
-                    ...prev,
-                    creatures: updatedCreatures,
-                };
+            console.log('handleRechargeCheck')
+            dispatchEncounter({
+                type: 'REPLACE_CREATURE',
+                payload: {
+                    creatureGuid: currentEncounter.creatures[selectedIndex].creatureGuid,
+                    newCreature: {
+                        ...currentEncounter.creatures[selectedIndex],
+                        [cKey]: currentEncounter.creatures[selectedIndex][cKey].map((item, i) =>
+                            i === actionIndex
+                                ? {
+                                    ...item,
+                                    rechargeCount: addCheck ? item.rechargeCount + 1 : item.rechargeCount - 1,
+                                }
+                            : item
+                        ),
+                    },
+                },
             });
+
         } else {
             // If legendary actions
-            setCurrentEncounter((prev) => {
-                const updatedCreatures = [...prev.creatures];
-                let newCount = updatedCreatures[selectedIndex][cKey];
-                addCheck ? newCount++ : newCount--
-                updatedCreatures[selectedIndex] = {
-                    ...updatedCreatures[selectedIndex],
-                    [cKey]: newCount,
-                };
-    
-                socket?.emit('creatureActionCountChange', newCount, cKey, currentEncounter.creatures[selectedIndex].creatureGuid);
-    
-                return {
-                    ...prev,
-                    creatures: updatedCreatures,
-                };
+            console.log('legendary actions')
+            dispatchEncounter({
+                type: 'REPLACE_CREATURE',
+                payload: {
+                    creatureGuid: currentEncounter.creatures[selectedIndex].creatureGuid,
+                    newCreature: {
+                        ...currentEncounter.creatures[selectedIndex],
+                        [cKey]: currentEncounter.creatures[selectedIndex][cKey] + (addCheck ? 1 : -1),
+                    },
+                },
             });
+
+            let newCount = currentEncounter.creatures[selectedIndex][cKey];
+            addCheck ? newCount++ : newCount--
+
+            socket?.emit('creatureActionCountChange', newCount, cKey, currentEncounter.creatures[selectedIndex].creatureGuid);
         }
     }
 
@@ -536,29 +522,30 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
         }
 
         socket?.emit("statBlockEditArrayAction", category, index, currentEncounter.creatures[selectedIndex].creatureGuid, cKey)
-
-        setCurrentEncounter((prev) => {
-            const updatedCreatures = [...prev.creatures];
-
-            updatedCreatures[selectedIndex] = {
-                ...updatedCreatures[selectedIndex],
-                [category]: updatedArray,
-            };
-
-            return {
-                ...prev,
-                creatures: updatedCreatures,
-            };
+        console.log('statBlockEditArrayAction')
+        dispatchEncounter({
+            type: 'REPLACE_CREATURE',
+            payload: {
+                creatureGuid: currentEncounter.creatures[selectedIndex].creatureGuid,
+                newCreature: {
+                    ...currentEncounter.creatures[selectedIndex],
+                    [category]: updatedArray,
+                },
+            },
         });
     };
 
     const toggleEditMode = () => {
         //reset creature on cancel when selected from search column
         if(currentEncounter.encounterName === 'dmbuddy_selected' && isEditMode === true) {
-            setCurrentEncounter(prev => {
-                prev.creatures[selectedIndex] = creatureReset
-                return prev
-            })
+            console.log('toggleEditMode')
+            dispatchEncounter({
+                type: 'REPLACE_CREATURE',
+                payload: {
+                    creatureGuid: currentEncounter.creatures[selectedIndex].creatureGuid,
+                    newCreature: creatureReset,
+                },
+            });
         }
         setIsEditMode(!isEditMode)
     }
@@ -570,10 +557,14 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
         if(isNewEntry) {
             homebrewCreature = {...creature, dmb_homebrew_guid: generateUniqueId()}
             setCreature(homebrewCreature)
-            setCurrentEncounter(prev => {
-                prev.creatures[selectedIndex] = homebrewCreature
-                return prev
-            })
+            console.log('handleAddToHomebrew')
+            dispatchEncounter({
+                type: 'REPLACE_CREATURE',
+                payload: {
+                    creatureGuid: currentEncounter.creatures[selectedIndex].creatureGuid,
+                    newCreature: homebrewCreature,
+                },
+            });
         }
         // Give the homebrew version a different creatureGuid
         addToHomebrewList({...homebrewCreature})
@@ -706,7 +697,7 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
                                 <img className={showFullImage ? "clearImage" : "behindImage"} src={creature.avatarUrl} alt={"Creature Img"} />
                                 {!showFullImage && 
                                     <>
-                                        <h1 className='creatureName titleFontFamily'>{creature?.name}&nbsp;</h1>
+                                        <h1 className='creatureName titleFontFamily'>{creature?.name } {!isProd ? creature?.creatureGuid : ''}&nbsp;</h1>
                                         
                                         <div className='creatureType'>
                                             <hr className="lineSeperator" />

@@ -7,12 +7,15 @@ import { ImportDndBeyondEncounter } from '../../api/ImportDndBeyondEncounter'
 import { ImportDndBeyondMonsters } from '../../api/ImportDndBeyondMonsters'
 import { useImportedPlayers } from '../../../../../providers/ImportedPlayersProvider';
 import { useUser } from '../../../../../providers/UserProvider';
+import { useEncounter } from '../../../../../providers/EncounterProvider';
 
-function InputEncounterId({setCurrentEncounter, encounterGuid, setError, socket, onClick=() => {}}) { 
+function InputEncounterId({encounterGuid, setError, socket, onClick=() => {}}) { 
     const [dndbEncounterId, setDndbEncounterId] = useState('');
     const eGuid = encounterGuid || generateUniqueId();
     const {addImportedPlayers} = useImportedPlayers();
     const {username} = useUser();
+    const {currentEncounter, dispatchEncounter} = useEncounter();
+    
 
     const handleDndBEncounterId = (event) => {
         let input = event.target.value;
@@ -37,25 +40,22 @@ function InputEncounterId({setCurrentEncounter, encounterGuid, setError, socket,
                 const dmbPlayers = await ImportDndBeyondCharacters(playerIds, eGuid, players, username);
                 addImportedPlayers(dmbPlayers)
 
-                // Send the whole monsters object since it comes with hp data
-                // const dmbMonsters = await ImportDndBeyondMonsters(monsters, eGuid);
-                setCurrentEncounter(prev => {
-                    if(prev.creatures.length === 0 && prev.encounterName === INIT_ENCOUNTER_NAME) {
-                        socket.emit("newEncounter", eGuid, data.data.name)
-                    }
+                if(currentEncounter.creatures.length === 0 && currentEncounter.encounterName === INIT_ENCOUNTER_NAME) {
+                    socket.emit("newEncounter", eGuid, data.data.name)
+                }
 
-                    // const newCreatures = [...dmbPlayers, ...dmbMonsters];
-                    const validPlayers = dmbPlayers.filter(player => player.status === 200);
-
-                    socket.emit("importedDndBCreatures", validPlayers, username);
-                    return {
-                      ...prev,
-                      encounterGuid: eGuid,
-                      encounterName: data.data.name,
-                      creatures: [...prev.creatures, ...validPlayers]
-                    };
-                });
+                const validPlayers = dmbPlayers.filter(player => player.status === 200);
+                socket.emit("importedDndBCreatures", validPlayers, username);
                 console.log("Creatures Imported!")
+                dispatchEncounter({
+                    type: 'SET_ENCOUNTER',
+                    payload: {
+                        encounterGuid: eGuid,
+                        encounterName: data.data.name,
+                        creatures: [...currentEncounter.creatures, ...validPlayers],
+                    }
+                })
+
             }
         } catch (error) {
             console.warn(error)

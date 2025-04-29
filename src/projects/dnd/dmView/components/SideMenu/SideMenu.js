@@ -34,7 +34,7 @@ function downloadLocalStorage() {
     document.body.removeChild(a);
 }
 
-function SideMenu({uploadLocalStorage, setCurrentEncounter, showSearchList, setShowSearchList, encounterGuid, socket}) {
+function SideMenu({showSearchList, setShowSearchList, socket}) {
     const [isOpen, setIsOpen] = useState(false);
 
     // Toggle the menu state

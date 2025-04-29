@@ -1,8 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { INIT_ENCOUNTER_NAME, INIT_ENCOUNTER } from '../../constants';
+import { useEncounter } from '../../../../../providers/EncounterProvider';
 
-const DropdownMenu = ({ adminView, savedEncounters, setSavedEncounters, handleLoadEncounter, currentEncounter, setCurrentEncounter, socket}) => {
+const DropdownMenu = ({ adminView, savedEncounters, setSavedEncounters, handleLoadEncounter, socket}) => {
     const [isOpen, setIsOpen] = useState(false);
+    const {currentEncounter, dispatchEncounter} = useEncounter();
+    
     const dropdownRef = useRef(null);
 
     function clickEncounterDropdownMenuX(event, encounter) {
@@ -10,8 +13,11 @@ const DropdownMenu = ({ adminView, savedEncounters, setSavedEncounters, handleLo
         let updatedEncounterList = savedEncounters.filter(e => e.encounterGuid !== encounter.encounterGuid)
         setSavedEncounters(updatedEncounterList);
         
-        if(currentEncounter.encounterGuid === encounter.encounterGuid)
-            setCurrentEncounter(INIT_ENCOUNTER)
+        if(currentEncounter.encounterGuid === encounter.encounterGuid) {
+            console.log('clickEncounterDropdownMenuX')
+            dispatchEncounter({ type: 'RESET_ENCOUNTER', payload: INIT_ENCOUNTER.encounterGuid });
+        }
+
         socket.emit("deleteEncounter", encounter.encounterGuid)
     }
     

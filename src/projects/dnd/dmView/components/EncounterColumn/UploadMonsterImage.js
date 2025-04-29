@@ -5,11 +5,13 @@ import FileUpload from '../FileUpload';
 import GridMap from '../GridMap';
 import { InfinitySpin } from 'react-loader-spinner';
 import { useUser } from '../../../../../providers/UserProvider';
+import { useEncounter } from '../../../../../providers/EncounterProvider';
 
-const UploadMonsterImage = ({uploadIconCreature, setUploadIconCreature, setCurrentEncounter, setUploadIconMenu, uploadIconMenu, socket}) => {
+const UploadMonsterImage = ({uploadIconCreature, setUploadIconCreature, setUploadIconMenu, uploadIconMenu, socket}) => {
     const [loading, setLoading] = useState(false);
     const [uploadedAvatars, setUploadedAvatars] = useState([]);
     const { username } = useUser();
+    const {currentEncounter, dispatchEncounter} = useEncounter();
 
     const ref = useRef(null);
 
@@ -64,17 +66,25 @@ const UploadMonsterImage = ({uploadIconCreature, setUploadIconCreature, setCurre
         }
 
         if(type === 'encounter' || type === 'encounterHomebrew') {
-            setCurrentEncounter(prev => {
-                const updatedCreatures = prev.creatures.map(creature => {
-                    if (uploadIconCreature.creatureGuid === creature.creatureGuid) {
-                        return {...creature, avatarUrl: imageObj.image};
-                    }
-                    return creature;
-                });
-        
-                socket.emit("creatureAvatarChange", imageObj.imageGuid, uploadIconCreature.creatureGuid, "dm");
-                return {...prev, creatures: updatedCreatures};
+
+            const updatedCreatures = currentEncounter.creatures.map(creature => {
+                if (uploadIconCreature.creatureGuid === creature.creatureGuid) {
+                    return {...creature, avatarUrl: imageObj.image};
+                }
+                return creature;
             });
+
+            socket.emit("creatureAvatarChange", imageObj.imageGuid, uploadIconCreature.creatureGuid, "dm");
+            console.log('creatureAvatarChange')
+
+            dispatchEncounter({
+                type: 'SET_ENCOUNTER',
+                payload: {
+                    creatures: updatedCreatures
+                }
+            });
+
+
         } else if(type === 'homebrew' || type === 'search') {
             setUploadIconCreature({...uploadIconCreature, avatarUrl: imageObj.image})
         }

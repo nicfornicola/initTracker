@@ -1,26 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import EncounterListItem from './EncounterListItem'
+import { useEncounter } from '../../../../../providers/EncounterProvider';
 
-const EncounterList = ({currentEncounter, setCurrentEncounter, handleSaveEncounter, turnNum, handleUploadMonsterImage, selectedIndex, setSelectedIndex, handleRemoveFromSelectedIndex, clickEncounterCreatureX, resort, socket}) => {
-    const [currentEncounterCreatures, setCurrentEncounterCreatures] = useState(currentEncounter.creatures);
-
-    useEffect(() => {
-        setCurrentEncounterCreatures([...currentEncounter.creatures])
-    }, [currentEncounter.creatures])
+const EncounterList = ({handleSaveEncounter, turnNum, handleUploadMonsterImage, selectedIndex, handleRemoveFromSelectedIndex, clickEncounterCreatureX, resort, socket}) => {
+    const {currentEncounter} = useEncounter();
 
     useEffect(() => {
-        setPlayerViewOnCreatureChange()
-        // eslint-disable-next-line
-    }, [currentEncounterCreatures])
-
-    const setPlayerViewOnCreatureChange = () => {
         handleSaveEncounter()
-    }
+        // eslint-disable-next-line
+    }, [currentEncounter])
 
     return (
         <div className='encounterCreaturesList'>
-            {currentEncounterCreatures.map((creatureListItem, index) => (
-                <EncounterListItem key={creatureListItem.creatureGuid + index} currentEncounter={currentEncounter} creatureListItem={creatureListItem} setCurrentEncounter={setCurrentEncounter} index={index} isTurn={index+1 === turnNum} handleUploadMonsterImage={handleUploadMonsterImage} resort={resort} setPlayerViewOnCreatureChange={setPlayerViewOnCreatureChange} selectedIndex={selectedIndex} handleRemoveFromSelectedIndex={handleRemoveFromSelectedIndex} clickEncounterCreatureX={clickEncounterCreatureX} socket={socket}/>
+            {currentEncounter.creatures.map((creatureListItem, index) => (
+                <EncounterListItem key={creatureListItem.creatureGuid + index} creatureListItem={creatureListItem} index={index} isTurn={index+1 === turnNum} handleUploadMonsterImage={handleUploadMonsterImage} resort={resort} selectedIndex={selectedIndex} handleRemoveFromSelectedIndex={handleRemoveFromSelectedIndex} clickEncounterCreatureX={clickEncounterCreatureX} socket={socket}/>
             ))}
         </div>
     );

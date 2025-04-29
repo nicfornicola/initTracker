@@ -1,5 +1,5 @@
-import React, { useState, useEffect }from 'react';
-import { INIT_ENCOUNTER_NAME } from '../../constants';
+import React, { useState, useEffect,useRef }from 'react';
+import { INIT_ENCOUNTER_NAME, SHORT_REFRESH } from '../../constants';
 import refresh from '../../pics/icons/refresh.png';
 import greenCheck from '../../pics/icons/check.png'; 
 import eyeClosed from '../../pics/icons/eyeClosed.png'; 
@@ -20,8 +20,8 @@ import EnemyBloodiedMessage from './EnemyBloodiedMessage';
 import streamingGif from '../../pics/icons/streaming.gif';
 import streamingImg from '../../pics/icons/streamingImg.png';
 import useShakeAnimation from '../../Hooks/useShakeAnimation';
-
 import { useUser } from '../../../../../providers/UserProvider';
+import { useEncounter } from '../../../../../providers/EncounterProvider';
 
 function getBloodImage(type) {
     let newImage;
@@ -31,7 +31,11 @@ function getBloodImage(type) {
     return newImage
 }
 
-const EncounterControls = ({streamingEncounter, setStreamingEncounter, handleTurnNums, currentEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange, socket}) => {
+const init_seconds = 60; 
+
+const EncounterControls = ({streamingEncounter, setStreamingEncounter, handleTurnNums, refreshLoading, setPlayerViewBackground, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, setNameChange, socket}) => {
+    const {currentEncounter, dispatchEncounter} = useEncounter();
+
     const [arrowButton, setArrowButton] = useState(upArrow);
     const [arrowToggleType, setArrowToggleType] = useState(0);
     const [showRefreshButton, setShowRefreshButton] = useState(autoRefresh);
@@ -42,7 +46,24 @@ const EncounterControls = ({streamingEncounter, setStreamingEncounter, handleTur
     const [enemyBloodToggle, setEnemyBloodToggle] = useState(currentEncounter.enemyBloodToggle);
     const [hideDeadEnemies, setHideDeadEnemies] = useState(currentEncounter.hideDeadEnemies);
     const [anyEnemyVisible, setAnyEnemyVisible] = useState(currentEncounter.creatures.filter(creature => !creature.hidden && creature.type !== "player").length);
+    const [seconds, setSeconds] = useState(init_seconds); // Timer state
+    const hasMounted = useRef(false); // Track if the component has mounted
+
     const {sessionID} = useUser()
+
+    useEffect(() => {
+        if (refreshCheck) {
+            setSeconds(init_seconds); // Reset seconds when refreshCheck changes
+        }
+    }, [refreshCheck]);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setSeconds((prevSeconds) => (prevSeconds > 1 ? prevSeconds - 1 : init_seconds));
+        }, 1000);
+
+        return () => clearInterval(interval); // Cleanup interval on unmount
+    }, []);
 
     const shakeRef = useShakeAnimation(anyEnemyVisible);
 
@@ -58,12 +79,21 @@ const EncounterControls = ({streamingEncounter, setStreamingEncounter, handleTur
     }, [currentEncounter]);
 
     useEffect(() => {
-        setCurrentEncounter(
-            { ...currentEncounter,
-                hideEnemies: hideEnemies, 
-                enemyBloodToggle: enemyBloodToggle, 
-                hideDeadEnemies: hideDeadEnemies 
+        if (hasMounted.current) {
+
+            console.log("hideEnemies, enemyBloodToggle, hideDeadEnemies")
+            dispatchEncounter({
+                type: 'SET_ENCOUNTER',
+                payload: {
+                    encounterName: encounterName,
+                    hideEnemies: hideEnemies,
+                    enemyBloodToggle: enemyBloodToggle,
+                    hideDeadEnemies: hideDeadEnemies,
+                },
             });
+        } else {
+            hasMounted.current = true; // Mark as mounted after the first render
+        }
         // eslint-disable-next-line
     }, [hideEnemies, enemyBloodToggle, hideDeadEnemies]);
 
@@ -107,12 +137,8 @@ const EncounterControls = ({streamingEncounter, setStreamingEncounter, handleTur
     } 
 
     const handleHideEnemies = () => {
-        if(autoRefresh && hideEnemies) // If hideEnemies is true, then refresh before revealing enemies
-            handleRefresh()
-
         setHideEnemies(!hideEnemies)
         socket.emit("controlHiddenToggle", !hideEnemies, currentEncounter.encounterGuid)
-
     } 
 
     const handleHideDeadEnemies = () => {
@@ -132,7 +158,13 @@ const EncounterControls = ({streamingEncounter, setStreamingEncounter, handleTur
     const handleEncounterNameChange = (e) => {
         if (currentEncounter.encounterName !== e.target.value) {
             setEncounterName(e.target.value);
-            setCurrentEncounter(prev => ({...prev, encounterName: e.target.value}))
+            console.log('handleEncounterNameChange')
+            dispatchEncounter({
+                type: 'SET_ENCOUNTER',
+                payload: {
+                    encounterName: e.target.value,
+                },
+            });
             setNameChange(true)
 
             if(currentEncounter.creatures.length === 0 && encounterName === INIT_ENCOUNTER_NAME) {
@@ -151,6 +183,11 @@ const EncounterControls = ({streamingEncounter, setStreamingEncounter, handleTur
         } else {
             socket.emit("startStreaming", currentEncounter.encounterGuid, sessionID)
         }
+    }
+
+    const handleRefreshClick = () => {
+        setSeconds(SHORT_REFRESH * 60); 
+        handleRefresh(); 
     }
 
     const isStreaming = streamingEncounter?.encounterGuid === currentEncounter.encounterGuid
@@ -172,7 +209,12 @@ const EncounterControls = ({streamingEncounter, setStreamingEncounter, handleTur
                         {/* <OptionButton src={arrowButton} message={"Player View Icon Position"} onClickFunction={handleMovePortraits}/> */}
                         <ImagePopup setPlayerViewBackground={setPlayerViewBackground} encounterGuid={currentEncounter.encounterGuid} socket={socket}/>                    
                         {showRefreshButton &&
-                            <OptionButton src={refreshCheck ? greenCheck : refresh} message={<RefreshTimer refresh={refreshCheck}/>} onClickFunction={() => handleRefresh()} imgClassName={refreshLoading ? 'spinningImage' : ''} />
+                            <OptionButton
+                                src={refreshCheck ? greenCheck : refresh}
+                                message={<RefreshTimer seconds={seconds} />}
+                                onClickFunction={handleRefreshClick}
+                                imgClassName={refreshLoading ? 'spinningImage' : ''}
+                            />     
                         }         
                         <Timer />     
                     </div>

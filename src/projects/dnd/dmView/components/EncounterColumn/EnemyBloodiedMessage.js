@@ -13,7 +13,7 @@ const EnemyBloodiedMessage = ({enemyBloodToggle}) => {
     return (
         <>
             {optionArr.map((s) => {
-                return <span className='tooltiptext'>{s}</span>
+                return <span key={s} className='tooltiptext'>{s}</span>
             })}
         </>
     );

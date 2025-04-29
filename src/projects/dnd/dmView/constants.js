@@ -262,8 +262,8 @@ export const INIT_ENCOUNTER = {
     turnNum: 0,
     creatures: [],
     backgroundGuid: 'default',
-    enemyBloodToggle : 0, 
-    hideDeadEnemies: true, 
+    enemyBloodToggle : 1, 
+    hideDeadEnemies: false, 
     hideEnemies: true
 }
 

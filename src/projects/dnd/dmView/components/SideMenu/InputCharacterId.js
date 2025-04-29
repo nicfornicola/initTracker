@@ -6,11 +6,13 @@ import { ImportDndBeyondCharacters } from '../../api/ImportDndBeyondCharacters'
 import { generateUniqueId, INIT_ENCOUNTER_NAME} from '../../constants'
 import { useImportedPlayers } from '../../../../../providers/ImportedPlayersProvider';
 import { useUser } from '../../../../../providers/UserProvider';
+import { useEncounter } from '../../../../../providers/EncounterProvider';
 
-function InputCharacterId({setCurrentEncounter, encounterGuid, setError, socket}) {
+function InputCharacterId({encounterGuid, setError, socket}) {
     const [playerNumbers, setPlayerNumbers] = useState([]);
     const [playerNumberInputValue, setPlayerNumberInputValue] = useState('');
     const eGuid = encounterGuid || generateUniqueId();
+    const {currentEncounter, dispatchEncounter} = useEncounter();
     const {addImportedPlayers} = useImportedPlayers();
     const {username} = useUser();
 
@@ -35,19 +37,27 @@ function InputCharacterId({setCurrentEncounter, encounterGuid, setError, socket}
         const playerDataArray = await ImportDndBeyondCharacters(playerNumbers, eGuid, undefined, username);
 
         addImportedPlayers(playerDataArray)
-        setCurrentEncounter(prev => {
-            if(prev.creatures.length === 0 && prev.encounterName === INIT_ENCOUNTER_NAME) {
-                socket.emit("newEncounter", eGuid)
-            }
 
-            socket.emit("importedDndBCreatures", playerDataArray, username);
-
-            return {
-            ...prev,
-            encounterGuid: eGuid,
-            creatures: [...prev.creatures, ...playerDataArray]
+        if(currentEncounter.creatures.length === 0 && currentEncounter.encounterName === INIT_ENCOUNTER_NAME) {
+            socket.emit("newEncounter", eGuid)
+            console.log('newEncounter')
+            dispatchEncounter({
+                type: 'SET_ENCOUNTER',
+                payload: {
+                    encounterGuid: eGuid,
+                },
+            });
         }
-        });        
+
+        socket.emit("importedDndBCreatures", playerDataArray, username);
+        console.log('importedDndBCreatures')
+        dispatchEncounter({
+            type: 'ADD_CREATURES_ARRAY',
+            payload: {
+                creatureArray: playerDataArray,
+            },
+        });
+
         setPlayerNumbers([])
         setPlayerNumberInputValue('')
     }

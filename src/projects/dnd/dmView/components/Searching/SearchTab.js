@@ -1,15 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { generateUniqueId, INIT_ENCOUNTER_NAME, COLOR_GREEN, COLOR_RED} from '../../constants'
 import { ThreeDots } from 'react-loader-spinner'
 import { useImportedPlayers } from '../../../../../providers/ImportedPlayersProvider';
 import { useHomebrewProvider } from '../../../../../providers/HomebrewProvider';
 import 'react-tabs/style/react-tabs.css';
-import greenCheck from '../../pics/icons/check.png'
-import refresh from '../../pics/icons/refresh.png'
-import OptionButton from '../EncounterColumn/OptionButton';
-import { useUser } from '../../../../../providers/UserProvider';
-import { ImportDndBeyondCharacters } from '../../api/ImportDndBeyondCharacters'
 import SearchImportRefresh from './SearchImportRefresh';
+import { useEncounter } from '../../../../../providers/EncounterProvider';
 
 const alignmentOptions = [
     'good', 'evil', 'neutral',
@@ -56,9 +52,10 @@ function highlightSubstring(substring, fullString) {
     );
 }
 
-const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTerm, setSearchSelectedCreature, loadingPack, setLoadingPack, socket}) => {    
+const SearchTab = ({displayedItems, encounterGuid, searchTerm, setSearchSelectedCreature, loadingPack, setLoadingPack, socket}) => {    
     const {removeFromImportList} = useImportedPlayers();
     const {removeFromHomebrewList} = useHomebrewProvider();
+    const {currentEncounter, dispatchEncounter} = useEncounter();
 
     // Set the selected creature in search bar on left and gets the data from open5e
     const handleSearchSelectCreature = async (creature, action, event, index) => {
@@ -78,22 +75,22 @@ const SearchTab = ({displayedItems, setCurrentEncounter, encounterGuid, searchTe
     const handleSelectCreature = (creature, action) => {
         if(action === "add") {
             let newCreature = {...creature, creatureGuid: generateUniqueId(), encounterGuid: encounterGuid}
-            setCurrentEncounter(prev => {
-                if(prev.creatures.length === 0 && prev.encounterName === INIT_ENCOUNTER_NAME) {
-                    socket.emit("newEncounter", encounterGuid)
-                }
-              
-                // If there are no creatures in this list, then create the encounter in the database and add to it
-                socket.emit("addCreatureToEncounter", newCreature)
-              
-                // Return the updated state with the new creature added
-                return {
-                  ...prev,
-                  creatures: [...prev.creatures, newCreature]
-                };
-            });           
-        }
-        else if(action === "select") {
+
+            if(currentEncounter.creatures.length === 0 && currentEncounter.encounterName === INIT_ENCOUNTER_NAME) {
+                socket.emit("newEncounter", encounterGuid)
+            }
+
+            socket.emit("addCreatureToEncounter", newCreature)
+            console.log('addCreatureToEncounter')
+            dispatchEncounter({
+                type: 'ADD_CREATURE',
+                payload: {
+                    newCreature: newCreature,
+                },
+            });
+            
+            
+        } else if(action === "select") {
             if(creature.dmb_homebrew_guid) {
                 setSearchSelectedCreature({...creature});
             } else {

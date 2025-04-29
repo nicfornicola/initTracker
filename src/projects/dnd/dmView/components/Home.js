@@ -5,7 +5,7 @@ import InputCharacterId from './SideMenu/InputCharacterId.js';
 import DropdownMenu from './EncounterColumn/DropdownMenu.js';
 import SignIn from './SignIn.js';
 
-const Home = ({savedEncounters, setSavedEncounters, currentEncounter, setCurrentEncounter, encounterGuid, handleNewEncounter, handleLoadEncounter, socket}) => {
+const Home = ({savedEncounters, setSavedEncounters, encounterGuid, handleNewEncounter, handleLoadEncounter, socket}) => {
 
     return (
         <div className='firstLoadMenuContainer'>
@@ -27,16 +27,8 @@ const Home = ({savedEncounters, setSavedEncounters, currentEncounter, setCurrent
                     <div className="gridCell">
                         <button className='homePageButton' onClick={handleNewEncounter} > New Encounter </button>
                     </div>
-                    {/* <div className="gridCell"> */}
-                        {/* <InputEncounterId 
-                            setCurrentEncounter={setCurrentEncounter} 
-                            encounterGuid={encounterGuid} 
-                            socket={socket} 
-                        /> */}
-                    {/* </div> */}
                     <div className="gridCell">
-                        <InputCharacterId 
-                            setCurrentEncounter={setCurrentEncounter} 
+                        <InputEncounterId 
                             encounterGuid={encounterGuid} 
                             socket={socket} 
                         />
@@ -46,8 +38,12 @@ const Home = ({savedEncounters, setSavedEncounters, currentEncounter, setCurrent
                             setSavedEncounters={setSavedEncounters} 
                             savedEncounters={savedEncounters} 
                             handleLoadEncounter={handleLoadEncounter} 
-                            currentEncounter={currentEncounter} 
-                            setCurrentEncounter={setCurrentEncounter}
+                            socket={socket} 
+                        />
+                    </div>
+                    <div className="gridCell">
+                        <InputCharacterId 
+                            encounterGuid={encounterGuid} 
                             socket={socket} 
                         />
                     </div>

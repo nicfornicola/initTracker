@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import eyeClosed from '../../pics/icons/eyeClosed.png'; 
 import eyeOpen from '../../pics/icons/eyeOpen.png'; 
 import OptionButton from '../EncounterColumn/OptionButton';
@@ -11,6 +11,7 @@ import Effect from './Effect.js';
 import EditAvatar from '../Statblock/EditAvatar.js';
 import WidgetPopUp from './WidgetPopUp.js';
 import TeamWidgetPopup from './FlagWidget/TeamWidgetPopup.js';
+import { useEncounter } from '../../../../../providers/EncounterProvider';
 
 const colors = {
     0: "green",
@@ -19,8 +20,9 @@ const colors = {
 }
 
 
-const EncounterListItem = ({index, currentEncounter, creatureListItem, isTurn, setCurrentEncounter, handleUploadMonsterImage, selectedIndex, handleRemoveFromSelectedIndex, clickEncounterCreatureX, resort, socket}) => {
-    
+const EncounterListItem = ({index, creatureListItem, isTurn, handleUploadMonsterImage, selectedIndex, handleRemoveFromSelectedIndex, clickEncounterCreatureX, resort, socket}) => {
+    const {currentEncounter, dispatchEncounter} = useEncounter();
+
     const [hidden, setHidden] = useState(creatureListItem.hidden);
     const [creature, setCreature] = useState(creatureListItem)
     const [isHovered, setIsHovered] = useState(false);
@@ -40,6 +42,7 @@ const EncounterListItem = ({index, currentEncounter, creatureListItem, isTurn, s
     const [effects, setEffects] = useState(creature.effects);
     const [selected, setSelected] = useState(false)
     const [selectedPlace, setSelectedPlace] = useState(-1)
+    const hasMounted = useRef(false); // Track if the component has mounted
 
     useEffect(() => {
         const selectedIndexOf = selectedIndex.findIndex(obj => obj.index === index);
@@ -53,12 +56,14 @@ const EncounterListItem = ({index, currentEncounter, creatureListItem, isTurn, s
     }, [creatureListItem]);
 
     const handleCreatureChange = () => {
-        setCurrentEncounter(prev => ({
-            ...prev,
-            creatures: [...prev.creatures.map((oldCreature) => {
-                return oldCreature.creatureGuid === creature.creatureGuid ? creature : oldCreature;
-            })]
-        }));
+        console.log('handleCreatureChange');
+        dispatchEncounter({
+            type: 'REPLACE_CREATURE',
+            payload: {
+                creatureGuid: creature.creatureGuid,
+                newCreature: creature,
+            }
+        })
     }
 
     // This useeffect is for checking changes from the statblock edit
@@ -71,23 +76,28 @@ const EncounterListItem = ({index, currentEncounter, creatureListItem, isTurn, s
     }, [creatureListItem.hit_points, creatureListItem.hit_points_current]);
 
     useEffect(() => {
-        let newCreature = {
-                ...creature, 
-                alignment: alignment,
+        if (hasMounted.current) {
+            // Only dispatch REPLACE_CREATURE after the initial render
+            const newCreature = {
+                ...creatureListItem,
+                alignment,
                 type: isPlayer ? 'player' : 'monster',
                 border: borderColor,
-                hidden: hidden,
-                effects: [...effects]
-        }
+                hidden,
+                effects: [...effects],
+            };
 
-        setCurrentEncounter(prev => ({
-            ...prev,
-            creatures: [...prev.creatures.map((oldCreature) => {
-                return oldCreature.creatureGuid === newCreature.creatureGuid ? newCreature : oldCreature;
-            })]
-        }));
-        
-    // eslint-disable-next-line
+            console.log('alignment, isPlayer, isPet, borderColor, hidden, effects');
+            dispatchEncounter({
+                type: 'REPLACE_CREATURE',
+                payload: {
+                    creatureGuid: creatureListItem.creatureGuid,
+                    newCreature,
+                }
+            });
+        } else {
+            hasMounted.current = true; // Mark as mounted after the first render
+        }
     }, [alignment, isPlayer, isPet, borderColor, hidden, effects]);
 
     const openEditHpWidget = (openHp) => {
@@ -298,19 +308,26 @@ const EncounterListItem = ({index, currentEncounter, creatureListItem, isTurn, s
         }
 
         setEffects(updatedEffects)
-        setCurrentEncounter(prev => ({
-            ...prev,
-            creatures: [...prev.creatures.map((oldCreature) => {
-                return oldCreature.creatureGuid === creature.creatureGuid ? {...creature, effects: updatedEffects} : oldCreature;
-            })]
-        }));
+        console.log('updateCreatureEffects')
+
+        dispatchEncounter({
+            type: 'REPLACE_CREATURE',
+            payload: {
+                creatureGuid: creature.creatureGuid,
+                newCreature: {
+                    ...creature,
+                    effects: updatedEffects
+                },
+            }
+        });
 
         socket.emit('creatureEffectChange', effect, alreadyExists ? "remove" : "add", creature.creatureGuid, "dm");
     };
 
     const handleClick = (index) => {
+        //If not a dndb player
         if(!creatureListItem?.dnd_b_player_id)
-            handleRemoveFromSelectedIndex(index, true); // Remove last column
+            handleRemoveFromSelectedIndex(index, creature.creatureGuid, true); // Remove last column
     };
 
 

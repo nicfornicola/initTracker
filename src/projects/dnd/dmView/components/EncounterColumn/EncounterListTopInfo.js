@@ -5,7 +5,7 @@ import DropDownSessionMenu from './DropDownSessionMenu';
 import { useUser } from '../../../../../providers/UserProvider';
 
 
-const EncounterListTopInfo = ({streamingEncounter, setStreamingEncounter, savedEncounters, setSavedEncounters, handleLoadEncounter, currentEncounter, setCurrentEncounter, handleNewEncounter, socket}) => {
+const EncounterListTopInfo = ({streamingEncounter, setStreamingEncounter, savedEncounters, setSavedEncounters, handleLoadEncounter, handleNewEncounter, socket}) => {
     const { username } = useUser();
     const [adminView, setAdminView] = useState(null);
     const [regEncounters, setRegEncounters] = useState([]);
@@ -57,7 +57,7 @@ const EncounterListTopInfo = ({streamingEncounter, setStreamingEncounter, savedE
                 </div>
             }
             <div className='dmViewButtonContainer'>
-                <DropdownMenu adminView={adminView} savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters} setCurrentEncounter={setCurrentEncounter} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} socket={socket}/>
+                <DropdownMenu adminView={adminView} savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters} handleLoadEncounter={handleLoadEncounter} socket={socket}/>
                 <NewEncounterButton handleNewEncounter={handleNewEncounter} />
                 <DropDownSessionMenu streamingEncounter={streamingEncounter} setStreamingEncounter={setStreamingEncounter} streamingEncounteradminView={adminView} savedEncounters={savedEncounters} socket={socket}/>
                 {username === 'nicadmin' && <input type='checkbox' onClick={(event) => handleClick(event)}/>}

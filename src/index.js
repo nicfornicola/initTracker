@@ -5,15 +5,18 @@ import App from './App';
 import { UserProvider } from './providers/UserProvider';
 import { ImportedPlayersProvider } from './providers/ImportedPlayersProvider';
 import { HomebrewProvider } from './providers/HomebrewProvider';
+import { EncounterProvider } from './providers/EncounterProvider';
 
 
 ReactDOM.render(
     <UserProvider> 
         <ImportedPlayersProvider> 
             <HomebrewProvider> 
-                <BrowserRouter>
-                    <App />
-                </BrowserRouter>
+                <EncounterProvider>
+                    <BrowserRouter>
+                        <App />
+                    </BrowserRouter>
+                </EncounterProvider>
             </HomebrewProvider> 
         </ImportedPlayersProvider> 
     </UserProvider>,

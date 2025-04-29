@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef  } from 'react';
+import React, { useEffect, useState, useRef, useReducer} from 'react';
 import '../../dmView/style/App.css';
 import SearchColumn from './Searching/SearchColumn.js';
 import Home from './Home.js';
@@ -12,6 +12,8 @@ import ReactGA from "react-ga4";
 import { useLocation } from 'react-router-dom';
 import defaultBackground from '../pics/backgrounds/happyTavern.png'
 import { useUser } from '../../../../providers/UserProvider.js';
+import { useEncounter } from '../../../../providers/EncounterProvider.js';
+
 import mockEncounters from '../mockEncounters.json'
 import UploadMonsterImage from './EncounterColumn/UploadMonsterImage.js';
 
@@ -107,8 +109,9 @@ function addRechargeCountToSpecialAbilities(data) {
 }
 
 const DmView = () => {
+
+
     const [playerViewBackground, setPlayerViewBackground] = useState({type: "image", src: defaultBackground});
-    const [currentEncounter, setCurrentEncounter] = useState(INIT_ENCOUNTER);
     const [onFirstLoad, setOnFirstLoad] = useState(true);
     const [refreshLoading, setRefreshLoading] = useState(false);
     const [autoRefreshDndbPlayers, setAutoRefreshDndbPlayers] = useState(false);
@@ -120,7 +123,8 @@ const DmView = () => {
     const [uploadIconMenu, setUploadIconMenu] = useState(false); 
     const [uploadIconCreature, setUploadIconCreature] = useState(null);
     const [selectedIndex, setSelectedIndex] = useState([]);
-    
+
+    const {currentEncounter, dispatchEncounter} = useEncounter();
     const { username } = useUser();
 
     const socketRef = useRef(null)
@@ -135,7 +139,7 @@ const DmView = () => {
         if(username === 'Username') {
             setPlayerViewBackground({type: "image", src: defaultBackground})
             setSavedEncounters([])
-            setCurrentEncounter(INIT_ENCOUNTER)
+            // dispatchEncounter({ type: 'RESET_ENCOUNTER', payload: INIT_ENCOUNTER.encounterGuid });
             setOnFirstLoad(true)
             setAutoRefreshDndbPlayers(false)
             setAutoRefresh(false)
@@ -193,6 +197,10 @@ const DmView = () => {
             return () => clearInterval(timer);
         }
     }, [refreshCheck])
+
+    // useEffect(() => {
+    //     dispatchEncounter({ type: 'UPDATE_BACKGROUND', payload: {src: playerViewBackground.src} });
+    // }, [playerViewBackground]);
 
     const refreshPlayerProfiles = async () => {
         try {
@@ -255,45 +263,51 @@ const DmView = () => {
         }  
     };
 
-    const resort = (refreshedCreatures=undefined) => {
-        
-        const sortCreatures = refreshedCreatures || currentEncounter.creatures
-        let reassignSelected = []
-        if(selectedIndex.length !== 0) {
-            selectedIndex.forEach(indexObj => {
-                reassignSelected.push(sortCreatures[indexObj.index].creatureGuid)
+    const resort = (refreshedCreatures = undefined) => {
+        const sortCreatures = refreshedCreatures || currentEncounter.creatures;
+        let reassignSelected = [];
+        if (selectedIndex.length !== 0) {
+            selectedIndex.forEach((indexObj) => {
+                reassignSelected.push(sortCreatures[indexObj.index].creatureGuid);
             });
         }
-        const sortedCreatures = sortCreatureArray(sortCreatures)
-        setCurrentEncounter(prev => ({...prev, creatures: [...sortedCreatures]}));
-        
+        const sortedCreatures = sortCreatureArray(sortCreatures);
+        console.log('resort')
+        dispatchEncounter({ type: 'SET_ENCOUNTER', payload: { creatures: sortedCreatures } });
+    
         // This handles open statblocks while the index of creatures change
         const postSortedIndices = findCreatureIndexes(sortedCreatures, reassignSelected);
-
+    
         setSelectedIndex((prev) => {
             prev.forEach((indexObj, i) => {
-                indexObj.index = postSortedIndices[i]
-            })
-            return prev
-        })
-    }
-
+                indexObj.index = postSortedIndices[i];
+            });
+            return prev;
+        });
+    };
 
     const handleRefresh = async () => {
-        console.log("Refresh Players", autoRefresh)
-        setRefreshLoading(true)
+        setRefreshLoading(true);
 
+        const refreshed = await refreshPlayerProfiles();
+        resort(refreshed);
+        setTimeout(() => {
+            setRefreshLoading(false);
+            setRefreshCheck(true)
+        }, 1000);
+    };
+
+    useEffect(() => {
+        let interval = 0
         if (autoRefreshDndbPlayers) {
-            const refreshed = await refreshPlayerProfiles()
-            resort(refreshed)
+            interval = setInterval(() => {
+                console.log("🔄AUTO-REFRESH DND_B PLAYERS🔄");
+                handleRefresh();
+            }, 60000); // 60 seconds
         }
 
-        // Set this for a minimum animation spin of 1 seconds
-        setTimeout(() => {
-            setRefreshLoading(false)
-            setRefreshCheck(true);
-        }, 1000); 
-    };
+        return () => clearInterval(interval);
+    }, [autoRefreshDndbPlayers, handleRefresh]);
 
     useEffect(() => {
         if(onFirstLoad && currentEncounter.encounterGuid !== "" && !window.location.href.includes("/playerView")) {
@@ -321,31 +335,10 @@ const DmView = () => {
             setAutoRefreshDndbPlayers(foundPlayer)
             setAutoRefresh(foundPlayer)
         }
-
-        let intervalId = 0
-        // Refresh every 1 or 5 minutes
-        if (autoRefreshDndbPlayers) {
-            let refreshTimer = SHORT_REFRESH;
-            console.log("Auto Refresh in Minutes", refreshTimer)
-
-            intervalId = setInterval(() => {
-                if(autoRefreshDndbPlayers) {
-                    handleRefresh();
-                    console.log("🔄AUTO-REFRESH DND_B PLAYERS🔄")
-                }
-
-            // X minutes in milliseconds
-            }, refreshTimer * 60000.0); 
-        }
-
-        // Cleanup interval on component unmount
-        return () => clearInterval(intervalId);
     // eslint-disable-next-line
     }, [currentEncounter]);
 
-    useEffect(() => {
-        setCurrentEncounter({...currentEncounter, backgroundGuid: playerViewBackground.src})
-    }, [playerViewBackground]);
+  
 
     const uploadLocalStorage = (event) => {
         const file = event.target.files[0];
@@ -367,13 +360,14 @@ const DmView = () => {
     }
 
     const handleNewEncounter = () => {
-        let newGuid = generateUniqueId();
-        console.log("%c=== New Encounter ===", "background: green;", newGuid)
+        const newGuid = generateUniqueId();
+        console.log("%c=== New Encounter ===", "background: green;", newGuid);
+        console.log('handleNewEncounter')
 
-        setCurrentEncounter({...INIT_ENCOUNTER, encounterGuid: newGuid})
-        setEncounterGuid(newGuid)
-        setPlayerViewBackground({type: 'image', src: defaultBackground})
-    };  
+        dispatchEncounter({ type: 'RESET_ENCOUNTER', payload: newGuid });
+        setEncounterGuid(newGuid);
+        setPlayerViewBackground({ type: 'image', src: defaultBackground });
+    }; 
      
     const handleUploadMonsterImage = (event, creature, column = "search") => {
         event.stopPropagation()
@@ -383,19 +377,23 @@ const DmView = () => {
     }
 
     const handleLoadEncounter = (encounter) => {
-        console.log("%cLoaded: " + encounter.encounterName + ' ' + encounter.encounterGuid, "background: #fdfd96;")
+        console.log("%cLoaded: " + encounter.encounterName + ' ' + encounter.encounterGuid, "background: #fdfd96;");
+        console.log('handleLoadEncounter')
 
-        setCurrentEncounter({...encounter, creatures: sortCreatureArray(encounter.creatures)})
-        setEncounterGuid(encounter.encounterGuid)
-
-        if(encounter.backgroundGuid === 'default') {
-            setPlayerViewBackground({type: "image", src: defaultBackground})
+        dispatchEncounter({
+            type: 'SET_ENCOUNTER',
+            payload: { ...encounter, creatures: sortCreatureArray(encounter.creatures) },
+        });
+        setEncounterGuid(encounter.encounterGuid);
+    
+        if (encounter.backgroundGuid === 'default') {
+            setPlayerViewBackground({ type: 'image', src: defaultBackground });
         } else {
             setPlayerViewBackground(
                 encounter.backgroundGuid.includes('youtube.com')
-                ? getVideoLink(encounter.backgroundGuid)
-                : {type: 'image', src: encounter.backgroundGuid}
-            )
+                    ? getVideoLink(encounter.backgroundGuid)
+                    : { type: 'image', src: encounter.backgroundGuid }
+            );
         }
     };      
 
@@ -406,17 +404,17 @@ const DmView = () => {
             }
 
             { onFirstLoad ? ( 
-                <Home savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters}  currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} handleNewEncounter={handleNewEncounter} handleLoadEncounter={handleLoadEncounter} socket={socket}/>
+                <Home savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters} encounterGuid={encounterGuid} handleNewEncounter={handleNewEncounter} handleLoadEncounter={handleLoadEncounter} socket={socket}/>
             ) : ( 
                 <>  
-                    <SideMenu uploadLocalStorage={uploadLocalStorage} setCurrentEncounter={setCurrentEncounter} showSearchList={showSearchList} setShowSearchList={setShowSearchList} encounterGuid={encounterGuid} socket={socket}/>
+                    <SideMenu showSearchList={showSearchList} setShowSearchList={setShowSearchList} socket={socket}/>
                     {showSearchList &&  
-                        <SearchColumn setCurrentEncounter={setCurrentEncounter} encounterGuid={encounterGuid} handleUploadMonsterImage={handleUploadMonsterImage} uploadIconCreature={uploadIconCreature} socket={socket}/>
+                        <SearchColumn encounterGuid={encounterGuid} handleUploadMonsterImage={handleUploadMonsterImage} uploadIconCreature={uploadIconCreature} socket={socket}/>
                     }
-                    <EncounterColumn currentEncounter={currentEncounter} savedEncounters={savedEncounters} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} setSavedEncounters={setSavedEncounters} refreshCheck={refreshCheck} autoRefresh={autoRefresh} setCurrentEncounter={setCurrentEncounter} handleRefresh={handleRefresh} setEncounterGuid={setEncounterGuid} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter} setUploadIconMenu={setUploadIconMenu} setUploadIconCreature={setUploadIconCreature} handleUploadMonsterImage={handleUploadMonsterImage} resort={resort} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} socket={socket}/>
+                    <EncounterColumn savedEncounters={savedEncounters} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} setSavedEncounters={setSavedEncounters} refreshCheck={refreshCheck} autoRefresh={autoRefresh} handleRefresh={handleRefresh} setEncounterGuid={setEncounterGuid} handleNewEncounter={handleNewEncounter} showSearchList={showSearchList} handleLoadEncounter={handleLoadEncounter} setUploadIconMenu={setUploadIconMenu} setUploadIconCreature={setUploadIconCreature} handleUploadMonsterImage={handleUploadMonsterImage} resort={resort} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} socket={socket}/>
                 </>
             )}
-            <UploadMonsterImage setCurrentEncounter={setCurrentEncounter} uploadIconMenu={uploadIconMenu} setUploadIconCreature={setUploadIconCreature} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} socket={socket}/>
+            <UploadMonsterImage uploadIconMenu={uploadIconMenu} setUploadIconCreature={setUploadIconCreature} setUploadIconMenu={setUploadIconMenu} uploadIconCreature={uploadIconCreature} socket={socket}/>
         </div>
     );
 };

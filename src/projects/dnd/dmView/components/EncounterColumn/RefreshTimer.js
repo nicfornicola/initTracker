@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { SHORT_REFRESH } from '../../constants';
+import React from 'react';
 
 
 const secondsToMinutes = (seconds) => {
@@ -14,25 +13,8 @@ const secondsToMinutes = (seconds) => {
     return `${minutes}:${remainingSeconds}`;
 };
 
-const RefreshTimer = ({refresh}) => {
-    const [seconds, setSeconds] = useState(SHORT_REFRESH * 60);
-
-    useEffect(() => {
-        if(refresh)
-            setSeconds(SHORT_REFRESH * 60);        
-
-        const interval = setInterval(() => {
-            setSeconds(prevSeconds => prevSeconds - 1);
-        }, 1000);
-
-        return () => clearInterval(interval); 
-    }, [refresh]);
-
-    return (
-        <>
-            Next Auto Refresh: {secondsToMinutes(seconds)}
-        </>
-    );
+const RefreshTimer = ({ seconds }) => {
+    return <>Next Auto Refresh: {secondsToMinutes(seconds)}</>;
 };
 
 export default RefreshTimer;

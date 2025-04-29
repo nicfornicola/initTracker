@@ -7,6 +7,7 @@ import EncounterControls from './EncounterControls'
 import EncounterList from './EncounterList'
 import { useUser } from '../../../../../providers/UserProvider.js';
 import EncounterColumnTop from './EncounterColumnTop.js';
+import { useEncounter } from '../../../../../providers/EncounterProvider';
 
 function updateSavedEncounters(jsonArray, newEncounter) {
     if(jsonArray === null) jsonArray = []
@@ -27,15 +28,14 @@ function updateSavedEncounters(jsonArray, newEncounter) {
     return jsonArray;
 }
 
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-const iJson = (i) => {
-    return {id: getRandomInt(1, 9999), index: i, removing: false, newlyAdded: true}
+const iJson = (i, creatureGuid) => {
+    return {id: creatureGuid, index: i, removing: false, newlyAdded: true}
 }
 
-const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading, setCurrentEncounter, setPlayerViewBackground, savedEncounters, setSavedEncounters, handleRefresh, refreshCheck, autoRefresh, showSearchList, handleNewEncounter, setEncounterGuid, handleUploadMonsterImage, resort, selectedIndex, setSelectedIndex, socket}) => {
+const EncounterColumn = ({handleLoadEncounter, refreshLoading, setPlayerViewBackground, savedEncounters, setSavedEncounters, handleRefresh, refreshCheck, autoRefresh, showSearchList, handleNewEncounter, setEncounterGuid, handleUploadMonsterImage, resort, selectedIndex, setSelectedIndex, socket}) => {
+
+    const {currentEncounter, dispatchEncounter} = useEncounter();
+
     const {username} = useUser();
     const [roundNum, setRoundNum] = useState(currentEncounter.roundNum);
     const [turnNum, setTurnNum] = useState(currentEncounter.turnNum);
@@ -45,6 +45,8 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
     const [newlyAdded, setNewlyAdded] = useState(false);
     const animationDuration = 500; // Duration in milliseconds
     let maxNum = showSearchList ? 2 : 3
+
+    
 
     useEffect(() => {
         if(nameChange) {
@@ -81,29 +83,33 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         setSelectedIndex([])
     }, [currentEncounter.encounterGuid]);
 
-    const clickEncounterCreatureX = (event, xCreature, xIndex) => {
+    const clickEncounterCreatureX = (event, xCreature, encounterItemIndex) => {
         event.stopPropagation(); 
 
         if(selectedIndex.length > 0) {
-            let foundIndex = selectedIndex.findIndex(obj => obj.index === xIndex);
+            let foundIndex = selectedIndex.findIndex(obj => obj.index === encounterItemIndex);
             if(foundIndex > -1) {
                 // if deleting the creature currently selected unselect it
-                let newArr = selectedIndex
-                newArr.splice(foundIndex, 1)
+                selectedIndex.splice(foundIndex, 1)
             }
 
             // if deleting a creature of lower index then selectedIndex move selectedIndex down by 1 to follow the selected creatures object
-            let newArr = [...selectedIndex]
-            newArr.forEach((sIndex, i) => {
-                if(xIndex < sIndex.index) {
-                    newArr[i].index = sIndex.index - 1
+            selectedIndex.forEach((selectedObj, i) => {
+                if(encounterItemIndex < selectedObj.index) {
+                    selectedIndex[i].index = selectedObj.index - 1
                 } 
             });
-            setSelectedIndex([...newArr])
+            setSelectedIndex([...selectedIndex])
         }
 
-        let newArray = currentEncounter.creatures.filter((_, i) => i !== xIndex)
-        setCurrentEncounter(prev => ({...prev, creatures: [...newArray]}));
+        console.log('clickEncounterCreatureX')
+
+        dispatchEncounter({
+            type: 'REMOVE_CREATURE',
+            payload: {
+                removeIdex: encounterItemIndex
+            }
+        });
 
         socket.emit("removeCreatureFromEncounter", xCreature.creatureGuid, username)
     };  
@@ -163,8 +169,13 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         newDummy.encounterGuid = currentEncounter.encounterGuid;
         
         socket.emit("addCreatureToEncounter", newDummy)
-
-        setCurrentEncounter(prev => ({...prev, creatures: [...prev.creatures, newDummy]}));
+        console.log('handleAddExtra')
+        dispatchEncounter({
+            type: 'ADD_CREATURE',
+            payload: {
+                newCreature: newDummy,
+            }
+        });
     };
 
     const handleAutoRollInitiative = (event) => {
@@ -184,20 +195,19 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         resort()
     }   
     
-    const handleRemoveFromSelectedIndex = (xIndex, check = false) => {
+    const handleRemoveFromSelectedIndex = (encounterItemIndex, creatureGuid, check = false) => {
 
         let updatedColumns = [...selectedIndex]
         if(!check) {
-            const updatedColumns = [...selectedIndex];
-            selectedIndex[xIndex].removing = true
+            selectedIndex[encounterItemIndex].removing = true
             setSelectedIndex(updatedColumns)
 
             setTimeout(() => {
-                setSelectedIndex((prev) => prev.filter((_, i) => i !== xIndex));
+                setSelectedIndex((prev) => prev.filter((_, i) => i !== encounterItemIndex));
             }, animationDuration);
 
         } else {
-            const indexOf = selectedIndex.findIndex(obj => obj.index === xIndex);
+            const indexOf = selectedIndex.findIndex(obj => obj.index === encounterItemIndex);
             // remove if clicked creature is duplicate
             if(indexOf > -1) {
                 updatedColumns.splice(indexOf, 1);
@@ -206,14 +216,13 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
                 updatedColumns.splice(updatedColumns.length-1)
             }
 
-            updatedColumns = [iJson(xIndex), ...updatedColumns]
+            updatedColumns = [iJson(encounterItemIndex, creatureGuid), ...updatedColumns]
             if(indexOf !== 0){
                 setSelectedIndex(updatedColumns)
                 setNewlyAdded(true);
             } else {
                 setAlreadySelected(true)
             }
-            
         }
     };
 
@@ -297,18 +306,17 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
         <>
             <div className='column'>
                 <div className='infoContainer'>
-                    <EncounterColumnTop savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} setSavedEncounters={setSavedEncounters} handleNewEncounter={handleNewEncounter} setNameChange={setNameChange} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} handleTurnNums={handleTurnNums} handleRefresh={handleRefresh} refreshCheck={refreshCheck} autoRefresh={autoRefresh} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleAutoRollInitiative={handleAutoRollInitiative} socket={socket}/>
-                    {/* <EncounterListTopInfo savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} setSavedEncounters={setSavedEncounters} handleNewEncounter={handleNewEncounter} socket={socket}/>
-                    <EncounterControls setNameChange={setNameChange} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} handleTurnNums={handleTurnNums} handleRefresh={handleRefresh} refreshCheck={refreshCheck} autoRefresh={autoRefresh} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleAutoRollInitiative={handleAutoRollInitiative} socket={socket}/> */}
+                    <EncounterColumnTop savedEncounters={savedEncounters} handleLoadEncounter={handleLoadEncounter} setSavedEncounters={setSavedEncounters} handleNewEncounter={handleNewEncounter} setNameChange={setNameChange} refreshLoading={refreshLoading} setPlayerViewBackground={setPlayerViewBackground} handleTurnNums={handleTurnNums} handleRefresh={handleRefresh} refreshCheck={refreshCheck} autoRefresh={autoRefresh} handleAutoRollInitiative={handleAutoRollInitiative} socket={socket}/>
+                    
                     {currentEncounter.creatures.length ? (
-                        <EncounterList currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} handleSaveEncounter={handleSaveEncounter} turnNum={turnNum} handleUploadMonsterImage={handleUploadMonsterImage} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} handleRemoveFromSelectedIndex={handleRemoveFromSelectedIndex} clickEncounterCreatureX={clickEncounterCreatureX} resort={resort} socket={socket}/>
+                        <EncounterList currentEncounter={currentEncounter} handleSaveEncounter={handleSaveEncounter} turnNum={turnNum} handleUploadMonsterImage={handleUploadMonsterImage} selectedIndex={selectedIndex} handleRemoveFromSelectedIndex={handleRemoveFromSelectedIndex} clickEncounterCreatureX={clickEncounterCreatureX} resort={resort} socket={socket}/>
                     ) : (
                         <div className='encounterCreaturesNoItemsContainer'> 
                             <div className='encounterCreaturesNoItems'>
                                 {savedEncounters?.length ? (
                                     <>
                                         Add a creature or select one of your Encounters
-                                        <DropdownMenu savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} socket={socket}/> 
+                                        <DropdownMenu savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters} handleLoadEncounter={handleLoadEncounter} socket={socket}/> 
                                     </>
                                 ) : ( 
                                     <>Add a creature to create an encounter!</>
@@ -328,18 +336,18 @@ const EncounterColumn = ({currentEncounter, handleLoadEncounter, refreshLoading,
             </div>
             {/* this flex allows the other columns to take space when no selected creature is present */}
             <div className='statContainers' style={{flex: flex}}>
-                {selectedIndex.map((sIndex, xIndex) => {
-                    return <div key={sIndex.id}
+                {selectedIndex.map((selectedObj, statBlockOrderIndex) => {
+                    return <div key={selectedObj.id}
                                 className={`column 
-                                ${sIndex.newlyAdded ? "newly-added" : ""}
-                                ${!sIndex.removing && !sIndex.newlyAdded && newlyAdded ? "existing-slide" : ""}
-                                ${sIndex.removing ? "removing" : ""}
-                                ${alreadySelected && xIndex === 0 ? "alreadySelected" : ""}
+                                ${selectedObj.newlyAdded ? "newly-added" : ""}
+                                ${!selectedObj.removing && !selectedObj.newlyAdded && newlyAdded ? "existing-slide" : ""}
+                                ${selectedObj.removing ? "removing" : ""}
+                                ${alreadySelected && statBlockOrderIndex === 0 ? "alreadySelected" : ""}
                                 `}
                             >
-                                {currentEncounter.creatures[sIndex.index] &&
+                                {currentEncounter.creatures[selectedObj.index] &&
                                     <div className='statBlock'>
-                                        <StatBlock selectedIndex={sIndex.index} indexOf={xIndex} currentEncounter={currentEncounter} setCurrentEncounter={setCurrentEncounter} closeStatBlock={() => handleRemoveFromSelectedIndex(xIndex)} handleUploadMonsterImage={handleUploadMonsterImage} socket={socket}/>
+                                        <StatBlock selectedIndex={selectedObj.index} indexOf={statBlockOrderIndex} closeStatBlock={() => handleRemoveFromSelectedIndex(statBlockOrderIndex, currentEncounter.creatures[selectedObj.index].creatureGuid)} handleUploadMonsterImage={handleUploadMonsterImage} socket={socket}/>
                                     </div>
                                 }
                             </div>
