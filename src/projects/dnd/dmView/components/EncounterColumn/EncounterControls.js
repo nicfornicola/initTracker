@@ -42,9 +42,14 @@ const EncounterControls = ({streamingEncounter, setStreamingEncounter, handleTur
     const [enemyBloodToggle, setEnemyBloodToggle] = useState(currentEncounter.enemyBloodToggle);
     const [hideDeadEnemies, setHideDeadEnemies] = useState(currentEncounter.hideDeadEnemies);
     const [anyEnemyVisible, setAnyEnemyVisible] = useState(currentEncounter.creatures.filter(creature => !creature.hidden && creature.type !== "player").length);
+    const [isStreaming, setIsStreaming] = useState(streamingEncounter?.encounterGuid === currentEncounter.encounterGuid);
     const {sessionID} = useUser()
 
     const shakeRef = useShakeAnimation(anyEnemyVisible);
+
+    useEffect(() => {
+        setIsStreaming(streamingEncounter?.encounterGuid === currentEncounter.encounterGuid)
+    }, [streamingEncounter?.encounterGuid]);
 
     useEffect(() => {
         setEncounterName(currentEncounter.encounterName)
@@ -144,16 +149,18 @@ const EncounterControls = ({streamingEncounter, setStreamingEncounter, handleTur
     };
 
     const handleStartStream = () => { 
-        const isStreaming = streamingEncounter?.encounterGuid === currentEncounter?.encounterGuid
         if(isStreaming) {
             socket.emit("stopStreaming", sessionID)
             setStreamingEncounter({encounterName: null, encounterGuid: null})
+            setIsStreaming(false)
         } else {
             socket.emit("startStreaming", currentEncounter.encounterGuid, sessionID)
+            setStreamingEncounter({encounterName: currentEncounter.encounterName, encounterGuid: currentEncounter.encounterGuid})
+            setIsStreaming(true)
+
         }
     }
 
-    const isStreaming = streamingEncounter?.encounterGuid === currentEncounter.encounterGuid
     return (
         <div className='encounterControlsContainer'>
             <div>

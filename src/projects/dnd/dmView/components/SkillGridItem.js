@@ -27,11 +27,29 @@ const SkillGridInput = ({value, cKey, disabled = false, handleChange, style}) =>
         />
     )
 }
+const changeName = window.location.search.includes('becca')
+
+function getName(skillName) {
+    if(!changeName) {
+        return skillName
+    } else {
+        let skillKeys = {
+            'STR': 'P.Att.',
+            'DEX': 'P.Def.',
+            'CON': 'M.Att.',
+            'INT': 'M.Def.',
+        }
+
+        return skillKeys[skillName]
+
+    }
+}
 
 const SkillGridItem = ({skillName, skillTotal, skillSave, edit, handleChange}) => {
     let editStyle = edit ? {borderBottom: '3px dotted grey'} : {}
-    const bigLetter = skillName.charAt(0); // Gets the first letter
-    const smallLetters = skillName.slice(1); // Gets the rest of the string
+    let skill = getName(skillName)
+    const bigLetter = skill.charAt(0); // Gets the first letter
+    const smallLetters = skill.slice(1); // Gets the rest of the string
 
     let skillKeys = {
         'STR':['strength', 'strength_save'],
@@ -41,7 +59,6 @@ const SkillGridItem = ({skillName, skillTotal, skillSave, edit, handleChange}) =
         'WIS':['wisdom', 'wisdom_save'],
         'CHA':['charisma', 'charisma_save']
     }
-
 
     return (
         <>
@@ -54,9 +71,13 @@ const SkillGridItem = ({skillName, skillTotal, skillSave, edit, handleChange}) =
             <div className="skillGridItem">
                 <SkillGridInput value={getModString(skillTotal)} disabled={true} style={{}}/>
             </div>
-            <div className="skillGridItem">
-                <SkillGridInput value={addSign(skillSave)} cKey={skillKeys[skillName][1]} handleChange={handleChange} style={editStyle}/>
-            </div>
+            {!changeName && 
+                <div className="skillGridItem">
+                    <SkillGridInput value={addSign(skillSave)} cKey={skillKeys[skillName][1]} handleChange={handleChange} style={editStyle}/>
+                </div>
+            }
+            
+            
         </> 
   );
 }

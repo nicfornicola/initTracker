@@ -1761,7 +1761,7 @@ input {
 }
 
 
-  /* Style the scrollbar track */
+/* Style the scrollbar track */
 ::-webkit-scrollbar {
     width: 6px; /* Width of the scrollbar */
     height: 6px; /* Height of the horizontal scrollbar */
@@ -1771,10 +1771,15 @@ input {
     background: #88888831; /* Color of the scrollbar */
 }
 
-.column:hover 
+.dropdownMenu:hover::-webkit-scrollbar-thumb {
+    background: #888888cd; /* Highlight color for the scrollbar */
+}
+
+.column:hover
 ::-webkit-scrollbar-thumb {
     background: #888888cd; /* Color of the scrollbar */
-}
+} 
+
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555; /* Color when hovering over the scrollbar */
@@ -1864,7 +1869,7 @@ input {
     margin: 0;
     z-index: 2;
     width: fit-content;
-    max-height: 50vh;
+    max-height: 25vh;
     overflow-y: scroll;
 }
 

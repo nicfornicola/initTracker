@@ -47,7 +47,10 @@ const filterName = (items, elementObj) => {
 
 // Usage in a React Component
 export const BoldifyReplace = ({ name, desc }) => {
-    const str = (name || desc).toString();
+    console.table({name, desc})
+    const str = (name || desc || "").toString();
+
+    if(str === "") return null;
 
     const formatPart = (part) => {
         // This is not in replace() becuase they are special

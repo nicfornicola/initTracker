@@ -27,13 +27,6 @@ const Home = ({savedEncounters, setSavedEncounters, currentEncounter, setCurrent
                     <div className="gridCell">
                         <button className='homePageButton' onClick={handleNewEncounter} > New Encounter </button>
                     </div>
-                    {/* <div className="gridCell"> */}
-                        {/* <InputEncounterId 
-                            setCurrentEncounter={setCurrentEncounter} 
-                            encounterGuid={encounterGuid} 
-                            socket={socket} 
-                        /> */}
-                    {/* </div> */}
                     <div className="gridCell">
                         <InputCharacterId 
                             setCurrentEncounter={setCurrentEncounter} 
@@ -48,6 +41,13 @@ const Home = ({savedEncounters, setSavedEncounters, currentEncounter, setCurrent
                             handleLoadEncounter={handleLoadEncounter} 
                             currentEncounter={currentEncounter} 
                             setCurrentEncounter={setCurrentEncounter}
+                            socket={socket} 
+                        />
+                    </div>
+                    <div className="gridCell">
+                        <InputEncounterId 
+                            setCurrentEncounter={setCurrentEncounter} 
+                            encounterGuid={encounterGuid} 
                             socket={socket} 
                         />
                     </div>

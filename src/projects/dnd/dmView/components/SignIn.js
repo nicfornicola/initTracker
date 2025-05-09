@@ -47,7 +47,7 @@ const SignIn = ({socket}) => {
     
             //get this when login or successful account creation
             socket.on('goodLogin', async (userData) => {
-                goodLogin(userData.emitUsername, userData.emitPassword, userData.emitSessionID)
+                goodLogin(userData.emitUsername, userData.emitPassword)
             });
 
             socket.on('backendready', () => {

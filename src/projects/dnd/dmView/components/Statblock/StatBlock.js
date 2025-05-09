@@ -16,12 +16,14 @@ import { BoldifyReplace } from './BoldifyReplace';
 import SpellCasting from './SpellList';
 import EditSpellCasting from './EditSpellCasting';
 
+const changeName = window.location.search.includes("becca"); // Query string
+
 function exists(value) {
     return value && value !== '0';
 }
 
 function formatSpeed(speed) {
-    const order = ['walk', 'climb', 'burrow', 'swim', 'fly', 'hover'];
+    const order = changeName ? ['walk'] : ['walk', 'climb', 'burrow', 'swim', 'fly', 'hover'];
     const entries = order
         .filter(key => exists(speed[key])) 
         .map(key => [key, speed[key]]);
@@ -629,25 +631,31 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
                                 </div>
 
                                 <hr className="editlineSeperator" />
-                                <GridWrap columns={3}>
-                                    <EditStatDropdown label={"Size"} options={sizeOptions} value={creature.size} cKey={'size'} handleChange={handleChange}/>
-                                    <EditStatDropdown label={"Type"} options={typeOptions} value={creature.creature_type} cKey={'creature_type'} handleChange={handleChange}/>
-                                    <EditStatDropdown label={"Alignment"} options={alignmentOptions} value={creature.creature_alignment} cKey={'creature_alignment'} handleChange={handleChange}/>
-                                </GridWrap>
+                                {!changeName &&
+                                    <GridWrap columns={3}>
+                                        <EditStatDropdown label={"Size"} options={sizeOptions} value={creature.size} cKey={'size'} handleChange={handleChange}/>
+                                        <EditStatDropdown label={"Type"} options={typeOptions} value={creature.creature_type} cKey={'creature_type'} handleChange={handleChange}/>
+                                        <EditStatDropdown label={"Alignment"} options={alignmentOptions} value={creature.creature_alignment} cKey={'creature_alignment'} handleChange={handleChange}/>
+                                    </GridWrap>
+                                }
                                 <hr className="editlineSeperator" />
                                 <GridWrap>
                                     <EditStat label={"Max Hp"} value={creature.hit_points} cKey={'hit_points'} handleChange={handleChange} type='number'/>
-                                    <EditStat label={'AC'} value={creature.armor_class} cKey={'armor_class'} handleChange={handleChange} type='number'/>
-                                    <EditStat label={"Init Bonus"} value={addSign(creature.dexterity_save)} cKey={'dexterity_save'} handleChange={handleChange} type='number'/>
+                                    <EditStat label={changeName ? "Max MP" : "AC"} value={creature.armor_class} cKey={'armor_class'} handleChange={handleChange} type='number'/>
+                                    {!changeName && <EditStat label={"Init Bonus"} value={addSign(creature.dexterity_save)} cKey={'dexterity_save'} handleChange={handleChange} type='number'/>}
                                 </GridWrap>
                                 <hr/>
                                 <GridWrap columns={6} scroll={'auto'}>
-                                    <EditStat label={"Walk"} value={creature.speed.walk || 0} cKey={'walk'} category={'speed'} handleChange={handleChange} type='number' />
-                                    <EditStat label={"Climb"} value={creature.speed.climb || 0} cKey={'climb'} category={'speed'} handleChange={handleChange} type='number' />
-                                    <EditStat label={"Burrow"} value={creature.speed.burrow || 0} cKey={'burrow'} category={'speed'} handleChange={handleChange} type='number' />
-                                    <EditStat label={"Swim"} value={creature.speed.swim || 0} cKey={'swim'} category={'speed'} handleChange={handleChange} type='number' />
-                                    <EditStat label={"Fly"} value={creature.speed.fly || 0} cKey={'fly'} category={'speed'} handleChange={handleChange} type='number' />
-                                    <EditStat label={"Hover"} value={creature.speed.hover || false} cKey={'hover'} category={'speed'} handleChange={handleChange} type='checkbox' />
+                                    <EditStat label={changeName ? "Speed" : "Walk"} value={creature.speed.walk || 0} cKey={'walk'} category={'speed'} handleChange={handleChange} type='number' />
+                                    {!changeName &&
+                                        <>
+                                        <EditStat label={"Climb"} value={creature.speed.climb || 0} cKey={'climb'} category={'speed'} handleChange={handleChange} type='number' />
+                                        <EditStat label={"Burrow"} value={creature.speed.burrow || 0} cKey={'burrow'} category={'speed'} handleChange={handleChange} type='number' />
+                                        <EditStat label={"Swim"} value={creature.speed.swim || 0} cKey={'swim'} category={'speed'} handleChange={handleChange} type='number' />
+                                        <EditStat label={"Fly"} value={creature.speed.fly || 0} cKey={'fly'} category={'speed'} handleChange={handleChange} type='number' />
+                                        <EditStat label={"Hover"} value={creature.speed.hover || false} cKey={'hover'} category={'speed'} handleChange={handleChange} type='checkbox' />
+                                        </>
+                                    }
                                 </GridWrap>
                                 <hr className="editlineSeperator" />
                                 <SkillGrid creature={creature} edit={true} handleChange={handleChange}/>
@@ -724,7 +732,7 @@ const StatBlock = ({selectedIndex, indexOf, currentEncounter, setCurrentEncounte
                                         }
                                         <div className='stickyStatGrid textShadow' >
                                             <p className="stickyStatItem">
-                                                <strong className='titleColor'>AC&nbsp;</strong>
+                                                <strong className='titleColor'>{changeName ? 'Max MP' : 'AC'}&nbsp;</strong>
                                                 <BoldifyReplace desc={creature.armor_class} />
                                                 {creature.armor_desc && creature.armor_desc !== "()" && 
                                                     <>&nbsp;<BoldifyReplace desc={creature.armor_desc} /></>

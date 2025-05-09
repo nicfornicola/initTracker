@@ -29,6 +29,7 @@ const DropDownSessionMenu = ({streamingEncounter, setStreamingEncounter, adminVi
 
     useEffect(() => {
         if(username !== 'Username') {
+            console.log("Signed in - getting current session")
             socket.emit("getCurrentSession");
         } else {
             setStreamingEncounter({encounterName: null, encounterGuid: null})
@@ -59,6 +60,8 @@ const DropDownSessionMenu = ({streamingEncounter, setStreamingEncounter, adminVi
         if(socket) {
             // Recieve messages from backend
             socket.on('sendSession', (sessionInfo) => {
+                console.log("Session info recieved - ", sessionInfo)
+                setSessionID(sessionInfo.sessionID)
                 // streamingEncounterGuid can be empty if nothing is found in the backend
                 let log = "No Stream found..."
                 savedEncounters.forEach(e => {

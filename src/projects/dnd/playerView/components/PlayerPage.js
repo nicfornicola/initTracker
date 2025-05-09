@@ -139,7 +139,6 @@ function PlayerPage() {
             });
 
             socket.on('stopStreaming', () => {
-                console.log(`stopStreaming - ${socket.id}`);
                 setCreatures(null)
                 setTurnNum(0);
                 setRoundNum(0);
