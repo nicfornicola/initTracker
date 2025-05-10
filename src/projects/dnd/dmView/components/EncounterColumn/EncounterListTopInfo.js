@@ -57,7 +57,7 @@ const EncounterListTopInfo = ({streamingEncounter, setStreamingEncounter, savedE
                 </div>
             }
             <div className='dmViewButtonContainer'>
-                <DropdownMenu adminView={adminView} savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters} setCurrentEncounter={setCurrentEncounter} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} socket={socket}/>
+                <DropdownMenu adminView={adminView} streamingEncounter={streamingEncounter} savedEncounters={savedEncounters} setSavedEncounters={setSavedEncounters} setCurrentEncounter={setCurrentEncounter} handleLoadEncounter={handleLoadEncounter} currentEncounter={currentEncounter} socket={socket}/>
                 <NewEncounterButton handleNewEncounter={handleNewEncounter} />
                 <DropDownSessionMenu streamingEncounter={streamingEncounter} setStreamingEncounter={setStreamingEncounter} streamingEncounteradminView={adminView} savedEncounters={savedEncounters} socket={socket}/>
                 {username === 'nicadmin' && <input type='checkbox' onClick={(event) => handleClick(event)}/>}

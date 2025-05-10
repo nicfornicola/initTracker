@@ -177,6 +177,16 @@ export function shuffleArray(array) {
     return array;
 }
 
+export const handleOpenSession = (sessionID) => {
+    if(!sessionID) {
+        alert("Start a session first :)")
+    }
+    let url = window.location.href;
+    // Add '/' if needed
+    url += url.endsWith("/") ? "" : "/";
+    window.open(`${url}playerView/${sessionID}`, '_blank');
+};
+
 export const getLevelData = (key) => {
     return key in levelData ? levelData[key]['xp'] : '--';
 }

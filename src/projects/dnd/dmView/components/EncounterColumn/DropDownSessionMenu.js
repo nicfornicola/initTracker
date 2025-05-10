@@ -4,16 +4,9 @@ import magPlus from '../../pics/icons/magPlus.PNG'
 import magMinus from '../../pics/icons/magMinus.PNG'
 import OptionButton from './OptionButton';
 import streaming from '../../pics/icons/streaming.gif';
+import { handleOpenSession } from '../../constants';
 
-const handleOpenSession = (sessionID) => {
-    if(!sessionID) {
-        alert("Start a session first :)")
-    }
-    let url = window.location.href;
-    // Add '/' if needed
-    url += url.endsWith("/") ? "" : "/";
-    window.open(`${url}playerView/${sessionID}`, '_blank');
-};
+
 
 const DropDownSessionMenu = ({streamingEncounter, setStreamingEncounter, adminView, savedEncounters, socket}) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -27,12 +20,30 @@ const DropDownSessionMenu = ({streamingEncounter, setStreamingEncounter, adminVi
         }
     };
 
+    const handleSetStreamingEncounter = (eGuid, eName) => {
+        let openedWindow = true;
+        if(sessionID) {
+            //if encounter is clicked
+            if(eGuid !== null) {
+                // if playerwindow has not been opened
+                if(!streamingEncounter.playerWindowOpen) {
+                    handleOpenSession(sessionID)
+                }
+            // if stopped streaming
+            } else {
+                openedWindow = false;
+            }
+        }
+
+        setStreamingEncounter({encounterGuid: eGuid, encounterName: eName, playerWindowOpen: openedWindow})
+    }
+
     useEffect(() => {
         if(username !== 'Username') {
             console.log("Signed in - getting current session")
             socket.emit("getCurrentSession");
         } else {
-            setStreamingEncounter({encounterName: null, encounterGuid: null})
+            handleSetStreamingEncounter(null, null)
             setSessionID(null)
             setIsOpen(false)
         }
@@ -44,11 +55,12 @@ const DropDownSessionMenu = ({streamingEncounter, setStreamingEncounter, adminVi
     }, [username]);
 
     useEffect(() => {
-        if(savedEncounters.length === 0) { setStreamingEncounter({encounterName: null, encounterGuid: null}) }
-        else if(sessionID && streamingEncounter.encounterName === '') {
+        if(savedEncounters.length === 0) { 
+            handleSetStreamingEncounter(null, null)
+        } else if(sessionID && streamingEncounter.encounterName === '') {
             savedEncounters.forEach(e => {
                 if(e.encounterGuid === streamingEncounter.encounterGuid) {
-                    setStreamingEncounter({encounterGuid: e.encounterGuid, encounterName: e.encounterName})
+                    handleSetStreamingEncounter(e.encounterGuid, e.encounterName)
                     console.log(`Found stream: ${e.encounterName} - (${e.encounterGuid})`)
                 }
             });
@@ -66,7 +78,7 @@ const DropDownSessionMenu = ({streamingEncounter, setStreamingEncounter, adminVi
                 let log = "No Stream found..."
                 savedEncounters.forEach(e => {
                     if(e.encounterGuid === sessionInfo.streamingEncounterGuid) {
-                        setStreamingEncounter({encounterGuid: e.encounterGuid, encounterName: e.encounterName})
+                        handleSetStreamingEncounter(e.encounterGuid, e.encounterName)
                         log = `Found stream: ${e.encounterName} - (eGuid: ${e.encounterGuid})`
                     }
                 });
@@ -78,10 +90,10 @@ const DropDownSessionMenu = ({streamingEncounter, setStreamingEncounter, adminVi
     const handleDropDownOptionClicked = (event, e, openSessionTab=false) => {
         if(e === null) {
             socket.emit("stopStreaming", sessionID)
-            setStreamingEncounter({encounterName: null, encounterGuid: null})
+            handleSetStreamingEncounter(null, null)
         } else if(e.encounterGuid !== streamingEncounter.encounterGuid) {
             socket.emit("startStreaming", e.encounterGuid, sessionID)
-            setStreamingEncounter({encounterName: e.encounterName, encounterGuid: e.encounterGuid})
+            handleSetStreamingEncounter(e.encounterGuid, e.encounterName)
         } 
 
         if(openSessionTab)

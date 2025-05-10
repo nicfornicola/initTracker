@@ -3,7 +3,7 @@ import EncounterListTopInfo from './EncounterListTopInfo.js'
 import EncounterControls from './EncounterControls.js'
 
 const EncounterColumnTop = ({savedEncounters, refreshLoading, setNameChange, handleLoadEncounter, setPlayerViewBackground, currentEncounter, setCurrentEncounter, handleTurnNums, setSavedEncounters, handleNewEncounter, handleRefresh, refreshCheck, autoRefresh, handleAutoRollInitiative, socket}) => {
-    const [streamingEncounter, setStreamingEncounter] = useState({encounterName: null, encounterGuid: null})
+    const [streamingEncounter, setStreamingEncounter] = useState({encounterName: null, encounterGuid: null, playerWindowOpen: false})
 
     return (
         <>

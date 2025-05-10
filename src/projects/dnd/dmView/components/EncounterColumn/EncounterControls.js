@@ -1,5 +1,5 @@
 import React, { useState, useEffect }from 'react';
-import { INIT_ENCOUNTER_NAME } from '../../constants';
+import { INIT_ENCOUNTER_NAME, handleOpenSession } from '../../constants';
 import refresh from '../../pics/icons/refresh.png';
 import greenCheck from '../../pics/icons/check.png'; 
 import eyeClosed from '../../pics/icons/eyeClosed.png'; 
@@ -58,6 +58,7 @@ const EncounterControls = ({streamingEncounter, setStreamingEncounter, handleTur
         setEnemyBloodToggleImage(getBloodImage(currentEncounter.enemyBloodToggle))
         setHideDeadEnemies(currentEncounter.hideDeadEnemies)
         setAnyEnemyVisible(currentEncounter.creatures.filter(creature => !creature.hidden && creature.type !== "player").length);
+        setIsStreaming(streamingEncounter?.encounterGuid === currentEncounter.encounterGuid)
 
         // eslint-disable-next-line
     }, [currentEncounter]);
@@ -151,11 +152,16 @@ const EncounterControls = ({streamingEncounter, setStreamingEncounter, handleTur
     const handleStartStream = () => { 
         if(isStreaming) {
             socket.emit("stopStreaming", sessionID)
-            setStreamingEncounter({encounterName: null, encounterGuid: null})
+            setStreamingEncounter({encounterName: null, encounterGuid: null, playerWindowOpen: false})
             setIsStreaming(false)
         } else {
             socket.emit("startStreaming", currentEncounter.encounterGuid, sessionID)
-            setStreamingEncounter({encounterName: currentEncounter.encounterName, encounterGuid: currentEncounter.encounterGuid})
+
+            if(!streamingEncounter.playerWindowOpen) {
+                handleOpenSession(sessionID)
+            }
+
+            setStreamingEncounter({encounterName: currentEncounter.encounterName, encounterGuid: currentEncounter.encounterGuid, playerWindowOpen: true})
             setIsStreaming(true)
 
         }
